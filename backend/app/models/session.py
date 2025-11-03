@@ -15,7 +15,7 @@ class Session(Base):
 
     session_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False, index=True)
-    refresh_token = Column(String(255), unique=True, nullable=False, index=True)
+    refresh_token = Column(String(1000), unique=True, nullable=False, index=True)
     expires_at = Column(DateTime(timezone=True), nullable=False, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     last_used_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

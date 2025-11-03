@@ -109,8 +109,8 @@ pytest --cov=app tests/  # With coverage
 See [PROJECT-PLAN.md](../docs/PROJECT-PLAN.md) for detailed task breakdown.
 
 - **Task 1.2**: Database Design & Setup ✅ (Complete)
-- **Task 2.1**: Authentication Foundation
-- **Task 2.2**: Email/Password Authentication
+- **Task 2.1**: Authentication Foundation ✅ (Complete)
+- **Task 2.2**: Email/Password Authentication ✅ (Complete)
 - **Task 3.1**: User Management API
 - And more...
 

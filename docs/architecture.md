@@ -13,6 +13,7 @@
 - **Python**: `3.11.7` (recommended) or `3.10+`
 - **Uvicorn**: `0.27.0` (ASGI server)
 - **Pydantic**: `2.5.0` (data validation)
+- **email-validator**: `2.3.0` (email validation for Pydantic)
 - **SQLAlchemy**: `2.0.23` (ORM)
 - **Alembic**: `1.13.0` (database migrations)
 
@@ -202,6 +203,7 @@ fastapi==0.109.0
 uvicorn[standard]==0.27.0
 pydantic==2.5.0
 pydantic-settings==2.1.0
+email-validator==2.3.0
 sqlalchemy==2.0.23
 alembic==1.13.0
 psycopg2-binary==2.9.9
@@ -1130,6 +1132,8 @@ Steps:
 fastapi==0.109.0
 uvicorn==0.27.0
 pydantic==2.5.0
+pydantic-settings==2.1.0
+email-validator==2.3.0
 sqlalchemy==2.0.23
 alembic==1.13.0
 psycopg2-binary==2.9.9

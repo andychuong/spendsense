@@ -127,13 +127,21 @@ def require_role(required_role: UserRole):
     """
     def role_checker(current_user: User = Depends(get_current_active_user)) -> User:
         # Check if user has required role or higher
+        # Convert string role to UserRole enum if needed
+        user_role = current_user.role
+        if isinstance(user_role, str):
+            try:
+                user_role = UserRole(user_role)
+            except ValueError:
+                user_role = UserRole.USER  # Default to USER if invalid
+        
         role_hierarchy = {
             UserRole.USER: 1,
             UserRole.OPERATOR: 2,
             UserRole.ADMIN: 3
         }
         
-        user_role_level = role_hierarchy.get(current_user.role, 0)
+        user_role_level = role_hierarchy.get(user_role, 0)
         required_role_level = role_hierarchy.get(required_role, 0)
         
         if user_role_level < required_role_level:

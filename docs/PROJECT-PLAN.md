@@ -1,9 +1,9 @@
 # SpendSense Project Plan
 ## Order of Operations & Task List
 
-**Version**: 1.0  
+**Version**: 1.1  
 **Date**: 2025-11-03
-**Status**: Development (Phase 1 - Task 2.1 Complete)  
+**Status**: Development (Phase 1 - Task 2.2 Complete)  
 **Project Manager**: TBD  
 
 ---
@@ -90,11 +90,11 @@ This document provides a comprehensive order of operations and task list for the
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#token-management)
   - [Security](./backend/Security.md#sr-be-001-authentication-security)
 
-**Task 2.2: Email/Password Authentication**
-- [ ] Implement user registration (email + password)
-- [ ] Implement user login (email + password)
-- [ ] Create user management endpoints
-- [ ] Add input validation (email, password strength)
+**Task 2.2: Email/Password Authentication** ✅
+- [x] Implement user registration (email + password)
+- [x] Implement user login (email + password)
+- [x] Create user management endpoints
+- [x] Add input validation (email, password strength)
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#authentication-endpoints)
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#emailusername--password)
@@ -874,6 +874,7 @@ This document provides a comprehensive order of operations and task list for the
 | 1.2 | 2025-11-03 | Task 1.2 completed - Database design, Alembic migrations, PostgreSQL setup, SQLAlchemy models | TBD |
 | 1.3 | 2025-11-03 | Task 1.3 completed - AWS Infrastructure Setup (Development): Terraform modules for VPC, RDS PostgreSQL 16.10, ElastiCache Redis 7.1, S3 buckets, IAM roles. Includes owner_id support for shared AWS accounts (us-west-1 region). | TBD |
 | 1.4 | 2025-11-03 | Task 2.1 completed - Authentication Foundation: JWT token generation/validation (RS256), password hashing (bcrypt cost factor 12), authentication middleware, token refresh mechanism. Includes RSA key generation utilities and authentication dependencies. | TBD |
+| 1.5 | 2025-11-03 | Task 2.2 completed - Email/Password Authentication: User registration and login endpoints, password validation (12+ chars, uppercase, lowercase, digit, special char), email validation, user management endpoints (GET/PUT /api/v1/users/me), token refresh and logout. Fixed enum role storage, refresh token length (1000 chars), and session management. | TBD |
 
 ---
 

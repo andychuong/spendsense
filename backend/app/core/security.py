@@ -4,9 +4,10 @@ import uuid
 import os
 from pathlib import Path
 from datetime import datetime, timedelta
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, Union
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+import bcrypt
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
@@ -15,7 +16,13 @@ from app.config import settings
 from app.models.user import UserRole
 
 # Password hashing context with bcrypt (cost factor 12)
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
+# Use bcrypt directly for better compatibility with bcrypt 5.x
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto",
+    bcrypt__rounds=12,
+    bcrypt__ident="2b"  # Use bcrypt 2b identifier for better compatibility
+)
 
 
 def generate_rsa_key_pair() -> tuple[str, str]:
@@ -168,7 +175,17 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     Returns:
         True if password matches, False otherwise
     """
-    return pwd_context.verify(plain_password, hashed_password)
+    # Use bcrypt directly for better compatibility
+    try:
+        plain_password_bytes = plain_password.encode('utf-8')
+        # Truncate to 72 bytes if necessary
+        if len(plain_password_bytes) > 72:
+            plain_password_bytes = plain_password_bytes[:72]
+        hashed_password_bytes = hashed_password.encode('utf-8')
+        return bcrypt.checkpw(plain_password_bytes, hashed_password_bytes)
+    except Exception:
+        # Fallback to passlib if bcrypt fails
+        return pwd_context.verify(plain_password, hashed_password)
 
 
 def get_password_hash(password: str) -> str:
@@ -181,7 +198,17 @@ def get_password_hash(password: str) -> str:
     Returns:
         Bcrypt hashed password
     """
-    return pwd_context.hash(password)
+    # Use bcrypt directly for better compatibility with bcrypt 5.x
+    # Encode password as UTF-8 bytes (bcrypt requirement)
+    password_bytes = password.encode('utf-8')
+    # Truncate to 72 bytes if necessary (bcrypt limit)
+    if len(password_bytes) > 72:
+        password_bytes = password_bytes[:72]
+    # Generate salt and hash
+    salt = bcrypt.gensalt(rounds=12)
+    hashed = bcrypt.hashpw(password_bytes, salt)
+    # Return as string (passlib format compatible)
+    return hashed.decode('utf-8')
 
 
 def create_access_token(data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
@@ -273,23 +300,26 @@ def decode_token(token: str) -> Dict[str, Any]:
         raise JWTError(f"Invalid token: {str(e)}")
 
 
-def create_tokens_for_user(user_id: uuid.UUID, email: str, role: UserRole, session_id: uuid.UUID) -> tuple[str, str]:
+def create_tokens_for_user(user_id: uuid.UUID, email: str, role: Union[UserRole, str], session_id: uuid.UUID) -> tuple[str, str]:
     """
     Create both access and refresh tokens for a user.
     
     Args:
         user_id: User UUID
         email: User email
-        role: User role
+        role: User role (can be UserRole enum or string)
         session_id: Session UUID for refresh token
         
     Returns:
         Tuple of (access_token, refresh_token)
     """
+    # Handle both enum and string roles
+    role_value = role.value if isinstance(role, UserRole) else role
+    
     access_token_data = {
         "user_id": str(user_id),
         "email": email,
-        "role": role.value,
+        "role": role_value,
     }
     
     access_token = create_access_token(access_token_data)
