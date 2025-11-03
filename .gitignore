@@ -131,6 +131,7 @@ jwt_secret.key
 jwt_private.pem
 jwt_public.pem
 *.jwt.key
+.dev_keys/
 
 # OpenAI API Keys
 openai_key.txt

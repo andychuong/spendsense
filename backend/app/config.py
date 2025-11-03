@@ -33,8 +33,10 @@ class Settings(BaseSettings):
     s3_bucket_analytics: str = "spendsense-analytics"
 
     # JWT
-    jwt_secret_key: str
-    jwt_algorithm: str = "HS256"
+    jwt_secret_key: Optional[str] = None  # For HS256 (legacy support)
+    jwt_private_key: Optional[str] = None  # RSA private key for RS256
+    jwt_public_key: Optional[str] = None  # RSA public key for RS256
+    jwt_algorithm: str = "RS256"  # Default to RS256 as per PRD
     jwt_access_token_expire_minutes: int = 60
     jwt_refresh_token_expire_days: int = 30
 
