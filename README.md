@@ -2,7 +2,7 @@
 
 **Version**: 1.0  
 **Date**: 2024-01-15  
-**Status**: Development (Phase 1)
+**Status**: Development (Phase 1 - Task 1.1 Complete ✅)
 
 ---
 
@@ -40,8 +40,8 @@ SpendSense/
 ### Backend
 - **Framework**: FastAPI 0.109.0
 - **Language**: Python 3.11.7
-- **Database**: PostgreSQL 15.6 (RDS)
-- **Cache**: Redis 7.2.4 (ElastiCache)
+- **Database**: PostgreSQL 16.10 (RDS) - adjusted for us-west-1 availability
+- **Cache**: Redis 7.1 (ElastiCache) - adjusted for us-west-1 availability
 - **ORM**: SQLAlchemy 2.0.23
 - **Migrations**: Alembic 1.13.0
 
@@ -74,8 +74,8 @@ SpendSense/
 
 - Python 3.11.7+
 - Node.js 20.10.0+ (LTS)
-- PostgreSQL 15.6+
-- Redis 7.2.4+
+- PostgreSQL 16.10+ (for local development)
+- Redis 7.1+ (for local development)
 - Docker 24.0.7+ (optional)
 - AWS CLI 2.15.25+ (for deployment)
 
@@ -114,8 +114,9 @@ Create `.env` files in each directory (backend, frontend, service) based on `.en
 ## Project Phases
 
 ### Phase 1: Foundation & Backend Core (Weeks 1-3) ✅ Current
-- Project setup and infrastructure
-- Database schema design
+- ✅ Project setup and infrastructure (Task 1.1 Complete)
+- ✅ Database schema design (Task 1.2 Complete)
+- ✅ AWS Infrastructure Setup (Task 1.3 Complete) - Includes `owner_id` support for shared AWS accounts
 - Authentication system
 - Core API development
 
@@ -200,4 +201,5 @@ See [BRANCH_STRATEGY.md](./BRANCH_STRATEGY.md) for detailed branch strategy.
 ---
 
 **For detailed task breakdown, see [PROJECT-PLAN.md](./docs/PROJECT-PLAN.md)**
+
 

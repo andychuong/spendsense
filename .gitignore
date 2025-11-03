@@ -1,0 +1,234 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv
+*.log
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+.npm
+.eslintcache
+.node_repl_history
+*.tgz
+.yarn-integrity
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+.next/
+out/
+
+# Environment files
+.env
+.env.*
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+.env.staging
+.env.staging.local
+*.env
+!.env.example
+!.env*.example
+
+# Secrets and credentials - CRITICAL: Never commit these!
+secrets/
+credentials/
+*.pem
+*.key
+*.p12
+*.p8
+*.pem
+*.crt
+*.cer
+*.jks
+*.keystore
+*.truststore
+config/secrets.json
+config/*secret*
+config/*credential*
+config/*key*
+**/secrets.json
+**/credentials.json
+**/keys.json
+
+# AWS Credentials 
+.aws/
+*.pem
+aws-credentials
+aws-credentials.json
+~/.aws/credentials
+~/.aws/config
+*.aws
+
+# OAuth Credentials
+oauth_credentials.json
+google_oauth.json
+github_oauth.json
+facebook_oauth.json
+apple_oauth.json
+*_oauth_*.json
+*_oauth_*.p8
+*oauth*.key
+
+# JWT Secrets 
+jwt_secret.key
+jwt_private.pem
+jwt_public.pem
+*.jwt.key
+
+# OpenAI API Keys
+openai_key.txt
+openai_key.env
+*openai*.key
+
+# Database credentials and dumps
+*.sqlite
+*.sqlite3
+postgres_data/
+*.sql.dump
+*.sql.gz
+*.dump
+database_credentials.json
+db_password.txt
+DATABASE_URL.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+!.terraform.lock.hcl
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Docker secrets
+docker-compose.override.yml
+docker-compose.*.yml
+!docker-compose.yml
+!docker-compose.example.yml
+.docker/
+docker_secrets/
+
+# Testing
+.coverage
+.pytest_cache/
+.coverage.*
+htmlcov/
+.tox/
+.hypothesis/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# TypeScript
+*.tsbuildinfo
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# IDE secrets (VS Code, etc.)
+.vscode/settings.json
+.vscode/launch.json
+.idea/dataSources/
+.idea/dataSources.local.xml
+
+# Backup files
+*.bak
+*.backup
+*.old
+*~
+
+# Cache and temporary directories
+.cache/
+*.cache
+*.swp
+*.swo
+
+# Local configuration files that might contain secrets
+local_settings.py
+local_config.json
+settings_local.py
+config_local.py
+local.env

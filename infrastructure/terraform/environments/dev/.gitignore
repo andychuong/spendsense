@@ -1,0 +1,13 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+.terraform/
+# Note: .terraform.lock.hcl should be committed (it's a dependency lock, not a secret)
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+

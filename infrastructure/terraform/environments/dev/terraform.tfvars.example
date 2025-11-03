@@ -1,0 +1,29 @@
+# Terraform Variables for Development Environment
+# Copy this file to terraform.tfvars and customize as needed
+# terraform.tfvars is in .gitignore and will not be committed
+
+project_name = "spendsense"
+environment  = "dev"
+aws_region   = "us-west-1"
+owner_id     = "your-identifier"  # Set your unique identifier (e.g., 'chuong', 'jane', etc.)
+
+# VPC Configuration
+vpc_cidr = "10.1.0.0/16"
+
+# Subnet CIDR blocks
+public_subnet_cidrs    = ["10.1.1.0/24", "10.1.2.0/24"]
+private_subnet_cidrs   = ["10.1.10.0/24", "10.1.11.0/24"]
+database_subnet_cidrs  = ["10.1.20.0/24", "10.1.21.0/24"]
+
+# RDS Configuration
+db_instance_class      = "db.t3.micro"
+db_allocated_storage   = 20
+db_max_allocated_storage = 100
+db_backup_retention_period = 7
+
+# ElastiCache Configuration
+redis_node_type = "cache.t3.micro"
+
+# Logging Configuration
+log_retention_days = 30
+
