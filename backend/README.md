@@ -104,6 +104,31 @@ pytest
 pytest --cov=app tests/  # With coverage
 ```
 
+### SMS Testing (Local with AWS SNS Sandbox)
+
+To test SMS functionality locally using AWS SNS sandbox mode, see [SMS_TESTING.md](./SMS_TESTING.md) for detailed instructions.
+
+**Quick Start:**
+1. Verify your phone number in AWS SNS Console (Text messaging → Sandbox)
+2. Configure AWS credentials in `.env` file
+3. Start Redis server
+4. Request verification code: `POST /api/v1/auth/phone/request`
+5. Verify code: `POST /api/v1/auth/phone/verify`
+
+### OAuth Testing
+
+OAuth integration is implemented for Google, GitHub, Facebook, and Apple Sign In. See [OAUTH_SETUP.md](./OAUTH_SETUP.md) for setup instructions and [TEST_OAUTH.md](./TEST_OAUTH.md) for testing guide.
+
+**Quick Start:**
+1. Configure OAuth credentials in `.env` file (see `OAUTH_SETUP.md`)
+2. Test authorize endpoint: `GET /api/v1/auth/oauth/{provider}/authorize?redirect_uri=http://localhost:3000/callback`
+3. Open the `authorize_url` in browser to test full OAuth flow
+4. Test callback endpoint: `GET /api/v1/auth/oauth/{provider}/callback?code=...&state=...`
+
+**Current Status:**
+- ✅ Google OAuth: Configured and tested
+- ⚠️ GitHub, Facebook, Apple: Structure ready, credentials needed
+
 ## Development Tasks
 
 See [PROJECT-PLAN.md](../docs/PROJECT-PLAN.md) for detailed task breakdown.
@@ -111,6 +136,11 @@ See [PROJECT-PLAN.md](../docs/PROJECT-PLAN.md) for detailed task breakdown.
 - **Task 1.2**: Database Design & Setup ✅ (Complete)
 - **Task 2.1**: Authentication Foundation ✅ (Complete)
 - **Task 2.2**: Email/Password Authentication ✅ (Complete)
+- **Task 2.3**: Phone/SMS Authentication ✅ (Complete)
+- **Task 2.4**: OAuth Integration ✅ (Complete)
+  - Google OAuth: Configured and tested
+  - GitHub, Facebook, Apple: Structure ready, credentials needed
+- **Task 2.5**: Account Linking
 - **Task 3.1**: User Management API
 - And more...
 

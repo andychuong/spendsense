@@ -59,6 +59,7 @@ class Settings(BaseSettings):
 
     # SMS (AWS SNS)
     sns_region: str = "us-west-1"
+    sms_mock_mode: bool = False  # Set to True to use mock SMS (logs codes to console instead of sending)
 
     # Security
     cors_origins: list[str] = ["http://localhost:3000", "http://localhost:5173"]

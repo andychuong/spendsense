@@ -82,3 +82,53 @@ class TokenRefreshResponse(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
 
+
+class PhoneVerificationRequest(BaseModel):
+    """Phone verification request schema."""
+
+    phone: str = Field(..., description="Phone number in E.164 format (e.g., +1234567890)")
+
+
+class PhoneVerificationRequestResponse(BaseModel):
+    """Phone verification request response schema."""
+
+    message: str = "Verification code sent successfully"
+    phone: str = Field(..., description="Normalized phone number in E.164 format")
+
+
+class PhoneVerificationVerifyRequest(BaseModel):
+    """Phone verification verify request schema."""
+
+    phone: str = Field(..., description="Phone number in E.164 format (e.g., +1234567890)")
+    code: str = Field(..., min_length=6, max_length=6, description="6-digit verification code")
+
+
+class PhoneVerificationVerifyResponse(BaseModel):
+    """Phone verification verify response schema."""
+
+    user_id: str
+    phone: str
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+    is_new_user: bool = Field(..., description="True if user was just created, False if existing user logged in")
+
+
+class OAuthAuthorizeResponse(BaseModel):
+    """OAuth authorization response schema."""
+
+    authorize_url: str = Field(..., description="OAuth authorization URL to redirect user to")
+    state: str = Field(..., description="OAuth state parameter for CSRF protection")
+
+
+class OAuthCallbackResponse(BaseModel):
+    """OAuth callback response schema."""
+
+    user_id: str
+    email: Optional[str] = None
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+    is_new_user: bool = Field(..., description="True if user was just created, False if existing user logged in")
+    provider: str = Field(..., description="OAuth provider name (google, github, facebook, apple)")
+
