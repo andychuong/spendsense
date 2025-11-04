@@ -21,14 +21,14 @@ VALID_APR_TYPES = ["purchase", "cash", "balance_transfer"]
 
 class ValidationError:
     """Represents a validation error."""
-    
+
     def __init__(self, type: str, field: str, value: Any, message: str, severity: str = "error"):
         self.type = type  # account, transaction, liability
         self.field = field
         self.value = value
         self.message = message
         self.severity = severity  # error, warning
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
         return {
@@ -46,11 +46,11 @@ class PlaidValidator:
     # Date range validation (reasonable ranges)
     MIN_DATE = date(1900, 1, 1)  # Minimum date (realistic for financial data)
     MAX_DATE = date.today() + timedelta(days=365)  # Maximum date (1 year in future for pending transactions)
-    
+
     # Amount range validation (reasonable transaction amounts)
     MIN_TRANSACTION_AMOUNT = -1000000.0  # Minimum transaction amount ($1M in negative)
     MAX_TRANSACTION_AMOUNT = 1000000.0   # Maximum transaction amount ($1M in positive)
-    
+
     # Amount range validation for account balances
     MIN_BALANCE = -10000000.0  # Minimum balance ($10M in negative)
     MAX_BALANCE = 10000000.0   # Maximum balance ($10M in positive)
@@ -58,7 +58,7 @@ class PlaidValidator:
     def __init__(self, enable_duplicate_detection: bool = True, enable_range_validation: bool = True):
         """
         Initialize the Plaid validator.
-        
+
         Args:
             enable_duplicate_detection: Enable duplicate account/transaction detection
             enable_range_validation: Enable data range validation (dates, amounts)
@@ -69,17 +69,17 @@ class PlaidValidator:
     def validate_account(self, account: Dict[str, Any], account_index: Optional[int] = None) -> List[ValidationError]:
         """
         Validate account structure.
-        
+
         Args:
             account: Account dictionary
             account_index: Index of account in list (for error reporting)
-            
+
         Returns:
             List of validation errors
         """
         errors = []
         prefix = f"account[{account_index}]" if account_index is not None else "account"
-        
+
         # Required fields
         required_fields = ["account_id", "type", "subtype", "balances", "iso_currency_code"]
         for field in required_fields:
@@ -91,7 +91,7 @@ class PlaidValidator:
                     message=f"Missing required field: {field}",
                     severity="error"
                 ))
-        
+
         # Validate account_id
         if "account_id" in account:
             account_id = account["account_id"]
@@ -103,7 +103,7 @@ class PlaidValidator:
                     message="account_id must be a non-empty string",
                     severity="error"
                 ))
-        
+
         # Validate type
         if "type" in account:
             account_type = account["type"]
@@ -115,7 +115,7 @@ class PlaidValidator:
                     message=f"Invalid account type: {account_type}. Valid types: {', '.join(VALID_ACCOUNT_TYPES)}",
                     severity="error"
                 ))
-        
+
         # Validate subtype
         if "type" in account and "subtype" in account:
             account_type = account.get("type")
@@ -130,7 +130,7 @@ class PlaidValidator:
                         message=f"Invalid subtype '{subtype}' for type '{account_type}'. Valid subtypes: {', '.join(valid_subtypes)}",
                         severity="error"
                     ))
-        
+
         # Validate holder_category
         if "holder_category" in account:
             holder_category = account["holder_category"]
@@ -151,7 +151,7 @@ class PlaidValidator:
                     message=f"Business accounts are excluded. holder_category must be 'individual'",
                     severity="error"
                 ))
-        
+
         # Validate balances
         if "balances" in account:
             balances = account["balances"]
@@ -171,7 +171,7 @@ class PlaidValidator:
                         if balance_value is not None:
                             try:
                                 balance_float = float(balance_value)
-                                
+
                                 # Range validation
                                 if self.enable_range_validation:
                                     if balance_float < self.MIN_BALANCE:
@@ -198,7 +198,7 @@ class PlaidValidator:
                                     message=f"balance.{balance_key} must be a number or null",
                                     severity="error"
                                 ))
-        
+
         # Validate iso_currency_code
         if "iso_currency_code" in account:
             iso_code = account["iso_currency_code"]
@@ -210,23 +210,23 @@ class PlaidValidator:
                     message="iso_currency_code must be a non-empty string",
                     severity="error"
                 ))
-        
+
         return errors
 
     def validate_transaction(self, transaction: Dict[str, Any], transaction_index: Optional[int] = None) -> List[ValidationError]:
         """
         Validate transaction structure.
-        
+
         Args:
             transaction: Transaction dictionary
             transaction_index: Index of transaction in list (for error reporting)
-            
+
         Returns:
             List of validation errors
         """
         errors = []
         prefix = f"transaction[{transaction_index}]" if transaction_index is not None else "transaction"
-        
+
         # Required fields
         required_fields = ["account_id", "date", "amount"]
         for field in required_fields:
@@ -238,7 +238,7 @@ class PlaidValidator:
                     message=f"Missing required field: {field}",
                     severity="error"
                 ))
-        
+
         # Validate transaction_id
         if "transaction_id" in transaction:
             transaction_id = transaction["transaction_id"]
@@ -250,7 +250,7 @@ class PlaidValidator:
                     message="transaction_id must be a non-empty string",
                     severity="error"
                 ))
-        
+
         # Validate account_id
         if "account_id" in transaction:
             account_id = transaction["account_id"]
@@ -262,7 +262,7 @@ class PlaidValidator:
                     message="account_id must be a non-empty string",
                     severity="error"
                 ))
-        
+
         # Validate date
         if "date" in transaction:
             date_value = transaction["date"]
@@ -278,7 +278,7 @@ class PlaidValidator:
                 try:
                     # Try to parse date format YYYY-MM-DD
                     parsed_date = datetime.strptime(str(date_value), "%Y-%m-%d").date()
-                    
+
                     # Range validation
                     if self.enable_range_validation:
                         if parsed_date < self.MIN_DATE:
@@ -305,7 +305,7 @@ class PlaidValidator:
                         message="date must be in format YYYY-MM-DD",
                         severity="error"
                     ))
-        
+
         # Validate amount
         if "amount" in transaction:
             amount = transaction["amount"]
@@ -328,7 +328,7 @@ class PlaidValidator:
                             message="amount must be non-zero",
                             severity="warning"
                         ))
-                    
+
                     # Range validation
                     if self.enable_range_validation:
                         if amount_float < self.MIN_TRANSACTION_AMOUNT:
@@ -355,7 +355,7 @@ class PlaidValidator:
                         message="amount must be a number",
                         severity="error"
                     ))
-        
+
         # Validate payment_channel
         if "payment_channel" in transaction:
             payment_channel = transaction["payment_channel"]
@@ -367,7 +367,7 @@ class PlaidValidator:
                     message=f"Invalid payment_channel: {payment_channel}. Valid channels: {', '.join(VALID_PAYMENT_CHANNELS)}",
                     severity="error"
                 ))
-        
+
         # Validate personal_finance_category
         if "personal_finance_category" in transaction:
             category = transaction["personal_finance_category"]
@@ -387,7 +387,7 @@ class PlaidValidator:
                     message="personal_finance_category.primary is required",
                     severity="error"
                 ))
-        
+
         # Validate pending
         if "pending" in transaction:
             pending = transaction["pending"]
@@ -399,22 +399,22 @@ class PlaidValidator:
                     message="pending must be a boolean",
                     severity="error"
                 ))
-        
+
         return errors
 
     def validate_liability(self, liability: Dict[str, Any], liability_index: Optional[int] = None) -> List[ValidationError]:
         """
         Validate liability structure.
-        
+
         Args:
             liability: Liability dictionary
             liability_index: Index of liability in list (for error reporting)
-            
+
         Returns:
             List of validation errors
         """
         errors = []
-        
+
         # Required field: account_id
         if "account_id" not in liability:
             errors.append(ValidationError(
@@ -424,7 +424,7 @@ class PlaidValidator:
                 message="Missing required field: account_id",
                 severity="error"
             ))
-        
+
         # Validate account_id
         if "account_id" in liability:
             account_id = liability["account_id"]
@@ -436,7 +436,7 @@ class PlaidValidator:
                     message="account_id must be a non-empty string",
                     severity="error"
                 ))
-        
+
         # Validate APR fields (for credit cards)
         if "apr_percentage" in liability and liability["apr_percentage"] is not None:
             apr_percentage = liability["apr_percentage"]
@@ -458,7 +458,7 @@ class PlaidValidator:
                     message="apr_percentage must be a number",
                     severity="error"
                 ))
-        
+
         if "apr_type" in liability and liability["apr_type"] is not None:
             apr_type = liability["apr_type"]
             if apr_type not in VALID_APR_TYPES:
@@ -469,7 +469,7 @@ class PlaidValidator:
                     message=f"Invalid apr_type: {apr_type}. Valid types: {', '.join(VALID_APR_TYPES)}",
                     severity="error"
                 ))
-        
+
         # Validate date fields
         date_fields = ["last_payment_date", "next_payment_due_date"]
         for field in date_fields:
@@ -477,7 +477,7 @@ class PlaidValidator:
                 date_value = liability[field]
                 try:
                     parsed_date = datetime.strptime(str(date_value), "%Y-%m-%d").date()
-                    
+
                     # Range validation
                     if self.enable_range_validation:
                         if parsed_date < self.MIN_DATE:
@@ -504,7 +504,7 @@ class PlaidValidator:
                         message=f"{field} must be in format YYYY-MM-DD",
                         severity="error"
                     ))
-        
+
         # Validate is_overdue
         if "is_overdue" in liability and liability["is_overdue"] is not None:
             is_overdue = liability["is_overdue"]
@@ -516,7 +516,7 @@ class PlaidValidator:
                     message="is_overdue must be a boolean",
                     severity="error"
                 ))
-        
+
         # Validate interest_rate (for mortgages/student loans)
         if "interest_rate" in liability and liability["interest_rate"] is not None:
             interest_rate = liability["interest_rate"]
@@ -538,23 +538,23 @@ class PlaidValidator:
                     message="interest_rate must be a number",
                     severity="error"
                 ))
-        
+
         return errors
 
     def _detect_duplicate_accounts(self, accounts: List[Dict[str, Any]]) -> List[ValidationError]:
         """
         Detect duplicate accounts based on account_id.
-        
+
         Args:
             accounts: List of account dictionaries
-            
+
         Returns:
             List of validation errors for duplicates
         """
         errors = []
         account_ids = [acc.get("account_id") for acc in accounts if acc.get("account_id")]
         duplicates = [account_id for account_id, count in Counter(account_ids).items() if count > 1]
-        
+
         for duplicate_id in duplicates:
             # Find indices of duplicate accounts
             duplicate_indices = [i for i, acc in enumerate(accounts) if acc.get("account_id") == duplicate_id]
@@ -566,23 +566,23 @@ class PlaidValidator:
                 severity="error"
             ))
             logger.warning(f"Duplicate account_id detected: {duplicate_id} (found {len(duplicate_indices)} times)")
-        
+
         return errors
 
     def _detect_duplicate_transactions(self, transactions: List[Dict[str, Any]]) -> List[ValidationError]:
         """
         Detect duplicate transactions based on transaction_id.
-        
+
         Args:
             transactions: List of transaction dictionaries
-            
+
         Returns:
             List of validation errors for duplicates
         """
         errors = []
         transaction_ids = [txn.get("transaction_id") for txn in transactions if txn.get("transaction_id")]
         duplicates = [txn_id for txn_id, count in Counter(transaction_ids).items() if count > 1]
-        
+
         for duplicate_id in duplicates:
             # Find indices of duplicate transactions
             duplicate_indices = [i for i, txn in enumerate(transactions) if txn.get("transaction_id") == duplicate_id]
@@ -594,23 +594,23 @@ class PlaidValidator:
                 severity="error"
             ))
             logger.warning(f"Duplicate transaction_id detected: {duplicate_id} (found {len(duplicate_indices)} times)")
-        
+
         return errors
 
     def validate(self, data: Dict[str, Any]) -> Tuple[bool, List[ValidationError]]:
         """
         Validate Plaid data structure.
-        
+
         Args:
             data: Parsed Plaid data dictionary
-            
+
         Returns:
             Tuple of (is_valid, list_of_errors)
         """
         errors = []
-        
+
         logger.info("Starting Plaid data validation")
-        
+
         # Validate accounts
         accounts = data.get("accounts", [])
         if not isinstance(accounts, list):
@@ -624,23 +624,23 @@ class PlaidValidator:
             logger.error(f"Invalid accounts structure: {type(accounts)}")
         else:
             logger.info(f"Validating {len(accounts)} accounts")
-            
+
             # Duplicate detection for accounts
             if self.enable_duplicate_detection:
                 duplicate_errors = self._detect_duplicate_accounts(accounts)
                 errors.extend(duplicate_errors)
-            
+
             # Validate each account
             for i, account in enumerate(accounts):
                 account_errors = self.validate_account(account, i)
                 errors.extend(account_errors)
-                
+
                 # Log account validation errors
                 if account_errors:
                     error_count = sum(1 for e in account_errors if e.severity == "error")
                     warning_count = sum(1 for e in account_errors if e.severity == "warning")
                     logger.warning(f"Account {i} ({account.get('account_id', 'unknown')}): {error_count} errors, {warning_count} warnings")
-        
+
         # Validate transactions
         transactions = data.get("transactions", [])
         if not isinstance(transactions, list):
@@ -654,17 +654,17 @@ class PlaidValidator:
             logger.error(f"Invalid transactions structure: {type(transactions)}")
         else:
             logger.info(f"Validating {len(transactions)} transactions")
-            
+
             # Duplicate detection for transactions
             if self.enable_duplicate_detection:
                 duplicate_errors = self._detect_duplicate_transactions(transactions)
                 errors.extend(duplicate_errors)
-            
+
             # Validate each transaction
             for i, transaction in enumerate(transactions):
                 transaction_errors = self.validate_transaction(transaction, i)
                 errors.extend(transaction_errors)
-                
+
                 # Cross-reference: validate transaction account_id exists in accounts
                 if "account_id" in transaction:
                     account_id = transaction["account_id"]
@@ -678,13 +678,13 @@ class PlaidValidator:
                             severity="error"
                         ))
                         logger.warning(f"Transaction {i} references non-existent account_id: {account_id}")
-                
+
                 # Log transaction validation errors (only if significant)
                 if transaction_errors and len(transaction_errors) > 2:
                     error_count = sum(1 for e in transaction_errors if e.severity == "error")
                     warning_count = sum(1 for e in transaction_errors if e.severity == "warning")
                     logger.warning(f"Transaction {i} ({transaction.get('transaction_id', 'unknown')}): {error_count} errors, {warning_count} warnings")
-        
+
         # Validate liabilities (optional)
         liabilities = data.get("liabilities", [])
         if liabilities:
@@ -699,12 +699,12 @@ class PlaidValidator:
                 logger.error(f"Invalid liabilities structure: {type(liabilities)}")
             else:
                 logger.info(f"Validating {len(liabilities)} liabilities")
-                
+
                 # Validate each liability
                 for i, liability in enumerate(liabilities):
                     liability_errors = self.validate_liability(liability, i)
                     errors.extend(liability_errors)
-                    
+
                     # Cross-reference: validate liability account_id exists in accounts
                     if "account_id" in liability:
                         account_id = liability["account_id"]
@@ -718,19 +718,19 @@ class PlaidValidator:
                                 severity="error"
                             ))
                             logger.warning(f"Liability {i} references non-existent account_id: {account_id}")
-        
+
         # Separate errors and warnings
         error_count = sum(1 for e in errors if e.severity == "error")
         warning_count = sum(1 for e in errors if e.severity == "warning")
-        
+
         is_valid = error_count == 0
-        
+
         # Log validation summary
         logger.info(f"Validation complete: {error_count} errors, {warning_count} warnings. Valid: {is_valid}")
         if error_count > 0:
             logger.error(f"Validation failed with {error_count} errors")
         if warning_count > 0:
             logger.warning(f"Validation completed with {warning_count} warnings")
-        
+
         return is_valid, errors
 

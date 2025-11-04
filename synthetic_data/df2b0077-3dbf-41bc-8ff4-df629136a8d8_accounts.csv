@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-e2446064-7a7a-40c1-af85-d635c4cb1d07,Randall and Sons Checking,depository,checking,individual,"{'available': 2754.701413779229, 'current': 2806.8505303710685, 'limit': None}",USD,9221
-acct-7a200d77-e775-4209-88db-a1c750cc4084,"Grant, Gallagher and Mcdowell Savings",depository,savings,individual,"{'available': 12247.667835188846, 'current': 13577.626698737255, 'limit': None}",USD,1037
-acct-39730aa2-2b9d-44c8-a1e5-1a2ed3534299,Moses Ltd Credit Card,credit,credit card,individual,"{'available': 724.3535575513545, 'current': 805.3308449078675, 'limit': 9839.735872284848}",USD,4294

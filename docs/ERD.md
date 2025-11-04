@@ -1,7 +1,7 @@
 # SpendSense Database ERD (Entity Relationship Diagram)
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
+**Version**: 1.0
+**Date**: 2025-11-04
 **Database**: PostgreSQL 16.10
 
 ---
@@ -133,8 +133,8 @@ erDiagram
 ## Table Details
 
 ### USERS
-**Primary Key**: `user_id` (UUID)  
-**Unique Constraints**: 
+**Primary Key**: `user_id` (UUID)
+**Unique Constraints**:
 - `email` (nullable)
 - `phone_number` (nullable)
 
@@ -150,7 +150,7 @@ erDiagram
 ---
 
 ### SESSIONS
-**Primary Key**: `session_id` (UUID)  
+**Primary Key**: `session_id` (UUID)
 **Foreign Keys**: `user_id` → `users.user_id`
 
 **Indexes**:
@@ -166,7 +166,7 @@ erDiagram
 ---
 
 ### DATA_UPLOADS
-**Primary Key**: `upload_id` (UUID)  
+**Primary Key**: `upload_id` (UUID)
 **Foreign Keys**: `user_id` → `users.user_id`
 
 **Indexes**:
@@ -183,7 +183,7 @@ erDiagram
 ---
 
 ### RECOMMENDATIONS
-**Primary Key**: `recommendation_id` (UUID)  
+**Primary Key**: `recommendation_id` (UUID)
 **Foreign Keys**:
 - `user_id` → `users.user_id`
 - `approved_by` → `users.user_id` (nullable)
@@ -205,7 +205,7 @@ erDiagram
 ---
 
 ### USER_PROFILES
-**Primary Key**: `profile_id` (UUID)  
+**Primary Key**: `profile_id` (UUID)
 **Foreign Keys**: `user_id` → `users.user_id` (UNIQUE)
 
 **Indexes**:
@@ -229,7 +229,7 @@ erDiagram
 ---
 
 ### PERSONA_HISTORY
-**Primary Key**: `history_id` (UUID)  
+**Primary Key**: `history_id` (UUID)
 **Foreign Keys**: `user_id` → `users.user_id`
 
 **Indexes**:
@@ -382,6 +382,6 @@ This ensures that if an operator/admin is deleted, their approval/rejection reco
 
 ---
 
-**Document Status**: Draft  
+**Document Status**: Draft
 **Last Updated**: 2025-11-04
 

@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-612d399a-b537-4f39-822a-f8aac4a066b4,Wall and Sons Checking,depository,checking,individual,"{'available': 1694.061904317173, 'current': 1804.2399430807127, 'limit': None}",USD,5169
-acct-80d86751-a238-4ee3-983e-34b44a051301,"English, Torres and Ruiz Credit Card",credit,credit card,individual,"{'available': 2269.212319181739, 'current': 2297.9989758930387, 'limit': 8260.185193169273}",USD,6140

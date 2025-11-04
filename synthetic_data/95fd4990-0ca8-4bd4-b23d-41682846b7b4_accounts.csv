@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-74afd416-9df1-4e66-bd87-22a0283456ca,"Brandt, Taylor and Ruiz Checking",depository,checking,individual,"{'available': 2536.908321053944, 'current': 2619.304948763184, 'limit': None}",USD,3283
-acct-102c1a02-015e-4b47-90de-62fbf2000d82,"Yates, Nelson and Burns Credit Card",credit,credit card,individual,"{'available': 1189.988723135872, 'current': 1273.7520421694512, 'limit': 6071.79903094868}",USD,7502

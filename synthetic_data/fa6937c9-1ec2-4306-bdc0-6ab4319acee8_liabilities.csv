@@ -1,2 +1,0 @@
-account_id,aprs,is_overdue,last_payment_amount,last_payment_date,last_statement_balance,minimum_payment_amount,next_payment_due_date
-acct-5c420a1a-94b9-497e-9bb1-a7fa366bf25c,"[{'apr_percentage': 25.44786434840029, 'apr_type': 'purchase_apr'}]",False,79.8324763533531,2025-10-15,637.297201383413,29.271928096351857,2025-11-13

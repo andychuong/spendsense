@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-ed5630eb-037e-4eac-9964-457894e31c4f,"Mcdaniel, Collins and Lambert Checking",depository,checking,individual,"{'available': 1302.0118893207778, 'current': 1524.6591005817113, 'limit': None}",USD,2937
-acct-7841a4ee-55e6-4a9a-ad21-b22c111563b7,Middleton PLC Savings,depository,savings,individual,"{'available': 4312.321976344857, 'current': 4325.589770680446, 'limit': None}",USD,7555
-acct-9258737c-35ca-4d33-af5f-992cef2c328d,Bender-Baker Credit Card,credit,credit card,individual,"{'available': 1767.7675763022055, 'current': 1933.222788057727, 'limit': 4621.111802553394}",USD,8513

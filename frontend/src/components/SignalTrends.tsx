@@ -30,21 +30,25 @@ const SignalTrends = ({ signals30d, signals180d }: SignalTrendsProps) => {
 
   const formatValue = (value?: number, type: 'currency' | 'percentage' | 'number' = 'number') => {
     if (value === undefined || value === null) return 'N/A'
-    
+
+    // Ensure value is a number
+    const numValue = typeof value === 'number' ? value : Number(value)
+    if (isNaN(numValue)) return 'N/A'
+
     if (type === 'currency') {
       return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0,
-      }).format(value)
+      }).format(numValue)
     }
-    
+
     if (type === 'percentage') {
-      return `${value.toFixed(1)}%`
+      return `${numValue.toFixed(1)}%`
     }
-    
-    return value.toString()
+
+    return numValue.toString()
   }
 
   const renderTrendBar = (
@@ -116,20 +120,20 @@ const SignalTrends = ({ signals30d, signals180d }: SignalTrendsProps) => {
           <div className="space-y-4">
             {renderTrendBar(
               'Monthly Recurring Spend',
-              signals30d.subscriptions.monthly_recurring_spend,
-              signals180d?.subscriptions?.monthly_recurring_spend,
+              signals30d.subscriptions.total_recurring_spend,
+              signals180d?.subscriptions?.total_recurring_spend,
               'currency',
-              signals180d?.subscriptions?.monthly_recurring_spend
+              signals180d?.subscriptions?.total_recurring_spend
                 ? Math.max(
-                    signals30d.subscriptions.monthly_recurring_spend || 0,
-                    signals180d.subscriptions.monthly_recurring_spend || 0
+                    signals30d.subscriptions.total_recurring_spend || 0,
+                    signals180d.subscriptions.total_recurring_spend || 0
                   ) * 1.2
                 : undefined
             )}
             {renderTrendBar(
               'Subscription Share',
-              signals30d.subscriptions.subscription_share,
-              signals180d?.subscriptions?.subscription_share,
+              signals30d.subscriptions.subscription_share_percent,
+              signals180d?.subscriptions?.subscription_share_percent,
               'percentage',
               100
             )}
@@ -144,20 +148,20 @@ const SignalTrends = ({ signals30d, signals180d }: SignalTrendsProps) => {
           <div className="space-y-4">
             {renderTrendBar(
               'Net Inflow',
-              signals30d.savings.net_inflow,
-              signals180d?.savings?.net_inflow,
+              signals30d.savings.net_inflow?.net_inflow,
+              signals180d?.savings?.net_inflow?.net_inflow,
               'currency',
-              signals180d?.savings?.net_inflow
+              signals180d?.savings?.net_inflow?.net_inflow
                 ? Math.max(
-                    signals30d.savings.net_inflow || 0,
-                    signals180d.savings.net_inflow || 0
+                    signals30d.savings.net_inflow?.net_inflow || 0,
+                    signals180d.savings.net_inflow?.net_inflow || 0
                   ) * 1.2
                 : undefined
             )}
             {renderTrendBar(
               'Growth Rate',
-              signals30d.savings.growth_rate,
-              signals180d?.savings?.growth_rate,
+              signals30d.savings.growth_rate?.growth_rate_percent,
+              signals180d?.savings?.growth_rate?.growth_rate_percent,
               'percentage',
               50
             )}
@@ -172,20 +176,20 @@ const SignalTrends = ({ signals30d, signals180d }: SignalTrendsProps) => {
           <div className="space-y-4">
             {renderTrendBar(
               'Utilization',
-              signals30d.credit.utilization,
-              signals180d?.credit?.utilization,
+              signals30d.credit.total_utilization,
+              signals180d?.credit?.total_utilization,
               'percentage',
               100
             )}
             {renderTrendBar(
-              'Interest Charges',
-              signals30d.credit.interest_charges,
-              signals180d?.credit?.interest_charges,
-              'currency',
-              signals180d?.credit?.interest_charges
+              'Cards with Interest',
+              signals30d.credit.cards_with_interest?.length,
+              signals180d?.credit?.cards_with_interest?.length,
+              'number',
+              signals180d?.credit?.cards_with_interest?.length
                 ? Math.max(
-                    signals30d.credit.interest_charges || 0,
-                    signals180d.credit.interest_charges || 0
+                    signals30d.credit.cards_with_interest?.length || 0,
+                    signals180d.credit.cards_with_interest?.length || 0
                   ) * 1.2
                 : undefined
             )}
@@ -200,8 +204,8 @@ const SignalTrends = ({ signals30d, signals180d }: SignalTrendsProps) => {
           <div className="space-y-4">
             {renderTrendBar(
               'Cash Flow Buffer',
-              signals30d.income.cash_flow_buffer,
-              signals180d?.income?.cash_flow_buffer,
+              signals30d.income.cash_flow_buffer?.cash_flow_buffer_months,
+              signals180d?.income?.cash_flow_buffer?.cash_flow_buffer_months,
               'number',
               12
             )}

@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-2582cb76-80bf-4071-9295-7fe9d2f7df64,Mann and Sons Checking,depository,checking,individual,"{'available': 1177.4343492719458, 'current': 1376.6398713201072, 'limit': None}",USD,5109
-acct-b17942e7-7fda-416b-b7ea-87dfacb22e4f,"Nguyen, Hart and Griffin Savings",depository,savings,individual,"{'available': 3447.5064982213194, 'current': 4054.643730426147, 'limit': None}",USD,9328
-acct-db98e611-e519-48c7-9029-45112a49a8e8,Potter Ltd Credit Card,credit,credit card,individual,"{'available': 3610.1955885232765, 'current': 3956.3377007129825, 'limit': 5268.262274473866}",USD,9009
-acct-6d1d8cbb-9471-4c51-9e39-7d777b1b35d1,Baker LLC Student,loan,student,individual,"{'available': 11482.643591230291, 'current': 13127.780543226205, 'limit': None}",USD,2363

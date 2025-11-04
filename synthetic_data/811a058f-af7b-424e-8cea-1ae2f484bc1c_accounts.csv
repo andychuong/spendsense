@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-fc0c771f-59cc-4580-9717-010d666b132a,Gibson-Marquez Checking,depository,checking,individual,"{'available': 3581.091884453017, 'current': 3999.9503198817392, 'limit': None}",USD,7737
-acct-d1650afd-30e5-4513-aa5c-b5280987e7ec,Elliott-Peterson Credit Card,credit,credit card,individual,"{'available': 1363.8000662051993, 'current': 1629.3749485230846, 'limit': 6536.782145613406}",USD,5985

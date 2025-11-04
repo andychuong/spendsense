@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-f036941a-fe22-4b33-89d4-d674f36843fd,"Joseph, Marsh and Gray Checking",depository,checking,individual,"{'available': 3118.862989224843, 'current': 3512.190545652553, 'limit': None}",USD,5607
-acct-43a16f31-7b16-47a0-8424-aab618835254,Taylor Group Credit Card,credit,credit card,individual,"{'available': 2077.8937824960444, 'current': 2162.240489299935, 'limit': 6377.213397597849}",USD,6078

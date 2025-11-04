@@ -107,7 +107,7 @@ resource "aws_elasticache_replication_group" "main" {
   # Encryption (transit encryption requires auth token)
   at_rest_encryption_enabled = var.redis_at_rest_encryption_enabled
   transit_encryption_enabled = var.redis_transit_encryption_enabled
-  
+
   # Auth token (required when transit encryption is enabled)
   auth_token = var.redis_transit_encryption_enabled ? (var.create_redis_password && var.redis_auth_token_enabled ? random_password.redis_password[0].result : (var.redis_auth_token_enabled ? var.redis_auth_token : null)) : null
 

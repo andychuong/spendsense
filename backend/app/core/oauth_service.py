@@ -21,9 +21,9 @@ OAUTH_PROVIDERS = ["google", "github", "facebook", "apple"]
 def generate_oauth_state() -> str:
     """
     Generate a cryptographically secure random state for OAuth flow.
-    
+
     This state is used to prevent CSRF attacks.
-    
+
     Returns:
         Random state string (32 characters)
     """
@@ -33,12 +33,12 @@ def generate_oauth_state() -> str:
 def store_oauth_state(state: str, provider: str, redirect_uri: Optional[str] = None) -> bool:
     """
     Store OAuth state in Redis with 10-minute TTL.
-    
+
     Args:
         state: OAuth state string
         provider: OAuth provider name (google, github, facebook, apple)
         redirect_uri: Optional redirect URI to store with state
-        
+
     Returns:
         True if stored successfully, False otherwise
     """
@@ -46,7 +46,7 @@ def store_oauth_state(state: str, provider: str, redirect_uri: Optional[str] = N
     if not redis_client:
         # Redis not available, but we can still proceed (development mode)
         return False
-    
+
     try:
         key = f"oauth:state:{state}"
         value = {
@@ -64,10 +64,10 @@ def store_oauth_state(state: str, provider: str, redirect_uri: Optional[str] = N
 def verify_oauth_state(state: str) -> Optional[Dict[str, Any]]:
     """
     Verify and retrieve OAuth state from Redis.
-    
+
     Args:
         state: OAuth state string to verify
-        
+
     Returns:
         Dictionary with provider and redirect_uri if valid, None otherwise
     """
@@ -75,16 +75,16 @@ def verify_oauth_state(state: str) -> Optional[Dict[str, Any]]:
     if not redis_client:
         # Redis not available, but we can still proceed (development mode)
         return None
-    
+
     try:
         key = f"oauth:state:{state}"
         value = redis_client.get(key)
         if not value:
             return None
-        
+
         # Delete state after use (one-time use)
         redis_client.delete(key)
-        
+
         return json.loads(value)
     except Exception:
         return None
@@ -93,15 +93,15 @@ def verify_oauth_state(state: str) -> Optional[Dict[str, Any]]:
 def get_oauth_config(provider: str) -> Optional[Dict[str, Any]]:
     """
     Get OAuth configuration for a provider.
-    
+
     Args:
         provider: OAuth provider name (google, github, facebook, apple)
-        
+
     Returns:
         Dictionary with client_id, client_secret, and endpoints, or None if not configured
     """
     provider_lower = provider.lower()
-    
+
     if provider_lower == "google":
         if not settings.oauth_google_client_id or not settings.oauth_google_client_secret:
             return None
@@ -113,7 +113,7 @@ def get_oauth_config(provider: str) -> Optional[Dict[str, Any]]:
             "userinfo_url": "https://www.googleapis.com/oauth2/v2/userinfo",
             "scopes": ["email", "profile", "openid"],
         }
-    
+
     elif provider_lower == "github":
         if not settings.oauth_github_client_id or not settings.oauth_github_client_secret:
             return None
@@ -125,7 +125,7 @@ def get_oauth_config(provider: str) -> Optional[Dict[str, Any]]:
             "userinfo_url": "https://api.github.com/user",
             "scopes": ["user:email"],
         }
-    
+
     elif provider_lower == "facebook":
         if not settings.oauth_facebook_client_id or not settings.oauth_facebook_client_secret:
             return None
@@ -137,7 +137,7 @@ def get_oauth_config(provider: str) -> Optional[Dict[str, Any]]:
             "userinfo_url": "https://graph.facebook.com/v18.0/me",
             "scopes": ["email", "public_profile"],
         }
-    
+
     elif provider_lower == "apple":
         if not settings.oauth_apple_client_id or not settings.oauth_apple_key_id or not settings.oauth_apple_team_id or not settings.oauth_apple_private_key:
             return None
@@ -150,34 +150,34 @@ def get_oauth_config(provider: str) -> Optional[Dict[str, Any]]:
             "token_url": "https://appleid.apple.com/auth/token",
             "scopes": ["email", "name"],
         }
-    
+
     return None
 
 
 def get_oauth_authorize_url(provider: str, redirect_uri: str, state: Optional[str] = None) -> Optional[str]:
     """
     Generate OAuth authorization URL for a provider.
-    
+
     Args:
         provider: OAuth provider name (google, github, facebook, apple)
         redirect_uri: Callback URL after OAuth flow
         state: Optional OAuth state (will be generated if not provided)
-        
+
     Returns:
         Authorization URL or None if provider not configured
     """
     config = get_oauth_config(provider)
     if not config:
         return None
-    
+
     if not state:
         state = generate_oauth_state()
-    
+
     # Store state in Redis
     store_oauth_state(state, provider, redirect_uri)
-    
+
     provider_lower = provider.lower()
-    
+
     if provider_lower == "google":
         params = {
             "client_id": config["client_id"],
@@ -189,7 +189,7 @@ def get_oauth_authorize_url(provider: str, redirect_uri: str, state: Optional[st
             "prompt": "consent",
         }
         return f"{config['authorize_url']}?{urlencode(params)}"
-    
+
     elif provider_lower == "github":
         params = {
             "client_id": config["client_id"],
@@ -198,7 +198,7 @@ def get_oauth_authorize_url(provider: str, redirect_uri: str, state: Optional[st
             "state": state,
         }
         return f"{config['authorize_url']}?{urlencode(params)}"
-    
+
     elif provider_lower == "facebook":
         params = {
             "client_id": config["client_id"],
@@ -208,7 +208,7 @@ def get_oauth_authorize_url(provider: str, redirect_uri: str, state: Optional[st
             "response_type": "code",
         }
         return f"{config['authorize_url']}?{urlencode(params)}"
-    
+
     elif provider_lower == "apple":
         params = {
             "client_id": config["client_id"],
@@ -219,7 +219,7 @@ def get_oauth_authorize_url(provider: str, redirect_uri: str, state: Optional[st
             "state": state,
         }
         return f"{config['authorize_url']}?{urlencode(params)}"
-    
+
     return None
 
 
@@ -228,21 +228,21 @@ async def exchange_oauth_code(
 ) -> Optional[OAuth2Token]:
     """
     Exchange OAuth authorization code for access token.
-    
+
     Args:
         provider: OAuth provider name (google, github, facebook, apple)
         code: Authorization code from OAuth callback
         redirect_uri: Callback URL used in authorization
-        
+
     Returns:
         OAuth2Token object with access token, or None if exchange failed
     """
     config = get_oauth_config(provider)
     if not config:
         return None
-    
+
     provider_lower = provider.lower()
-    
+
     try:
         if provider_lower == "apple":
             # Apple Sign In requires special handling with JWT client secret
@@ -261,7 +261,7 @@ async def exchange_oauth_code(
                     token_data = response.json()
                     return OAuth2Token(token_data)
                 return None
-        
+
         # For other providers, use Authlib OAuth2Client
         async with AsyncOAuth2Client(
             client_id=config["client_id"],
@@ -280,24 +280,24 @@ async def exchange_oauth_code(
 async def get_oauth_user_info(provider: str, token: OAuth2Token) -> Optional[Dict[str, Any]]:
     """
     Retrieve user information from OAuth provider.
-    
+
     Args:
         provider: OAuth provider name (google, github, facebook, apple)
         token: OAuth2Token with access token
-        
+
     Returns:
         Dictionary with user information (email, name, provider_id), or None if failed
     """
     config = get_oauth_config(provider)
     if not config:
         return None
-    
+
     provider_lower = provider.lower()
-    
+
     try:
         async with httpx.AsyncClient() as client:
             headers = {"Authorization": f"Bearer {token['access_token']}"}
-            
+
             if provider_lower == "google":
                 response = await client.get(config["userinfo_url"], headers=headers)
                 if response.status_code == 200:
@@ -308,7 +308,7 @@ async def get_oauth_user_info(provider: str, token: OAuth2Token) -> Optional[Dic
                         "provider_id": data.get("id"),
                         "picture": data.get("picture"),
                     }
-            
+
             elif provider_lower == "github":
                 response = await client.get(config["userinfo_url"], headers=headers)
                 if response.status_code == 200:
@@ -327,14 +327,14 @@ async def get_oauth_user_info(provider: str, token: OAuth2Token) -> Optional[Dic
                                 (e["email"] for e in emails if e.get("primary")), None
                             )
                             email = primary_email or (emails[0]["email"] if emails else None)
-                    
+
                     return {
                         "email": email,
                         "name": data.get("name") or data.get("login"),
                         "provider_id": str(data.get("id")),
                         "picture": data.get("avatar_url"),
                     }
-            
+
             elif provider_lower == "facebook":
                 # Facebook requires fields parameter
                 params = {"fields": "id,name,email,picture"}
@@ -348,14 +348,14 @@ async def get_oauth_user_info(provider: str, token: OAuth2Token) -> Optional[Dic
                     picture_url = None
                     if data.get("picture") and data["picture"].get("data"):
                         picture_url = data["picture"]["data"].get("url")
-                    
+
                     return {
                         "email": data.get("email"),
                         "name": data.get("name"),
                         "provider_id": data.get("id"),
                         "picture": picture_url,
                     }
-            
+
             elif provider_lower == "apple":
                 # Apple Sign In returns user info in ID token
                 # For now, we'll decode the ID token if available
@@ -375,7 +375,7 @@ async def get_oauth_user_info(provider: str, token: OAuth2Token) -> Optional[Dic
                             payload += "=" * (4 - len(payload) % 4)
                             decoded = base64.urlsafe_b64decode(payload)
                             data = json.loads(decoded)
-                            
+
                             return {
                                 "email": data.get("email"),
                                 "name": None,  # Apple doesn't return name in ID token
@@ -384,9 +384,9 @@ async def get_oauth_user_info(provider: str, token: OAuth2Token) -> Optional[Dic
                             }
                     except Exception:
                         pass
-                
+
                 return None
-            
+
             return None
     except Exception:
         return None

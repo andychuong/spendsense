@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-e7e57239-17c7-423e-bfed-149fc41f7e72,"Norris, Yates and Kelly Checking",depository,checking,individual,"{'available': 2614.6279002122005, 'current': 2666.8474771332126, 'limit': None}",USD,3815
-acct-5083139c-977c-4fc2-aaaf-ed98206b3c74,"Stafford, Hansen and Hurst Savings",depository,savings,individual,"{'available': 27770.692829775926, 'current': 33468.84321372467, 'limit': None}",USD,4774
-acct-900b8606-6905-4f84-8a44-7a532590fc8b,"Duncan, Estrada and May Credit Card",credit,credit card,individual,"{'available': 262.1450499647941, 'current': 287.3063700413197, 'limit': 11484.828729525056}",USD,4052

@@ -15,19 +15,19 @@ _redis_client: Optional[Redis] = None
 def get_redis_client() -> Optional[Redis]:
     """
     Get Redis client instance.
-    
+
     Returns:
         Redis client instance or None if Redis is not available
     """
     global _redis_client
-    
+
     if _redis_client is not None:
         return _redis_client
-    
+
     try:
         # Parse Redis URL
         redis_url = settings.redis_url
-        
+
         # Create SSL context if SSL is enabled
         ssl_context = None
         if settings.redis_ssl:
@@ -43,7 +43,7 @@ def get_redis_client() -> Optional[Redis]:
                 ssl_context.verify_mode = cert_reqs_map.get(
                     settings.redis_ssl_cert_reqs.lower(), ssl.CERT_REQUIRED
                 )
-        
+
         # Create Redis client
         _redis_client = redis.from_url(
             redis_url,
@@ -52,10 +52,10 @@ def get_redis_client() -> Optional[Redis]:
             socket_connect_timeout=5,
             socket_timeout=5,
         )
-        
+
         # Test connection
         _redis_client.ping()
-        
+
         return _redis_client
     except Exception as e:
         # Redis not available, log but don't fail
@@ -68,7 +68,7 @@ def close_redis_client() -> None:
     Close Redis client connection.
     """
     global _redis_client
-    
+
     if _redis_client is not None:
         try:
             _redis_client.close()

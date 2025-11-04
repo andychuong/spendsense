@@ -36,24 +36,24 @@ def store_session(
 ) -> bool:
     """
     Store session in Redis.
-    
+
     Key: session:{session_id}
     TTL: 30 days
     Value: JSON with user_id, role, last_used_at
-    
+
     Args:
         session_id: Session ID
         user_id: User ID
         role: User role
         last_used_at: Last used timestamp (defaults to now)
-        
+
     Returns:
         True if stored successfully, False otherwise
     """
     redis_client = get_redis_client()
     if not redis_client:
         return False
-    
+
     try:
         key = f"{CACHE_PREFIX_SESSION}:{session_id}"
         value = {
@@ -71,17 +71,17 @@ def store_session(
 def get_session(session_id: uuid.UUID) -> Optional[Dict[str, Any]]:
     """
     Get session from Redis.
-    
+
     Args:
         session_id: Session ID
-        
+
     Returns:
         Session data as dict, or None if not found
     """
     redis_client = get_redis_client()
     if not redis_client:
         return None
-    
+
     try:
         key = f"{CACHE_PREFIX_SESSION}:{session_id}"
         value = redis_client.get(key)
@@ -96,17 +96,17 @@ def get_session(session_id: uuid.UUID) -> Optional[Dict[str, Any]]:
 def update_session_last_used(session_id: uuid.UUID) -> bool:
     """
     Update session last_used_at timestamp.
-    
+
     Args:
         session_id: Session ID
-        
+
     Returns:
         True if updated successfully, False otherwise
     """
     session_data = get_session(session_id)
     if not session_data:
         return False
-    
+
     try:
         user_id = uuid.UUID(session_data["user_id"])
         role = session_data["role"]
@@ -119,17 +119,17 @@ def update_session_last_used(session_id: uuid.UUID) -> bool:
 def delete_session(session_id: uuid.UUID) -> bool:
     """
     Delete session from Redis.
-    
+
     Args:
         session_id: Session ID
-        
+
     Returns:
         True if deleted successfully, False otherwise
     """
     redis_client = get_redis_client()
     if not redis_client:
         return False
-    
+
     try:
         key = f"{CACHE_PREFIX_SESSION}:{session_id}"
         redis_client.delete(key)
@@ -146,7 +146,7 @@ def delete_session(session_id: uuid.UUID) -> bool:
 def cache_profile_response(func: Callable) -> Callable:
     """
     Decorator to cache user profile responses.
-    
+
     Cache key: profile:{user_id}
     TTL: 5 minutes
     """
@@ -158,11 +158,11 @@ def cache_profile_response(func: Callable) -> Callable:
             user_id = user_id.user_id
         elif isinstance(user_id, str):
             user_id = uuid.UUID(user_id)
-        
+
         if not user_id:
             # If we can't get user_id, call function without caching
             return await func(*args, **kwargs)
-        
+
         # Try to get from cache
         cache_key = f"{CACHE_PREFIX_PROFILE}:{user_id}"
         redis_client = get_redis_client()
@@ -173,10 +173,10 @@ def cache_profile_response(func: Callable) -> Callable:
                     return json.loads(cached_value)
             except Exception as e:
                 logger.warning(f"Failed to get cached profile: {str(e)}")
-        
+
         # Call function and cache result
         result = await func(*args, **kwargs)
-        
+
         if redis_client:
             try:
                 # Convert result to JSON-serializable format
@@ -188,20 +188,20 @@ def cache_profile_response(func: Callable) -> Callable:
                     result_dict = result
                 else:
                     result_dict = {"data": str(result)}
-                
+
                 redis_client.setex(cache_key, PROFILE_TTL, json.dumps(result_dict))
             except Exception as e:
                 logger.warning(f"Failed to cache profile response: {str(e)}")
-        
+
         return result
-    
+
     return wrapper
 
 
 def cache_recommendations_response(func: Callable) -> Callable:
     """
     Decorator to cache recommendations responses.
-    
+
     Cache key: recommendations:{user_id}
     TTL: 1 hour
     """
@@ -213,10 +213,10 @@ def cache_recommendations_response(func: Callable) -> Callable:
             user_id = user_id.user_id
         elif isinstance(user_id, str):
             user_id = uuid.UUID(user_id)
-        
+
         if not user_id:
             return await func(*args, **kwargs)
-        
+
         cache_key = f"{CACHE_PREFIX_RECOMMENDATIONS}:{user_id}"
         redis_client = get_redis_client()
         if redis_client:
@@ -226,9 +226,9 @@ def cache_recommendations_response(func: Callable) -> Callable:
                     return json.loads(cached_value)
             except Exception as e:
                 logger.warning(f"Failed to get cached recommendations: {str(e)}")
-        
+
         result = await func(*args, **kwargs)
-        
+
         if redis_client:
             try:
                 if hasattr(result, "model_dump"):
@@ -239,20 +239,20 @@ def cache_recommendations_response(func: Callable) -> Callable:
                     result_dict = result
                 else:
                     result_dict = {"data": str(result)}
-                
+
                 redis_client.setex(cache_key, RECOMMENDATIONS_TTL, json.dumps(result_dict))
             except Exception as e:
                 logger.warning(f"Failed to cache recommendations response: {str(e)}")
-        
+
         return result
-    
+
     return wrapper
 
 
 def cache_signals_response(func: Callable) -> Callable:
     """
     Decorator to cache behavioral signals responses.
-    
+
     Cache key: signals:{user_id}
     TTL: 24 hours
     """
@@ -264,10 +264,10 @@ def cache_signals_response(func: Callable) -> Callable:
             user_id = user_id.user_id
         elif isinstance(user_id, str):
             user_id = uuid.UUID(user_id)
-        
+
         if not user_id:
             return await func(*args, **kwargs)
-        
+
         cache_key = f"{CACHE_PREFIX_SIGNALS}:{user_id}"
         redis_client = get_redis_client()
         if redis_client:
@@ -277,9 +277,9 @@ def cache_signals_response(func: Callable) -> Callable:
                     return json.loads(cached_value)
             except Exception as e:
                 logger.warning(f"Failed to get cached signals: {str(e)}")
-        
+
         result = await func(*args, **kwargs)
-        
+
         if redis_client:
             try:
                 if hasattr(result, "model_dump"):
@@ -290,30 +290,30 @@ def cache_signals_response(func: Callable) -> Callable:
                     result_dict = result
                 else:
                     result_dict = {"data": str(result)}
-                
+
                 redis_client.setex(cache_key, SIGNALS_TTL, json.dumps(result_dict))
             except Exception as e:
                 logger.warning(f"Failed to cache signals response: {str(e)}")
-        
+
         return result
-    
+
     return wrapper
 
 
 def get_cached_profile(user_id: uuid.UUID) -> Optional[Dict[str, Any]]:
     """
     Get cached user profile.
-    
+
     Args:
         user_id: User ID
-        
+
     Returns:
         Cached profile data, or None if not found
     """
     redis_client = get_redis_client()
     if not redis_client:
         return None
-    
+
     try:
         cache_key = f"{CACHE_PREFIX_PROFILE}:{user_id}"
         cached_value = redis_client.get(cache_key)
@@ -328,17 +328,17 @@ def get_cached_profile(user_id: uuid.UUID) -> Optional[Dict[str, Any]]:
 def get_cached_recommendations(user_id: uuid.UUID) -> Optional[Dict[str, Any]]:
     """
     Get cached recommendations.
-    
+
     Args:
         user_id: User ID
-        
+
     Returns:
         Cached recommendations data, or None if not found
     """
     redis_client = get_redis_client()
     if not redis_client:
         return None
-    
+
     try:
         cache_key = f"{CACHE_PREFIX_RECOMMENDATIONS}:{user_id}"
         cached_value = redis_client.get(cache_key)
@@ -353,17 +353,17 @@ def get_cached_recommendations(user_id: uuid.UUID) -> Optional[Dict[str, Any]]:
 def get_cached_signals(user_id: uuid.UUID) -> Optional[Dict[str, Any]]:
     """
     Get cached behavioral signals.
-    
+
     Args:
         user_id: User ID
-        
+
     Returns:
         Cached signals data, or None if not found
     """
     redis_client = get_redis_client()
     if not redis_client:
         return None
-    
+
     try:
         cache_key = f"{CACHE_PREFIX_SIGNALS}:{user_id}"
         cached_value = redis_client.get(cache_key)
@@ -382,17 +382,17 @@ def get_cached_signals(user_id: uuid.UUID) -> Optional[Dict[str, Any]]:
 def invalidate_user_profile_cache(user_id: uuid.UUID) -> bool:
     """
     Invalidate user profile cache.
-    
+
     Args:
         user_id: User ID
-        
+
     Returns:
         True if invalidated successfully, False otherwise
     """
     redis_client = get_redis_client()
     if not redis_client:
         return False
-    
+
     try:
         cache_key = f"{CACHE_PREFIX_PROFILE}:{user_id}"
         redis_client.delete(cache_key)
@@ -406,17 +406,17 @@ def invalidate_user_profile_cache(user_id: uuid.UUID) -> bool:
 def invalidate_recommendations_cache(user_id: uuid.UUID) -> bool:
     """
     Invalidate recommendations cache.
-    
+
     Args:
         user_id: User ID
-        
+
     Returns:
         True if invalidated successfully, False otherwise
     """
     redis_client = get_redis_client()
     if not redis_client:
         return False
-    
+
     try:
         cache_key = f"{CACHE_PREFIX_RECOMMENDATIONS}:{user_id}"
         redis_client.delete(cache_key)
@@ -430,17 +430,17 @@ def invalidate_recommendations_cache(user_id: uuid.UUID) -> bool:
 def invalidate_signals_cache(user_id: uuid.UUID) -> bool:
     """
     Invalidate behavioral signals cache.
-    
+
     Args:
         user_id: User ID
-        
+
     Returns:
         True if invalidated successfully, False otherwise
     """
     redis_client = get_redis_client()
     if not redis_client:
         return False
-    
+
     try:
         cache_key = f"{CACHE_PREFIX_SIGNALS}:{user_id}"
         redis_client.delete(cache_key)
@@ -454,15 +454,15 @@ def invalidate_signals_cache(user_id: uuid.UUID) -> bool:
 def invalidate_all_user_caches(user_id: uuid.UUID) -> bool:
     """
     Invalidate all caches for a user.
-    
+
     This includes:
     - Profile cache
     - Recommendations cache
     - Signals cache
-    
+
     Args:
         user_id: User ID
-        
+
     Returns:
         True if all invalidated successfully, False otherwise
     """
@@ -476,17 +476,17 @@ def invalidate_all_user_caches(user_id: uuid.UUID) -> bool:
 def invalidate_cache_pattern(pattern: str) -> int:
     """
     Invalidate all cache keys matching a pattern.
-    
+
     Args:
         pattern: Redis key pattern (e.g., "profile:*", "recommendations:*")
-        
+
     Returns:
         Number of keys deleted
     """
     redis_client = get_redis_client()
     if not redis_client:
         return 0
-    
+
     try:
         keys = redis_client.keys(pattern)
         if keys:

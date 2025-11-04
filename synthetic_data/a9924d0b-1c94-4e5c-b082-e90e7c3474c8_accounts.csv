@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-e55aee20-3ef6-4d07-bd30-b0491a3c03c0,French-Kelly Checking,depository,checking,individual,"{'available': 447.0818635650128, 'current': 542.4935758686381, 'limit': None}",USD,9791
-acct-4f9e2620-6af9-4663-88b9-7cbe3c8aae30,Palmer-Brown Savings,depository,savings,individual,"{'available': 1745.497638840354, 'current': 1866.9809056417664, 'limit': None}",USD,7020
-acct-599af23a-1a02-4eee-a2b1-aac85fc56bcd,"Lopez, Collins and Johnson Credit Card",credit,credit card,individual,"{'available': 4728.209855426049, 'current': 4788.592512130157, 'limit': 5000.0}",USD,4227

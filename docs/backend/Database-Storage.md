@@ -1,9 +1,9 @@
 # Database & Storage Requirements
 ## SpendSense Platform - Backend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -350,7 +350,7 @@ from sqlalchemy.sql import func
 
 class User(Base):
     __tablename__ = "users"
-    
+
     user_id = Column(UUID(as_uuid=True), primary_key=True)
     email = Column(String, unique=True, nullable=True)
     phone_number = Column(String, unique=True, nullable=True)
@@ -384,8 +384,8 @@ class User(Base):
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Backend Lead, Database Team
 
 

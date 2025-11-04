@@ -21,7 +21,7 @@ accounts:
 # --- Transaction Generation ---
 transactions:
   num_transactions_range: [40, 100]
-  history_days: 180
+  history_days: 365 # Generate 365 days (1 year) of transaction history
   patterns:
     - payment_type: "income"
       amount_range: [5000, 8000]

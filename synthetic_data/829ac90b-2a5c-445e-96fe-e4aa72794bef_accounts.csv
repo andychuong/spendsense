@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-93200553-43aa-4826-9b2a-6da6b36e44a7,Miller-Chase Checking,depository,checking,individual,"{'available': 4219.97439541347, 'current': 4666.199556213947, 'limit': None}",USD,8548
-acct-05cc6ee6-011d-413e-b134-bfa3cad562b8,Murray-Kim Savings,depository,savings,individual,"{'available': 14009.935206821085, 'current': 16724.429252507274, 'limit': None}",USD,3711
-acct-0525735b-4ce5-4acf-a5ef-a72d519a1119,"Griffin, Smith and Pollard Credit Card",credit,credit card,individual,"{'available': 230.1153869560741, 'current': 273.5186073150463, 'limit': 10041.921543005617}",USD,1824

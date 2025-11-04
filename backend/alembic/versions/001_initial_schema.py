@@ -1,7 +1,7 @@
 """Initial database schema
 
 Revision ID: 001_initial
-Revises: 
+Revises:
 Create Date: 2025-01-26
 
 """

@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-72861ea1-f65a-4c75-bb79-54e303a92953,"King, Gonzalez and Moore Checking",depository,checking,individual,"{'available': 1350.646785363748, 'current': 1617.644563953485, 'limit': None}",USD,7713
-acct-5c398e61-9999-44c0-b5a4-3390fb9b120a,Berg-Powers Savings,depository,savings,individual,"{'available': 4990.704611145791, 'current': 5433.045382347023, 'limit': None}",USD,9035
-acct-793226e1-8567-4d11-8c08-3ae0cc425b8d,"Pacheco, Davis and Trevino Credit Card",credit,credit card,individual,"{'available': 1277.0654218035745, 'current': 1421.6742665844897, 'limit': 3051.8348448584516}",USD,8311

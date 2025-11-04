@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-e2b1b2fe-3640-45cf-8c08-b12ac819d974,Wood-Odom Checking,depository,checking,individual,"{'available': 2330.7017459828567, 'current': 2563.457059943365, 'limit': None}",USD,7602
-acct-aa04003b-9fe1-424c-97e1-9962cd0815a2,"Esparza, Hughes and Greer Savings",depository,savings,individual,"{'available': 46137.01511436237, 'current': 46637.96063347565, 'limit': None}",USD,8229
-acct-f275c7a3-35ce-47fd-b2d2-380990ddd7f0,"Phillips, Medina and Hubbard Credit Card",credit,credit card,individual,"{'available': 278.3121633003389, 'current': 337.0013642618121, 'limit': 13235.221394757025}",USD,9204

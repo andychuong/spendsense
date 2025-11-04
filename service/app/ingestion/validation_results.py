@@ -28,7 +28,7 @@ class ValidationResultsStorage:
     def __init__(self, db_session: Session):
         """
         Initialize validation results storage.
-        
+
         Args:
             db_session: SQLAlchemy database session
         """
@@ -42,7 +42,7 @@ class ValidationResultsStorage:
     ) -> None:
         """
         Store validation results in DataUpload table.
-        
+
         Args:
             upload_id: Upload ID
             errors: List of validation errors
@@ -52,11 +52,11 @@ class ValidationResultsStorage:
             upload = self.db.query(DataUploadModel).filter(
                 DataUploadModel.upload_id == upload_id
             ).first()
-            
+
             if upload:
                 # Convert errors to dictionaries
                 errors_dict = [e.to_dict() for e in errors]
-                
+
                 # Store validation results
                 upload.validation_errors = {
                     "is_valid": is_valid,
@@ -65,12 +65,12 @@ class ValidationResultsStorage:
                     "errors": errors_dict,
                     "validated_at": datetime.utcnow().isoformat(),
                 }
-                
+
                 self.db.commit()
                 logger.info(f"Stored validation results for upload {upload_id}: {len(errors)} errors/warnings")
             else:
                 logger.warning(f"Upload {upload_id} not found, cannot store validation results")
-                
+
         except Exception as e:
             logger.error(f"Error storing validation results: {str(e)}")
             self.db.rollback()
@@ -79,10 +79,10 @@ class ValidationResultsStorage:
     def get_validation_results(self, upload_id: uuid.UUID) -> Optional[Dict[str, Any]]:
         """
         Get validation results for an upload.
-        
+
         Args:
             upload_id: Upload ID
-            
+
         Returns:
             Validation results dictionary or None if not found
         """
@@ -90,11 +90,11 @@ class ValidationResultsStorage:
             upload = self.db.query(DataUploadModel).filter(
                 DataUploadModel.upload_id == upload_id
             ).first()
-            
+
             if upload and upload.validation_errors:
                 return upload.validation_errors
             return None
-            
+
         except Exception as e:
             logger.error(f"Error getting validation results: {str(e)}")
             return None
@@ -108,23 +108,23 @@ class ValidationResultsStorage:
     ) -> Dict[str, Any]:
         """
         Generate comprehensive validation report.
-        
+
         Args:
             errors: List of validation errors
             accounts_count: Number of accounts processed
             transactions_count: Number of transactions processed
             liabilities_count: Number of liabilities processed
-            
+
         Returns:
             Validation report dictionary
         """
         error_count = sum(1 for e in errors if e.severity == "error")
         warning_count = sum(1 for e in errors if e.severity == "warning")
-        
+
         # Group errors by type
         errors_by_type = {}
         warnings_by_type = {}
-        
+
         for error in errors:
             error_type = error.type
             if error.severity == "error":
@@ -135,11 +135,11 @@ class ValidationResultsStorage:
                 if error_type not in warnings_by_type:
                     warnings_by_type[error_type] = []
                 warnings_by_type[error_type].append(error.to_dict())
-        
+
         # Group errors by field
         errors_by_field = {}
         warnings_by_field = {}
-        
+
         for error in errors:
             field_key = f"{error.type}.{error.field}"
             if error.severity == "error":
@@ -150,7 +150,7 @@ class ValidationResultsStorage:
                 if field_key not in warnings_by_field:
                     warnings_by_field[field_key] = []
                 warnings_by_field[field_key].append(error.to_dict())
-        
+
         report = {
             "summary": {
                 "is_valid": error_count == 0,
@@ -169,7 +169,7 @@ class ValidationResultsStorage:
             "all_warnings": [e.to_dict() for e in errors if e.severity == "warning"],
             "generated_at": datetime.utcnow().isoformat(),
         }
-        
+
         return report
 
     def log_validation_summary(
@@ -181,7 +181,7 @@ class ValidationResultsStorage:
     ) -> None:
         """
         Log validation summary with structured logging.
-        
+
         Args:
             errors: List of validation errors
             accounts_count: Number of accounts processed
@@ -190,7 +190,7 @@ class ValidationResultsStorage:
         """
         error_count = sum(1 for e in errors if e.severity == "error")
         warning_count = sum(1 for e in errors if e.severity == "warning")
-        
+
         # Log structured summary
         logger.info(
             "Validation summary",
@@ -203,7 +203,7 @@ class ValidationResultsStorage:
                 "is_valid": error_count == 0,
             }
         )
-        
+
         # Log errors by type
         if errors:
             errors_by_type = {}
@@ -212,12 +212,12 @@ class ValidationResultsStorage:
                 if error_type not in errors_by_type:
                     errors_by_type[error_type] = 0
                 errors_by_type[error_type] += 1
-            
+
             logger.info(
                 "Validation errors by type",
                 extra={"errors_by_type": errors_by_type}
             )
-            
+
             # Log top error fields
             errors_by_field = {}
             for error in errors:
@@ -225,7 +225,7 @@ class ValidationResultsStorage:
                 if field_key not in errors_by_field:
                     errors_by_field[field_key] = 0
                 errors_by_field[field_key] += 1
-            
+
             # Sort by count and log top 10
             top_errors = sorted(errors_by_field.items(), key=lambda x: x[1], reverse=True)[:10]
             if top_errors:
@@ -233,4 +233,3 @@ class ValidationResultsStorage:
                     "Top validation error fields",
                     extra={"top_errors": dict(top_errors)}
                 )
-

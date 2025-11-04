@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-8888129e-8208-41e9-9889-a2c04e36bc40,"Espinoza, Snow and King Checking",depository,checking,individual,"{'available': 1908.9978320326666, 'current': 2179.444844037539, 'limit': None}",USD,5922
-acct-072e393e-b0ea-433d-99ca-c825510a7362,Krueger Group Credit Card,credit,credit card,individual,"{'available': 1860.9418275209516, 'current': 1992.986228678528, 'limit': 8129.212777525081}",USD,7214

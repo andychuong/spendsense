@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-ff4c94aa-c1b5-4a2c-ae98-8828197cc97a,Lee-Mclaughlin Checking,depository,checking,individual,"{'available': 198.94485745130677, 'current': 208.285444884661, 'limit': None}",USD,1017
-acct-f829ee4a-db0c-4b10-b90f-1ef91e7a09ff,"Simmons, Ferrell and Kennedy Savings",depository,savings,individual,"{'available': 978.2782243997905, 'current': 1171.103830473698, 'limit': None}",USD,8760
-acct-d055be43-0b84-4604-b842-ab6a905ca4d1,Stephens-Reid Credit Card,credit,credit card,individual,"{'available': 4323.725494589036, 'current': 4559.1566120294, 'limit': 5000.0}",USD,4268

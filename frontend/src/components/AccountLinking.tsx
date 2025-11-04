@@ -83,7 +83,7 @@ const AccountLinking = ({ onUpdate }: AccountLinkingProps) => {
       setError(null)
       const profileData = await userService.getProfile()
       setProfile(profileData)
-      
+
       // Update user in store if needed
       if (user) {
         setUser({
@@ -104,10 +104,10 @@ const AccountLinking = ({ onUpdate }: AccountLinkingProps) => {
     try {
       setLoading(true)
       setError(null)
-      
+
       // Construct redirect_uri that was used in the authorize request
       const redirectUri = `${window.location.origin}/settings?action=link&provider=${provider}`
-      
+
       const response = await authService.linkOAuthProvider({
         code,
         state,
@@ -133,7 +133,7 @@ const AccountLinking = ({ onUpdate }: AccountLinkingProps) => {
       if (onUpdate) onUpdate()
     } catch (err: any) {
       setError(err.response?.data?.detail || err.message || `Failed to link ${provider} account`)
-      
+
       // Clear sessionStorage on error
       sessionStorage.removeItem('oauth_linking')
       sessionStorage.removeItem('oauth_provider')
@@ -147,18 +147,18 @@ const AccountLinking = ({ onUpdate }: AccountLinkingProps) => {
     try {
       setLinkingProvider(provider)
       setError(null)
-      
+
       // Set redirect_uri to settings page for account linking
       const redirectUri = `${window.location.origin}/settings?action=link&provider=${provider}`
-      
+
       // Get OAuth authorize URL with linking redirect_uri
       const response = await authService.getOAuthAuthorizeUrl(provider, redirectUri)
-      
+
       // Store state in sessionStorage for callback
       sessionStorage.setItem('oauth_linking', 'true')
       sessionStorage.setItem('oauth_provider', provider)
       sessionStorage.setItem('oauth_state', response.state)
-      
+
       // Redirect to OAuth provider
       window.location.href = response.authorize_url
     } catch (err: any) {
@@ -193,7 +193,7 @@ const AccountLinking = ({ onUpdate }: AccountLinkingProps) => {
     try {
       setLoading(true)
       setError(null)
-      
+
       const response = await authService.linkPhoneNumber({
         phone: phoneToLink,
         code,

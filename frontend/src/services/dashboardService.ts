@@ -119,7 +119,8 @@ export const dashboardService = {
       recommendations = recommendationsResponse.data.items || []
     } catch (error: any) {
       // Recommendations may not exist yet or endpoint not implemented
-      if (error.response?.status !== 404) {
+      // Suppress CORS and network errors silently - they're expected if backend isn't fully configured
+      if (error.response?.status !== 404 && error.response?.status !== 0) {
         console.warn('Error fetching recommendations:', error.message)
       }
     }

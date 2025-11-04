@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuthStore } from '@/store'
 import { authService } from '@/services/authService'
+import { userService } from '@/services/userService'
+import { storeTokens } from '@/services/api'
 import { validateEmail, validatePhone } from '@/utils/validation'
 import OAuthButtons from '@/components/OAuthButtons'
 import PhoneVerification from '@/components/PhoneVerification'
@@ -45,15 +47,25 @@ const Login = () => {
     setLoading(true)
     try {
       const response = await authService.login(email, password)
-      
+
+      // Store tokens first so apiClient can use them
+      storeTokens({
+        access_token: response.access_token,
+        refresh_token: response.refresh_token,
+        token_type: response.token_type,
+      })
+
+      // Fetch user profile to get complete user data including role
+      const userProfileResponse = await userService.getProfile()
+
       // Store auth tokens and user info
       setAuth(
         {
           id: response.user_id,
           email: response.email,
-          role: 'user',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          role: userProfileResponse.role || 'user',
+          created_at: userProfileResponse.created_at,
+          updated_at: userProfileResponse.updated_at || new Date().toISOString(),
         },
         {
           access_token: response.access_token,
@@ -103,15 +115,25 @@ const Login = () => {
     setLoading(true)
     try {
       const response = await authService.verifyPhoneCode(phone, code)
-      
+
+      // Store tokens first so apiClient can use them
+      storeTokens({
+        access_token: response.access_token,
+        refresh_token: response.refresh_token,
+        token_type: response.token_type,
+      })
+
+      // Fetch user profile to get complete user data including role
+      const userProfileResponse = await userService.getProfile()
+
       // Store auth tokens and user info
       setAuth(
         {
           id: response.user_id,
           phone: response.phone,
-          role: 'user',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          role: userProfileResponse.role || 'user',
+          created_at: userProfileResponse.created_at,
+          updated_at: userProfileResponse.updated_at || new Date().toISOString(),
         },
         {
           access_token: response.access_token,
@@ -161,12 +183,16 @@ const Login = () => {
         </div>
 
         {/* Auth Method Tabs */}
-        <div className="flex gap-2 bg-gray-100 p-1 rounded-lg">
+        <div className="flex gap-2 bg-gray-100 p-1 rounded-lg" role="tablist" aria-label="Authentication method">
           <button
             type="button"
             onClick={() => setAuthMethod('email')}
+            role="tab"
+            aria-selected={authMethod === 'email'}
+            aria-controls="email-tabpanel"
+            id="email-tab"
             className={`
-              flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200
+              flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500
               ${authMethod === 'email'
                 ? 'bg-white text-primary-600 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
@@ -178,8 +204,12 @@ const Login = () => {
           <button
             type="button"
             onClick={() => setAuthMethod('phone')}
+            role="tab"
+            aria-selected={authMethod === 'phone'}
+            aria-controls="phone-tabpanel"
+            id="phone-tab"
             className={`
-              flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200
+              flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500
               ${authMethod === 'phone'
                 ? 'bg-white text-primary-600 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
@@ -192,14 +222,14 @@ const Login = () => {
 
         {/* Error Message */}
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+          <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm" role="alert" aria-live="polite">
             {error}
           </div>
         )}
 
         {/* Email/Password Form */}
         {authMethod === 'email' && (
-          <form onSubmit={handleEmailLogin} className="mt-8 space-y-6">
+          <form onSubmit={handleEmailLogin} className="mt-8 space-y-6" role="tabpanel" id="email-tabpanel" aria-labelledby="email-tab">
             <div className="space-y-4">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -286,7 +316,7 @@ const Login = () => {
 
         {/* Phone Form */}
         {authMethod === 'phone' && (
-          <form onSubmit={handlePhoneRequest} className="mt-8 space-y-6">
+          <form onSubmit={handlePhoneRequest} className="mt-8 space-y-6" role="tabpanel" id="phone-tabpanel" aria-labelledby="phone-tab">
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                 Phone number

@@ -19,17 +19,17 @@ class TestRequestPhoneVerification:
         """Test successfully requesting phone verification."""
         mock_validate.return_value = "+1234567890"
         mock_send_code.return_value = (True, None)
-        
+
         response = client.post(
             "/api/v1/auth/phone/request",
             json={"phone": "+1234567890"}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["message"] == "Verification code sent successfully"
         assert data["phone"] == "+1234567890"
-        
+
         mock_validate.assert_called_once_with("+1234567890")
         mock_send_code.assert_called_once_with("+1234567890")
 
@@ -39,12 +39,12 @@ class TestRequestPhoneVerification:
     ):
         """Test requesting verification with invalid phone number."""
         mock_validate.side_effect = ValueError("Invalid phone number format")
-        
+
         response = client.post(
             "/api/v1/auth/phone/request",
             json={"phone": "invalid"}
         )
-        
+
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "Invalid phone number" in response.json()["detail"]
 
@@ -56,12 +56,12 @@ class TestRequestPhoneVerification:
         """Test requesting verification when SMS sending fails."""
         mock_validate.return_value = "+1234567890"
         mock_send_code.return_value = (False, "Rate limit exceeded")
-        
+
         response = client.post(
             "/api/v1/auth/phone/request",
             json={"phone": "+1234567890"}
         )
-        
+
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "Failed to send" in response.json()["detail"]
 
@@ -71,7 +71,7 @@ class TestRequestPhoneVerification:
             "/api/v1/auth/phone/request",
             json={}
         )
-        
+
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
@@ -86,7 +86,7 @@ class TestVerifyPhoneCode:
         """Test successfully verifying code for new user."""
         mock_validate.return_value = "+1234567890"
         mock_verify.return_value = True
-        
+
         response = client.post(
             "/api/v1/auth/phone/verify",
             json={
@@ -94,7 +94,7 @@ class TestVerifyPhoneCode:
                 "code": "123456"
             }
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["phone"] == "+1234567890"
@@ -102,7 +102,7 @@ class TestVerifyPhoneCode:
         assert "access_token" in data
         assert "refresh_token" in data
         assert data["token_type"] == "bearer"
-        
+
         # Verify user was created
         user = db_session.query(User).filter(
             User.phone_number == "+1234567890"
@@ -123,10 +123,10 @@ class TestVerifyPhoneCode:
         )
         db_session.add(existing_user)
         db_session.commit()
-        
+
         mock_validate.return_value = "+1234567890"
         mock_verify.return_value = True
-        
+
         response = client.post(
             "/api/v1/auth/phone/verify",
             json={
@@ -134,7 +134,7 @@ class TestVerifyPhoneCode:
                 "code": "123456"
             }
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["phone"] == "+1234567890"
@@ -151,7 +151,7 @@ class TestVerifyPhoneCode:
         """Test verifying with invalid code."""
         mock_validate.return_value = "+1234567890"
         mock_verify.return_value = False
-        
+
         response = client.post(
             "/api/v1/auth/phone/verify",
             json={
@@ -159,7 +159,7 @@ class TestVerifyPhoneCode:
                 "code": "wrong_code"
             }
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert "Invalid or expired" in response.json()["detail"]
 
@@ -171,7 +171,7 @@ class TestVerifyPhoneCode:
         """Test verifying when max attempts exceeded."""
         mock_validate.return_value = "+1234567890"
         mock_verify.side_effect = ValueError("Max attempts exceeded")
-        
+
         response = client.post(
             "/api/v1/auth/phone/verify",
             json={
@@ -179,7 +179,7 @@ class TestVerifyPhoneCode:
                 "code": "123456"
             }
         )
-        
+
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "Max attempts exceeded" in response.json()["detail"]
 
@@ -189,7 +189,7 @@ class TestVerifyPhoneCode:
     ):
         """Test verifying with invalid phone number."""
         mock_validate.side_effect = ValueError("Invalid phone number format")
-        
+
         response = client.post(
             "/api/v1/auth/phone/verify",
             json={
@@ -197,7 +197,7 @@ class TestVerifyPhoneCode:
                 "code": "123456"
             }
         )
-        
+
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_verify_phone_code_missing_fields(self, client):
@@ -206,7 +206,7 @@ class TestVerifyPhoneCode:
             "/api/v1/auth/phone/verify",
             json={"phone": "+1234567890"}
         )
-        
+
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     @patch('app.core.sms_service.verify_verification_code')
@@ -223,10 +223,10 @@ class TestVerifyPhoneCode:
         )
         db_session.add(existing_user)
         db_session.commit()
-        
+
         mock_validate.return_value = "+1234567890"
         mock_verify.return_value = True
-        
+
         # Try to verify - should succeed and login existing user
         response = client.post(
             "/api/v1/auth/phone/verify",
@@ -235,7 +235,7 @@ class TestVerifyPhoneCode:
                 "code": "123456"
             }
         )
-        
+
         # Should succeed and login existing user
         assert response.status_code == status.HTTP_200_OK
         data = response.json()

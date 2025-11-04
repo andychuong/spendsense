@@ -2,12 +2,14 @@ import apiClient from './api'
 
 interface UserProfileResponse {
   user_id: string
+  name?: string
   email?: string
   phone_number?: string
   oauth_providers?: Record<string, string>
   role: string
   consent_status: boolean
   consent_version: string
+  monthly_income?: number
   created_at: string
   updated_at?: string
 }
@@ -20,7 +22,7 @@ export const userService = {
   },
 
   // Update user profile
-  async updateProfile(data: { email?: string; phone_number?: string }): Promise<UserProfileResponse> {
+  async updateProfile(data: { email?: string; phone_number?: string; monthly_income?: number }): Promise<UserProfileResponse> {
     const response = await apiClient.put<UserProfileResponse>('/api/v1/users/me', data)
     return response.data
   },

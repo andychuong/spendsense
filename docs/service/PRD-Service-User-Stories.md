@@ -1,11 +1,11 @@
 # Product Requirements Document (PRD)
 ## SpendSense Platform - Service Layer: User Stories
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
-**Product Owner**: TBD  
-**Technical Lead**: TBD  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
+**Product Owner**: TBD
+**Technical Lead**: TBD
 
 ---
 
@@ -301,8 +301,8 @@
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Service Layer Lead, Data Science Team
 
 

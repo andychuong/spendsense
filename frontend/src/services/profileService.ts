@@ -51,6 +51,29 @@ interface BehavioralProfile {
       variable_income?: boolean
     }
   }
+  signals_365d?: {
+    subscriptions?: {
+      recurring_merchants?: number
+      monthly_recurring_spend?: number
+      subscription_share?: number
+    }
+    savings?: {
+      net_inflow?: number
+      growth_rate?: number
+      emergency_fund_coverage?: number
+    }
+    credit?: {
+      utilization?: number
+      high_utilization_cards?: number
+      interest_charges?: number
+      overdue_accounts?: number
+    }
+    income?: {
+      payment_frequency?: number
+      cash_flow_buffer?: number
+      variable_income?: boolean
+    }
+  }
   updated_at: string
 }
 
@@ -71,12 +94,28 @@ export interface ProfileData {
 export const profileService = {
   // Get user profile data
   async getProfile(userId?: string): Promise<ProfileData> {
-    // If no userId provided, use 'me' to get current user
-    const endpoint = userId ? `/api/v1/users/${userId}/profile` : '/api/v1/users/me/profile'
-    
+    // First get current user to get user_id
+    let currentUserId: string | undefined = userId
+
+    if (!currentUserId) {
+      try {
+        const userResponse = await apiClient.get<{ user_id: string }>('/api/v1/users/me')
+        currentUserId = userResponse.data.user_id
+      } catch (error: any) {
+        console.error('Error fetching current user:', error.message)
+        throw error
+      }
+    }
+
+    if (!currentUserId) {
+      throw new Error('Unable to determine user ID')
+    }
+
     let behavioralProfile: BehavioralProfile | undefined
     try {
-      const profileResponse = await apiClient.get<BehavioralProfile>(endpoint)
+      const profileResponse = await apiClient.get<BehavioralProfile>(
+        `/api/v1/users/${currentUserId}/profile`
+      )
       behavioralProfile = profileResponse.data
     } catch (error: any) {
       // Profile may not exist yet for new users
@@ -86,16 +125,12 @@ export const profileService = {
     }
 
     // Fetch persona history
-    // Note: This endpoint may not exist yet - will be added when persona history API is implemented
     let personaHistory: PersonaHistoryEntry[] = []
     try {
-      const historyEndpoint = userId 
-        ? `/api/v1/users/${userId}/persona-history`
-        : '/api/v1/users/me/persona-history'
       const historyResponse = await apiClient.get<{
         items: PersonaHistoryEntry[]
         total: number
-      }>(historyEndpoint)
+      }>(`/api/v1/users/${currentUserId}/persona-history`)
       personaHistory = historyResponse.data.items || []
     } catch (error: any) {
       // Persona history may not exist yet or endpoint not implemented

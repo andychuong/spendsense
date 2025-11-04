@@ -43,11 +43,11 @@ const PersonaHistoryTimeline = ({ history }: PersonaHistoryTimelineProps) => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-900">Persona History</h3>
-      
+
       <div className="relative">
         {/* Timeline line */}
         <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
-        
+
         <div className="space-y-6">
           {sortedHistory.map((entry, index) => (
             <div key={entry.history_id} className="relative flex items-start gap-4">
@@ -57,7 +57,7 @@ const PersonaHistoryTimeline = ({ history }: PersonaHistoryTimelineProps) => {
                   <div className="h-3 w-3 rounded-full bg-primary-500"></div>
                 </div>
               </div>
-              
+
               {/* Content */}
               <div className="flex-1 min-w-0">
                 <div className="bg-white border border-gray-200 rounded-lg p-4">
@@ -69,7 +69,7 @@ const PersonaHistoryTimeline = ({ history }: PersonaHistoryTimelineProps) => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <PersonaBadge
                     personaId={entry.persona_id}
                     personaName={entry.persona_name}

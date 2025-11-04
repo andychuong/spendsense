@@ -21,11 +21,11 @@ accounts:
   - type: "loan"
     subtype: "student"
     balance_range: [10000, 40000] # May have student loans
-    
+
 # --- Transaction Generation ---
 transactions:
   num_transactions_range: [70, 200]
-  history_days: 180
+  history_days: 365 # Generate 365 days (1 year) of transaction history
   patterns:
     - payment_type: "income"
       amount_range: [3500, 7000]

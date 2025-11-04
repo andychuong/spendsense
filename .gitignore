@@ -234,3 +234,9 @@ local_config.json
 settings_local.py
 config_local.py
 local.env
+
+# Synthetic data directories
+synthetic_data/
+synthetic_data */
+synthetic_data_*/
+test_data_upload.json

@@ -290,7 +290,7 @@ OAUTH_APPLE_TEAM_ID=ABC123DEF4  # Your Team ID
 OAUTH_APPLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----  # Contents of .p8 file
 ```
 
-**Important**: 
+**Important**:
 - The `OAUTH_APPLE_PRIVATE_KEY` should contain the entire contents of the `.p8` file
 - Include the `-----BEGIN PRIVATE KEY-----` and `-----END PRIVATE KEY-----` lines
 - Use `\n` for newlines if storing as a single line
@@ -419,6 +419,6 @@ Alternatively, set environment variables in your deployment:
 
 ---
 
-**Last Updated**: 2025-01-XX  
+**Last Updated**: 2025-01-XX
 **Version**: 1.0
 

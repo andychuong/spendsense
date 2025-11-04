@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-b1f81bb7-f67b-4490-853a-1ddd9b22412f,Hartman-Mora Checking,depository,checking,individual,"{'available': 2264.1719652933616, 'current': 2355.4763643873093, 'limit': None}",USD,9326
-acct-4bf9c83b-6a8b-42db-be7e-0ea7d4c18eda,"Mercer, Hudson and Barnes Savings",depository,savings,individual,"{'available': 2238.514028755737, 'current': 2362.082185162336, 'limit': None}",USD,7804
-acct-b0c1c62a-65a4-41ed-bc2f-53840d48da05,"Monroe, Jones and Perez Credit Card",credit,credit card,individual,"{'available': 1360.572906934134, 'current': 1374.9241084053224, 'limit': 4626.515293486027}",USD,2033

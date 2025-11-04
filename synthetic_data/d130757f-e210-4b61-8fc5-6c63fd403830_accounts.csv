@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-530d5d71-e97c-4bac-903e-2efd3ce18535,Wheeler Group Checking,depository,checking,individual,"{'available': 1209.006945283375, 'current': 1397.4541920166157, 'limit': None}",USD,4347
-acct-df2a2ac3-0484-40f9-b816-4df6917ec182,Pace and Sons Savings,depository,savings,individual,"{'available': 13886.046693152457, 'current': 14431.327544413129, 'limit': None}",USD,4936
-acct-da0d01de-ed55-4f65-b34a-65d99ab01360,Nelson PLC Credit Card,credit,credit card,individual,"{'available': 2665.104093295655, 'current': 2992.2186031079755, 'limit': 4987.422474335398}",USD,4851
-acct-0174a52f-e08d-46a8-8742-8b4a3cb134a0,Cobb-Anderson Student,loan,student,individual,"{'available': 31550.05528208878, 'current': 32281.662667710472, 'limit': None}",USD,8599

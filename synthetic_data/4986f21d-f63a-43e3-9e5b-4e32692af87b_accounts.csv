@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-52d22cab-042f-4505-abf4-8e5a8c8a8c06,"Hess, Bond and Hill Checking",depository,checking,individual,"{'available': 488.0173557687163, 'current': 591.6041875620787, 'limit': None}",USD,7252
-acct-d1c9269e-054f-4335-ba5c-ec8e36db66e5,"Young, Peterson and Rogers Savings",depository,savings,individual,"{'available': 9693.337222672313, 'current': 9735.424726628578, 'limit': None}",USD,9474
-acct-ba67f1b2-b833-4889-8caa-c0ba1d6d6195,"Glover, Jacobson and Mckinney Credit Card",credit,credit card,individual,"{'available': 2773.6751223074248, 'current': 2972.8935637702207, 'limit': 9850.19128324693}",USD,8291
-acct-be17b3dc-6466-4667-ad3e-30e1e0693b31,Castro PLC Student,loan,student,individual,"{'available': 23108.298059100813, 'current': 24450.28508383682, 'limit': None}",USD,5970

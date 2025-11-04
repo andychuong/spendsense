@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-809ac1fd-d528-4cfe-84cb-918fad86bda6,Whitaker Group Checking,depository,checking,individual,"{'available': 653.6997231854998, 'current': 697.9240975151191, 'limit': None}",USD,1154
-acct-cc92d7a0-bd1f-4af1-9f27-86aa9a821487,Sutton LLC Savings,depository,savings,individual,"{'available': 6111.4237627219345, 'current': 7257.5273804951075, 'limit': None}",USD,4049
-acct-eef1d83b-5a71-45a8-a2d3-d9577a9c903f,King-Roberson Credit Card,credit,credit card,individual,"{'available': 795.2391462348864, 'current': 840.5545743895694, 'limit': 3021.1731524078577}",USD,6567

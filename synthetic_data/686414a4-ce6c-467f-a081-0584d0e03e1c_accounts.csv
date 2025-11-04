@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-c44b3116-9953-4cbf-994b-411a75ff79e7,Armstrong and Sons Checking,depository,checking,individual,"{'available': 1067.2577471653294, 'current': 1108.6354181078873, 'limit': None}",USD,5408
-acct-08ab10c6-b220-436f-89dc-419ac984fbb5,"Baker, Clark and Anderson Savings",depository,savings,individual,"{'available': 4043.260984946809, 'current': 4612.107716737321, 'limit': None}",USD,9010
-acct-41ce7066-3a51-4ffa-8a6d-94a2458e6ac5,"Wagner, Ramirez and Williams Credit Card",credit,credit card,individual,"{'available': 1092.765013620945, 'current': 1212.9804976125565, 'limit': 6727.219395472987}",USD,1810

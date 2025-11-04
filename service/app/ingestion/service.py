@@ -30,7 +30,7 @@ class IngestionService:
     def __init__(self, db_session: Session, s3_bucket: str = "spendsense-analytics"):
         """
         Initialize ingestion service.
-        
+
         Args:
             db_session: SQLAlchemy database session
             s3_bucket: S3 bucket name for Parquet files
@@ -53,13 +53,13 @@ class IngestionService:
     ) -> Dict[str, Any]:
         """
         Ingest Plaid data from file.
-        
+
         Args:
             file_content: Raw file content as bytes
             file_type: File type ('json' or 'csv')
             user_id: User ID
             upload_id: Upload ID (optional)
-            
+
         Returns:
             Ingestion report dictionary with summary, errors, warnings, and storage info
         """
@@ -97,11 +97,11 @@ class IngestionService:
                 },
             },
         }
-        
+
         try:
             from datetime import datetime
             report["ingestion_timestamp"] = datetime.utcnow().isoformat()
-            
+
             # Step 1: Parse file
             logger.info(f"Parsing {file_type} file for user {user_id}")
             try:
@@ -116,11 +116,11 @@ class IngestionService:
                     "severity": "error",
                 })
                 return report
-            
+
             # Step 2: Validate data
             logger.info(f"Validating data for user {user_id}")
             is_valid, validation_errors = self.validator.validate(parsed_data)
-            
+
             # Store validation results
             if upload_id:
                 try:
@@ -129,12 +129,12 @@ class IngestionService:
                     )
                 except Exception as e:
                     logger.warning(f"Failed to store validation results: {str(e)}")
-            
+
             # Get counts for validation report
             accounts = parsed_data.get("accounts", [])
             transactions = parsed_data.get("transactions", [])
             liabilities = parsed_data.get("liabilities", [])
-            
+
             # Generate validation report
             validation_report = self.validation_results.generate_validation_report(
                 validation_errors,
@@ -142,7 +142,7 @@ class IngestionService:
                 len(transactions),
                 len(liabilities),
             )
-            
+
             # Log validation summary
             self.validation_results.log_validation_summary(
                 validation_errors,
@@ -150,38 +150,38 @@ class IngestionService:
                 len(transactions),
                 len(liabilities),
             )
-            
+
             # Separate errors and warnings
             errors = [e.to_dict() for e in validation_errors if e.severity == "error"]
             warnings = [e.to_dict() for e in validation_errors if e.severity == "warning"]
-            
+
             report["errors"] = errors
             report["warnings"] = warnings
             report["validation_report"] = validation_report
-            
+
             # Update summary using validation report
             accounts = parsed_data.get("accounts", [])
             transactions = parsed_data.get("transactions", [])
             liabilities = parsed_data.get("liabilities", [])
-            
+
             report["summary"]["accounts_processed"] = len(accounts)
             report["summary"]["accounts_valid"] = len(accounts) - len([e for e in errors if e["type"] == "account"])
             report["summary"]["accounts_invalid"] = len([e for e in errors if e["type"] == "account"])
-            
+
             report["summary"]["transactions_processed"] = len(transactions)
             report["summary"]["transactions_valid"] = len(transactions) - len([e for e in errors if e["type"] == "transaction"])
             report["summary"]["transactions_invalid"] = len([e for e in errors if e["type"] == "transaction"])
-            
+
             report["summary"]["liabilities_processed"] = len(liabilities)
             report["summary"]["liabilities_valid"] = len(liabilities) - len([e for e in errors if e["type"] == "liability"])
             report["summary"]["liabilities_invalid"] = len([e for e in errors if e["type"] == "liability"])
-            
+
             # If there are critical errors, stop processing
             if not is_valid:
                 logger.warning(f"Validation failed for user {user_id}. Errors: {len(errors)}")
                 report["status"] = "failed"
                 return report
-            
+
             # Step 3: Store in PostgreSQL
             logger.info(f"Storing data in PostgreSQL for user {user_id}")
             try:
@@ -191,11 +191,11 @@ class IngestionService:
                 )
                 report["storage"]["postgresql"]["accounts_inserted"] = accounts_result["inserted"]
                 report["storage"]["postgresql"]["accounts_updated"] = accounts_result["updated"]
-                
+
                 # Get account_id mapping (Plaid account_id -> database account.id)
                 # This is needed for transactions and liabilities
                 account_id_map = self._get_account_id_map(accounts, user_id)
-                
+
                 # Store transactions
                 if transactions:
                     transactions_result = self.storage.store_transactions_postgresql(
@@ -203,7 +203,7 @@ class IngestionService:
                     )
                     report["storage"]["postgresql"]["transactions_inserted"] = transactions_result["inserted"]
                     report["storage"]["postgresql"]["transactions_updated"] = transactions_result["updated"]
-                
+
                 # Store liabilities
                 if liabilities:
                     liabilities_result = self.storage.store_liabilities_postgresql(
@@ -211,7 +211,7 @@ class IngestionService:
                     )
                     report["storage"]["postgresql"]["liabilities_inserted"] = liabilities_result["inserted"]
                     report["storage"]["postgresql"]["liabilities_updated"] = liabilities_result["updated"]
-                
+
             except Exception as e:
                 logger.error(f"Error storing data in PostgreSQL: {str(e)}")
                 report["status"] = "failed"
@@ -222,7 +222,7 @@ class IngestionService:
                     "severity": "error",
                 })
                 return report
-            
+
             # Step 4: Store in S3 as Parquet
             logger.info(f"Storing data in S3 as Parquet for user {user_id}")
             try:
@@ -239,10 +239,10 @@ class IngestionService:
                     "error": f"Failed to store data in S3: {str(e)}",
                     "severity": "warning",
                 })
-            
+
             report["status"] = "completed"
             logger.info(f"Ingestion completed for user {user_id}")
-            
+
         except Exception as e:
             logger.error(f"Unexpected error during ingestion: {str(e)}")
             report["status"] = "failed"
@@ -252,7 +252,7 @@ class IngestionService:
                 "error": f"Unexpected error: {str(e)}",
                 "severity": "error",
             })
-        
+
         return report
 
     def _get_account_id_map(
@@ -262,29 +262,29 @@ class IngestionService:
     ) -> Dict[str, uuid.UUID]:
         """
         Get mapping from Plaid account_id to database account.id.
-        
+
         Args:
             accounts: List of account dictionaries
             user_id: User ID
-            
+
         Returns:
             Dictionary mapping Plaid account_id to database account.id
         """
         account_id_map = {}
-        
+
         for account in accounts:
             plaid_account_id = account.get("account_id")
             if not plaid_account_id:
                 continue
-            
+
             # Query database for account
             db_account = self.db.query(AccountModel).filter(
                 AccountModel.user_id == user_id,
                 AccountModel.account_id == plaid_account_id
             ).first()
-            
+
             if db_account:
                 account_id_map[plaid_account_id] = db_account.id
-        
+
         return account_id_map
 

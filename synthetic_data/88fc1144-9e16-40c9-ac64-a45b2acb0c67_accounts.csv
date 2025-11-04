@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-073cb6d5-426f-4470-b614-ee2e76373502,Bailey LLC Checking,depository,checking,individual,"{'available': 992.171716797192, 'current': 1056.7159560195712, 'limit': None}",USD,3138
-acct-f9b12ce4-3c9e-4fe5-ba4d-d865003a3f3f,Flores-Cooper Savings,depository,savings,individual,"{'available': 9372.277839263723, 'current': 9839.689904777584, 'limit': None}",USD,1949
-acct-a7d4ee86-593b-4f84-a2a5-7b57595b650b,Galvan-Shepherd Credit Card,credit,credit card,individual,"{'available': 649.5142209410427, 'current': 740.3753189543181, 'limit': 11275.878536671902}",USD,4371
-acct-2906bb91-d791-4a75-91d2-a3c2055d0c73,Wu PLC Student,loan,student,individual,"{'available': 13301.48086474309, 'current': 13935.365197489118, 'limit': None}",USD,9726

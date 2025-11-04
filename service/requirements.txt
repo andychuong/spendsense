@@ -1,0 +1,18 @@
+# OpenAI SDK (required for Task 7.3)
+openai==1.12.0
+
+# Data processing (for feature engineering)
+pandas==2.1.4
+numpy==1.26.3
+pyarrow==15.0.0
+
+# Database (SQLAlchemy - shared with backend)
+sqlalchemy==2.0.23
+
+# Redis (for caching - shared with backend)
+redis==5.0.1
+
+# Note: Other dependencies are inherited from backend/requirements.txt
+# when running in the same environment
+
+

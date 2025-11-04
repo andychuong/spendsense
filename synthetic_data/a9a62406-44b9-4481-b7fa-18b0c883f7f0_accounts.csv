@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-f9629b15-afda-4b43-b5a6-1b2e685dd018,Martinez-Coleman Checking,depository,checking,individual,"{'available': 649.3780579492513, 'current': 668.8316972671412, 'limit': None}",USD,1116
-acct-0e1302f1-a14a-4d8b-a26a-9e5eab541c15,Sharp Ltd Savings,depository,savings,individual,"{'available': 5348.589404887101, 'current': 5388.466315714705, 'limit': None}",USD,7801
-acct-27f9494c-8ba0-41c2-add0-64b88a166c6c,Hammond Inc Credit Card,credit,credit card,individual,"{'available': 1084.725808148762, 'current': 1263.2143051554979, 'limit': 4524.869531120349}",USD,9801

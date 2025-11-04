@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-601ce818-a2b1-4e64-9781-fe8cfb317b02,Flores LLC Checking,depository,checking,individual,"{'available': 2142.3224935517223, 'current': 2434.525318260014, 'limit': None}",USD,5808
-acct-5efac7b8-66b7-4c96-8ef3-7eb3351f5ea3,"Lowe, Davis and Love Credit Card",credit,credit card,individual,"{'available': 2064.2662454852457, 'current': 2066.113273039924, 'limit': 6053.45746518164}",USD,6273

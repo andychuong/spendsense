@@ -27,17 +27,19 @@ interface Signals30d {
 interface ProfileBehavioralSignalsProps {
   signals30d?: Signals30d
   signals180d?: Signals30d
-  selectedPeriod: '30d' | '180d'
+  signals365d?: Signals30d
+  selectedPeriod: '30d' | '180d' | '365d'
 }
 
 const ProfileBehavioralSignals = ({
   signals30d,
   signals180d,
+  signals365d,
   selectedPeriod,
 }: ProfileBehavioralSignalsProps) => {
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['subscriptions']))
 
-  const signals = selectedPeriod === '30d' ? signals30d : signals180d
+  const signals = selectedPeriod === '30d' ? signals30d : selectedPeriod === '180d' ? signals180d : signals365d || signals180d
 
   const toggleSection = (section: string) => {
     const newExpanded = new Set(expandedSections)
@@ -65,10 +67,11 @@ const ProfileBehavioralSignals = ({
   }
 
   if (!signals || (!signals.subscriptions && !signals.savings && !signals.credit && !signals.income)) {
+    const periodLabel = selectedPeriod === '30d' ? '30-day' : selectedPeriod === '180d' ? '180-day' : '365-day'
     return (
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
         <p className="text-gray-500 text-sm">
-          No behavioral signals available for {selectedPeriod === '30d' ? '30-day' : '180-day'}{' '}
+          No behavioral signals available for {periodLabel}{' '}
           period. Upload your transaction data to see insights.
         </p>
       </div>
@@ -92,27 +95,27 @@ const ProfileBehavioralSignals = ({
           </button>
           {expandedSections.has('subscriptions') && (
             <div className="px-4 pb-4 space-y-3">
-              {signals.subscriptions.recurring_merchants !== undefined && (
+              {(signals.subscriptions.subscription_count !== undefined || signals.subscriptions.recurring_merchants?.length !== undefined) && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-sm text-gray-600">Recurring Merchants</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.subscriptions.recurring_merchants}
+                    {signals.subscriptions.subscription_count ?? signals.subscriptions.recurring_merchants?.length ?? 0}
                   </span>
                 </div>
               )}
-              {signals.subscriptions.monthly_recurring_spend !== undefined && (
+              {signals.subscriptions.total_recurring_spend !== undefined && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-sm text-gray-600">Monthly Recurring Spend</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatCurrency(signals.subscriptions.monthly_recurring_spend)}
+                    {formatCurrency(signals.subscriptions.total_recurring_spend)}
                   </span>
                 </div>
               )}
-              {signals.subscriptions.subscription_share !== undefined && (
+              {signals.subscriptions.subscription_share_percent !== undefined && (
                 <div className="flex justify-between py-2">
                   <span className="text-sm text-gray-600">Subscription Share of Total Spend</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatPercentage(signals.subscriptions.subscription_share)}
+                    {formatPercentage(signals.subscriptions.subscription_share_percent)}
                   </span>
                 </div>
               )}
@@ -134,27 +137,27 @@ const ProfileBehavioralSignals = ({
           </button>
           {expandedSections.has('savings') && (
             <div className="px-4 pb-4 space-y-3">
-              {signals.savings.net_inflow !== undefined && (
+              {signals.savings.net_inflow?.net_inflow !== undefined && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-sm text-gray-600">Net Inflow</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatCurrency(signals.savings.net_inflow)}
+                    {formatCurrency(signals.savings.net_inflow.net_inflow)}
                   </span>
                 </div>
               )}
-              {signals.savings.growth_rate !== undefined && (
+              {signals.savings.growth_rate?.growth_rate_percent !== undefined && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-sm text-gray-600">Growth Rate</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatPercentage(signals.savings.growth_rate)}
+                    {formatPercentage(signals.savings.growth_rate.growth_rate_percent)}
                   </span>
                 </div>
               )}
-              {signals.savings.emergency_fund_coverage !== undefined && (
+              {signals.savings.emergency_fund_coverage?.coverage_months !== undefined && (
                 <div className="flex justify-between py-2">
                   <span className="text-sm text-gray-600">Emergency Fund Coverage</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.savings.emergency_fund_coverage.toFixed(1)} months
+                    {signals.savings.emergency_fund_coverage.coverage_months.toFixed(1)} months
                   </span>
                 </div>
               )}
@@ -176,35 +179,35 @@ const ProfileBehavioralSignals = ({
           </button>
           {expandedSections.has('credit') && (
             <div className="px-4 pb-4 space-y-3">
-              {signals.credit.utilization !== undefined && (
+              {signals.credit.total_utilization !== undefined && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-sm text-gray-600">Utilization</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatPercentage(signals.credit.utilization)}
+                    {formatPercentage(signals.credit.total_utilization)}
                   </span>
                 </div>
               )}
-              {signals.credit.high_utilization_cards !== undefined && (
+              {(signals.credit.high_utilization_cards?.length !== undefined || signals.credit.card_count !== undefined) && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-sm text-gray-600">High Utilization Cards</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.credit.high_utilization_cards}
+                    {signals.credit.high_utilization_cards?.length ?? 0}
                   </span>
                 </div>
               )}
-              {signals.credit.interest_charges !== undefined && (
+              {signals.credit.cards_with_interest?.length !== undefined && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
-                  <span className="text-sm text-gray-600">Interest Charges</span>
+                  <span className="text-sm text-gray-600">Cards with Interest</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatCurrency(signals.credit.interest_charges)}
+                    {signals.credit.cards_with_interest.length}
                   </span>
                 </div>
               )}
-              {signals.credit.overdue_accounts !== undefined && (
+              {signals.credit.overdue_cards?.length !== undefined && (
                 <div className="flex justify-between py-2">
                   <span className="text-sm text-gray-600">Overdue Accounts</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.credit.overdue_accounts}
+                    {signals.credit.overdue_cards.length}
                   </span>
                 </div>
               )}
@@ -226,27 +229,27 @@ const ProfileBehavioralSignals = ({
           </button>
           {expandedSections.has('income') && (
             <div className="px-4 pb-4 space-y-3">
-              {signals.income.payment_frequency !== undefined && (
+              {signals.income.payment_frequency?.median_gap_days !== undefined && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-sm text-gray-600">Payment Frequency</span>
                   <span className="text-sm font-medium text-gray-900">
-                    Every {signals.income.payment_frequency} days
+                    Every {signals.income.payment_frequency.median_gap_days} days
                   </span>
                 </div>
               )}
-              {signals.income.cash_flow_buffer !== undefined && (
+              {signals.income.cash_flow_buffer?.cash_flow_buffer_months !== undefined && (
                 <div className="flex justify-between py-2 border-b border-gray-100">
                   <span className="text-sm text-gray-600">Cash Flow Buffer</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.income.cash_flow_buffer.toFixed(1)} months
+                    {signals.income.cash_flow_buffer.cash_flow_buffer_months.toFixed(1)} months
                   </span>
                 </div>
               )}
-              {signals.income.variable_income !== undefined && (
+              {signals.income.variable_income_pattern?.is_variable_income !== undefined && (
                 <div className="flex justify-between py-2">
                   <span className="text-sm text-gray-600">Variable Income</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.income.variable_income ? 'Yes' : 'No'}
+                    {signals.income.variable_income_pattern.is_variable_income ? 'Yes' : 'No'}
                   </span>
                 </div>
               )}

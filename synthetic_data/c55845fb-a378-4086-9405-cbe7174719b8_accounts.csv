@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-06dad10c-3435-4492-9058-3504d686b67b,Huang-Greene Checking,depository,checking,individual,"{'available': 1752.543238880257, 'current': 2103.9750518322753, 'limit': None}",USD,9853
-acct-e73a9e84-019e-4ce5-a927-b40845dff58d,"Hubbard, Patterson and Guerra Credit Card",credit,credit card,individual,"{'available': 1441.685180725231, 'current': 1635.5340519842207, 'limit': 7016.716216538337}",USD,8587

@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-eeb1eddf-4858-4ebc-a051-a629b4b6b89b,"Cruz, Goodman and Wilcox Checking",depository,checking,individual,"{'available': 1117.8246547858748, 'current': 1318.279633223581, 'limit': None}",USD,6742
-acct-4446af92-f7ff-4999-bae7-0dfd207c8f9f,"Lopez, Carrillo and Nelson Savings",depository,savings,individual,"{'available': 6367.144560304931, 'current': 7163.546101111556, 'limit': None}",USD,6469
-acct-74925096-e895-43d9-9ea0-1640613c4596,Gomez Ltd Credit Card,credit,credit card,individual,"{'available': 1314.5275550010988, 'current': 1571.3575017335584, 'limit': 6502.731753734333}",USD,1105

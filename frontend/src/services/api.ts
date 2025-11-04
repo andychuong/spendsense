@@ -28,6 +28,10 @@ apiClient.interceptors.request.use(
 // Response interceptor - Handle token refresh and errors
 apiClient.interceptors.response.use(
   (response) => {
+    // Skip JSON parsing for blob responses
+    if (response.config.responseType === 'blob') {
+      return response
+    }
     return response
   },
   async (error: AxiosError) => {
@@ -58,8 +62,44 @@ apiClient.interceptors.response.use(
       } catch (refreshError) {
         // Refresh failed - clear tokens and redirect to login
         clearStoredTokens()
-        window.location.href = '/login'
+        // Only redirect if not already on login page
+        if (!window.location.pathname.includes('/login')) {
+          window.location.href = '/login'
+        }
         return Promise.reject(refreshError)
+      }
+    }
+
+    // Handle 403 Forbidden - Consent or permission issues
+    if (error.response?.status === 403) {
+      const errorMessage = (error.response?.data as any)?.detail || 'Access forbidden'
+      console.warn('Access forbidden:', errorMessage)
+      // Don't redirect for consent issues - let the UI handle it
+    }
+
+    // Handle 404 Not Found - Resource not found (suppress warnings for optional resources)
+    if (error.response?.status === 404) {
+      const errorMessage = (error.response?.data as any)?.detail || 'Resource not found'
+      // Only log warnings for non-optional resources
+      const url = error.config?.url || ''
+      if (!url.includes('/profile') && !url.includes('/recommendations')) {
+        console.warn('Resource not found:', errorMessage)
+      }
+    }
+
+    // Handle 500 Internal Server Error
+    if (error.response?.status === 500) {
+      const errorMessage = (error.response?.data as any)?.detail || 'Internal server error'
+      console.error('Server error:', errorMessage)
+    }
+
+    // Handle network errors (suppress CORS errors silently)
+    if (!error.response) {
+      // CORS errors and network errors are expected if backend isn't fully configured
+      // Only log if it's not a CORS issue (which shows as status 0)
+      const isCorsError = error.message?.includes('CORS') || error.message?.includes('Network Error')
+      if (!isCorsError) {
+        console.error('Network error:', error.message)
       }
     }
 

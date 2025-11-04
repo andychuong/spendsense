@@ -20,13 +20,13 @@ class PlaidParser:
     def parse_json(self, file_content: bytes) -> Dict[str, Any]:
         """
         Parse Plaid JSON data format.
-        
+
         Args:
             file_content: Raw file content as bytes
-            
+
         Returns:
             Dictionary with 'accounts', 'transactions', and optional 'user_id', 'upload_timestamp'
-            
+
         Raises:
             ValueError: If JSON is invalid or missing required fields
         """
@@ -34,20 +34,20 @@ class PlaidParser:
             data = json.loads(file_content.decode('utf-8'))
         except json.JSONDecodeError as e:
             raise ValueError(f"Invalid JSON format: {str(e)}")
-        
+
         # Validate top-level structure
         if not isinstance(data, dict):
             raise ValueError("JSON data must be a dictionary")
-        
+
         # Extract accounts, transactions
         accounts = data.get("accounts", [])
         transactions = data.get("transactions", [])
-        
+
         if not isinstance(accounts, list):
             raise ValueError("'accounts' must be a list")
         if not isinstance(transactions, list):
             raise ValueError("'transactions' must be a list")
-        
+
         return {
             "user_id": data.get("user_id"),
             "upload_timestamp": data.get("upload_timestamp"),
@@ -58,50 +58,50 @@ class PlaidParser:
     def parse_csv(self, file_content: bytes) -> Dict[str, Any]:
         """
         Parse Plaid CSV data format.
-        
+
         CSV format expects separate sections for accounts, transactions, and liabilities.
         Sections are separated by empty lines or headers.
-        
+
         Args:
             file_content: Raw file content as bytes
-            
+
         Returns:
             Dictionary with 'accounts', 'transactions', and optional 'liabilities'
-            
+
         Raises:
             ValueError: If CSV format is invalid
         """
         try:
             content = file_content.decode('utf-8')
             reader = csv.DictReader(io.StringIO(content))
-            
+
             # Read all rows
             rows = list(reader)
-            
+
             if not rows:
                 raise ValueError("CSV file is empty")
-            
+
             # Determine section by checking column names
             first_row = rows[0]
-            
+
             # Check if this is accounts section
             if "account_id" in first_row and "account_name" in first_row:
                 accounts = self._parse_accounts_csv(rows)
                 return {"accounts": accounts, "transactions": [], "liabilities": []}
-            
+
             # Check if this is transactions section
             elif "transaction_id" in first_row and "account_id" in first_row:
                 transactions = self._parse_transactions_csv(rows)
                 return {"accounts": [], "transactions": transactions, "liabilities": []}
-            
+
             # Check if this is liabilities section
             elif "liability_account_id" in first_row or "account_id" in first_row:
                 liabilities = self._parse_liabilities_csv(rows)
                 return {"accounts": [], "transactions": [], "liabilities": liabilities}
-            
+
             else:
                 raise ValueError("CSV format not recognized. Expected columns: account_id, transaction_id, or liability_account_id")
-                
+
         except Exception as e:
             raise ValueError(f"Error parsing CSV: {str(e)}")
 
@@ -179,14 +179,14 @@ class PlaidParser:
     def parse(self, file_content: bytes, file_type: str) -> Dict[str, Any]:
         """
         Parse Plaid data from file content.
-        
+
         Args:
             file_content: Raw file content as bytes
             file_type: File type ('json' or 'csv')
-            
+
         Returns:
             Dictionary with parsed data
-            
+
         Raises:
             ValueError: If file type is unsupported or parsing fails
         """
@@ -196,4 +196,3 @@ class PlaidParser:
             return self.parse_csv(file_content)
         else:
             raise ValueError(f"Unsupported file type: {file_type}. Supported types: json, csv")
-

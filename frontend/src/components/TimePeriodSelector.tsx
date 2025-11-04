@@ -1,6 +1,6 @@
 interface TimePeriodSelectorProps {
-  selectedPeriod: '30d' | '180d'
-  onPeriodChange: (period: '30d' | '180d') => void
+  selectedPeriod: '30d' | '180d' | '365d'
+  onPeriodChange: (period: '30d' | '180d' | '365d') => void
 }
 
 const TimePeriodSelector = ({ selectedPeriod, onPeriodChange }: TimePeriodSelectorProps) => {
@@ -31,6 +31,19 @@ const TimePeriodSelector = ({ selectedPeriod, onPeriodChange }: TimePeriodSelect
         `}
       >
         180 Days
+      </button>
+      <button
+        type="button"
+        onClick={() => onPeriodChange('365d')}
+        className={`
+          flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200
+          ${selectedPeriod === '365d'
+            ? 'bg-white text-primary-600 shadow-sm'
+            : 'text-gray-600 hover:text-gray-900'
+          }
+        `}
+      >
+        365 Days
       </button>
     </div>
   )

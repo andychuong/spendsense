@@ -22,7 +22,7 @@ accounts:
 # --- Transaction Generation ---
 transactions:
   num_transactions_range: [50, 150] # Number of transactions over the history period
-  history_days: 180 # Generate 180 days of transaction history
+  history_days: 365 # Generate 365 days (1 year) of transaction history
   patterns:
     # High credit card usage for various purchases
     - category: "Retail"

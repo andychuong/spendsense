@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-0827fa25-dc63-423a-895e-05cb2225a1af,"Patterson, Johnson and Fleming Checking",depository,checking,individual,"{'available': 970.5969231619704, 'current': 1057.8743051222045, 'limit': None}",USD,3719
-acct-4dc30dfc-fe8c-4822-a73e-3a08ce8e7b87,"Montoya, Pineda and Moody Savings",depository,savings,individual,"{'available': 428.2279036075883, 'current': 524.3869107475508, 'limit': None}",USD,7773
-acct-ebaf1471-5fd5-48f4-b605-b31868fb8b12,Hodge-Garza Credit Card,credit,credit card,individual,"{'available': 3423.2413032037102, 'current': 4059.0194550286024, 'limit': 5000.0}",USD,9566

@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-9eb2b8c5-90b7-45d5-8534-dbc25130134f,"Odonnell, Flores and Cobb Checking",depository,checking,individual,"{'available': 1666.4136252371434, 'current': 1872.575532845139, 'limit': None}",USD,5651
-acct-e67a95a0-8704-4288-9253-66e01153c420,"James, Bernard and Anderson Savings",depository,savings,individual,"{'available': 14042.972028184267, 'current': 14526.71160168733, 'limit': None}",USD,9925
-acct-fe3b33e4-b3f0-4c87-b9a8-77d2fbf0e372,Smith-Martinez Credit Card,credit,credit card,individual,"{'available': 2824.250062303886, 'current': 3229.2454156405597, 'limit': 4273.944697824314}",USD,4548
-acct-839824af-fa4d-4761-b98a-f533498ced6f,Brooks-Cox Student,loan,student,individual,"{'available': 9842.559353307395, 'current': 10386.848594978097, 'limit': None}",USD,4881

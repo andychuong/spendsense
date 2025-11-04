@@ -8,7 +8,7 @@ React frontend application for the SpendSense platform.
 - **Language**: TypeScript 5.3.3
 - **Build Tool**: Vite 5.0.11
 - **Routing**: React Router 6.21.1
-- **State Management**: 
+- **State Management**:
   - Zustand 4.4.7 (client state)
   - React Query 5.17.0 (server state)
 - **HTTP Client**: Axios 1.6.5

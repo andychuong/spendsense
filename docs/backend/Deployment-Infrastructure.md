@@ -1,9 +1,9 @@
 # Deployment & Infrastructure Requirements
 ## SpendSense Platform - Backend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -97,12 +97,12 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 **Container Definition**:
 - **Image**: ECR repository URI
 - **Port Mappings**: 8000 (container) → 8000 (host)
-- **Environment Variables**: 
+- **Environment Variables**:
   - Database connection string (Secrets Manager)
   - Redis endpoint (Secrets Manager)
   - JWT secret key (Secrets Manager)
   - OAuth credentials (Secrets Manager)
-- **Health Check**: 
+- **Health Check**:
   - Command: `CMD-SHELL,curl -f http://localhost:8000/health || exit 1`
   - Interval: 30 seconds
   - Timeout: 5 seconds
@@ -119,7 +119,7 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 - **Subnets**: Private subnets (VPC)
 - **Security Groups**: Allow traffic from ALB (port 8000)
 - **Load Balancer**: ALB target group
-- **Auto Scaling**: 
+- **Auto Scaling**:
   - CPU utilization: 70% threshold
   - Memory utilization: 80% threshold
   - Min capacity: 2
@@ -398,7 +398,7 @@ This prevents naming conflicts by including your identifier in resource names. S
 
 ### Recovery Procedures
 
-**RTO (Recovery Time Objective)**: <1 hour  
+**RTO (Recovery Time Objective)**: <1 hour
 **RPO (Recovery Point Objective)**: <15 minutes
 
 **Recovery Steps**:
@@ -418,8 +418,8 @@ This prevents naming conflicts by including your identifier in resource names. S
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Backend Lead, DevOps Team
 
 

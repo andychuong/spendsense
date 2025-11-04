@@ -44,24 +44,24 @@ async def grant_consent(
 ):
     """
     Grant consent for data processing.
-    
+
     This endpoint:
     1. Requires explicit opt-in (TOS acceptance)
     2. Stores consent with timestamp and version
     3. Logs consent grant event
-    
+
     Note: By granting consent, users acknowledge they have read the financial advice disclaimer:
     "This is educational content, not financial advice. Consult a licensed advisor for personalized guidance."
     The disclaimer is prominently displayed in the consent UI before granting consent.
-    
+
     Args:
         request: Consent grant request with version and TOS acceptance
         current_user: Current authenticated user
         db: Database session
-        
+
     Returns:
         Consent status response
-        
+
     Raises:
         HTTPException: If TOS not accepted or validation fails
     """
@@ -71,22 +71,22 @@ async def grant_consent(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Terms of Service must be accepted to grant consent"
         )
-    
+
     # Update user consent status
     current_user.consent_status = True
     current_user.consent_version = request.consent_version
     current_user.updated_at = datetime.utcnow()
-    
+
     try:
         db.commit()
         db.refresh(current_user)
-        
+
         # Log consent grant event
         logger.info(
             f"Consent granted: User {current_user.user_id} granted consent "
             f"(version: {request.consent_version})"
         )
-        
+
         return ConsentStatusResponse(
             user_id=str(current_user.user_id),
             consent_status=current_user.consent_status,
@@ -119,18 +119,18 @@ async def get_consent_status(
 ):
     """
     Get current user's consent status.
-    
+
     Args:
         current_user: Current authenticated user
         db: Database session
-        
+
     Returns:
         Consent status response
     """
     # Get consent status from user record
     # Note: We don't store separate consent_granted_at/revoked_at timestamps yet
     # This could be added in a future migration if needed
-    
+
     return ConsentStatusResponse(
         user_id=str(current_user.user_id),
         consent_status=current_user.consent_status,
@@ -160,28 +160,28 @@ async def revoke_consent(
 ):
     """
     Revoke consent for data processing.
-    
+
     This endpoint:
     1. Allows users to revoke consent at any time
     2. Optionally deletes all user data if requested
     3. Blocks future recommendations (consent_status = False)
     4. Logs consent revocation event
-    
+
     Args:
         request: Consent revoke request with optional data deletion
         current_user: Current authenticated user
         db: Database session
-        
+
     Returns:
         Consent status response
-        
+
     Raises:
         HTTPException: If revocation fails
     """
     # Update user consent status
     current_user.consent_status = False
     current_user.updated_at = datetime.utcnow()
-    
+
     # Optionally delete all user data
     if request.delete_data:
         try:
@@ -190,22 +190,22 @@ async def revoke_consent(
             db.query(DataUpload).filter(
                 DataUpload.user_id == current_user.user_id
             ).delete()
-            
+
             # Recommendation records
             db.query(Recommendation).filter(
                 Recommendation.user_id == current_user.user_id
             ).delete()
-            
+
             # UserProfile records
             db.query(UserProfile).filter(
                 UserProfile.user_id == current_user.user_id
             ).delete()
-            
+
             # PersonaHistory records
             db.query(PersonaHistory).filter(
                 PersonaHistory.user_id == current_user.user_id
             ).delete()
-            
+
             logger.info(
                 f"Consent revoked with data deletion: User {current_user.user_id} "
                 f"revoked consent and deleted all user data"
@@ -224,14 +224,14 @@ async def revoke_consent(
             f"Consent revoked: User {current_user.user_id} revoked consent "
             f"(data deletion not requested)"
         )
-    
+
     try:
         db.commit()
         db.refresh(current_user)
-        
+
         # Invalidate all user caches (consent affects recommendations)
         invalidate_all_user_caches(current_user.user_id)
-        
+
         return ConsentStatusResponse(
             user_id=str(current_user.user_id),
             consent_status=current_user.consent_status,
@@ -251,12 +251,12 @@ async def revoke_consent(
 def check_consent(user: User) -> bool:
     """
     Check if user has granted consent for data processing.
-    
+
     This function should be used before processing user data or generating recommendations.
-    
+
     Args:
         user: User object to check
-        
+
     Returns:
         True if user has granted consent, False otherwise
     """
@@ -266,12 +266,12 @@ def check_consent(user: User) -> bool:
 def require_consent(user: User) -> None:
     """
     Require consent for data processing.
-    
+
     Raises HTTPException if user has not granted consent.
-    
+
     Args:
         user: User object to check
-        
+
     Raises:
         HTTPException: 403 Forbidden if consent not granted
     """

@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-ca288ea9-68f5-4e14-b1e3-1ae8ae9643f9,Palmer PLC Checking,depository,checking,individual,"{'available': 1991.8880800624547, 'current': 2133.6194083905775, 'limit': None}",USD,2575
-acct-3cd8697f-76cb-4d77-9ad3-8b07f0d46fef,"Soto, Krueger and Turner Credit Card",credit,credit card,individual,"{'available': 1896.6206836574015, 'current': 2025.6071573565841, 'limit': 8645.128112076174}",USD,4212

@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-e2926f7a-0621-4b46-9016-928382f397e8,Burns-Williams Checking,depository,checking,individual,"{'available': 2117.555243871209, 'current': 2312.0223483280706, 'limit': None}",USD,7236
-acct-cc791e1d-1a0e-41dc-a33c-03916e5378aa,"Howard, White and Bradley Credit Card",credit,credit card,individual,"{'available': 1961.5067221678094, 'current': 1979.3301456095921, 'limit': 6562.066347768208}",USD,6060

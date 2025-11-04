@@ -1,7 +1,7 @@
 # SpendSense Architecture Documentation
 ## Version 1.0.0
 
-**Last Updated**: 2025-11-04  
+**Last Updated**: 2025-11-04
 **Status**: Development Phase (Phase 1 - Task 1.1 Complete)
 
 ---
@@ -135,7 +135,7 @@
 │                      Data Storage Layer                              │
 │  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐    │
 │  │ RDS PostgreSQL   │  │  Amazon S3       │  │ ElastiCache      │    │
-│  │ Version 16.10    │  │  (S3 Standard)   │  │ Redis 7.1         │    │
+│  │ Version 16.10    │  │  (S3 Standard)   │  │ Redis 7.1        │    │
 │  │ • User Data      │  │  • Parquet Files │  │ • Caching        │    │
 │  │ • Transactions   │  │  • Logs          │  │ • Sessions       │    │
 │  │ • Personas       │  │  • Reports       │  │ • Rate Limiting  │    │
@@ -246,7 +246,7 @@ React Query 5.17.0
 **Build Specifications:**
 - **Node.js**: `20.10.0` (LTS)
 - **Build Tool**: Vite 5.0.11
-- **Target Browsers**: 
+- **Target Browsers**:
   - Chrome 90+
   - Firefox 88+
   - Safari 14+
@@ -379,12 +379,12 @@ React Query 5.17.0
 
 **Implementation**: FastAPI-managed authentication with JWT tokens
 
-**Sign-in Methods**: 
+**Sign-in Methods**:
 - ✅ Email/Username (primary) - Password hashing with bcrypt (cost factor 12)
 - ✅ Phone number (SMS verification) - AWS SNS for SMS delivery
 - ✅ OAuth providers (Google, GitHub, Facebook, Apple Sign In) - FastAPI-managed OAuth flows
 
-**Password Policy**: 
+**Password Policy**:
 - Min length: 12
 - Require uppercase, lowercase, numbers, symbols
 
@@ -421,10 +421,10 @@ React Query 5.17.0
   - Client ID and Secret: Store in Secrets Manager or `.env` for development
   - Scopes: `email`, `profile`, `openid`
   - Callback URL: `https://api.spendsense.example.com/api/v1/auth/oauth/google/callback`
-  - Endpoints: 
+  - Endpoints:
     - `GET /api/v1/auth/oauth/google/authorize` - Initiate OAuth flow
     - `GET /api/v1/auth/oauth/google/callback` - Handle OAuth callback
-  
+
 - **GitHub OAuth 2.0** (Structure ready, credentials needed)
   - Client ID and Secret: Store in Secrets Manager or `.env` for development
   - Scopes: `user:email`
@@ -432,7 +432,7 @@ React Query 5.17.0
   - Endpoints:
     - `GET /api/v1/auth/oauth/github/authorize` - Initiate OAuth flow
     - `GET /api/v1/auth/oauth/github/callback` - Handle OAuth callback
-  
+
 - **Facebook Login** (Structure ready, credentials needed)
   - App ID and App Secret: Store in Secrets Manager or `.env` for development
   - Permissions: `email`, `public_profile`
@@ -440,7 +440,7 @@ React Query 5.17.0
   - Endpoints:
     - `GET /api/v1/auth/oauth/facebook/authorize` - Initiate OAuth flow
     - `GET /api/v1/auth/oauth/facebook/callback` - Handle OAuth callback
-  
+
 - **Apple Sign In** (Structure ready, credentials needed)
   - Service ID, Key ID, Team ID: Store in Secrets Manager
   - Private Key (P8 file): Store securely in Secrets Manager
@@ -463,11 +463,11 @@ React Query 5.17.0
 - **Code Storage**: Redis with key `verify:{phone_number}` (10-minute TTL)
 - **Code Expiration**: 10 minutes
 - **Max Attempts**: 3 verification attempts per code (tracked in Redis)
-- **Rate Limiting**: 
+- **Rate Limiting**:
   - Max 5 SMS per phone number per hour
   - Max 10 SMS per phone number per day
   - Tracked in Redis: `ratelimit:sms:{phone_number}`
-- **Security**: 
+- **Security**:
   - CAPTCHA required after 3 failed attempts
   - Block suspicious phone numbers (fraud detection)
 
@@ -830,7 +830,7 @@ Steps:
 ```yaml
 Triggers:
   - Push to main (after CI passes)
-  
+
 Steps:
   1. Configure AWS credentials
   2. Login to ECR
@@ -843,7 +843,7 @@ Steps:
 ```yaml
 Triggers:
   - Push to main (after build)
-  
+
 Steps:
   1. Update ECS task definition
   2. Deploy to staging environment
@@ -857,7 +857,7 @@ Steps:
 Triggers:
   - Scheduled (daily)
   - Manual trigger
-  
+
 Steps:
   1. Deploy to test environment
   2. Run API contract tests
@@ -914,7 +914,7 @@ Steps:
 ### Data Encryption
 
 - **In Transit**: TLS 1.3
-- **At Rest**: 
+- **At Rest**:
   - RDS: AES-256 encryption
   - S3: SSE-S3 (AES-256)
   - ElastiCache: Encryption at rest enabled

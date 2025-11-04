@@ -53,7 +53,7 @@ const Register = () => {
     setLoading(true)
     try {
       const response = await authService.register(email, password)
-      
+
       // Store auth tokens and user info
       setAuth(
         {
@@ -111,7 +111,7 @@ const Register = () => {
     setLoading(true)
     try {
       const response = await authService.verifyPhoneCode(phone, code)
-      
+
       // Store auth tokens and user info
       setAuth(
         {

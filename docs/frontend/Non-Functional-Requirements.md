@@ -1,9 +1,9 @@
 # Non-Functional Requirements
 ## SpendSense Platform - Frontend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -58,7 +58,7 @@ This document defines the non-functional requirements for the Frontend Layer, in
 
 ---
 
-**Document Status**: Draft  
+**Document Status**: Draft
 **Next Review Date**: TBD
 
 

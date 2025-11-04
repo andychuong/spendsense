@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-e6b3f06d-5c83-4f4f-85f2-66c006f2b9e2,Martin Inc Checking,depository,checking,individual,"{'available': 1127.5143873442103, 'current': 1403.524823456164, 'limit': None}",USD,5255
-acct-1a90700e-dd52-4b9a-bb6c-c3794c8e8b74,Martinez-Pham Savings,depository,savings,individual,"{'available': 2495.362476348748, 'current': 2871.4266193010412, 'limit': None}",USD,2452
-acct-2ff88d6f-1cf5-4389-b2ae-78ad4584a270,Kerr-Matthews Credit Card,credit,credit card,individual,"{'available': 4212.243312452883, 'current': 4693.378101089222, 'limit': 5000.0}",USD,8754

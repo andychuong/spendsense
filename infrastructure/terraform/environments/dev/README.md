@@ -43,7 +43,7 @@ The configuration sets up:
 
 **AWS Region**: `us-west-1` (default)
 
-**Shared Account Support**: 
+**Shared Account Support**:
 - Set `owner_id` variable (e.g., `-var="owner_id=chuong"`) when deploying to shared AWS accounts
 - This prevents naming conflicts by including the identifier in resource names
 - **Resource Naming Convention**:

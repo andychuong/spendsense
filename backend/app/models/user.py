@@ -1,7 +1,7 @@
 """User model."""
 
 import uuid
-from sqlalchemy import Column, String, Boolean, JSON, DateTime, Enum, TypeDecorator
+from sqlalchemy import Column, String, Boolean, JSON, DateTime, Enum, TypeDecorator, Numeric
 from sqlalchemy.dialects.postgresql import UUID, ENUM
 from sqlalchemy.sql import func
 import enum
@@ -19,11 +19,11 @@ class UserRole(str, enum.Enum):
 
 class UserRoleEnum(TypeDecorator):
     """Type decorator for UserRole enum to ensure proper conversion."""
-    
+
     # Use String as the underlying type, but PostgreSQL will use the enum
     impl = String(20)
     cache_ok = True
-    
+
     def load_dialect_impl(self, dialect):
         """Use PostgreSQL ENUM type when available."""
         if dialect.name == 'postgresql':
@@ -31,7 +31,7 @@ class UserRoleEnum(TypeDecorator):
                 ENUM(UserRole, name='userrole', create_type=False, native_enum=True)
             )
         return dialect.type_descriptor(String(20))
-    
+
     def process_bind_param(self, value, dialect):
         """Convert enum to its value when binding to database."""
         if value is None:
@@ -53,7 +53,7 @@ class UserRoleEnum(TypeDecorator):
                 return value
         # Fallback: try to get value attribute
         return getattr(value, 'value', value)
-    
+
     def process_result_value(self, value, dialect):
         """Convert database value back to enum."""
         if value is None:
@@ -73,6 +73,7 @@ class User(Base):
     __tablename__ = "users"
 
     user_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    name = Column(String(255), nullable=True)
     email = Column(String(255), unique=True, nullable=True, index=True)
     phone_number = Column(String(20), unique=True, nullable=True, index=True)
     password_hash = Column(String(255), nullable=True)
@@ -84,10 +85,11 @@ class User(Base):
     )
     consent_status = Column(Boolean, default=False, nullable=False)
     consent_version = Column(String(10), default="1.0", nullable=False)
+    monthly_income = Column(Numeric(15, 2), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), nullable=True)
 
     def __repr__(self) -> str:
         """String representation of User."""
-        return f"<User(user_id={self.user_id}, email={self.email}, role={self.role})>"
+        return f"<User(user_id={self.user_id}, name={self.name}, email={self.email}, role={self.role})>"
 

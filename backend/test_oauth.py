@@ -12,27 +12,27 @@ def test_oauth_endpoints():
     print("=" * 60)
     print("Testing OAuth Endpoints")
     print("=" * 60)
-    
+
     providers = ["google", "github", "facebook", "apple"]
     redirect_uri = "http://localhost:3000/callback"
-    
+
     for provider in providers:
         print(f"\n[Testing {provider.upper()} OAuth]")
         print("-" * 60)
-        
+
         # Test authorize endpoint
         url = f"{BASE_URL}/api/v1/auth/oauth/{provider}/authorize"
         params = {"redirect_uri": redirect_uri}
-        
+
         try:
             response = requests.get(url, params=params, timeout=5)
             print(f"Status Code: {response.status_code}")
-            
+
             if response.status_code == 200:
                 data = response.json()
                 print(f"✅ Success! Authorize URL generated")
                 print(f"   State: {data.get('state', 'N/A')}")
-                
+
                 # Parse the authorize URL to show it's valid
                 auth_url = data.get('authorize_url', '')
                 if auth_url:
@@ -56,7 +56,7 @@ def test_oauth_endpoints():
             print(f"   Start server with: uvicorn app.main:app --reload")
         except Exception as e:
             print(f"❌ Error: {str(e)}")
-    
+
     print("\n" + "=" * 60)
     print("Test Summary")
     print("=" * 60)

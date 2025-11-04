@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-82ca571b-5c46-48fb-8772-b7fa4943956e,"Martinez, Dean and Allen Checking",depository,checking,individual,"{'available': 1692.638850509113, 'current': 1912.2387332560859, 'limit': None}",USD,8446
-acct-0d613db3-3511-4708-b1fb-44c1aa200bbd,Mcdonald PLC Savings,depository,savings,individual,"{'available': 3126.6000782256974, 'current': 3444.03392034624, 'limit': None}",USD,7420
-acct-95cf8a00-355a-4530-8253-5616f20b7abc,Ortiz PLC Credit Card,credit,credit card,individual,"{'available': 1214.8832065181537, 'current': 1332.6875252781012, 'limit': 4699.848633457164}",USD,6112

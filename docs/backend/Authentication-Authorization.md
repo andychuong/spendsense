@@ -1,9 +1,9 @@
 # Authentication & Authorization Requirements
 ## SpendSense Platform - Backend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -240,7 +240,7 @@ This document defines the authentication and authorization requirements for the 
 - **Operator Endpoints**: All operator endpoints require operator role or higher
 - **Admin Endpoints**: Admin endpoints require admin role
 - **Resource-Level Authorization**: Users can access their own resources, operators can access all user resources (with consent), admins can access all resources (with consent)
-- **Consent Enforcement**: 
+- **Consent Enforcement**:
   - Users can always access their own data (regardless of consent status)
   - Operators and admins must respect user consent when accessing other users' data
   - If a user has revoked consent or never granted consent, operators/admins are blocked from accessing that user's data
@@ -364,8 +364,8 @@ This document defines the authentication and authorization requirements for the 
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Backend Lead, Security Team
 
 

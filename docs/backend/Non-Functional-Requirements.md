@@ -1,9 +1,9 @@
 # Non-Functional Requirements
 ## SpendSense Platform - Backend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -182,7 +182,7 @@ This document defines the non-functional requirements for the SpendSense backend
 
 **Code Quality**:
 - **Target**: Linting, type checking, formatting enforced
-- **Tools**: 
+- **Tools**:
   - Linting: pylint, flake8
   - Type checking: mypy
   - Formatting: black
@@ -190,7 +190,7 @@ This document defines the non-functional requirements for the SpendSense backend
 
 **Modularity**:
 - **Target**: Clear separation of concerns
-- **Structure**: 
+- **Structure**:
   - `app/api/` - API endpoints
   - `app/core/` - Core configuration, security, database
   - `app/models/` - Database models
@@ -200,7 +200,7 @@ This document defines the non-functional requirements for the SpendSense backend
 
 **Monitoring**:
 - **Target**: CloudWatch metrics and logs
-- **Requirements**: 
+- **Requirements**:
   - Application metrics (response time, error rate)
   - Infrastructure metrics (CPU, memory, disk)
   - Security metrics (authentication, authorization failures)
@@ -215,7 +215,7 @@ This document defines the non-functional requirements for the SpendSense backend
 
 **API Documentation**:
 - **Target**: Clear, comprehensive API documentation
-- **Requirements**: 
+- **Requirements**:
   - OpenAPI/Swagger documentation
   - Code examples (curl, Python, JavaScript)
   - Error responses documented
@@ -224,7 +224,7 @@ This document defines the non-functional requirements for the SpendSense backend
 
 **Error Messages**:
 - **Target**: Clear, actionable error messages
-- **Requirements**: 
+- **Requirements**:
   - HTTP status codes used correctly
   - Error messages explain what went wrong
   - Error messages suggest how to fix the issue
@@ -233,7 +233,7 @@ This document defines the non-functional requirements for the SpendSense backend
 
 **API Versioning**:
 - **Target**: Clear API versioning strategy
-- **Requirements**: 
+- **Requirements**:
   - URL-based versioning (`/api/v1/`)
   - Backward compatibility for at least 1 major version
   - Deprecation notice: 6 months before removal
@@ -241,7 +241,7 @@ This document defines the non-functional requirements for the SpendSense backend
 
 **Response Format**:
 - **Target**: Consistent JSON response format
-- **Requirements**: 
+- **Requirements**:
   - Standard response structure
   - Consistent error response format
   - Pagination for list endpoints
@@ -333,8 +333,8 @@ This document defines the non-functional requirements for the SpendSense backend
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Backend Lead, DevOps Team, QA Team
 
 

@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-6ce730d2-16e5-4616-b307-336c84a3cbec,Sandoval PLC Checking,depository,checking,individual,"{'available': 4131.661011618111, 'current': 4340.362583565385, 'limit': None}",USD,7913
-acct-1a2e0115-dd08-48ea-bf7c-2c2d04ddec53,Morrison-Vaughan Savings,depository,savings,individual,"{'available': 25040.058654547916, 'current': 30265.560963495645, 'limit': None}",USD,7782
-acct-030bb205-7df7-48fc-bef0-297ede1405f1,"Gomez, Young and Manning Credit Card",credit,credit card,individual,"{'available': 540.9921362777253, 'current': 556.0853841766425, 'limit': 10888.709607376622}",USD,7936

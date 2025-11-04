@@ -76,7 +76,7 @@ const OAuthButtons = () => {
             onClick={() => handleOAuthLogin(provider.name)}
             disabled={isDisabled}
             className={`
-              w-full flex items-center justify-center gap-3 px-4 py-3 
+              w-full flex items-center justify-center gap-3 px-4 py-3
               border rounded-lg font-medium transition-all duration-200
               disabled:opacity-50 disabled:cursor-not-allowed
               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500

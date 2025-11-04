@@ -12,6 +12,7 @@ interface RegisterResponse {
 interface LoginResponse {
   user_id: string
   email: string
+  role?: string
   access_token: string
   refresh_token: string
   token_type: string
@@ -25,6 +26,7 @@ interface PhoneRequestResponse {
 interface PhoneVerifyResponse {
   user_id: string
   phone: string
+  role?: string
   access_token: string
   refresh_token: string
   token_type: string

@@ -26,14 +26,14 @@ class TestGrantConsent:
                 "tos_accepted": True
             }
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["consent_status"] is True
         assert data["consent_version"] == "1.0"
         assert data["user_id"] == str(test_user.user_id)
         assert data["consent_granted_at"] is not None
-        
+
         # Verify in database
         db_session.refresh(test_user)
         assert test_user.consent_status is True
@@ -51,7 +51,7 @@ class TestGrantConsent:
                 "tos_accepted": False
             }
         )
-        
+
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "Terms of Service" in response.json()["detail"]
 
@@ -64,7 +64,7 @@ class TestGrantConsent:
                 "tos_accepted": True
             }
         )
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_grant_consent_update_version(
@@ -75,7 +75,7 @@ class TestGrantConsent:
         test_user.consent_status = True
         test_user.consent_version = "1.0"
         db_session.commit()
-        
+
         # Update to new version
         response = client.post(
             "/api/v1/consent",
@@ -85,11 +85,11 @@ class TestGrantConsent:
                 "tos_accepted": True
             }
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["consent_version"] == "2.0"
-        
+
         # Verify in database
         db_session.refresh(test_user)
         assert test_user.consent_version == "2.0"
@@ -105,12 +105,12 @@ class TestGetConsentStatus:
         test_user.consent_status = True
         test_user.consent_version = "1.0"
         db_session.commit()
-        
+
         response = client.get(
             "/api/v1/consent",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["consent_status"] is True
@@ -126,7 +126,7 @@ class TestGetConsentStatus:
             "/api/v1/consent",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["consent_status"] is False
@@ -135,7 +135,7 @@ class TestGetConsentStatus:
     def test_get_consent_status_unauthorized(self, client):
         """Test getting consent status without authentication."""
         response = client.get("/api/v1/consent")
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
 
@@ -150,18 +150,18 @@ class TestRevokeConsent:
         test_user.consent_status = True
         test_user.consent_version = "1.0"
         db_session.commit()
-        
+
         response = client.delete(
             "/api/v1/consent",
             headers=auth_headers,
             json={"delete_data": False}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["consent_status"] is False
         assert data["consent_revoked_at"] is not None
-        
+
         # Verify in database
         db_session.refresh(test_user)
         assert test_user.consent_status is False
@@ -174,7 +174,7 @@ class TestRevokeConsent:
         test_user.consent_status = True
         test_user.consent_version = "1.0"
         db_session.commit()
-        
+
         # Create related data
         data_upload = DataUpload(
             user_id=test_user.user_id,
@@ -203,26 +203,26 @@ class TestRevokeConsent:
             persona_id=1,
             persona_name="Test Persona"
         )
-        
+
         db_session.add_all([data_upload, recommendation, user_profile, persona_history])
         db_session.commit()
-        
+
         user_id = test_user.user_id
-        
+
         response = client.delete(
             "/api/v1/consent",
             headers=auth_headers,
             json={"delete_data": True}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["consent_status"] is False
-        
+
         # Verify user data is deleted
         db_session.refresh(test_user)
         assert test_user.consent_status is False
-        
+
         assert db_session.query(DataUpload).filter(
             DataUpload.user_id == user_id
         ).first() is None
@@ -244,7 +244,7 @@ class TestRevokeConsent:
         test_user.consent_status = True
         test_user.consent_version = "1.0"
         db_session.commit()
-        
+
         # Create related data
         data_upload = DataUpload(
             user_id=test_user.user_id,
@@ -257,15 +257,15 @@ class TestRevokeConsent:
         )
         db_session.add(data_upload)
         db_session.commit()
-        
+
         response = client.delete(
             "/api/v1/consent",
             headers=auth_headers,
             json={"delete_data": False}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
-        
+
         # Verify data is NOT deleted
         assert db_session.query(DataUpload).filter(
             DataUpload.user_id == test_user.user_id
@@ -277,7 +277,7 @@ class TestRevokeConsent:
             "/api/v1/consent",
             json={"delete_data": False}
         )
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_revoke_consent_default_no_deletion(
@@ -288,12 +288,12 @@ class TestRevokeConsent:
         test_user.consent_status = True
         test_user.consent_version = "1.0"
         db_session.commit()
-        
+
         response = client.delete(
             "/api/v1/consent",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["consent_status"] is False

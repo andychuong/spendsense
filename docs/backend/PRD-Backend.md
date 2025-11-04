@@ -1,11 +1,11 @@
 # Product Requirements Document (PRD)
 ## SpendSense Platform - Backend Layer Overview
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
-**Product Owner**: TBD  
-**Technical Lead**: TBD  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
+**Product Owner**: TBD
+**Technical Lead**: TBD
 
 ---
 
@@ -139,7 +139,7 @@ For detailed success metrics, see:
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Backend Lead, Security Team
 

@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-c700ab8b-dc99-4567-ad34-2317a0aa1700,"Robinson, Paul and Mosley Checking",depository,checking,individual,"{'available': 2689.1485106054142, 'current': 3059.724193893879, 'limit': None}",USD,2248
-acct-8760aecb-95db-478d-951c-b763d4a45ff6,Duncan Inc Credit Card,credit,credit card,individual,"{'available': 1146.7851717395695, 'current': 1223.4080032817055, 'limit': 6627.704460156445}",USD,3683

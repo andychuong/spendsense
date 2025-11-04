@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-7fa7f866-33a0-4754-83a1-be74fdfba47c,Murphy Group Checking,depository,checking,individual,"{'available': 3324.4743903435324, 'current': 3936.833220309345, 'limit': None}",USD,7194
-acct-42c89aa6-ba3b-475d-96cf-9ef16a9c128a,Lindsey-Todd Credit Card,credit,credit card,individual,"{'available': 1578.102459912866, 'current': 1606.0317431356245, 'limit': 8331.599632660978}",USD,6539

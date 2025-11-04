@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-37363c21-305a-4c83-948d-12851b493f24,Miller-Compton Checking,depository,checking,individual,"{'available': 2885.587987655277, 'current': 3227.3297582616656, 'limit': None}",USD,5028
-acct-260f8fa0-36ff-4ea4-ab29-c6ec342ccf86,Escobar Group Credit Card,credit,credit card,individual,"{'available': 1283.664273187426, 'current': 1534.8003818167113, 'limit': 9961.096563514395}",USD,5963

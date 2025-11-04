@@ -19,7 +19,7 @@ class TestGetCurrentUserProfile:
             "/api/v1/users/me",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["user_id"] == str(test_user.user_id)
@@ -31,7 +31,7 @@ class TestGetCurrentUserProfile:
     def test_get_current_user_profile_unauthorized(self, client):
         """Test getting current user profile without authentication."""
         response = client.get("/api/v1/users/me")
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_get_current_user_profile_invalid_token(self, client):
@@ -40,7 +40,7 @@ class TestGetCurrentUserProfile:
             "/api/v1/users/me",
             headers={"Authorization": "Bearer invalid_token"}
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
@@ -57,11 +57,11 @@ class TestUpdateCurrentUserProfile:
             headers=auth_headers,
             json={"email": new_email}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["email"] == new_email
-        
+
         # Verify in database
         db_session.refresh(test_user)
         assert test_user.email == new_email
@@ -76,11 +76,11 @@ class TestUpdateCurrentUserProfile:
             headers=auth_headers,
             json={"phone_number": new_phone}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["phone_number"] == new_phone
-        
+
         # Verify in database
         db_session.refresh(test_user)
         assert test_user.phone_number == new_phone
@@ -96,12 +96,12 @@ class TestUpdateCurrentUserProfile:
             headers=auth_headers,
             json={"email": new_email, "phone_number": new_phone}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["email"] == new_email
         assert data["phone_number"] == new_phone
-        
+
         # Verify in database
         db_session.refresh(test_user)
         assert test_user.email == new_email
@@ -119,13 +119,13 @@ class TestUpdateCurrentUserProfile:
         )
         db_session.add(other_user)
         db_session.commit()
-        
+
         response = client.put(
             "/api/v1/users/me",
             headers=auth_headers,
             json={"email": "existing@example.com"}
         )
-        
+
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "already registered" in response.json()["detail"]
 
@@ -142,13 +142,13 @@ class TestUpdateCurrentUserProfile:
         )
         db_session.add(other_user)
         db_session.commit()
-        
+
         response = client.put(
             "/api/v1/users/me",
             headers=auth_headers,
             json={"phone_number": "+9876543210"}
         )
-        
+
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "already registered" in response.json()["detail"]
 
@@ -158,7 +158,7 @@ class TestUpdateCurrentUserProfile:
             "/api/v1/users/me",
             json={"email": "new@example.com"}
         )
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_update_current_user_profile_invalid_email_format(
@@ -170,7 +170,7 @@ class TestUpdateCurrentUserProfile:
             headers=auth_headers,
             json={"email": "invalid-email"}
         )
-        
+
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     def test_update_current_user_profile_no_changes(
@@ -182,7 +182,7 @@ class TestUpdateCurrentUserProfile:
             headers=auth_headers,
             json={}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["email"] == test_user.email
@@ -199,7 +199,7 @@ class TestGetUserProfile:
             f"/api/v1/users/{test_user.user_id}",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["user_id"] == str(test_user.user_id)
@@ -212,7 +212,7 @@ class TestGetUserProfile:
             f"/api/v1/users/{test_user.user_id}",
             headers=operator_auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["user_id"] == str(test_user.user_id)
@@ -225,7 +225,7 @@ class TestGetUserProfile:
             f"/api/v1/users/{test_user.user_id}",
             headers=admin_auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["user_id"] == str(test_user.user_id)
@@ -242,12 +242,12 @@ class TestGetUserProfile:
         )
         db_session.add(other_user)
         db_session.commit()
-        
+
         response = client.get(
             f"/api/v1/users/{other_user.user_id}",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_get_user_profile_user_not_found(
@@ -256,12 +256,12 @@ class TestGetUserProfile:
         """Test getting profile for non-existent user."""
         import uuid
         fake_user_id = uuid.uuid4()
-        
+
         response = client.get(
             f"/api/v1/users/{fake_user_id}",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     def test_get_user_profile_consent_revoked(
@@ -271,19 +271,19 @@ class TestGetUserProfile:
         # Revoke consent
         test_user.consent_status = False
         db_session.commit()
-        
+
         response = client.get(
             f"/api/v1/users/{test_user.user_id}",
             headers=operator_auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
         assert "consent" in response.json()["detail"].lower()
 
     def test_get_user_profile_unauthorized_no_auth(self, client, test_user):
         """Test getting user profile without authentication."""
         response = client.get(f"/api/v1/users/{test_user.user_id}")
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
 
@@ -295,15 +295,15 @@ class TestDeleteCurrentUserAccount:
     ):
         """Test successfully deleting user account."""
         user_id = test_user.user_id
-        
+
         response = client.delete(
             "/api/v1/users/me",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert response.content == b""  # No content
-        
+
         # Verify user is deleted
         deleted_user = db_session.query(User).filter(User.user_id == user_id).first()
         assert deleted_user is None
@@ -311,7 +311,7 @@ class TestDeleteCurrentUserAccount:
     def test_delete_current_user_account_unauthorized(self, client):
         """Test deleting account without authentication."""
         response = client.delete("/api/v1/users/me")
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_delete_current_user_account_with_related_data(
@@ -323,7 +323,7 @@ class TestDeleteCurrentUserAccount:
         from app.models.recommendation import Recommendation
         from app.models.user_profile import UserProfile
         from app.models.persona_history import PersonaHistory
-        
+
         # Create related data
         session = SessionModel(
             user_id=test_user.user_id,
@@ -332,20 +332,20 @@ class TestDeleteCurrentUserAccount:
         )
         db_session.add(session)
         db_session.commit()
-        
+
         user_id = test_user.user_id
-        
+
         response = client.delete(
             "/api/v1/users/me",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_204_NO_CONTENT
-        
+
         # Verify user and related data are deleted
         deleted_user = db_session.query(User).filter(User.user_id == user_id).first()
         assert deleted_user is None
-        
+
         deleted_session = db_session.query(SessionModel).filter(
             SessionModel.user_id == user_id
         ).first()
@@ -357,6 +357,6 @@ class TestDeleteCurrentUserAccount:
             "/api/v1/users/me",
             headers={"Authorization": "Bearer invalid_token"}
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 

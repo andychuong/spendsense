@@ -72,9 +72,9 @@ backend/
    cp env.example .env
    # Edit .env with your configuration
    ```
-   
+
    **Note on JWT Keys for Local Development:**
-   - If you don't provide `JWT_PRIVATE_KEY` and `JWT_PUBLIC_KEY` in your `.env` file, 
+   - If you don't provide `JWT_PRIVATE_KEY` and `JWT_PUBLIC_KEY` in your `.env` file,
      the system will automatically generate RSA keys for development when `ENVIRONMENT=development`.
    - Generated keys are saved to `.dev_keys/` directory (created automatically) for persistence across server restarts.
    - These keys are git-ignored and should never be committed.

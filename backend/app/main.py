@@ -8,12 +8,12 @@ from app.api.v1.router import api_router
 
 # OpenAPI documentation metadata
 description = """
-SpendSense API provides a comprehensive platform for financial data analysis, 
+SpendSense API provides a comprehensive platform for financial data analysis,
 persona-based recommendations, and user profile management.
 
 ## Features
 
-* **Authentication**: Multiple authentication methods including email/password, 
+* **Authentication**: Multiple authentication methods including email/password,
   phone/SMS, and OAuth (Google, GitHub, Facebook, Apple)
 * **User Management**: Profile management, account linking, and data deletion
 * **Consent Management**: GDPR-compliant consent tracking and revocation
@@ -23,14 +23,14 @@ persona-based recommendations, and user profile management.
 
 ## Authentication
 
-Most endpoints require authentication using JWT tokens. Include the token in the 
+Most endpoints require authentication using JWT tokens. Include the token in the
 Authorization header:
 
 ```
 Authorization: Bearer <your_access_token>
 ```
 
-Access tokens expire after 1 hour. Use the refresh token endpoint to obtain new 
+Access tokens expire after 1 hour. Use the refresh token endpoint to obtain new
 access tokens.
 
 ## Rate Limiting
@@ -108,7 +108,7 @@ async def root():
 async def health():
     """
     Health check endpoint.
-    
+
     Returns the health status of the API service.
     """
     return {"status": "healthy"}

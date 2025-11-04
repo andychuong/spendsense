@@ -47,7 +47,7 @@ infrastructure/
    ```bash
    # macOS
    brew install terraform
-   
+
    # Or download from https://www.terraform.io/downloads
    ```
 
@@ -67,7 +67,7 @@ infrastructure/
    # For shared AWS accounts, specify your owner_id:
    terraform plan -var="owner_id=your-identifier"
    terraform apply -var="owner_id=your-identifier"
-   
+
    # For dedicated accounts, you can omit owner_id:
    terraform plan
    terraform apply

@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-6025db9d-dc21-4f23-aa10-536eff9cf1e0,"Hernandez, Lane and Becker Checking",depository,checking,individual,"{'available': 915.1562637384556, 'current': 1077.5457884619873, 'limit': None}",USD,1089
-acct-e8b05e58-96d8-4012-939a-86376683fe1a,"Mooney, Palmer and Gill Savings",depository,savings,individual,"{'available': 2212.159975618851, 'current': 2335.7996710771995, 'limit': None}",USD,3530
-acct-2ab26238-8ab9-46e2-b090-e2a206be0e58,"Ellis, Jones and Brown Credit Card",credit,credit card,individual,"{'available': 3725.6236236831214, 'current': 4213.094516174131, 'limit': 5000.0}",USD,2187

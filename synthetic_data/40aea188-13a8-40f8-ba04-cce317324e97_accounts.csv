@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-3c6d19f1-46fe-4f05-909d-d349ec661714,"Jones, Fowler and Boyd Checking",depository,checking,individual,"{'available': 2694.4963063640807, 'current': 3178.6302409554955, 'limit': None}",USD,1614
-acct-1326f41c-f0ef-4f45-bac1-84acfc5db114,Wilson and Sons Savings,depository,savings,individual,"{'available': 19082.770445096285, 'current': 19676.75302431351, 'limit': None}",USD,2334
-acct-7b062256-5654-4af5-9688-c3d7c797b0c4,"Mahoney, Hurley and Reyes Credit Card",credit,credit card,individual,"{'available': 639.1114522789097, 'current': 655.775280965429, 'limit': 9123.98727489716}",USD,5945

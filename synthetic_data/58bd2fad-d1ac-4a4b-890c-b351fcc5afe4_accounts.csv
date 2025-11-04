@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-bccfadd3-edbb-417a-9877-03b1497f735e,Olson Ltd Checking,depository,checking,individual,"{'available': 596.1690607274775, 'current': 696.7480213867121, 'limit': None}",USD,4476
-acct-8e4b5a10-40b1-44a0-ae23-105c2047abda,Wilson-Lee Savings,depository,savings,individual,"{'available': 9839.612217593762, 'current': 11155.679731191622, 'limit': None}",USD,8056
-acct-f0b05500-9c02-471f-a9f3-64bb4dcb3949,"Peterson, Rose and Roberson Credit Card",credit,credit card,individual,"{'available': 3074.6247649087527, 'current': 3574.289897278157, 'limit': 10493.505938655817}",USD,6371
-acct-8db419c8-57b0-4b57-93f6-9f6cc87a794c,Stone-Peters Student,loan,student,individual,"{'available': 13049.036653987983, 'current': 15223.507408385267, 'limit': None}",USD,3374

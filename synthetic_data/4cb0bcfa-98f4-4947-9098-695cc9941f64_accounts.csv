@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-d03935e0-6fab-472a-b303-8ed6696a3ad4,"Walton, Taylor and Bennett Checking",depository,checking,individual,"{'available': 932.6190842926611, 'current': 1148.4840770256476, 'limit': None}",USD,2220
-acct-d74a66d9-fc14-4c93-855f-e37ded872b1d,"Terry, Benson and Zuniga Savings",depository,savings,individual,"{'available': 1042.0615396460598, 'current': 1104.5022951719247, 'limit': None}",USD,4472
-acct-321b12ee-7df1-4970-acbd-9c3e716a6c2d,Glover-Miller Credit Card,credit,credit card,individual,"{'available': 3841.128203898243, 'current': 4566.961227742983, 'limit': 5000.0}",USD,2548

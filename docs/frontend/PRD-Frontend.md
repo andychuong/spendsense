@@ -1,11 +1,11 @@
 # Product Requirements Document (PRD)
 ## SpendSense Platform - Frontend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
-**Product Owner**: TBD  
-**Technical Lead**: TBD  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
+**Product Owner**: TBD
+**Technical Lead**: TBD
 
 ---
 
@@ -112,8 +112,8 @@ This document provides the **overview and architecture** for the Frontend Layer.
 ## Risks & Mitigation - Frontend
 
 ### Risk-FE-001: Performance Degradation
-**Risk**: Large bundle size, slow page loads  
-**Impact**: Poor user experience  
+**Risk**: Large bundle size, slow page loads
+**Impact**: Poor user experience
 **Mitigation**:
 - Code splitting by route
 - Lazy loading components
@@ -121,8 +121,8 @@ This document provides the **overview and architecture** for the Frontend Layer.
 - CDN for static assets
 
 ### Risk-FE-002: Browser Compatibility
-**Risk**: Features not working in older browsers  
-**Impact**: Limited user access  
+**Risk**: Features not working in older browsers
+**Impact**: Limited user access
 **Mitigation**:
 - Polyfills for older browsers
 - Progressive enhancement
@@ -130,8 +130,8 @@ This document provides the **overview and architecture** for the Frontend Layer.
 - Clear browser requirements
 
 ### Risk-FE-003: Mobile Responsiveness
-**Risk**: Poor mobile experience  
-**Impact**: Reduced mobile user engagement  
+**Risk**: Poor mobile experience
+**Impact**: Reduced mobile user engagement
 **Mitigation**:
 - Mobile-first design
 - Regular mobile testing
@@ -139,8 +139,8 @@ This document provides the **overview and architecture** for the Frontend Layer.
 - Native mobile app (future)
 
 ### Risk-FE-004: Accessibility Compliance
-**Risk**: Not meeting WCAG 2.1 AA requirements  
-**Impact**: Legal liability, reduced accessibility  
+**Risk**: Not meeting WCAG 2.1 AA requirements
+**Impact**: Legal liability, reduced accessibility
 **Mitigation**:
 - Accessibility testing tools
 - Screen reader testing
@@ -178,6 +178,6 @@ This document provides the **overview and architecture** for the Frontend Layer.
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Frontend Lead, UX Designer

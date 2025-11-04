@@ -1,9 +1,9 @@
 # User Stories
 ## SpendSense Platform - Frontend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -171,7 +171,7 @@ This document contains all user stories for the Frontend Layer, including accept
 
 ---
 
-**Document Status**: Draft  
+**Document Status**: Draft
 **Next Review Date**: TBD
 
 

@@ -21,7 +21,7 @@ class TestRegister:
                 "password": "SecurePassword123!"
             }
         )
-        
+
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
         assert "user_id" in data
@@ -29,14 +29,14 @@ class TestRegister:
         assert "access_token" in data
         assert "refresh_token" in data
         assert data["token_type"] == "bearer"
-        
+
         # Verify user was created
         user = db_session.query(User).filter(
             User.email == "newuser@example.com"
         ).first()
         assert user is not None
         assert user.role == "user"
-        
+
         # Verify session was created
         session = db_session.query(SessionModel).filter(
             SessionModel.user_id == user.user_id
@@ -53,7 +53,7 @@ class TestRegister:
                 "password": "SecurePassword123!"
             }
         )
-        
+
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "already registered" in response.json()["detail"]
 
@@ -66,7 +66,7 @@ class TestRegister:
                 "password": "SecurePassword123!"
             }
         )
-        
+
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
     def test_register_weak_password(self, client):
@@ -78,7 +78,7 @@ class TestRegister:
                 "password": "weak"
             }
         )
-        
+
         # Should fail validation if password validation is implemented
         assert response.status_code in [
             status.HTTP_422_UNPROCESSABLE_ENTITY,
@@ -91,7 +91,7 @@ class TestRegister:
             "/api/v1/auth/register",
             json={"email": "user@example.com"}
         )
-        
+
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
@@ -107,7 +107,7 @@ class TestLogin:
                 "password": "TestPassword123!"
             }
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["user_id"] == str(test_user.user_id)
@@ -125,7 +125,7 @@ class TestLogin:
                 "password": "TestPassword123!"
             }
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert "Invalid email or password" in response.json()["detail"]
 
@@ -138,7 +138,7 @@ class TestLogin:
                 "password": "WrongPassword123!"
             }
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert "Invalid email or password" in response.json()["detail"]
 
@@ -153,7 +153,7 @@ class TestLogin:
         )
         db_session.add(oauth_user)
         db_session.commit()
-        
+
         response = client.post(
             "/api/v1/auth/login",
             json={
@@ -161,7 +161,7 @@ class TestLogin:
                 "password": "AnyPassword123!"
             }
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert "Invalid email or password" in response.json()["detail"]
 
@@ -171,7 +171,7 @@ class TestLogin:
             "/api/v1/auth/login",
             json={"email": "user@example.com"}
         )
-        
+
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
@@ -189,7 +189,7 @@ class TestRefreshToken:
             role=test_user.role,
             session_id=None
         )
-        
+
         session = SessionModel(
             user_id=test_user.user_id,
             refresh_token=refresh_token,
@@ -197,12 +197,12 @@ class TestRefreshToken:
         )
         db_session.add(session)
         db_session.commit()
-        
+
         response = client.post(
             "/api/v1/auth/refresh",
             json={"refresh_token": refresh_token}
         )
-        
+
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert "access_token" in data
@@ -217,7 +217,7 @@ class TestRefreshToken:
             "/api/v1/auth/refresh",
             json={"refresh_token": "invalid_token"}
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_refresh_token_expired_token(
@@ -231,7 +231,7 @@ class TestRefreshToken:
             role=test_user.role,
             session_id=None
         )
-        
+
         session = SessionModel(
             user_id=test_user.user_id,
             refresh_token=expired_token,
@@ -239,12 +239,12 @@ class TestRefreshToken:
         )
         db_session.add(session)
         db_session.commit()
-        
+
         response = client.post(
             "/api/v1/auth/refresh",
             json={"refresh_token": expired_token}
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_refresh_token_missing_session(
@@ -258,12 +258,12 @@ class TestRefreshToken:
             role=test_user.role,
             session_id=None
         )
-        
+
         response = client.post(
             "/api/v1/auth/refresh",
             json={"refresh_token": refresh_token}
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_refresh_token_missing_field(self, client):
@@ -272,7 +272,7 @@ class TestRefreshToken:
             "/api/v1/auth/refresh",
             json={}
         )
-        
+
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
 
@@ -290,7 +290,7 @@ class TestLogout:
             role=test_user.role,
             session_id=None
         )
-        
+
         session = SessionModel(
             user_id=test_user.user_id,
             refresh_token=refresh_token,
@@ -298,17 +298,17 @@ class TestLogout:
         )
         db_session.add(session)
         db_session.commit()
-        
+
         session_id = session.session_id
-        
+
         response = client.post(
             "/api/v1/auth/logout",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert response.content == b""
-        
+
         # Verify session was deleted
         deleted_session = db_session.query(SessionModel).filter(
             SessionModel.session_id == session_id
@@ -333,16 +333,16 @@ class TestLogout:
                 expires_at=datetime.utcnow() + timedelta(days=30)
             )
             db_session.add(session)
-        
+
         db_session.commit()
-        
+
         response = client.post(
             "/api/v1/auth/logout",
             headers=auth_headers
         )
-        
+
         assert response.status_code == status.HTTP_204_NO_CONTENT
-        
+
         # Verify all sessions for user were deleted
         sessions = db_session.query(SessionModel).filter(
             SessionModel.user_id == test_user.user_id
@@ -352,7 +352,7 @@ class TestLogout:
     def test_logout_unauthorized(self, client):
         """Test logging out without authentication."""
         response = client.post("/api/v1/auth/logout")
-        
+
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_logout_invalid_token(self, client):
@@ -361,6 +361,6 @@ class TestLogout:
             "/api/v1/auth/logout",
             headers={"Authorization": "Bearer invalid_token"}
         )
-        
+
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 

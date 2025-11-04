@@ -16,7 +16,7 @@ class Liability(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     account_id = Column(UUID(as_uuid=True), ForeignKey("accounts.id"), nullable=False, index=True)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False, index=True)
-    
+
     # Credit card specific fields
     apr_percentage = Column(Numeric(5, 2), nullable=True)  # APR percentage (0-100)
     apr_type = Column(String(50), nullable=True)  # purchase, cash, balance_transfer
@@ -26,10 +26,10 @@ class Liability(Base):
     last_statement_balance = Column(Numeric(15, 2), nullable=True)
     is_overdue = Column(Boolean, default=False, nullable=True)
     next_payment_due_date = Column(Date, nullable=True, index=True)
-    
+
     # Mortgage/Student loan specific fields
     interest_rate = Column(Numeric(5, 2), nullable=True)  # Interest rate percentage (0-100)
-    
+
     upload_id = Column(UUID(as_uuid=True), ForeignKey("data_uploads.upload_id"), nullable=True, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), nullable=True)

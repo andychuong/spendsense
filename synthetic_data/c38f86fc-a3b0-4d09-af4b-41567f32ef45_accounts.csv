@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-6b369152-4167-412b-af93-0cd7e2c3c7a2,Robinson Inc Checking,depository,checking,individual,"{'available': 883.9596086991994, 'current': 998.4927433748888, 'limit': None}",USD,4039
-acct-28d08311-38bd-4147-b88d-57da60492fa7,Newton Ltd Savings,depository,savings,individual,"{'available': 6684.0786409269385, 'current': 7381.448872957896, 'limit': None}",USD,9547
-acct-bccd6f51-c480-4eee-86b6-95c11e266927,"Blanchard, Huffman and Joseph Credit Card",credit,credit card,individual,"{'available': 701.0474934450473, 'current': 732.8349238780739, 'limit': 3673.466774913098}",USD,8908

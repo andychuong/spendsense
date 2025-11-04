@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-a06b69e3-dda9-45a2-b306-235460daa2de,Villarreal-Smith Checking,depository,checking,individual,"{'available': 839.582083607762, 'current': 902.2182444768214, 'limit': None}",USD,3874
-acct-95194286-7417-4dc7-a7bf-4b205b700bbb,Moore-Best Savings,depository,savings,individual,"{'available': 12068.683141571984, 'current': 12798.042266917859, 'limit': None}",USD,8298
-acct-8b1e1bd7-8dd9-4518-9931-b904ee395c59,"Hutchinson, Bailey and Robinson Credit Card",credit,credit card,individual,"{'available': 3264.1125709214475, 'current': 3638.6118315956464, 'limit': 6148.898917638052}",USD,7469
-acct-50fcd83b-cda5-4942-9164-64bc7948e635,Alexander LLC Student,loan,student,individual,"{'available': 27101.60462847256, 'current': 29348.48871698007, 'limit': None}",USD,6462

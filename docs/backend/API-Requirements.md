@@ -1,9 +1,9 @@
 # API Requirements
 ## SpendSense Platform - Backend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -294,7 +294,7 @@ This document defines the REST API requirements for the SpendSense backend, incl
 
 ### TR-BE-001: FastAPI Application Structure
 
-**Framework**: FastAPI 0.109.0  
+**Framework**: FastAPI 0.109.0
 **Language**: Python 3.11.7
 
 **Project Structure**:
@@ -478,8 +478,8 @@ ETag: "abc123"
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Backend Lead, API Team
 
 

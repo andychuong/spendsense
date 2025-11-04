@@ -3,10 +3,10 @@
 
 ## Current Status
 
-✅ **Google OAuth**: Configured and working  
-❌ **GitHub OAuth**: Not configured  
-❌ **Facebook OAuth**: Not configured  
-❌ **Apple Sign In**: Not configured  
+✅ **Google OAuth**: Configured and working
+❌ **GitHub OAuth**: Not configured
+❌ **Facebook OAuth**: Not configured
+❌ **Apple Sign In**: Not configured
 
 ## Testing OAuth Endpoints
 

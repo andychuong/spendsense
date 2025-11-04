@@ -8,17 +8,17 @@ def list_tables():
     """List all tables in the database."""
     inspector = inspect(engine)
     tables = inspector.get_table_names()
-    
+
     print("Database Tables:")
     print("-" * 50)
-    
+
     if not tables:
         print("No tables found in the database.")
         return
-    
+
     for i, table in enumerate(tables, 1):
         print(f"{i}. {table}")
-        
+
         # Get column information
         columns = inspector.get_columns(table)
         print(f"   Columns ({len(columns)}):")
@@ -26,7 +26,7 @@ def list_tables():
             nullable = "NULL" if col['nullable'] else "NOT NULL"
             default = f" DEFAULT {col['default']}" if col['default'] else ""
             print(f"     - {col['name']}: {col['type']} {nullable}{default}")
-        
+
         # Get indexes
         indexes = inspector.get_indexes(table)
         if indexes:
@@ -35,9 +35,9 @@ def list_tables():
                 unique = "UNIQUE" if idx['unique'] else ""
                 cols = ", ".join(idx['column_names'])
                 print(f"     - {idx['name']} {unique}: ({cols})")
-        
+
         print()
-    
+
     print(f"Total tables: {len(tables)}")
 
 if __name__ == "__main__":

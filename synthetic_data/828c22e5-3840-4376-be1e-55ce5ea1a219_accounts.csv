@@ -1,3 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-26a27ec3-c22c-4989-b088-8f82713f43c1,Martinez LLC Checking,depository,checking,individual,"{'available': 3746.651402103897, 'current': 3978.452704408293, 'limit': None}",USD,5041
-acct-c1fe7091-bb3a-4ef8-9327-6e6767d5a42d,Durham-Jones Credit Card,credit,credit card,individual,"{'available': 1209.0589499918499, 'current': 1237.773799297296, 'limit': 8128.313398503328}",USD,8898

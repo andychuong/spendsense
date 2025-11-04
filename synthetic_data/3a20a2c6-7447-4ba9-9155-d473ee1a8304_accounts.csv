@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-98a7c735-72a3-43fc-9ae3-08b328361282,Baker Inc Checking,depository,checking,individual,"{'available': 1479.5921597531478, 'current': 1727.940540661723, 'limit': None}",USD,1552
-acct-84e6ec5b-0c4e-450a-809d-0b17db0baa26,Ellison-Willis Savings,depository,savings,individual,"{'available': 6796.030349056046, 'current': 7833.662412763455, 'limit': None}",USD,7520
-acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa,Vasquez-Wise Credit Card,credit,credit card,individual,"{'available': 1204.6838101401777, 'current': 1294.1861491233917, 'limit': 7392.835237777418}",USD,2409
-acct-d1f4b44a-4097-4226-b60f-029faa3fc3ba,Alexander LLC Student,loan,student,individual,"{'available': 30697.698538481767, 'current': 35401.15769233724, 'limit': None}",USD,1203

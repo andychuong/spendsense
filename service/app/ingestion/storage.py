@@ -45,7 +45,7 @@ class DataStorage:
     def __init__(self, db_session: Session, s3_bucket: str = "spendsense-analytics"):
         """
         Initialize data storage.
-        
+
         Args:
             db_session: SQLAlchemy database session
             s3_bucket: S3 bucket name for Parquet files
@@ -62,35 +62,35 @@ class DataStorage:
     ) -> Dict[str, int]:
         """
         Store accounts in PostgreSQL.
-        
+
         Args:
             accounts: List of account dictionaries
             user_id: User ID
             upload_id: Upload ID (optional)
-            
+
         Returns:
             Dictionary with counts: {'inserted': int, 'updated': int, 'errors': int}
         """
         inserted = 0
         updated = 0
         errors = 0
-        
+
         for account_data in accounts:
             try:
                 account_id_str = account_data.get("account_id")
-                
+
                 # Check if account already exists
                 existing_account = self.db.query(AccountModel).filter(
                     AccountModel.user_id == user_id,
                     AccountModel.account_id == account_id_str
                 ).first()
-                
+
                 # Extract balances
                 balances = account_data.get("balances", {})
                 balance_available = self._to_decimal(balances.get("available"))
                 balance_current = self._to_decimal(balances.get("current"))
                 balance_limit = self._to_decimal(balances.get("limit"))
-                
+
                 if existing_account:
                     # Update existing account
                     existing_account.name = account_data.get("name", "")
@@ -123,11 +123,11 @@ class DataStorage:
                     )
                     self.db.add(new_account)
                     inserted += 1
-                
+
             except Exception as e:
                 logger.error(f"Error storing account {account_data.get('account_id')}: {str(e)}")
                 errors += 1
-        
+
         try:
             self.db.commit()
         except Exception as e:
@@ -136,7 +136,7 @@ class DataStorage:
             errors += inserted + updated
             inserted = 0
             updated = 0
-        
+
         return {"inserted": inserted, "updated": updated, "errors": errors}
 
     def store_transactions_postgresql(
@@ -148,50 +148,50 @@ class DataStorage:
     ) -> Dict[str, int]:
         """
         Store transactions in PostgreSQL.
-        
+
         Args:
             transactions: List of transaction dictionaries
             user_id: User ID
             account_id_map: Mapping from Plaid account_id to database account.id
             upload_id: Upload ID (optional)
-            
+
         Returns:
             Dictionary with counts: {'inserted': int, 'updated': int, 'errors': int}
         """
         inserted = 0
         updated = 0
         errors = 0
-        
+
         for transaction_data in transactions:
             try:
                 transaction_id_str = transaction_data.get("transaction_id")
                 plaid_account_id = transaction_data.get("account_id")
-                
+
                 # Get database account ID
                 db_account_id = account_id_map.get(plaid_account_id)
                 if not db_account_id:
                     logger.warning(f"Transaction references account_id '{plaid_account_id}' that doesn't exist")
                     errors += 1
                     continue
-                
+
                 # Check if transaction already exists
                 existing_transaction = self.db.query(TransactionModel).filter(
                     TransactionModel.user_id == user_id,
                     TransactionModel.transaction_id == transaction_id_str
                 ).first()
-                
+
                 # Parse date
                 date_value = self._parse_date(transaction_data.get("date"))
                 if not date_value:
                     logger.warning(f"Invalid date for transaction {transaction_id_str}")
                     errors += 1
                     continue
-                
+
                 # Extract category
                 category = transaction_data.get("personal_finance_category", {})
                 category_primary = category.get("primary", "")
                 category_detailed = category.get("detailed")
-                
+
                 if existing_transaction:
                     # Update existing transaction
                     existing_transaction.account_id = db_account_id
@@ -225,11 +225,11 @@ class DataStorage:
                     )
                     self.db.add(new_transaction)
                     inserted += 1
-                
+
             except Exception as e:
                 logger.error(f"Error storing transaction {transaction_data.get('transaction_id')}: {str(e)}")
                 errors += 1
-        
+
         try:
             self.db.commit()
         except Exception as e:
@@ -238,7 +238,7 @@ class DataStorage:
             errors += inserted + updated
             inserted = 0
             updated = 0
-        
+
         return {"inserted": inserted, "updated": updated, "errors": errors}
 
     def store_liabilities_postgresql(
@@ -250,41 +250,41 @@ class DataStorage:
     ) -> Dict[str, int]:
         """
         Store liabilities in PostgreSQL.
-        
+
         Args:
             liabilities: List of liability dictionaries
             user_id: User ID
             account_id_map: Mapping from Plaid account_id to database account.id
             upload_id: Upload ID (optional)
-            
+
         Returns:
             Dictionary with counts: {'inserted': int, 'updated': int, 'errors': int}
         """
         inserted = 0
         updated = 0
         errors = 0
-        
+
         for liability_data in liabilities:
             try:
                 plaid_account_id = liability_data.get("account_id")
-                
+
                 # Get database account ID
                 db_account_id = account_id_map.get(plaid_account_id)
                 if not db_account_id:
                     logger.warning(f"Liability references account_id '{plaid_account_id}' that doesn't exist")
                     errors += 1
                     continue
-                
+
                 # Check if liability already exists for this account
                 existing_liability = self.db.query(LiabilityModel).filter(
                     LiabilityModel.user_id == user_id,
                     LiabilityModel.account_id == db_account_id
                 ).first()
-                
+
                 # Parse dates
                 last_payment_date = self._parse_date(liability_data.get("last_payment_date"))
                 next_payment_due_date = self._parse_date(liability_data.get("next_payment_due_date"))
-                
+
                 if existing_liability:
                     # Update existing liability
                     existing_liability.apr_percentage = self._to_decimal(liability_data.get("apr_percentage"))
@@ -317,11 +317,11 @@ class DataStorage:
                     )
                     self.db.add(new_liability)
                     inserted += 1
-                
+
             except Exception as e:
                 logger.error(f"Error storing liability for account {liability_data.get('account_id')}: {str(e)}")
                 errors += 1
-        
+
         try:
             self.db.commit()
         except Exception as e:
@@ -330,7 +330,7 @@ class DataStorage:
             errors += inserted + updated
             inserted = 0
             updated = 0
-        
+
         return {"inserted": inserted, "updated": updated, "errors": errors}
 
     def store_parquet_s3(
@@ -341,36 +341,36 @@ class DataStorage:
     ) -> Dict[str, str]:
         """
         Store data in S3 as Parquet files.
-        
+
         Args:
             data: Parsed Plaid data dictionary
             user_id: User ID
             upload_id: Upload ID (optional)
-            
+
         Returns:
             Dictionary with S3 keys: {'accounts': str, 'transactions': str, 'liabilities': str}
         """
         s3_keys = {}
         ingestion_date = datetime.utcnow().date()
-        
+
         # Store accounts as Parquet
         if data.get("accounts"):
             accounts_df = self._create_accounts_dataframe(data["accounts"], user_id, upload_id, ingestion_date)
             accounts_key = self._upload_parquet_to_s3(accounts_df, "accounts", user_id, ingestion_date)
             s3_keys["accounts"] = accounts_key
-        
+
         # Store transactions as Parquet
         if data.get("transactions"):
             transactions_df = self._create_transactions_dataframe(data["transactions"], user_id, upload_id, ingestion_date)
             transactions_key = self._upload_parquet_to_s3(transactions_df, "transactions", user_id, ingestion_date)
             s3_keys["transactions"] = transactions_key
-        
+
         # Store liabilities as Parquet
         if data.get("liabilities"):
             liabilities_df = self._create_liabilities_dataframe(data["liabilities"], user_id, upload_id, ingestion_date)
             liabilities_key = self._upload_parquet_to_s3(liabilities_df, "liabilities", user_id, ingestion_date)
             s3_keys["liabilities"] = liabilities_key
-        
+
         return s3_keys
 
     def _create_accounts_dataframe(
@@ -401,7 +401,7 @@ class DataStorage:
                 "ingestion_date": ingestion_date.isoformat(),
             }
             rows.append(row)
-        
+
         return pd.DataFrame(rows)
 
     def _create_transactions_dataframe(
@@ -433,7 +433,7 @@ class DataStorage:
                 "ingestion_date": ingestion_date.isoformat(),
             }
             rows.append(row)
-        
+
         return pd.DataFrame(rows)
 
     def _create_liabilities_dataframe(
@@ -463,7 +463,7 @@ class DataStorage:
                 "ingestion_date": ingestion_date.isoformat(),
             }
             rows.append(row)
-        
+
         return pd.DataFrame(rows)
 
     def _upload_parquet_to_s3(
@@ -476,13 +476,13 @@ class DataStorage:
         """Upload DataFrame to S3 as Parquet file."""
         # Generate S3 key
         s3_key = f"{data_type}/user_id={user_id}/ingestion_date={ingestion_date.isoformat()}/{data_type}.parquet"
-        
+
         # Convert DataFrame to Parquet
         parquet_buffer = io.BytesIO()
         table = pa.Table.from_pandas(df)
         pq.write_table(table, parquet_buffer)
         parquet_buffer.seek(0)
-        
+
         # Upload to S3
         try:
             self.s3_client.put_object(

@@ -300,7 +300,7 @@ Expected error:
    ```bash
    # Enable SMS with default type
    aws sns set-sms-attributes --attributes DefaultSMSType=Transactional --region us-west-1
-   
+
    # Check current SMS attributes
    aws sns get-sms-attributes --region us-west-1
    ```
@@ -348,7 +348,7 @@ sudo systemctl start redis  # Linux
 
 ### Issue: "Phone number not verified"
 
-**Solution:** 
+**Solution:**
 1. Go to AWS SNS Console
 2. Navigate to Text messaging (SMS) → Sandbox
 3. Verify your phone number

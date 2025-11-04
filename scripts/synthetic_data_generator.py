@@ -12,9 +12,26 @@ import uuid
 import yaml
 from faker import Faker
 
-# No longer need to modify sys.path
-# from app.ingestion.validator import PlaidValidator # Old import
-from app.common.validator import PlaidValidator # New, stable import
+# Add paths for imports
+import sys
+import os
+_current_file = os.path.abspath(__file__)
+_project_root = os.path.dirname(os.path.dirname(_current_file))
+_backend_dir = os.path.join(_project_root, "backend")
+_service_dir = os.path.join(_project_root, "service")
+
+# Add backend first (service depends on it), then service
+for path in [_backend_dir, _service_dir]:
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
+# Import validator directly from the file to avoid circular imports
+import importlib.util
+spec = importlib.util.spec_from_file_location("validator", os.path.join(_project_root, "service", "app", "ingestion", "validator.py"))
+validator_module = importlib.util.module_from_spec(spec)
+sys.modules['validator'] = validator_module
+spec.loader.exec_module(validator_module)
+PlaidValidator = validator_module.PlaidValidator
 
 # --- Configuration ---
 LOGGING_LEVEL = logging.INFO
@@ -33,7 +50,7 @@ class SyntheticDataGenerator:
     def __init__(self, config_path: str, transactions_csv_path: str):
         """
         Initializes the generator.
-        
+
         Args:
             config_path: Path to the persona YAML configuration file.
             transactions_csv_path: Path to the CSV file with sample transactions.
@@ -74,7 +91,7 @@ class SyntheticDataGenerator:
         """Generates a list of user profiles based on the configuration."""
         num_profiles = self.config.get("num_profiles", 1)
         logger.info(f"Generating {num_profiles} profiles for persona: {self.config.get('persona_name', 'Unknown')}")
-        
+
         profiles = []
         for i in range(num_profiles):
             user_id = str(uuid.uuid4())
@@ -96,7 +113,7 @@ class SyntheticDataGenerator:
             "liabilities": liabilities
         }
         return profile_data
-    
+
     def _get_random_value(self, config_range: List[float]) -> float:
         """Returns a random value from a [min, max] range."""
         return random.uniform(config_range[0], config_range[1])
@@ -105,7 +122,7 @@ class SyntheticDataGenerator:
         """Generates a list of accounts based on the persona configuration."""
         accounts = []
         account_configs = self.config.get("accounts", [])
-        
+
         for acc_config in account_configs:
             account_id = f"acct-{uuid.uuid4()}"
             balance = self._get_random_value(acc_config["balance_range"])
@@ -129,7 +146,15 @@ class SyntheticDataGenerator:
         return accounts
 
     def _generate_transactions(self, accounts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Generates a list of transactions based on the persona configuration."""
+        """
+        Generates a list of transactions based on the persona configuration.
+
+        Plaid Transaction Amount Convention:
+        - Deposits (income, transfers in) = POSITIVE amounts (money entering account)
+        - Expenses (purchases, payments, transfers out) = NEGATIVE amounts (money leaving account)
+
+        This matches Plaid's API where deposits increase account balance and expenses decrease it.
+        """
         transactions = []
         tx_config = self.config.get("transactions", {})
         history_days = tx_config.get("history_days", 180)
@@ -142,18 +167,20 @@ class SyntheticDataGenerator:
                 merchants_in_category = [m for m in self.merchant_pool if pattern["category"] in m["category"]]
                 if not merchants_in_category:
                     continue
-                
+
                 num_months = history_days / 30
                 freq_min, freq_max = pattern.get("frequency_per_month", [1,1])
                 num_transactions = int(random.uniform(freq_min, freq_max) * num_months)
 
                 for _ in range(num_transactions):
                     merchant = random.choice(merchants_in_category)
+                    # Spending transactions are negative amounts (money leaving account)
+                    amount = -abs(self._get_random_value(pattern["amount_range"]))
                     transaction = {
                         "transaction_id": f"txn-{uuid.uuid4()}",
                         "account_id": self._get_random_account(accounts, ["checking", "credit card"]),
                         "date": self.faker.date_between(start_date=start_date, end_date=end_date).strftime("%Y-%m-%d"),
-                        "amount": self._get_random_value(pattern["amount_range"]),
+                        "amount": amount,
                         "merchant_name": merchant["name"],
                         "merchant_entity_id": None, # Can be enhanced later
                         "payment_channel": random.choice(["online", "in_store", "other"]),
@@ -165,7 +192,7 @@ class SyntheticDataGenerator:
                         "iso_currency_code": "USD",
                     }
                     transactions.append(transaction)
-            
+
             elif "payment_type" in pattern:
                 # Generate special transaction types
                 num_months = history_days / 30
@@ -174,26 +201,82 @@ class SyntheticDataGenerator:
 
                 for _ in range(num_transactions):
                     amount = self._get_random_value(pattern.get("amount_range", [50, 200])) # Default amount
-                    
+
                     # Custom logic for each payment type
                     if pattern["payment_type"] == "income":
-                        merchant_name = "Direct Deposit"
-                        category = "Financial/Income"
+                        # Income deposits: positive amounts, PAYROLL category, ACH channel
+                        merchant_name = random.choice([
+                            "Direct Deposit",
+                            "Payroll Deposit",
+                            "Salary Deposit",
+                            "Employer Payroll",
+                            "ACH Deposit"
+                        ])
+                        category_primary = "PAYROLL"
+                        category_detailed = "PAYROLL"
                         account_id = self._get_random_account(accounts, ["checking"])
-                        amount = -amount # Income is a credit
+                        # Amount should be positive for deposits (Plaid convention)
+                        # Don't negate - deposits are positive amounts
+                        payment_channel = "ACH"
                     elif pattern["payment_type"] == "transfer_to_savings":
-                        merchant_name = "Transfer to Savings"
-                        category = "Financial/Transfers"
-                        account_id = self._get_random_account(accounts, ["checking"])
-                        # We would also need a corresponding credit to the savings account
+                        # Create transfer out from checking (negative)
+                        checking_account_id = self._get_random_account(accounts, ["checking"])
+                        savings_account_id = self._get_random_account(accounts, ["savings"])
+
+                        # First transaction: transfer out from checking (negative)
+                        transaction_out = {
+                            "transaction_id": f"txn-{uuid.uuid4()}",
+                            "account_id": checking_account_id,
+                            "date": self.faker.date_between(start_date=start_date, end_date=end_date).strftime("%Y-%m-%d"),
+                            "amount": -abs(amount),  # Negative - money leaving checking
+                            "merchant_name": "Transfer to Savings",
+                            "merchant_entity_id": None,
+                            "payment_channel": "other",
+                            "personal_finance_category": {
+                                "primary": "GENERAL_MERCHANDISE",
+                                "detailed": "TRANSFER_OUT",
+                            },
+                            "pending": False,
+                            "iso_currency_code": "USD",
+                        }
+                        transactions.append(transaction_out)
+
+                        # Second transaction: transfer in to savings (positive)
+                        transaction_in = {
+                            "transaction_id": f"txn-{uuid.uuid4()}",
+                            "account_id": savings_account_id,
+                            "date": transaction_out["date"],  # Same date as transfer out
+                            "amount": abs(amount),  # Positive - money entering savings
+                            "merchant_name": "Transfer from Checking",
+                            "merchant_entity_id": None,
+                            "payment_channel": "other",
+                            "personal_finance_category": {
+                                "primary": "GENERAL_MERCHANDISE",
+                                "detailed": "TRANSFER_IN",
+                            },
+                            "pending": False,
+                            "iso_currency_code": "USD",
+                        }
+                        transactions.append(transaction_in)
+
+                        # Skip creating the single transaction below, we already created both
+                        continue
                     elif pattern["payment_type"] == "credit_card_payment":
                         merchant_name = "Credit Card Payment"
-                        category = "Financial/Payments"
+                        category_primary = "GENERAL_MERCHANDISE"
+                        category_detailed = "CREDIT_CARD_PAYMENT"
                         account_id = self._get_random_account(accounts, ["checking"])
+                        # Payments are negative amounts (money leaving checking)
+                        amount = -abs(amount)
+                        payment_channel = "other"
                     elif pattern["payment_type"] == "loan_payment":
                         merchant_name = f"{pattern['loan_type'].title()} Loan Payment"
-                        category = "Financial/Payments"
+                        category_primary = "GENERAL_MERCHANDISE"
+                        category_detailed = "LOAN_PAYMENT"
                         account_id = self._get_random_account(accounts, ["checking"])
+                        # Payments are negative amounts (money leaving checking)
+                        amount = -abs(amount)
+                        payment_channel = "other"
                     else:
                         continue # Skip unknown payment types
 
@@ -204,16 +287,16 @@ class SyntheticDataGenerator:
                         "amount": amount,
                         "merchant_name": merchant_name,
                         "merchant_entity_id": None,
-                        "payment_channel": "online",
+                        "payment_channel": payment_channel,
                         "personal_finance_category": {
-                            "primary": category.split('/')[0],
-                            "detailed": category,
+                            "primary": category_primary,
+                            "detailed": category_detailed,
                         },
                         "pending": False,
                         "iso_currency_code": "USD",
                     }
                     transactions.append(transaction)
-        
+
         # Sort transactions by date
         transactions.sort(key=lambda x: x["date"])
         return transactions
@@ -227,7 +310,7 @@ class SyntheticDataGenerator:
             if account["type"] == "credit" and "credit_card" in liability_configs:
                 config = liability_configs["credit_card"]
                 last_payment_date = (datetime.now() - timedelta(days=random.randint(15, 25))).strftime("%Y-%m-%d")
-                
+
                 liability = {
                     "account_id": account["account_id"],
                     "aprs": [{
@@ -266,20 +349,20 @@ class SyntheticDataGenerator:
     def validate_and_export(self, profiles: List[Dict[str, Any]], output_dir: str, format: str):
         """Validates the generated profiles and exports them to the specified format."""
         logger.info(f"Starting validation and export for {len(profiles)} profiles.")
-        
+
         for i, profile in enumerate(profiles):
             user_id = profile["user_id"]
             logger.info(f"Validating profile {i+1}/{len(profiles)} for user {user_id}...")
-            
+
             is_valid, errors = self.validator.validate(profile)
-            
+
             if not is_valid:
                 logger.error(f"Validation FAILED for user {user_id}.")
                 for error in errors:
                     logger.error(f"  - {error.to_dict()}")
                 # Decide whether to skip export for invalid profiles
-                continue 
-            
+                continue
+
             logger.info(f"Validation PASSED for user {user_id}.")
 
 
@@ -288,7 +371,7 @@ class SyntheticDataGenerator:
                 self._export_to_json(profile, output_dir)
             if format == "csv" or format == "both":
                 self._export_to_csv(profile, output_dir)
-            
+
         logger.info("Export process completed.")
 
     def _export_to_json(self, profile: Dict[str, Any], output_dir: str):
@@ -375,7 +458,7 @@ def main():
     for filename in os.listdir(args.config_dir):
         if filename.endswith(".yaml") or filename.endswith(".yml"):
             config_path = os.path.join(args.config_dir, filename)
-            
+
             generator = SyntheticDataGenerator(config_path, args.transactions_csv)
             profiles = generator.generate_profiles()
             generator.validate_and_export(profiles, args.output_dir, args.format)

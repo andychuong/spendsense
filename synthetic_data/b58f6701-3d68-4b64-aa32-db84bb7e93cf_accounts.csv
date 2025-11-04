@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-c09e2852-45e5-4178-abb9-d0f81b87c224,Zimmerman Group Checking,depository,checking,individual,"{'available': 3742.307997700122, 'current': 4376.028159524823, 'limit': None}",USD,1914
-acct-a9f0c0d3-d340-4530-bc5a-176d987c9afc,"Cox, Kerr and Nguyen Savings",depository,savings,individual,"{'available': 10589.683004059416, 'current': 12692.818273742925, 'limit': None}",USD,1523
-acct-a4fb4cbf-b8c3-449a-96c9-20c65a955428,"Mccormick, Moore and Reed Credit Card",credit,credit card,individual,"{'available': 311.67337679042015, 'current': 358.14845771992555, 'limit': 13829.525750810732}",USD,6876

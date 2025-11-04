@@ -1,9 +1,9 @@
 # Security Requirements
 ## SpendSense Platform - Backend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -73,7 +73,7 @@ This document defines the security requirements for the SpendSense backend, incl
 
 **Role-Based Access Control (RBAC)**:
 - **Roles**: `user`, `operator`, `admin`
-- **User Role**: 
+- **User Role**:
   - Access own profile, recommendations, data
   - Upload transaction data
   - Manage consent
@@ -360,8 +360,8 @@ This document defines the security requirements for the SpendSense backend, incl
 
 ---
 
-**Document Status**: Draft  
-**Next Review Date**: TBD  
+**Document Status**: Draft
+**Next Review Date**: TBD
 **Approval Required From**: Product Owner, Backend Lead, Security Team, Compliance Officer
 
 

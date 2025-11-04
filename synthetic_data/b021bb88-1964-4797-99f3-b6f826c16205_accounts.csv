@@ -1,5 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-ded89aa2-b96e-4fc8-9c3f-827b96a4e7b2,"Carter, Larsen and Singh Checking",depository,checking,individual,"{'available': 2082.652085693616, 'current': 2439.144063591052, 'limit': None}",USD,4957
-acct-2bb264e8-603b-4b41-b1f7-a772aeb5d2ea,Duffy-Mason Savings,depository,savings,individual,"{'available': 4050.7850491149075, 'current': 4541.844141581354, 'limit': None}",USD,2759
-acct-1808e5ec-3719-4005-b57e-36fb2af64d95,Walters-Molina Credit Card,credit,credit card,individual,"{'available': 3605.0500587960987, 'current': 3637.415677028051, 'limit': 10423.434025071034}",USD,3610
-acct-5ea0ecb4-1fd5-4537-9942-cc3f6b89d84e,Carr Inc Student,loan,student,individual,"{'available': 14704.365828453996, 'current': 17974.345729722154, 'limit': None}",USD,6416

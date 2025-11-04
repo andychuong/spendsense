@@ -1,9 +1,9 @@
 # Functional Requirements
 ## SpendSense Platform - Frontend Layer
 
-**Version**: 1.0  
-**Date**: 2025-11-04  
-**Status**: Planning  
+**Version**: 1.0
+**Date**: 2025-11-04
+**Status**: Planning
 
 ---
 
@@ -83,7 +83,7 @@ This document defines the functional requirements for the Frontend Layer, specif
 
 ---
 
-**Document Status**: Draft  
+**Document Status**: Draft
 **Next Review Date**: TBD
 
 

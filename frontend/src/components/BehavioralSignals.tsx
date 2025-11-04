@@ -42,40 +42,43 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
 
   const formatPercentage = (value?: number) => {
     if (value === undefined || value === null) return 'N/A'
-    return `${value.toFixed(1)}%`
+    // Ensure value is a number
+    const numValue = typeof value === 'number' ? value : Number(value)
+    if (isNaN(numValue)) return 'N/A'
+    return `${numValue.toFixed(1)}%`
   }
 
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-gray-900">Behavioral Signals (30 days)</h3>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Subscriptions */}
         {signals.subscriptions && (
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <h4 className="text-sm font-medium text-gray-700 mb-3">Subscriptions</h4>
             <div className="space-y-2">
-              {signals.subscriptions.recurring_merchants !== undefined && (
+              {(signals.subscriptions.subscription_count !== undefined || signals.subscriptions.recurring_merchants?.length !== undefined) && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Recurring Merchants</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.subscriptions.recurring_merchants}
+                    {signals.subscriptions.subscription_count ?? signals.subscriptions.recurring_merchants?.length ?? 0}
                   </span>
                 </div>
               )}
-              {signals.subscriptions.monthly_recurring_spend !== undefined && (
+              {signals.subscriptions.total_recurring_spend !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Monthly Recurring Spend</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatCurrency(signals.subscriptions.monthly_recurring_spend)}
+                    {formatCurrency(signals.subscriptions.total_recurring_spend)}
                   </span>
                 </div>
               )}
-              {signals.subscriptions.subscription_share !== undefined && (
+              {signals.subscriptions.subscription_share_percent !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Subscription Share</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatPercentage(signals.subscriptions.subscription_share)}
+                    {formatPercentage(signals.subscriptions.subscription_share_percent)}
                   </span>
                 </div>
               )}
@@ -88,27 +91,27 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <h4 className="text-sm font-medium text-gray-700 mb-3">Savings</h4>
             <div className="space-y-2">
-              {signals.savings.net_inflow !== undefined && (
+              {signals.savings.net_inflow?.net_inflow !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Net Inflow</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatCurrency(signals.savings.net_inflow)}
+                    {formatCurrency(signals.savings.net_inflow.net_inflow)}
                   </span>
                 </div>
               )}
-              {signals.savings.growth_rate !== undefined && (
+              {signals.savings.growth_rate?.growth_rate_percent !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Growth Rate</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatPercentage(signals.savings.growth_rate)}
+                    {formatPercentage(signals.savings.growth_rate.growth_rate_percent)}
                   </span>
                 </div>
               )}
-              {signals.savings.emergency_fund_coverage !== undefined && (
+              {signals.savings.emergency_fund_coverage?.coverage_months !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Emergency Fund Coverage</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.savings.emergency_fund_coverage.toFixed(1)} months
+                    {signals.savings.emergency_fund_coverage.coverage_months.toFixed(1)} months
                   </span>
                 </div>
               )}
@@ -121,35 +124,35 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <h4 className="text-sm font-medium text-gray-700 mb-3">Credit</h4>
             <div className="space-y-2">
-              {signals.credit.utilization !== undefined && (
+              {signals.credit.total_utilization !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Utilization</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatPercentage(signals.credit.utilization)}
+                    {formatPercentage(signals.credit.total_utilization)}
                   </span>
                 </div>
               )}
-              {signals.credit.high_utilization_cards !== undefined && (
+              {(signals.credit.high_utilization_cards?.length !== undefined || signals.credit.card_count !== undefined) && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">High Utilization Cards</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.credit.high_utilization_cards}
+                    {signals.credit.high_utilization_cards?.length ?? 0}
                   </span>
                 </div>
               )}
-              {signals.credit.interest_charges !== undefined && (
+              {signals.credit.cards_with_interest?.length !== undefined && (
                 <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Interest Charges</span>
+                  <span className="text-sm text-gray-600">Cards with Interest</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {formatCurrency(signals.credit.interest_charges)}
+                    {signals.credit.cards_with_interest.length}
                   </span>
                 </div>
               )}
-              {signals.credit.overdue_accounts !== undefined && (
+              {(signals.credit.overdue_cards?.length !== undefined) && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Overdue Accounts</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.credit.overdue_accounts}
+                    {signals.credit.overdue_cards.length}
                   </span>
                 </div>
               )}
@@ -162,27 +165,27 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <h4 className="text-sm font-medium text-gray-700 mb-3">Income</h4>
             <div className="space-y-2">
-              {signals.income.payment_frequency !== undefined && (
+              {signals.income.payment_frequency?.median_gap_days !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Payment Frequency</span>
                   <span className="text-sm font-medium text-gray-900">
-                    Every {signals.income.payment_frequency} days
+                    Every {signals.income.payment_frequency.median_gap_days} days
                   </span>
                 </div>
               )}
-              {signals.income.cash_flow_buffer !== undefined && (
+              {signals.income.cash_flow_buffer?.cash_flow_buffer_months !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Cash Flow Buffer</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.income.cash_flow_buffer.toFixed(1)} months
+                    {signals.income.cash_flow_buffer.cash_flow_buffer_months.toFixed(1)} months
                   </span>
                 </div>
               )}
-              {signals.income.variable_income !== undefined && (
+              {signals.income.variable_income_pattern?.is_variable_income !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Variable Income</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.income.variable_income ? 'Yes' : 'No'}
+                    {signals.income.variable_income_pattern.is_variable_income ? 'Yes' : 'No'}
                   </span>
                 </div>
               )}

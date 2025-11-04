@@ -1,4 +1,0 @@
-account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
-acct-ce1664a8-87ac-4947-b788-b9443cd9877b,Dominguez-Gibson Checking,depository,checking,individual,"{'available': 1253.9903746655925, 'current': 1494.6109253932498, 'limit': None}",USD,7875
-acct-1789b93a-cb09-4b22-9461-ddf06b9fbc9e,"Robinson, Clay and Duncan Savings",depository,savings,individual,"{'available': 2281.559510972972, 'current': 2641.293450228353, 'limit': None}",USD,6321
-acct-1ab8ce7e-fa5a-4fd8-97de-0f5a7261c5ed,"Hunter, Cunningham and Green Credit Card",credit,credit card,individual,"{'available': 3897.5294004696234, 'current': 4681.18131481369, 'limit': 5000.0}",USD,1481
