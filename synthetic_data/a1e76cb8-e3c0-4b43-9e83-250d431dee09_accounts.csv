@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-1eff62b5-4263-455f-b6a7-ad93de65760a,Hernandez-Perez Checking,depository,checking,individual,"{'available': 894.5408718037185, 'current': 1084.2674097529316, 'limit': None}",USD,8156
+acct-173b1d79-9f79-4c96-b632-46f82cffa9ba,Wright Group Savings,depository,savings,individual,"{'available': 1472.1612939382533, 'current': 1572.5091391512206, 'limit': None}",USD,9081
+acct-147a2ceb-11c6-4153-bee1-08a6a2c6e64e,Graves LLC Credit Card,credit,credit card,individual,"{'available': 3591.6449855464484, 'current': 4382.768914098807, 'limit': 5000.0}",USD,3722

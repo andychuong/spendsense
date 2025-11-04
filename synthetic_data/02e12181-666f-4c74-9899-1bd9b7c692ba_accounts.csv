@@ -1,0 +1,3 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-c353ca6b-5944-4254-8021-323fc5d23447,Parrish-Hamilton Checking,depository,checking,individual,"{'available': 2911.6404677297696, 'current': 3200.3991309619796, 'limit': None}",USD,6760
+acct-499db93e-2c94-4174-b586-925764e3288a,Johnson Group Credit Card,credit,credit card,individual,"{'available': 1364.1950481093575, 'current': 1458.3753740124416, 'limit': 7327.554876700879}",USD,9720

@@ -2,7 +2,7 @@
 ## SpendSense Platform - Backend Layer
 
 **Version**: 1.0  
-**Date**: 2024-01-15  
+**Date**: 2025-11-04  
 **Status**: Planning  
 
 ---
@@ -91,17 +91,26 @@ This document defines the security requirements for the SpendSense backend, incl
   - Access audit logs
 
 **Access Control**:
-- **Endpoint-Level**: Check role in route handler
-- **Resource-Level**: Verify ownership in service layer
-- **Users**: Can only access their own data
-- **Operators**: Can access all user data
-- **Admins**: Can access all endpoints
+- ✅ **Endpoint-Level**: Check role in route handler using FastAPI dependencies
+- ✅ **Resource-Level**: Verify ownership in dependency layer
+- ✅ **Users**: Can only access their own data (can access own data regardless of consent)
+- ✅ **Operators**: Can access all user data (but must respect user consent)
+- ✅ **Admins**: Can access all endpoints (but must respect user consent)
+- ✅ **Consent Enforcement**: Operators and admins cannot access user data if consent is revoked or not granted
 
 **Authorization Checks**:
-- JWT token includes `role` claim
-- Middleware checks role before route handler
-- Resource-level checks in service layer
-- Log authorization failures
+- ✅ JWT token includes `role` claim
+- ✅ Authorization dependencies check role before route handler
+- ✅ Resource-level checks in dependency layer using `check_resource_access()` and factory functions
+- ✅ Log authorization failures (all failures logged with user ID, role, and resource details)
+
+**Implementation Details**:
+- **Authorization Dependencies**: `require_role()`, `require_operator`, `require_admin`
+- **Resource-Level Helpers**: `check_resource_access()`, `check_user_access()`, factory functions for owner/operator/admin access
+- **Consent Enforcement**: `check_resource_access()` and `check_user_access()` check target user's `consent_status` when operators/admins access other users' data
+- **Role Hierarchy**: USER (1) < OPERATOR (2) < ADMIN (3)
+- **Authorization Logging**: All authorization failures are logged with detailed information, including consent violations
+- **Privacy Compliance**: Operators and admins must respect user consent, ensuring GDPR compliance and user control over data access
 
 ---
 

@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-9f43d190-fa2c-4887-b533-4322a88fe22b,Gonzales LLC Checking,depository,checking,individual,"{'available': 708.2620180580733, 'current': 763.3345399993532, 'limit': None}",USD,9326
+acct-e494fd20-79be-4eb7-b8d9-83bb324e869b,Davis Inc Savings,depository,savings,individual,"{'available': 558.635619794139, 'current': 662.1274130779232, 'limit': None}",USD,9715
+acct-746a790d-142a-4313-b36b-135deacc347b,"Riley, York and Allen Credit Card",credit,credit card,individual,"{'available': 4347.731583470487, 'current': 4416.755556317113, 'limit': 5000.0}",USD,8570

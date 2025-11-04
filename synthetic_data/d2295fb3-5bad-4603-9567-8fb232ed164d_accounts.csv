@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-832a6800-82c7-4a4a-8a1f-bd7662d52a08,Williams Group Checking,depository,checking,individual,"{'available': 4209.132155401876, 'current': 4533.149406773451, 'limit': None}",USD,8011
+acct-294a827f-b315-424f-88ec-4316082cd4cc,Dougherty-Gomez Savings,depository,savings,individual,"{'available': 18490.397851801423, 'current': 21610.185747924537, 'limit': None}",USD,1010
+acct-41b49291-8c00-4e4c-a3ad-41e1dac1be03,"Hill, Delgado and Smith Credit Card",credit,credit card,individual,"{'available': 818.5426778446248, 'current': 944.547494147159, 'limit': 14187.801947026397}",USD,6869

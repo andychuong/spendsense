@@ -1,0 +1,47 @@
+# Persona 3: Subscription-Heavy
+# This persona represents users with a high number of recurring monthly or weekly subscriptions.
+
+persona_name: "Subscription-Heavy"
+num_profiles: 20
+
+# --- Account Generation ---
+accounts:
+  - type: "depository"
+    subtype: "checking"
+    balance_range: [1000, 4000]
+  - type: "credit"
+    subtype: "credit card"
+    balance_range: [1000, 2500]
+    limit_range: [5000, 10000]
+    apr_range: [16.0, 23.0]
+
+# --- Transaction Generation ---
+transactions:
+  num_transactions_range: [60, 180]
+  history_days: 180
+  patterns:
+    - payment_type: "income"
+      amount_range: [4000, 6000]
+      frequency_per_month: [1, 2]
+    # High number of recurring subscriptions
+    - category: "Entertainment/Streaming Services"
+      amount_range: [10, 30]
+      frequency_per_month: [3, 5] # Multiple streaming services
+    - category: "Software/Cloud Services"
+      amount_range: [5, 50]
+      frequency_per_month: [2, 4]
+    - category: "Bills & Utilities/Internet"
+      amount_range: [50, 100]
+      frequency_per_month: [1, 1]
+    - category: "Health/Fitness" # Gym membership
+      amount_range: [30, 80]
+      frequency_per_month: [1, 1]
+    - payment_type: "credit_card_payment"
+      payment_behavior: "pays_statement_balance"
+      frequency_per_month: [1, 1] # Pay once a month
+      amount_range: [500, 1500] # Based on typical spending
+
+# --- Liability Generation ---
+liabilities:
+  credit_card:
+    is_overdue: false

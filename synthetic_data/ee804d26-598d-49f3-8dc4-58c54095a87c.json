@@ -1,0 +1,816 @@
+{
+  "user_id": "ee804d26-598d-49f3-8dc4-58c54095a87c",
+  "accounts": [
+    {
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "name": "Simmons PLC Checking",
+      "type": "depository",
+      "subtype": "checking",
+      "holder_category": "individual",
+      "balances": {
+        "available": 4077.5574630805504,
+        "current": 4157.32853658038,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "1383"
+    },
+    {
+      "account_id": "acct-6aa20516-33de-4c7f-bcb9-c3fad106edf8",
+      "name": "Myers PLC Savings",
+      "type": "depository",
+      "subtype": "savings",
+      "holder_category": "individual",
+      "balances": {
+        "available": 20815.48934724645,
+        "current": 22539.02892614428,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "2282"
+    },
+    {
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "name": "Curry, Calderon and Johnston Credit Card",
+      "type": "credit",
+      "subtype": "credit card",
+      "holder_category": "individual",
+      "balances": {
+        "available": 762.7506866234035,
+        "current": 770.4987699929401,
+        "limit": 9219.408885173088
+      },
+      "iso_currency_code": "USD",
+      "mask": "1382"
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": "txn-5e241f41-6fe9-4843-8aad-73dcc05bae93",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-05-07",
+      "amount": 1270.6811451559429,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1fc700a2-f691-4d1b-9fbd-b604a48d2e22",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-05-09",
+      "amount": 101.37204104340339,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-dc6e0aee-25a7-41ef-813e-26f3d19dccf5",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-05-14",
+      "amount": 83.49166735681406,
+      "merchant_name": "eBookStore #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Digital Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e284824b-d506-4abe-a647-c158c74c3717",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-05-20",
+      "amount": 163.6243953719445,
+      "merchant_name": "HardwarePro #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0c840a9b-771a-42ec-a407-fabe197b9e3b",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-05-21",
+      "amount": 111.01964637440435,
+      "merchant_name": "ElectroHub #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-03a7db0e-2d4b-459b-95c1-d34c457e3d65",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-05-24",
+      "amount": 769.944604838586,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-df85d91e-79dc-4761-9937-fccfe42d941b",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-05-27",
+      "amount": 151.67607215845777,
+      "merchant_name": "LuxuryBoutique #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ff99b910-c1c8-4ca5-a4c8-c9423ede5e86",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-05-28",
+      "amount": -5793.509369547424,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6193dac7-c2d0-4a2b-995f-a7bfcf018c6b",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-05-28",
+      "amount": 112.43687565548665,
+      "merchant_name": "SubscriptionBox #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-83406759-a3f8-4751-ba42-f779bbc8e37f",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-05-31",
+      "amount": 724.3452922559848,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f2738405-f44f-4395-b425-46aea803e691",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-06-06",
+      "amount": 163.69000313969957,
+      "merchant_name": "ToyHouse #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Toys & Games"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b808c516-268f-4dd5-ab7e-9a9560179421",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-06-09",
+      "amount": -5690.894336676537,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-031898a5-1c5d-4d86-a175-858aa36b62df",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-06-11",
+      "amount": 66.55412851011961,
+      "merchant_name": "HomeGoods Store #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Home & Garden"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-44925cc8-a293-46d3-bd3f-7560fcc0cefc",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-06-17",
+      "amount": 1619.222517431123,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6ffa51fa-3928-4dce-8398-d05c7953ee50",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-06-20",
+      "amount": 77.54335657688651,
+      "merchant_name": "GardenCenter #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Nurseries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-61db0871-b359-47c9-a144-02ded6948e22",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-07-18",
+      "amount": 1852.1091184591542,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8b116a56-6a07-4968-a6d6-9dd43fa8762a",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-07-22",
+      "amount": 567.8629336543651,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b5a51253-e6bc-402a-9eb1-14819daacbc6",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-07-22",
+      "amount": 71.43294489336185,
+      "merchant_name": "CityMall Clothing #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d7c847b4-06ce-4e70-9e34-e65eeb2e6e9a",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-07-28",
+      "amount": 1462.9269347801805,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ce899c2f-acd6-489e-a490-0f4ab2b2903a",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-07-28",
+      "amount": 105.26128736587886,
+      "merchant_name": "ToyHouse #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Toys & Games"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-dcef1924-5733-4a49-ad0e-067c241a2326",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-07-28",
+      "amount": 173.57384703834992,
+      "merchant_name": "BikeShop #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Bicycles & Accessories"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-122aa3f2-57ef-4272-a38d-e6e4f1227c76",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-07-29",
+      "amount": 1765.9042954700344,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6c03d4c2-19e9-4a18-920a-734d0e4876e8",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-08-02",
+      "amount": 101.22856163968297,
+      "merchant_name": "OnlineMart #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-26064f9a-f452-486d-ab77-2473fb6d95e6",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-08-07",
+      "amount": 192.3048995645248,
+      "merchant_name": "LuxuryBoutique #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1ccbc8f2-1b16-4090-b2fa-5ad1ca951da8",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-08-09",
+      "amount": 146.07207101996232,
+      "merchant_name": "HardwarePro #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-eedfb2ef-ee16-4f77-91e8-193154463d12",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-08-10",
+      "amount": 918.5030620182448,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c6c2ca41-dec8-401d-a567-fabe2a91cf6c",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-08-13",
+      "amount": -7457.129767732706,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9bed4e77-3d2b-47c5-8e20-ff61d2063aa2",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-08-15",
+      "amount": 120.50179535424938,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f602681f-e65e-4a5c-91aa-7400299c2c7a",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-08-21",
+      "amount": 192.2143683232182,
+      "merchant_name": "OnlineMart #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4d95773f-0cff-45ef-8626-ef2a5286d20b",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-08-26",
+      "amount": 119.53598462657109,
+      "merchant_name": "HomeGoods Store #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Home & Garden"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4cadfa89-4066-4149-980c-573360dc40d8",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-09-02",
+      "amount": 55.74642732550897,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4e68d2b6-c57e-4836-bc14-2b4472bc56c8",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-09-07",
+      "amount": 146.88413742616376,
+      "merchant_name": "CraftsOnline #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d56beca7-1cf7-4c4a-bd65-a3b15bc54907",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-09-10",
+      "amount": 1815.714707617124,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-811e30f2-ae8b-4877-a6d7-8968401e5635",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-09-12",
+      "amount": -5953.766238591664,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e660ceda-f5d9-4842-a368-c7e4f87f0c9d",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-09-12",
+      "amount": 89.50348175290898,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-267bb87a-d44d-4234-94cc-2553ed804f1a",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-09-18",
+      "amount": 135.57991752703342,
+      "merchant_name": "BikeShop #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Bicycles & Accessories"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-10b68fbc-9754-42eb-8368-4e56fff954e2",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-09-19",
+      "amount": 67.68630374110062,
+      "merchant_name": "CityMall Clothing #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c9df0ece-dad3-46d6-a017-26d144d17d8b",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-09-22",
+      "amount": 138.13975404501426,
+      "merchant_name": "FurnitureCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5ab05353-4618-47f2-81ba-b0bff844cb09",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-09-25",
+      "amount": 97.88990007244671,
+      "merchant_name": "LuxuryBoutique #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4166b203-41fd-463e-9130-0e4f97794931",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-09-27",
+      "amount": -7920.620577729333,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2f7f7736-2a24-4189-af3d-82f7be6677fc",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-10-01",
+      "amount": 178.14901802348257,
+      "merchant_name": "BikeShop #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Bicycles & Accessories"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-68c20e19-187d-47ef-a28e-a9696c795605",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-10-02",
+      "amount": 58.169531877869474,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f1701855-cf9c-474a-9d32-643c3b972d2d",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-10-11",
+      "amount": 177.08951332395657,
+      "merchant_name": "CraftsOnline #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e8777dc5-d24d-4174-9c44-6fccf61eec51",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-10-17",
+      "amount": 1984.058538334657,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1dda7f35-7e99-4ea8-89e1-55e3cda970af",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-10-17",
+      "amount": 57.90656188273396,
+      "merchant_name": "BikeShop #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Bicycles & Accessories"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-55226724-00c3-4569-bf28-3b49ef4f3e7a",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-10-19",
+      "amount": -7497.468997701329,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0f5c8983-3aa5-48a8-bf3f-0a5ff4a68266",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-10-24",
+      "amount": 86.39318720928148,
+      "merchant_name": "BikeShop #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Bicycles & Accessories"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-eb09db69-d723-4363-bd45-29b86215b101",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-10-25",
+      "amount": 1706.145685882329,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-71c0fea4-3560-4bfe-9c5a-3d7bb3611184",
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "date": "2025-10-31",
+      "amount": 198.61156497530573,
+      "merchant_name": "LuxuryBoutique #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-91314566-528a-40cb-a0f4-fe5d8d619ed6",
+      "account_id": "acct-35b60d04-0719-4d62-ac39-d06b935c342f",
+      "date": "2025-11-01",
+      "amount": 61.42581506587425,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    }
+  ],
+  "liabilities": [
+    {
+      "account_id": "acct-7774f7f2-190e-4fa4-8310-4e9fb7895772",
+      "aprs": [
+        {
+          "apr_percentage": 24.919424834305808,
+          "apr_type": "purchase_apr"
+        }
+      ],
+      "is_overdue": false,
+      "last_payment_amount": 310.9483019431886,
+      "last_payment_date": "2025-10-10",
+      "last_statement_balance": 896.0601052971823,
+      "minimum_payment_amount": 38.52493849964701,
+      "next_payment_due_date": "2025-11-18"
+    }
+  ]
+}

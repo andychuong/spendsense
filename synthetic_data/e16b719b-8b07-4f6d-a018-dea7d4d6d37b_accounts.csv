@@ -1,0 +1,3 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-76812a08-b507-4411-881e-647b889b9eda,Dixon-Duncan Checking,depository,checking,individual,"{'available': 3419.400454354146, 'current': 3953.129662085829, 'limit': None}",USD,4819
+acct-c1c82387-78e3-4958-92da-8d82b90dedd8,Tran Inc Credit Card,credit,credit card,individual,"{'available': 902.0535359628276, 'current': 1006.6446110500231, 'limit': 9829.512800486384}",USD,9030

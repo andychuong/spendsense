@@ -1,0 +1,5 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-d8e5db22-e498-4747-99fc-ab8d58d943a9,Ramirez-Rodriguez Checking,depository,checking,individual,"{'available': 1812.8371034831923, 'current': 1922.7503104423051, 'limit': None}",USD,1239
+acct-d1b11a08-6734-4389-9582-2ebf15d4d8d0,"Chase, Davidson and Jimenez Savings",depository,savings,individual,"{'available': 4395.8483518020485, 'current': 5105.449146150964, 'limit': None}",USD,8367
+acct-a9bf973c-bc8e-4c89-add8-6c89f06d8d17,Mendoza-Campbell Credit Card,credit,credit card,individual,"{'available': 1499.4993630349443, 'current': 1663.9414489831747, 'limit': 6987.421226706476}",USD,4769
+acct-28e8ff1c-6f65-458e-8a2b-d980f4b2a28a,"Harmon, Francis and Thomas Student",loan,student,individual,"{'available': 34143.98993402005, 'current': 38282.23473726478, 'limit': None}",USD,2156

@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-f59f7890-a310-4a7f-8bda-938d17193c48,"Wood, Potter and Williams Checking",depository,checking,individual,"{'available': 3036.1820092253292, 'current': 3453.13857741177, 'limit': None}",USD,2769
+acct-e5a968a8-cfc5-4922-9803-7509fec9d978,Burton Inc Savings,depository,savings,individual,"{'available': 48107.83761267775, 'current': 49608.30938131814, 'limit': None}",USD,7295
+acct-7b0c87e8-8153-467d-b4e1-0db6994f92dc,Small-Phillips Credit Card,credit,credit card,individual,"{'available': 604.2767182536878, 'current': 639.6883275445225, 'limit': 9165.326470659285}",USD,5422

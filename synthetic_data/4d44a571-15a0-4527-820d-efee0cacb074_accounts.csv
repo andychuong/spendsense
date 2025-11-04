@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-aef5f2f8-bb57-424d-98f1-3a21c9e04a20,Wall-Johnson Checking,depository,checking,individual,"{'available': 1640.4183298991516, 'current': 1736.2695132644785, 'limit': None}",USD,2865
+acct-04d2644e-d20a-435f-a9b7-19eb3b4c7361,Perez Group Savings,depository,savings,individual,"{'available': 1497.0123208758112, 'current': 1669.9651199979508, 'limit': None}",USD,3176
+acct-355694db-d31c-4452-b62d-9cda165ba3b0,"Bailey, Bailey and Rivas Credit Card",credit,credit card,individual,"{'available': 1711.3256294505284, 'current': 1992.4091821067022, 'limit': 6309.465661913844}",USD,3242

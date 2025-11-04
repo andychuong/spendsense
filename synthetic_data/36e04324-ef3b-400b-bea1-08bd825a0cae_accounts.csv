@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-82e38c1d-916f-4623-bf1c-ea2e26291733,Thompson LLC Checking,depository,checking,individual,"{'available': 4127.394586089779, 'current': 4178.406423609064, 'limit': None}",USD,5380
+acct-6ece68d5-74b1-460f-8430-50ce0f29f18f,"Rivera, Ross and Hughes Savings",depository,savings,individual,"{'available': 22258.84950836752, 'current': 24455.097377637718, 'limit': None}",USD,7272
+acct-b3b4d1c2-ee17-4340-b025-17fab610958e,"Hardin, Garcia and Orozco Credit Card",credit,credit card,individual,"{'available': 459.3699137584558, 'current': 504.2216903803184, 'limit': 12057.848285539782}",USD,5625

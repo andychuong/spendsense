@@ -1,0 +1,5 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-f5b455f3-acfb-4593-b8c9-718ce326dae1,Gutierrez-Evans Checking,depository,checking,individual,"{'available': 995.3940872160983, 'current': 1046.8752997051708, 'limit': None}",USD,4893
+acct-1e8dfe69-4489-4781-bb59-3a19cdfe500d,"Carey, Spencer and Russell Savings",depository,savings,individual,"{'available': 5152.439047750232, 'current': 5844.028477256903, 'limit': None}",USD,8455
+acct-bb990089-b753-495d-aed1-1943a6756c7f,Murphy-Evans Credit Card,credit,credit card,individual,"{'available': 3142.5788591952473, 'current': 3867.714980278165, 'limit': 5867.623518673954}",USD,1371
+acct-ea798dc1-0d05-47e6-983e-cc066f60811b,Benjamin Group Student,loan,student,individual,"{'available': 19525.674726070527, 'current': 20564.705205615726, 'limit': None}",USD,5550

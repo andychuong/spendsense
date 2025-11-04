@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-fac91278-16e2-4eb3-a171-e3cacfb4a9c4,"Davis, Silva and Soto Checking",depository,checking,individual,"{'available': 898.8791572605182, 'current': 972.1623756245449, 'limit': None}",USD,2370
+acct-a4ef9a13-f073-4764-9fc8-40fdb43424df,Bailey Group Savings,depository,savings,individual,"{'available': 1941.882867294934, 'current': 2186.1311502446174, 'limit': None}",USD,4643
+acct-b1381025-0dad-4a2d-bec2-8cb8a9246664,"Hawkins, Manning and Rios Credit Card",credit,credit card,individual,"{'available': 3949.903929506522, 'current': 4654.081129880349, 'limit': 5000.0}",USD,1718

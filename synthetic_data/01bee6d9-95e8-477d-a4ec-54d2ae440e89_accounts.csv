@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-fec4649c-db6d-41bd-a88f-5cff562b5a90,"Bennett, Thomas and Brown Checking",depository,checking,individual,"{'available': 3748.195742135278, 'current': 4406.46276192751, 'limit': None}",USD,9056
+acct-d6f9c995-f706-40fc-83b7-137876b17d34,Coffey Group Savings,depository,savings,individual,"{'available': 37486.83231097795, 'current': 42579.13615506406, 'limit': None}",USD,5202
+acct-25d3e13d-a099-4a74-a1d7-42218dce48a5,"Young, Hughes and Wells Credit Card",credit,credit card,individual,"{'available': 646.4487396423754, 'current': 672.358552068451, 'limit': 11937.120650388784}",USD,1069

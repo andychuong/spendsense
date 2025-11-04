@@ -1,0 +1,5 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-2ce53305-f2e4-4e79-9a60-6e719a8a1cb6,Williams-Evans Checking,depository,checking,individual,"{'available': 2686.2108635817503, 'current': 2956.072047423225, 'limit': None}",USD,2749
+acct-868e10b8-7be2-4b2d-bbc9-87b63cb3c8ef,Mason Group Savings,depository,savings,individual,"{'available': 7178.920254791047, 'current': 8546.326289846787, 'limit': None}",USD,7930
+acct-3b400142-9250-41fc-b811-3b2f7ad715bd,"Vang, Grimes and Castro Credit Card",credit,credit card,individual,"{'available': 1969.510783777031, 'current': 2369.753105247538, 'limit': 8966.064960986569}",USD,2482
+acct-611f16b8-b790-4c90-b4ff-4ea6645530a7,Stewart-Williams Student,loan,student,individual,"{'available': 11947.224755846994, 'current': 12680.93342342782, 'limit': None}",USD,7725

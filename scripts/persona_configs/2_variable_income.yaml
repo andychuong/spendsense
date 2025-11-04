@@ -1,0 +1,43 @@
+# Persona 2: Variable Income Budgeter
+# This persona represents users with irregular income streams, such as freelancers or gig economy workers.
+
+persona_name: "Variable Income Budgeter"
+num_profiles: 20
+
+# --- Account Generation ---
+accounts:
+  - type: "depository"
+    subtype: "checking"
+    balance_range: [100, 2500] # Balance can fluctuate significantly
+  - type: "depository"
+    subtype: "savings"
+    balance_range: [1000, 8000]
+  - type: "credit"
+    subtype: "credit card"
+    balance_range: [500, 2000]
+    limit_range: [3000, 7000]
+    apr_range: [15.0, 22.5]
+
+# --- Transaction Generation ---
+transactions:
+  num_transactions_range: [40, 120]
+  history_days: 180
+  patterns:
+    # Income is variable in amount and frequency
+    - payment_type: "income"
+      amount_range: [500, 4000] # Wide range of income payments
+      frequency_per_month: [1, 5] # Multiple, irregular payments
+    # Spending is generally conservative
+    - category: "Bills & Utilities"
+      amount_range: [50, 400]
+      frequency_per_month: [3, 6]
+    - category: "Transport"
+      amount_range: [20, 150]
+      frequency_per_month: [4, 10]
+    - payment_type: "credit_card_payment"
+      payment_behavior: "pays_in_full"
+
+# --- Liability Generation ---
+liabilities:
+  credit_card:
+    is_overdue: false

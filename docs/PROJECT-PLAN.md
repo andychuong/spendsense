@@ -1,9 +1,9 @@
 # SpendSense Project Plan
 ## Order of Operations & Task List
 
-**Version**: 1.1  
-**Date**: 2025-11-03
-**Status**: Development (Phase 1 - Task 2.4 Complete)  
+**Version**: 1.18  
+**Date**: 2025-11-04
+**Status**: Development (Phase 4 - Task 11.2 Complete)  
 **Project Manager**: TBD  
 
 ---
@@ -86,6 +86,8 @@ This document provides a comprehensive order of operations and task list for the
 - [x] Set up password hashing (bcrypt)
 - [x] Create authentication middleware
 - [x] Implement token refresh mechanism
+- [ ] Write unit tests for authentication foundation (≥80% coverage)
+  - [ ] Fix test failures related to JWT token creation and validation
 - **PRD References**:
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#token-management)
   - [Security](./backend/Security.md#sr-be-001-authentication-security)
@@ -95,6 +97,18 @@ This document provides a comprehensive order of operations and task list for the
 - [x] Implement user login (email + password)
 - [x] Create user management endpoints
 - [x] Add input validation (email, password strength)
+- [ ] Write unit tests for email/password authentication endpoints (100% coverage)
+  - [ ] Fix test_register_success - mock database operations properly
+  - [ ] Fix test_login_invalid_email - adjust test expectations
+  - [ ] Fix test_login_user_without_password - mock OAuth user properly
+  - [ ] Fix test_refresh_token_success - fix create_refresh_token signature
+  - [ ] Fix test_refresh_token_invalid_token - mock token validation
+  - [ ] Fix test_refresh_token_expired_token - mock expired token handling
+  - [ ] Fix test_refresh_token_missing_session - mock session lookup
+  - [ ] Fix test_logout_success - mock session deletion
+  - [ ] Fix test_logout_multiple_sessions - mock multiple session deletion
+  - [ ] Fix test_logout_unauthorized - adjust unauthorized test expectations
+  - [ ] Fix test_logout_invalid_token - mock invalid token handling
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#authentication-endpoints)
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#emailusername--password)
@@ -104,6 +118,14 @@ This document provides a comprehensive order of operations and task list for the
 - [x] Implement phone verification code generation
 - [x] Create phone verification endpoints
 - [x] Add rate limiting for SMS
+- [ ] Write unit tests for phone/SMS authentication endpoints (100% coverage)
+  - [ ] Fix test_request_phone_verification_success - mock SMS service properly
+  - [ ] Fix test_request_phone_verification_send_failure - adjust error expectations
+  - [ ] Fix test_verify_phone_code_new_user_success - mock user creation
+  - [ ] Fix test_verify_phone_code_existing_user_success - mock existing user lookup
+  - [ ] Fix test_verify_phone_code_invalid_code - mock invalid code handling
+  - [ ] Fix test_verify_phone_code_max_attempts_exceeded - mock max attempts error
+  - [ ] Fix test_verify_phone_code_phone_already_registered_different_user - mock user lookup
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#authentication-endpoints)
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#phone-number--sms)
@@ -115,24 +137,27 @@ This document provides a comprehensive order of operations and task list for the
 - [x] Set up Facebook OAuth (structure ready, credentials needed)
 - [x] Set up Apple Sign In (structure ready, credentials needed)
 - [x] Implement OAuth callback handlers
+- [ ] Write unit tests for OAuth integration endpoints (100% coverage)
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#authentication-endpoints)
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#oauth-20-google-github-facebook-apple)
   - [Security](./backend/Security.md#oauth-security)
 
-**Task 2.5: Account Linking**
-- [ ] Implement account linking endpoints
-- [ ] Create account merging logic
-- [ ] Add account unlinking functionality
+**Task 2.5: Account Linking** ✅
+- [x] Implement account linking endpoints
+- [x] Create account merging logic
+- [x] Add account unlinking functionality
+- [ ] Write unit tests for account linking endpoints (100% coverage)
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#account-linking-endpoints)
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#account-linking)
 
-**Task 2.6: Authorization (RBAC)**
-- [ ] Implement role-based access control
-- [ ] Create authorization middleware
-- [ ] Add endpoint-level authorization checks
-- [ ] Add resource-level authorization checks
+**Task 2.6: Authorization (RBAC)** ✅
+- [x] Implement role-based access control
+- [x] Create authorization middleware
+- [x] Add endpoint-level authorization checks
+- [x] Add resource-level authorization checks
+- [ ] Write unit tests for authorization logic (≥80% coverage)
 - **PRD References**:
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#authorization)
   - [Security](./backend/Security.md#sr-be-002-authorization)
@@ -140,36 +165,69 @@ This document provides a comprehensive order of operations and task list for the
 ### Week 3: Core API & Data Models
 
 **Task 3.1: User Management API**
-- [ ] Implement user profile endpoints
-- [ ] Create consent management API
-- [ ] Add user data deletion endpoint
+- [x] Implement user profile endpoints
+- [x] Create consent management API
+- [x] Add user data deletion endpoint
+- [ ] Write unit tests for user management endpoints (100% coverage)
+  - [x] test_get_current_user_profile_success - PASSING
+  - [ ] Fix test_get_current_user_profile_unauthorized - mock authentication dependency
+  - [ ] Fix test_get_current_user_profile_invalid_token - mock invalid token handling
+  - [ ] Fix test_update_current_user_profile_email_success - mock database update
+  - [ ] Fix test_update_current_user_profile_phone_success - mock database update
+  - [ ] Fix test_update_current_user_profile_both_fields_success - mock database update
+  - [ ] Fix test_update_current_user_profile_email_already_exists - mock duplicate email check
+  - [ ] Fix test_update_current_user_profile_phone_already_exists - mock duplicate phone check
+  - [ ] Fix test_update_current_user_profile_unauthorized - mock authentication dependency
+  - [x] test_get_user_profile_own_profile_success - PASSING
+  - [x] test_get_user_profile_operator_access - PASSING
+  - [x] test_get_user_profile_admin_access - PASSING
+  - [ ] Fix test_get_user_profile_unauthorized_access - mock authorization check
+  - [ ] Fix test_get_user_profile_user_not_found - mock user lookup returning None
+  - [ ] Fix test_get_user_profile_consent_revoked - mock consent check
+  - [ ] Fix test_get_user_profile_unauthorized_no_auth - mock missing authentication
+  - [ ] Fix test_delete_current_user_account_success - mock user deletion
+  - [ ] Fix test_delete_current_user_account_unauthorized - mock authentication dependency
+  - [ ] Fix test_delete_current_user_account_with_related_data - mock related data deletion
+  - [ ] Fix test_delete_current_user_account_invalid_token - mock invalid token handling
+  - [ ] Fix test_grant_consent_success - mock consent update
+  - [ ] Fix test_grant_consent_unauthorized - mock authentication dependency
+  - [ ] Fix test_grant_consent_update_version - mock version update
+  - [ ] Fix test_get_consent_status_granted - mock consent status
+  - [ ] Fix test_get_consent_status_unauthorized - mock authentication dependency
+  - [ ] Fix test_revoke_consent_success - mock consent revocation
+  - [ ] Fix test_revoke_consent_with_data_deletion - mock data deletion
+  - [ ] Fix test_revoke_consent_without_data_deletion - mock consent revocation without deletion
+  - [ ] Fix test_revoke_consent_unauthorized - mock authentication dependency
+  - [ ] Fix test_revoke_consent_default_no_deletion - fix DELETE endpoint json parameter issue
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#user-management-endpoints)
   - [Database & Storage](./backend/Database-Storage.md#database-schema)
 
-**Task 3.2: Data Upload API**
-- [ ] Create file upload endpoint
-- [ ] Implement file validation (format, size)
-- [ ] Integrate S3 file storage
-- [ ] Create upload status tracking
+**Task 3.2: Data Upload API** ✅
+- [x] Create file upload endpoint
+- [x] Implement file validation (format, size)
+- [x] Integrate S3 file storage
+- [x] Create upload status tracking
+- [x] Write unit tests for data upload API endpoints (100% coverage)
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#data-management-endpoints)
   - [Database & Storage](./backend/Database-Storage.md#file-storage)
   - [File Upload Flow](./backend/Database-Storage.md#file-upload-flow)
 
-**Task 3.3: Caching Infrastructure**
-- [ ] Set up Redis connection
-- [ ] Implement session storage in Redis
-- [ ] Create API response caching
-- [ ] Implement cache invalidation strategy
+**Task 3.3: Caching Infrastructure** ✅
+- [x] Set up Redis connection
+- [x] Implement session storage in Redis
+- [x] Create API response caching
+- [x] Implement cache invalidation strategy
+- [x] Write unit tests for caching infrastructure (≥80% coverage)
 - **PRD References**:
   - [Database & Storage](./backend/Database-Storage.md#caching)
   - [Non-Functional Requirements](./backend/Non-Functional-Requirements.md#nfr-be-001-performance)
 
-**Task 3.4: API Documentation**
-- [ ] Set up OpenAPI/Swagger documentation
-- [ ] Document all API endpoints
-- [ ] Add request/response examples
+**Task 3.4: API Documentation** ✅
+- [x] Set up OpenAPI/Swagger documentation
+- [x] Document all API endpoints
+- [x] Add request/response examples
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#openapi-documentation)
   - [Technical Requirements](./backend/API-Requirements.md#technical-requirements)
@@ -180,29 +238,29 @@ This document provides a comprehensive order of operations and task list for the
 
 ### Week 4: Data Ingestion & Validation
 
-**Task 4.1: Data Ingestion Service**
-- [ ] Create Plaid data parser (JSON/CSV)
-- [ ] Implement data validation
-- [ ] Store data in PostgreSQL
-- [ ] Store data in S3 (Parquet)
+**Task 4.1: Data Ingestion Service** ✅
+- [x] Create Plaid data parser (JSON/CSV)
+- [x] Implement data validation
+- [x] Store data in PostgreSQL
+- [x] Store data in S3 (Parquet)
 - **PRD References**:
   - [Service Layer PRD](./service/PRD-Service.md#sv-us-001-data-ingestion-service)
   - [Service Functional Requirements](./service/PRD-Service-Functional-Requirements.md#fr-sv-001-data-ingestion)
 
-**Task 4.2: Data Validation Service**
-- [ ] Validate account structure
-- [ ] Validate transaction structure
-- [ ] Validate liability structure
-- [ ] Create validation error reporting
+**Task 4.2: Data Validation Service** ✅
+- [x] Validate account structure
+- [x] Validate transaction structure
+- [x] Validate liability structure
+- [x] Create validation error reporting
 - **PRD References**:
   - [Service Layer PRD](./service/PRD-Service.md#sv-us-002-data-validation-service)
   - [Service Functional Requirements](./service/PRD-Service-Functional-Requirements.md#fr-sv-001-data-ingestion)
 
-**Task 4.3: Synthetic Data Generator**
-- [ ] Create synthetic Plaid data generator
-- [ ] Generate 50-100 diverse user profiles
-- [ ] Validate generated data
-- [ ] Export to JSON/CSV formats
+**Task 4.3: Synthetic Data Generator** ✅
+- [x] Create synthetic Plaid data generator
+- [x] Generate 50-100 diverse user profiles
+- [x] Validate generated data
+- [x] Export to JSON/CSV formats
 - **PRD References**:
   - [Main PRD](./PRD.md#fr-001-data-ingestion)
   - [Service Technical Requirements](./service/PRD-Service-Technical-Requirements.md#tr-sv-001-service-structure)
@@ -407,64 +465,65 @@ This document provides a comprehensive order of operations and task list for the
 
 ### Week 10: Frontend Foundation & Authentication
 
-**Task 10.1: Frontend Project Setup**
-- [ ] Initialize React project with TypeScript
-- [ ] Set up Vite build tool
-- [ ] Configure React Router
-- [ ] Set up state management (Zustand/Redux)
-- [ ] Configure Axios for API calls
+**Task 10.1: Frontend Project Setup** ✅
+- [x] Initialize React project with TypeScript
+- [x] Set up Vite build tool
+- [x] Configure React Router
+- [x] Set up state management (Zustand/Redux)
+- [x] Configure Axios for API calls
 - **PRD References**:
   - [Frontend Technical Requirements](./frontend/Technical-Requirements.md#tr-fe-001-react-application-structure)
   - [Frontend Technical Requirements](./frontend/Technical-Requirements.md#tr-fe-002-routing)
 
-**Task 10.2: Authentication UI**
-- [ ] Create login/registration pages
-- [ ] Implement email/password authentication UI
-- [ ] Implement phone/SMS authentication UI
-- [ ] Implement OAuth buttons (Google, GitHub, Facebook, Apple)
-- [ ] Add form validation and error handling
+**Task 10.2: Authentication UI** ✅
+- [x] Create login/registration pages
+- [x] Implement email/password authentication UI
+- [x] Implement phone/SMS authentication UI
+- [x] Implement OAuth buttons (Google, GitHub, Facebook, Apple)
+- [x] Add form validation and error handling
 - **PRD References**:
   - [Frontend User Stories](./frontend/User-Stories.md#fe-us-001-user-registration-ui)
   - [Frontend User Stories](./frontend/User-Stories.md#fe-us-002-user-login-ui)
   - [Frontend Functional Requirements](./frontend/Functional-Requirements.md#fr-fe-001-authentication-ui)
 
-**Task 10.3: Token Management**
-- [ ] Implement token storage (localStorage/sessionStorage)
-- [ ] Create token refresh mechanism
-- [ ] Implement logout functionality
-- [ ] Add token expiration handling
+**Task 10.3: Token Management** ✅
+- [x] Implement token storage (localStorage/sessionStorage)
+- [x] Create token refresh mechanism
+- [x] Implement logout functionality
+- [x] Add token expiration handling
+- **Note**: Completed as part of Task 10.1 (integrated into API client and auth store)
 - **PRD References**:
   - [Frontend Technical Requirements](./frontend/Technical-Requirements.md#tr-fe-003-api-integration)
   - [Frontend Technical Requirements](./frontend/Technical-Requirements.md#tr-fe-004-state-management)
 
-**Task 10.4: Account Linking UI**
-- [ ] Create account linking settings page
-- [ ] Implement OAuth provider linking
-- [ ] Implement phone number linking
-- [ ] Add account unlinking functionality
+**Task 10.4: Account Linking UI** ✅
+- [x] Create account linking settings page
+- [x] Implement OAuth provider linking
+- [x] Implement phone number linking
+- [x] Add account unlinking functionality
 - **PRD References**:
   - [Frontend User Stories](./frontend/User-Stories.md#fe-us-003-account-linking-ui)
   - [Frontend Functional Requirements](./frontend/Functional-Requirements.md#fr-fe-001-authentication-ui)
 
 ### Week 11: User Dashboard & Profile
 
-**Task 11.1: Dashboard Page**
-- [ ] Create personalized dashboard layout
-- [ ] Display assigned persona
-- [ ] Show key behavioral signals
-- [ ] Display recommendations list
-- [ ] Show consent status
+**Task 11.1: Dashboard Page** ✅
+- [x] Create personalized dashboard layout
+- [x] Display assigned persona
+- [x] Show key behavioral signals
+- [x] Display recommendations list
+- [x] Show consent status
 - **PRD References**:
   - [Frontend User Stories](./frontend/User-Stories.md#fe-us-005-personalized-dashboard)
   - [Frontend Functional Requirements](./frontend/Functional-Requirements.md#fr-fe-002-user-dashboard)
   - [Frontend User Experience](./frontend/User-Experience-Requirements.md#key-screens)
 
-**Task 11.2: Profile View**
-- [ ] Create profile page layout
-- [ ] Display detected signals (subscriptions, savings, credit, income)
-- [ ] Show 30-day and 180-day analysis with time selector
-- [ ] Display persona history timeline
-- [ ] Show signal trends (charts/graphs)
+**Task 11.2: Profile View** ✅
+- [x] Create profile page layout
+- [x] Display detected signals (subscriptions, savings, credit, income)
+- [x] Show 30-day and 180-day analysis with time selector
+- [x] Display persona history timeline
+- [x] Show signal trends (charts/graphs)
 - **PRD References**:
   - [Frontend User Stories](./frontend/User-Stories.md#fe-us-006-profile-view)
   - [Frontend Functional Requirements](./frontend/Functional-Requirements.md#fr-fe-003-profile-view)
@@ -564,10 +623,13 @@ This document provides a comprehensive order of operations and task list for the
 
 ### Week 14: Testing & Quality Assurance
 
-**Task 14.1: Unit Testing**
-- [ ] Write unit tests for backend services (≥80% coverage)
-- [ ] Write unit tests for frontend components
-- [ ] Write unit tests for service layer (feature engineering, personas)
+**Note**: Unit tests are now written alongside each feature task (see individual tasks). This week focuses on integration, performance, and security testing.
+
+**Task 14.1: Test Coverage Review**
+- [ ] Review and ensure 100% coverage for all API endpoints
+- [ ] Review and ensure ≥80% overall test coverage (non-endpoint code)
+- [ ] Identify and fill any test coverage gaps
+- [ ] Run full test suite and fix any failing tests
 - **PRD References**:
   - [Backend Non-Functional Requirements](./backend/Non-Functional-Requirements.md#nfr-be-005-maintainability)
   - [Frontend Technical Requirements](./frontend/Technical-Requirements.md#tr-fe-006-testing)
@@ -838,7 +900,7 @@ This document provides a comprehensive order of operations and task list for the
 - [ ] OAuth authentication (all providers)
 - [ ] Phone number authentication
 - [ ] Account linking
-- [ ] Comprehensive test suite (≥80% coverage)
+- [ ] Comprehensive test suite (100% endpoint coverage, ≥80% overall coverage)
 - [ ] Complete API documentation
 
 ### Nice to Have
@@ -876,6 +938,18 @@ This document provides a comprehensive order of operations and task list for the
 | 1.4 | 2025-11-03 | Task 2.1 completed - Authentication Foundation: JWT token generation/validation (RS256), password hashing (bcrypt cost factor 12), authentication middleware, token refresh mechanism. Includes RSA key generation utilities and authentication dependencies. | TBD |
 | 1.5 | 2025-11-03 | Task 2.2 completed - Email/Password Authentication: User registration and login endpoints, password validation (12+ chars, uppercase, lowercase, digit, special char), email validation, user management endpoints (GET/PUT /api/v1/users/me), token refresh and logout. Fixed enum role storage, refresh token length (1000 chars), and session management. | TBD |
 | 1.6 | 2025-11-03 | Task 2.3 completed - Phone/SMS Authentication: Integrated AWS SNS for SMS sending, implemented phone verification code generation (6-digit cryptographically secure), created Redis connection utility for code storage (10-minute TTL), added rate limiting (5 SMS/hour, 10 SMS/day per phone), implemented phone validation using phonenumbers library (E.164 format), created POST /api/v1/auth/phone/request and POST /api/v1/auth/phone/verify endpoints with automatic user registration/login. | TBD |
+| 1.7 | 2025-11-03 | Task 10.1 completed - Frontend Project Setup: Initialized React 18.2.0 project with TypeScript 5.3.3, configured Vite 5.0.11 build tool, set up React Router 6.21.1 with all routes (public, protected, operator), implemented Zustand 4.4.7 for client state management (auth store with persistence), configured React Query 5.17.0 for server state, set up Axios 1.6.5 with request/response interceptors, implemented automatic token refresh mechanism, created protected route components, configured environment variables. Includes complete project structure with placeholder pages for all routes. | TBD |
+| 1.8 | 2025-11-03 | Task 2.5 completed - Account Linking: Implemented account linking endpoints (POST /api/v1/auth/oauth/link, POST /api/v1/auth/phone/link), implemented account unlinking endpoints (DELETE /api/v1/auth/oauth/unlink/{provider}, DELETE /api/v1/auth/phone/unlink), created account merging logic that merges user data from duplicate accounts (DataUpload, Recommendation, UserProfile, PersonaHistory), preserves primary authentication method, ensures at least one authentication method remains after unlinking. Includes proper validation, error handling, and CSRF protection via OAuth state verification. | TBD |
+| 1.9 | 2025-11-03 | Task 2.6 completed - Authorization (RBAC): Implemented role-based access control with user, operator, and admin roles. Created authorization dependencies (require_role, require_operator, require_admin) with role hierarchy. Added resource-level authorization helpers (check_resource_access, check_user_access, require_owner_or_operator_factory, require_owner_or_admin_factory, require_owner_only_factory). Added endpoint-level authorization checks to operator endpoints (GET /api/v1/operator/review, GET /api/v1/operator/analytics, etc.) and admin endpoints (GET /api/v1/operator/admin/users, PUT /api/v1/operator/admin/users/{user_id}/role). Added resource-level authorization example to user endpoints (GET /api/v1/users/{user_id}). Implemented authorization logging for audit trail. All authorization failures are logged with user ID, role, and resource details. | TBD |
+| 1.10 | 2025-11-04 | Task 10.2 completed - Authentication UI: Created login and registration pages with email/password and phone/SMS authentication options. Implemented phone verification component with 10-minute countdown timer and resend functionality. Added OAuth buttons for Google, GitHub, Facebook, and Apple with React Icons (FaGoogle, FaGithub, FaFacebook, FaApple). Implemented comprehensive form validation (email format, password strength matching backend requirements, phone E.164 format). Added error handling and loading states for all async operations. Integrated Tailwind CSS 4.0+ with @tailwindcss/postcss for modern responsive design. Created authService with API integration for all auth methods. Implemented validation utilities. All authentication pages feature Tailwind styling with proper spacing, colors, hover states, focus states, and accessibility features. Added React Router v7 future flags (v7_startTransition, v7_relativeSplatPath) to eliminate deprecation warnings. | TBD |
+| 1.11 | 2025-11-04 | Task 3.1 completed - User Management API: Implemented user profile endpoints (GET/PUT /api/v1/users/me, GET /api/v1/users/{user_id}, DELETE /api/v1/users/me), created consent management API (POST/GET/DELETE /api/v1/consent), added user data deletion endpoint that deletes all user-related data, added logging for profile updates, created unit tests (test_user_endpoints.py, test_consent_endpoints.py). | TBD |
+| 1.12 | 2025-11-04 | Task 3.2 completed - Data Upload API: Created file upload endpoint (POST /api/v1/data/upload) supporting JSON/CSV formats with validation (max 10MB), uploads files to S3 bucket, stores metadata in PostgreSQL, created upload status endpoint (GET /api/v1/data/upload/{upload_id}) with authorization, implemented S3 service (app/core/s3_service.py) with file validation and error handling, created data upload schemas, wrote comprehensive unit tests (12 tests, all passing). | TBD |
+| 1.13 | 2025-11-04 | Task 3.3 completed - Caching Infrastructure: Created comprehensive caching service (app/core/cache_service.py) with session storage in Redis (30-day TTL), API response caching decorators (profile: 5min, recommendations: 1hr, signals: 24hr), cache invalidation functions, integrated session storage into all authentication endpoints (registration, login, token refresh, phone verification, OAuth callbacks), implemented automatic cache invalidation on user profile updates, user deletion, and consent revocation, wrote comprehensive unit tests (21 tests, all passing). | TBD |
+| 1.14 | 2025-11-04 | Task 10.4 completed - Account Linking UI: Updated backend UserProfileResponse schema to include oauth_providers field, created userService for fetching user profile, added account linking API methods to authService (linkOAuthProvider, linkPhoneNumber, unlinkOAuthProvider, unlinkPhoneNumber), created AccountLinking component displaying linked accounts with OAuth and phone linking/unlinking functionality, implemented OAuth callback handling for account linking with state verification, created Settings page with AccountLinking component, added confirmation dialogs for unlinking, validation to ensure at least one authentication method remains, error handling and success messages. All code compiles successfully. | TBD |
+| 1.15 | 2025-11-04 | Task 3.4 completed - API Documentation: Enhanced FastAPI app with comprehensive OpenAPI metadata including API description, features overview, authentication guide, rate limiting, and caching information. Added tag descriptions for all endpoint groups (authentication, users, consent, data, operator, health). Added request/response examples to all Pydantic schemas (auth, user, consent, data_upload). Enhanced all endpoint documentation with summary, description, and response examples including status codes. Documentation available at /docs (Swagger UI), /redoc (ReDoc), and /openapi.json (OpenAPI JSON). All endpoints now have comprehensive documentation with examples following OpenAPI 3.0 standards. | TBD |
+| 1.16 | 2025-11-04 | Task 11.1 completed - Dashboard Page: Created personalized dashboard layout with sections for persona, behavioral signals, recommendations, and consent status. Created dashboardService for fetching dashboard data with graceful handling of missing endpoints. Implemented PersonaBadge component with color-coded persona indicators (5 personas). Implemented BehavioralSignals component displaying 30-day signals for subscriptions, savings, credit, and income with formatted currency and percentages. Implemented RecommendationsList component displaying approved recommendations with type badges, rationale, and links to detail view. Implemented ConsentStatusBadge component with status indicator and settings link. Main Dashboard page includes loading skeletons, error states with retry, empty states for new users with quick actions, and quick actions section. All components are mobile-responsive. Code compiles successfully. | TBD |
+| 1.17 | 2025-11-04 | Task 11.2 completed - Profile View: Created comprehensive profile page layout with sections for current persona, behavioral signals, signal trends, and persona history timeline. Created profileService for fetching profile data and persona history with graceful handling of missing endpoints. Implemented TimePeriodSelector component for switching between 30-day and 180-day analysis. Implemented ProfileBehavioralSignals component with expandable sections for subscriptions, savings, credit, and income signals. Implemented SignalTrends component with simple progress bar visualizations showing trends between 30-day and 180-day periods. Implemented PersonaHistoryTimeline component displaying persona assignments over time with timeline visualization. Added export functionality placeholder (PDF/CSV). Profile page includes loading skeletons, error states with retry, empty states for new users, and mobile-responsive design. All components properly typed with TypeScript. Code compiles successfully. | TBD |
+| 1.18 | 2025-11-04 | Task 4.3 completed - Synthetic Data Generator: Created synthetic Plaid data generator (scripts/synthetic_data_generator.py) that generates realistic financial data for testing. Generator uses YAML-based persona configurations (5 personas: high utilization, variable income, subscription-heavy, savings builder, custom) to create diverse user profiles. Generates 100 diverse user profiles (20 per persona) with accounts, transactions, and liabilities. Uses real merchant data from CSV file for realistic transaction generation. Validates all generated data against PlaidValidator. Supports export to JSON (single file per user) and CSV (separate files for accounts, transactions, liabilities) formats. All generated data passes validation (0 errors, 0 warnings). Configuration-driven generation with comprehensive logging. Suitable for testing feature engineering, persona assignment, and recommendation generation. | TBD |
 
 ---
 

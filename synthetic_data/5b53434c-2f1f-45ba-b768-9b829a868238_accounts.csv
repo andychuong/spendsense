@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-5cd8aa3c-886a-4bed-822c-00bfee9ec522,Wilson-Campbell Checking,depository,checking,individual,"{'available': 214.26042540624925, 'current': 218.06562383645254, 'limit': None}",USD,7492
+acct-b47b1180-af9e-46fe-80d6-234533c23b69,Johnson Group Savings,depository,savings,individual,"{'available': 2287.0883117752574, 'current': 2638.857918492768, 'limit': None}",USD,7028
+acct-18fc605e-7760-4f4b-877b-c56d124124e0,"Martinez, Rice and Ward Credit Card",credit,credit card,individual,"{'available': 3743.954281691217, 'current': 4161.962663562787, 'limit': 5000.0}",USD,8421

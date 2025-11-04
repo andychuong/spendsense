@@ -1,0 +1,44 @@
+# Persona 1: High Utilization
+# This persona represents users who have high credit card balances relative to their credit limits.
+
+persona_name: "High Utilization"
+num_profiles: 20  # Generate 20 profiles for this persona
+
+# --- Account Generation ---
+accounts:
+  - type: "depository"
+    subtype: "checking"
+    balance_range: [200, 1500]
+  - type: "depository"
+    subtype: "savings"
+    balance_range: [500, 3000]
+  - type: "credit"
+    subtype: "credit card"
+    # Ensure high utilization by setting the balance close to the limit
+    balance_range: [4000, 4800]
+    limit_range: [5000, 5000]
+    apr_range: [18.5, 25.9]
+
+# --- Transaction Generation ---
+transactions:
+  num_transactions_range: [50, 150] # Number of transactions over the history period
+  history_days: 180 # Generate 180 days of transaction history
+  patterns:
+    # High credit card usage for various purchases
+    - category: "Retail"
+      amount_range: [20, 300]
+      frequency_per_month: [5, 15]
+    - category: "Food & Drink"
+      amount_range: [10, 150]
+      frequency_per_month: [10, 25]
+    # Simulate making only minimum payments
+    - payment_type: "credit_card_payment"
+      payment_behavior: "minimum_only"
+    - payment_type: "income"
+      amount_range: [3000, 5000] # Monthly income
+      frequency_per_month: [1, 2] # Paid once or bi-weekly
+
+# --- Liability Generation ---
+liabilities:
+  credit_card:
+    is_overdue: false

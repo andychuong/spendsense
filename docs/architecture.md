@@ -1,7 +1,7 @@
 # SpendSense Architecture Documentation
 ## Version 1.0.0
 
-**Last Updated**: 2024-01-15  
+**Last Updated**: 2025-11-04  
 **Status**: Development Phase (Phase 1 - Task 1.1 Complete)
 
 ---
@@ -681,16 +681,36 @@ React Query 5.17.0
 11. FastAPI generates JWT tokens and returns to frontend
 ```
 
-### Account Linking
+### Account Linking ✅
 
 **Multiple Authentication Methods:**
 - Users can link multiple authentication methods to one account
 - Example: User signs up with Google, later adds phone number
 - Database schema supports multiple identity providers per user
 
+**Account Linking Endpoints:**
+- `POST /api/v1/auth/oauth/link` - Link additional OAuth provider (requires authentication)
+- `POST /api/v1/auth/phone/link` - Link phone number (requires authentication)
+- `DELETE /api/v1/auth/oauth/unlink/{provider}` - Unlink OAuth provider
+- `DELETE /api/v1/auth/phone/unlink` - Unlink phone number
+
 **Account Merging:**
-- If user signs in with different method that matches existing account (email match), prompt to link accounts
-- Operator view can manually merge accounts if needed
+- Automatically merges accounts if duplicate found during linking
+- Merges user data from duplicate accounts:
+  - DataUpload records
+  - Recommendation records
+  - PersonaHistory records
+  - UserProfile records
+- Preserves primary authentication method
+- Ensures at least one authentication method remains after unlinking
+- CSRF protection via OAuth state verification
+
+**Linking Flow:**
+1. Authenticated user initiates OAuth flow or phone verification
+2. System checks for duplicate accounts (by email or provider ID)
+3. If duplicate found, merges accounts automatically
+4. Links new authentication method to current user account
+5. Returns merge status to user
 
 ---
 
@@ -878,7 +898,15 @@ Steps:
   - Phone number + SMS verification
   - OAuth 2.0 (Google, GitHub, Facebook)
   - Apple Sign In
-- **Authorization**: Role-based (RBAC)
+- **Authorization**: Role-based (RBAC) ✅
+  - **Roles**: `user`, `operator`, `admin` (hierarchy: USER < OPERATOR < ADMIN)
+  - **Endpoint-Level Authorization**: FastAPI dependencies check role before route handler
+  - **Resource-Level Authorization**: Users can access own resources, operators can access all user resources (with consent), admins can access all resources (with consent)
+  - **Consent Enforcement**: Operators and admins must respect user consent when accessing other users' data. If consent is revoked or not granted, access is denied.
+  - **Authorization Dependencies**: `require_role()`, `require_operator`, `require_admin`
+  - **Resource-Level Helpers**: `check_resource_access()`, `check_user_access()`, factory functions for owner/operator/admin access
+  - **Consent Checks**: `check_resource_access()` and `check_user_access()` verify target user's `consent_status` before allowing operator/admin access
+  - **Authorization Logging**: All authorization failures are logged with user ID, role, and resource details, including consent violations
 - **Token Expiration**: 1 hour (access), 30 days (refresh)
 - **Token Storage**: HTTP-only cookies (web) or secure storage (mobile)
 - **Social Provider Linking**: Users can link multiple providers to one account

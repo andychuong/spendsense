@@ -1,0 +1,5 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-0692b1f6-941f-4a0e-8b2a-ba46e5504910,Myers and Sons Checking,depository,checking,individual,"{'available': 3194.127922198284, 'current': 3440.759399494024, 'limit': None}",USD,2690
+acct-02421546-34ec-4fe7-aab9-d8b21ff085ce,Moore Inc Savings,depository,savings,individual,"{'available': 5327.767589350545, 'current': 6158.42646410192, 'limit': None}",USD,6602
+acct-c4162ea9-a0be-4f5e-bdb7-9f4a77969536,Smith-Hopkins Credit Card,credit,credit card,individual,"{'available': 2335.6481823818167, 'current': 2503.263049869576, 'limit': 4687.4404238974785}",USD,1629
+acct-dc9e6226-84fc-42f8-81f5-bcc1593bca9e,Shepherd LLC Student,loan,student,individual,"{'available': 13691.056063134281, 'current': 13841.03465208251, 'limit': None}",USD,2108

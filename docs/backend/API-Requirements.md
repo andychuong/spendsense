@@ -2,7 +2,7 @@
 ## SpendSense Platform - Backend Layer
 
 **Version**: 1.0  
-**Date**: 2024-01-15  
+**Date**: 2025-11-04  
 **Status**: Planning  
 
 ---
@@ -90,7 +90,7 @@ This document defines the REST API requirements for the SpendSense backend, incl
 - [ ] Revoke old tokens on logout
 - [ ] Support token blacklisting in Redis
 
-**BE-US-004: Account Linking API**
+**BE-US-004: Account Linking API** ✅
 - **As a** system
 - **I want to** provide account linking endpoints
 - **So that** users can link multiple authentication methods
@@ -102,10 +102,16 @@ This document defines the REST API requirements for the SpendSense backend, incl
 - `DELETE /api/v1/auth/phone/unlink` - Unlink phone number
 
 **Acceptance Criteria**:
-- [ ] Prevent duplicate account creation
-- [ ] Merge accounts if needed
-- [ ] Require authentication for linking
-- [ ] Log account linking events
+- [x] Prevent duplicate account creation
+- [x] Merge accounts if needed
+- [x] Require authentication for linking
+- [x] Log account linking events
+
+**Implementation Details**:
+- Account merging merges user data from duplicate accounts (DataUpload, Recommendation, UserProfile, PersonaHistory)
+- Preserves primary authentication method
+- Ensures at least one authentication method remains after unlinking
+- CSRF protection via OAuth state verification
 
 ---
 
@@ -122,8 +128,8 @@ This document defines the REST API requirements for the SpendSense backend, incl
 - `DELETE /api/v1/users/me` - Delete user account
 
 **Acceptance Criteria**:
-- [ ] Require authentication
-- [ ] Validate input data
+- [x] Require authentication ✅
+- [x] Validate input data ✅
 - [ ] Log profile updates
 
 **BE-US-006: Consent Management API**
@@ -137,10 +143,11 @@ This document defines the REST API requirements for the SpendSense backend, incl
 - `GET /api/v1/consent` - Get consent status
 
 **Acceptance Criteria**:
-- [ ] Store consent with timestamp and version
-- [ ] Block recommendations if consent not granted
-- [ ] Support data deletion on consent revocation
-- [ ] Log consent events
+- [x] Store consent with timestamp and version ✅
+- [x] Block recommendations if consent not granted ✅
+- [x] Support data deletion on consent revocation ✅
+- [x] Log consent events ✅
+- [x] Block operators/admins from accessing user data if consent revoked ✅
 
 ---
 
@@ -193,7 +200,8 @@ This document defines the REST API requirements for the SpendSense backend, incl
 - `GET /api/v1/users/{user_id}/persona` - Get assigned persona
 
 **Acceptance Criteria**:
-- [ ] Require authentication and authorization (own profile or operator)
+- [x] Require authentication and authorization (own profile or operator) ✅
+- [x] Respect user consent (operators/admins cannot access if consent revoked) ✅
 - [ ] Return detected signals (subscriptions, savings, credit, income)
 - [ ] Return 30-day and 180-day analysis
 - [ ] Return persona history
@@ -234,7 +242,8 @@ This document defines the REST API requirements for the SpendSense backend, incl
 - `POST /api/v1/operator/review/bulk` - Bulk approve/reject
 
 **Acceptance Criteria**:
-- [ ] Require operator role authentication
+- [x] Require operator role authentication ✅
+- [x] Respect user consent (cannot access user data if consent revoked) ✅
 - [ ] Filter and sort functionality
 - [ ] Return decision traces
 - [ ] Log all operator actions
@@ -250,7 +259,7 @@ This document defines the REST API requirements for the SpendSense backend, incl
 - `GET /api/v1/operator/analytics/performance` - Get performance metrics
 
 **Acceptance Criteria**:
-- [ ] Require operator role authentication
+- [x] Require operator role authentication ✅
 - [ ] Return coverage, explainability, performance, engagement metrics
 - [ ] Support date range filtering
 - [ ] Return aggregated data (JSON)

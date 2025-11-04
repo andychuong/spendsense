@@ -1,0 +1,5 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-6d69a34f-a009-4406-ba48-00ecbd89e2d7,"Gray, Lindsey and Schmitt Checking",depository,checking,individual,"{'available': 2372.8122346557575, 'current': 2943.676973851038, 'limit': None}",USD,8341
+acct-2a22f657-c879-47c0-9a7d-e7070eea256b,"Oconnell, Howard and Evans Savings",depository,savings,individual,"{'available': 4307.948006245059, 'current': 4743.395063428021, 'limit': None}",USD,3395
+acct-6d7adcc5-4c15-4c41-86fc-a7340b7ae1e6,Graham LLC Credit Card,credit,credit card,individual,"{'available': 1622.876612271635, 'current': 1717.886288859369, 'limit': 4279.638725046634}",USD,6871
+acct-e0f7e14f-606f-4294-b407-f5d1cc12dd99,Lee LLC Student,loan,student,individual,"{'available': 18773.38437037642, 'current': 22256.245423383618, 'limit': None}",USD,4400

@@ -1,0 +1,1446 @@
+{
+  "user_id": "2684f31f-1a58-483c-a469-84b8ed8bd432",
+  "accounts": [
+    {
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "name": "Diaz-Saunders Checking",
+      "type": "depository",
+      "subtype": "checking",
+      "holder_category": "individual",
+      "balances": {
+        "available": 2043.827673214513,
+        "current": 2046.0496951330126,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "5510"
+    },
+    {
+      "account_id": "acct-ddd23331-bc3f-41b4-99e1-4102cd0a050f",
+      "name": "Rice, Morris and Nunez Savings",
+      "type": "depository",
+      "subtype": "savings",
+      "holder_category": "individual",
+      "balances": {
+        "available": 3313.0779885325155,
+        "current": 3769.837883597847,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "1919"
+    },
+    {
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "name": "Wise, Gonzalez and Jackson Credit Card",
+      "type": "credit",
+      "subtype": "credit card",
+      "holder_category": "individual",
+      "balances": {
+        "available": 1494.4648733718552,
+        "current": 1586.8210013102678,
+        "limit": 4510.198690093512
+      },
+      "iso_currency_code": "USD",
+      "mask": "4108"
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": "txn-8e021ce2-8737-42df-9713-99f030e63af9",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-05-08",
+      "amount": -3356.289993938308,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7c38b6fb-ac95-41da-8efe-7c1afc18a819",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-05-11",
+      "amount": 38.35909328606242,
+      "merchant_name": "CityTransit #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2da1df5c-f969-4cd7-a94d-2a26c48fe37b",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-05-12",
+      "amount": 98.84448347661778,
+      "merchant_name": "QuickFuel #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5acb80f1-0943-4200-a8cd-c3323a4c0375",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-05-16",
+      "amount": 130.5014198291208,
+      "merchant_name": "CityTransit #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f14d98a5-1505-4fe6-8603-17059c5fd1ec",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-05-17",
+      "amount": 132.51271650520042,
+      "merchant_name": "CityTransit #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c279a35d-28c3-4d60-88d7-8930a7aa587b",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-05-17",
+      "amount": 74.70872749785877,
+      "merchant_name": "ParkingLot Inc #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2eaabf69-7d23-400b-b4d6-a88cbf0fa5d6",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-05-24",
+      "amount": -752.2117573215985,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f744028e-3194-42a0-a6cf-e6b5c961b226",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-05-24",
+      "amount": 163.51806826124914,
+      "merchant_name": "PayUtilities #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5486c74d-6bb5-4064-be1e-a488cbbdc0e9",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-05-26",
+      "amount": 34.525117997917874,
+      "merchant_name": "CityTransit #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7b4d0363-bcd6-402e-a6ec-3904a97ef2bc",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-05-27",
+      "amount": -1210.6442131065114,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a04ef17d-190e-4a27-be75-20157fe7f0e2",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-05-28",
+      "amount": -2830.87467892197,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f7e14882-de37-4cb6-b8d3-9153e0ec2f5f",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-05-29",
+      "amount": 130.39618906927484,
+      "merchant_name": "PayUtilities #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f34988fe-14aa-46dc-9baf-461f09b69443",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-05-31",
+      "amount": 153.62630494830222,
+      "merchant_name": "MobileCarrier #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Mobile Phone"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-aaf625f2-a45d-4995-9d0d-e109ef77fe0d",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-06-05",
+      "amount": -1565.0906654367193,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-89982a28-77a6-4bdc-a2e4-200461a73ada",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-06-06",
+      "amount": 347.7022206740123,
+      "merchant_name": "PayUtilities #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-45640e3c-2739-4895-bffd-9b26d7872e57",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-06-07",
+      "amount": 22.353996588190427,
+      "merchant_name": "QuickFuel #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d04d1059-b138-4634-9b25-a64edb8feeae",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-06-12",
+      "amount": 99.19692849583456,
+      "merchant_name": "RideShareCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d4b01558-0de7-44b5-8f9a-68e05f880aed",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-06-16",
+      "amount": 138.73482603967778,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-32624048-aa62-4785-9b6b-889cc249d928",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-06-18",
+      "amount": -908.9329750907825,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5457c1f1-1a9e-4c7c-bf66-a901a09ba9b5",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-06-19",
+      "amount": 149.84370060114628,
+      "merchant_name": "ParkingLot Inc #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c3a43237-d034-4177-a9b6-bb8dc9da06e9",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-06-21",
+      "amount": 326.36834734405465,
+      "merchant_name": "PayUtilities #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ea239c6c-ef1d-4003-9c33-bae2f2c0db6d",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-06-23",
+      "amount": 124.56128331705844,
+      "merchant_name": "ParkingLot Inc #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-57577876-ae1a-4e92-af99-363dba4dd5ed",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-06-26",
+      "amount": 37.49754487609894,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b7d85a26-627f-46ec-b4a8-78cb33d0065c",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-06-26",
+      "amount": 30.227173605783193,
+      "merchant_name": "CityTransit #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-84592c2a-57df-47fc-917f-d53f130c6e23",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-06-29",
+      "amount": 376.2030794582717,
+      "merchant_name": "PayUtilities #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fb6a7725-5050-4e7a-afdf-5c35ed0d9b30",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-06-29",
+      "amount": 82.58320793506243,
+      "merchant_name": "QuickFuel #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c25155f0-d2eb-4844-ab31-0572cd559232",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-07-03",
+      "amount": 345.37928639465514,
+      "merchant_name": "PayUtilities #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-915c61f8-fe6a-4cc1-bbca-536153fb2a0c",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-09",
+      "amount": 147.2897307451555,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e9d2f2ac-350a-49b5-a175-33c6686cd9b2",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-10",
+      "amount": 362.1896664936945,
+      "merchant_name": "PayUtilities #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4413a7cf-7251-4e2d-a092-c93935664661",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-10",
+      "amount": 118.02503195578821,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c88a32ba-f077-4036-910f-087b56eba71d",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-14",
+      "amount": -1124.1120970931865,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-93a8512a-a684-4805-a688-6662d724afac",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-07-18",
+      "amount": 30.746726252579283,
+      "merchant_name": "RideShareCo #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c6609930-ecde-45e8-8a84-e16521d8658d",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-19",
+      "amount": -3088.398024550501,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-93bf12ea-38d2-4fb0-b5b6-583d9a028b52",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-19",
+      "amount": -3155.650300587069,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-536d1c1e-ab44-4c04-88e6-3c2bbdae47a1",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-28",
+      "amount": 26.555100851927982,
+      "merchant_name": "QuickFuel #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b6e3536d-2547-4c53-91b3-eaff1347f551",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-30",
+      "amount": 97.96450845455756,
+      "merchant_name": "RideShareCo #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-496d5abc-e266-435e-9dcf-938ddcc88fe9",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-07-31",
+      "amount": -1450.0325199096658,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a63eeb38-c215-4779-8799-4101df36a306",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-07-31",
+      "amount": 77.36764852543847,
+      "merchant_name": "RideShareCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f6c8a674-7263-45d4-9226-ab3e54380dec",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-07",
+      "amount": 55.40184217164572,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f09ad616-3afe-4fac-ba39-94c9fc0ab7be",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-08",
+      "amount": -3180.7910693145373,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-771cd73a-32f6-49c8-a159-ca67f5445183",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-08-08",
+      "amount": 111.83656707625069,
+      "merchant_name": "QuickFuel #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-865802da-edc7-43f6-b0be-c1012ab5b4b3",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-09",
+      "amount": 298.5060317106984,
+      "merchant_name": "PayUtilities #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2e33397c-0928-4f7b-8e19-64a1505f52dd",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-10",
+      "amount": 142.86008439234783,
+      "merchant_name": "QuickFuel #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-defb55cf-11c6-4ec0-899c-641568d9b5cb",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-11",
+      "amount": 69.24679513481723,
+      "merchant_name": "PayUtilities #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-bf303e27-751e-4f70-b911-aff1d7c3c780",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-08-12",
+      "amount": 395.87727568351244,
+      "merchant_name": "PayUtilities #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d9f35ebe-addc-4926-8e16-08a54157bd77",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-08-14",
+      "amount": 281.13318322449527,
+      "merchant_name": "MobileCarrier #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Mobile Phone"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4420c4e5-4c81-4bf5-b29b-a3f127e5c96f",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-19",
+      "amount": -629.8111586690226,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-af30f87c-f7ba-4d70-9bfc-94214ae17e0f",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-21",
+      "amount": 297.4841341135719,
+      "merchant_name": "MobileCarrier #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Mobile Phone"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8bab9529-2c89-4417-b3e3-8046e07d2871",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-21",
+      "amount": 268.3198175457911,
+      "merchant_name": "MobileCarrier #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Mobile Phone"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2b59698b-0283-4d3f-b36e-f92a38a67c96",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-21",
+      "amount": 183.65635368155466,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6e883cf8-3bb8-435c-b8e8-877da3fb54aa",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-27",
+      "amount": 279.4889427064587,
+      "merchant_name": "PayUtilities #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-84846dc6-8062-4bba-9a25-3f30965b344c",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-08-31",
+      "amount": 371.19964362750056,
+      "merchant_name": "PayUtilities #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ff909411-3bd0-4ca9-b020-7929fc3134ad",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-09-01",
+      "amount": 235.3711299975733,
+      "merchant_name": "PayUtilities #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c23520be-b4b7-4efc-bc39-80d802c5da01",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-09-01",
+      "amount": 132.57296806122372,
+      "merchant_name": "PayUtilities #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-09e05626-e152-4e13-9691-9584cecaa75f",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-09-02",
+      "amount": 133.1600362820837,
+      "merchant_name": "RideShareCo #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-183fd25c-ac33-43cf-8145-680226f17306",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-09-06",
+      "amount": 59.32236221148759,
+      "merchant_name": "CityTransit #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d487df5c-a7e8-46aa-9dc6-3ecf5da2697d",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-09-11",
+      "amount": 251.29520186586612,
+      "merchant_name": "PayUtilities #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-055922ef-4f4c-4aeb-8116-e09e149e0c7d",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-09-16",
+      "amount": -1533.9329927281997,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-60365ac2-6f4f-4d3f-9074-b6ee08b13f85",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-09-17",
+      "amount": 143.14186689954585,
+      "merchant_name": "RideShareCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f415a23c-df9b-4fc8-8b8d-664c79a6d27a",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-09-21",
+      "amount": 390.8753923051364,
+      "merchant_name": "MobileCarrier #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Mobile Phone"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2ce48dcc-3a5d-43cd-8415-38ffc72a8446",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-09-21",
+      "amount": 82.5804287270112,
+      "merchant_name": "CityTransit #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-364a2fd0-a85a-45b6-af2b-97899246cb83",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-09-24",
+      "amount": 291.3688890249746,
+      "merchant_name": "PayUtilities #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fa76f5df-8e7a-49fe-902f-e361730d5c8c",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-09-24",
+      "amount": 126.56452503375121,
+      "merchant_name": "MobileCarrier #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Mobile Phone"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b651583b-3ad4-4287-ac9e-e6d7b4d8912e",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-09-27",
+      "amount": 194.23765906510175,
+      "merchant_name": "PayUtilities #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e13d02c3-e5d7-4d8a-8036-4c4cf2973f23",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-09-29",
+      "amount": -2886.2834569185065,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f0ca0d29-b089-44fe-8b12-67c22bc9eafc",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-01",
+      "amount": 244.79137686204814,
+      "merchant_name": "MobileCarrier #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Mobile Phone"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-59761de7-0f18-486e-9471-4ac6c148b75e",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-04",
+      "amount": 56.68163890215642,
+      "merchant_name": "ParkingLot Inc #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-33597830-9a21-48e0-8bb7-bad56a5c7ed1",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-05",
+      "amount": 49.04803328667531,
+      "merchant_name": "CityTransit #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1e7846e3-9018-4613-bbbc-96462122e7ea",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-06",
+      "amount": 368.6480058527905,
+      "merchant_name": "PayUtilities #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7937c8aa-76a3-41c3-a0ed-ab811314b8d5",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-08",
+      "amount": 147.09292835782765,
+      "merchant_name": "PayUtilities #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d989ffd2-9f20-4d74-93a6-c7c42a6b67a3",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-09",
+      "amount": -1115.6769620266064,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e87cad73-dae4-43c6-ad3e-5c435cdec62e",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-09",
+      "amount": 84.79835367322725,
+      "merchant_name": "RideShareCo #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-98a24ce4-d476-4145-a26f-78b94054c45d",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-11",
+      "amount": 90.90545761538638,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-71c0ad4d-3d5a-4ff4-813d-04511320374d",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-14",
+      "amount": 44.24270395280625,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b4adc980-4f72-4eb0-a275-b8a05797a966",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-14",
+      "amount": 84.10929266417124,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-51468ac1-0e82-475a-874f-42e0f04c2377",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-14",
+      "amount": 109.35116060258416,
+      "merchant_name": "ParkingLot Inc #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1a5e7851-0680-4be2-a424-141017d28769",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-16",
+      "amount": 69.9796807947221,
+      "merchant_name": "QuickFuel #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c8c80da7-c6e1-487d-b10e-4b1fc40dc240",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-17",
+      "amount": 289.7069510718985,
+      "merchant_name": "MobileCarrier #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Mobile Phone"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e0888821-959a-4a55-a2ec-338b9017da44",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-17",
+      "amount": 177.7313238741939,
+      "merchant_name": "PayUtilities #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-21ab6110-21c9-4953-bf16-6432a9c776ac",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-17",
+      "amount": 84.49446365647194,
+      "merchant_name": "CityTransit #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-357ef6be-7304-4e04-ad49-e40b6ba013f6",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-19",
+      "amount": -1234.9798623059119,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-91463d15-ba2f-4780-93db-4c8df1147622",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-19",
+      "amount": -1345.6218705493784,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4198480b-c58a-4307-b98f-7e495b8e826d",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-19",
+      "amount": 383.71754588606154,
+      "merchant_name": "PayUtilities #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-50b3ed6a-8b21-45af-97f1-dc6262f24b0a",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-22",
+      "amount": -2865.1134544534525,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9c37747b-cffd-4b0f-b40f-32b76839ac21",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-27",
+      "amount": -3330.234679378041,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5fe2c192-1768-4473-ab72-798cf3f0e22a",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-27",
+      "amount": -2553.9527389112295,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c1c64450-e6a3-47b8-b585-f4dd7d9c223a",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-28",
+      "amount": -2771.956826984114,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-66708ca5-75df-415c-826f-f3366def40cb",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-28",
+      "amount": 127.08636685872662,
+      "merchant_name": "RideShareCo #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-bb04b442-4f28-41d3-aa5e-fad97e5f6939",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-30",
+      "amount": 385.40381553578374,
+      "merchant_name": "PayUtilities #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Bills & Utilities",
+        "detailed": "Bills & Utilities/Utilities"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-65d45c36-5c46-48b7-ab4d-8fe90e15e724",
+      "account_id": "acct-b6bbe9d2-b475-41a9-a1d1-3da836c0e0d0",
+      "date": "2025-10-30",
+      "amount": 177.14676325854848,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e2544edc-8531-4e1b-b522-1e97fceb1c73",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-31",
+      "amount": 143.38625936071992,
+      "merchant_name": "CityTransit #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-115bfb52-2210-4dc0-b036-95a630c09acd",
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "date": "2025-10-31",
+      "amount": 94.73281513875335,
+      "merchant_name": "RideShareCo #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    }
+  ],
+  "liabilities": [
+    {
+      "account_id": "acct-431ef17d-7c70-4284-bcf9-a4cf972c98e7",
+      "aprs": [
+        {
+          "apr_percentage": 21.38711070837989,
+          "apr_type": "purchase_apr"
+        }
+      ],
+      "is_overdue": false,
+      "last_payment_amount": 778.5658239837488,
+      "last_payment_date": "2025-10-11",
+      "last_statement_balance": 1775.5441465429453,
+      "minimum_payment_amount": 79.3410500655134,
+      "next_payment_due_date": "2025-11-15"
+    }
+  ]
+}

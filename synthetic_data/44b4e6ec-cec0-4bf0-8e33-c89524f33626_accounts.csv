@@ -1,0 +1,5 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-751d9fee-3ae2-428e-a098-ff5e3c9ea47a,Weiss Inc Checking,depository,checking,individual,"{'available': 1427.2509205598758, 'current': 1537.732969613546, 'limit': None}",USD,7537
+acct-2d7674d9-2b09-4a40-a41b-19c54bd83bb1,Torres-Andrews Savings,depository,savings,individual,"{'available': 11132.042397919342, 'current': 12150.131893144726, 'limit': None}",USD,7135
+acct-4b57e0e7-eaed-4e80-81fc-bf20b92daba5,Hill-Moore Credit Card,credit,credit card,individual,"{'available': 1024.5209357806298, 'current': 1068.075742083401, 'limit': 5427.279639738393}",USD,5489
+acct-f1a54ce6-d644-42e8-9ef5-2051d3b21ac0,Robinson Ltd Student,loan,student,individual,"{'available': 36132.426319704944, 'current': 37695.09210481687, 'limit': None}",USD,2332

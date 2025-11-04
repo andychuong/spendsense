@@ -1,0 +1,3486 @@
+{
+  "user_id": "c1530055-a27a-4adc-b202-b3d4a4608a9b",
+  "accounts": [
+    {
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "name": "Hansen-Hall Checking",
+      "type": "depository",
+      "subtype": "checking",
+      "holder_category": "individual",
+      "balances": {
+        "available": 1127.2312341758827,
+        "current": 1313.1944403651803,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "8506"
+    },
+    {
+      "account_id": "acct-8521b307-af03-4f65-a936-c2ae54e7446a",
+      "name": "Reyes-Ewing Savings",
+      "type": "depository",
+      "subtype": "savings",
+      "holder_category": "individual",
+      "balances": {
+        "available": 2328.664446347991,
+        "current": 2656.4270186317026,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "5126"
+    },
+    {
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "name": "Jones-Brown Credit Card",
+      "type": "credit",
+      "subtype": "credit card",
+      "holder_category": "individual",
+      "balances": {
+        "available": 3787.3159037740843,
+        "current": 4430.424642039683,
+        "limit": 5000.0
+      },
+      "iso_currency_code": "USD",
+      "mask": "7603"
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": "txn-ad48842d-51bc-4108-aa7b-22c5a53776a9",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-07",
+      "amount": 158.776028472964,
+      "merchant_name": "OnlineMart #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-aa1573d6-ee8e-47f1-9a07-6de12e39035f",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-07",
+      "amount": 102.40195375097008,
+      "merchant_name": "FreshBites #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-02f7738e-b45b-4a30-b86e-089e5eae4d45",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-07",
+      "amount": 138.35510916587617,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c43faad0-82a5-4ad4-9f6c-e5774711ca72",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-08",
+      "amount": 110.1430287177891,
+      "merchant_name": "LuxuryBoutique #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ee27e194-4f6c-4e86-9bb8-37518a811cea",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-08",
+      "amount": 127.18362313522002,
+      "merchant_name": "FreshBites #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e01ef933-7ef0-414d-8b5a-07b7ee71e6ff",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-08",
+      "amount": 87.26432157506815,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4bdfa773-6f2f-4799-8048-f30cc7569e2c",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-09",
+      "amount": 38.457128029187956,
+      "merchant_name": "ElectroHub #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-842e26c1-2bbb-4940-b030-c94526e95ee2",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-10",
+      "amount": 52.948969432507816,
+      "merchant_name": "StarBite Cafe #5",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-91a14dca-ed94-43b0-aaa3-ad0d02d3a2b3",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-11",
+      "amount": 106.80589767502507,
+      "merchant_name": "LocalBakery #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b3d36af8-f1ef-44d6-be8c-6935023c7fdc",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-12",
+      "amount": 134.45537907226006,
+      "merchant_name": "StarBite Cafe #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-da3c4b0f-5c01-4881-accd-edbd75553a5d",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-13",
+      "amount": 58.421399703529815,
+      "merchant_name": "BookBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-97fc0984-577b-4cae-807c-4901a0cdf007",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-14",
+      "amount": 99.04129095753213,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a9a76462-d975-4388-944a-e2c9a3ede5bc",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-14",
+      "amount": 144.21750180898226,
+      "merchant_name": "FreshBites #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2d0295e2-bb14-4d50-b040-3630d7eba892",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-15",
+      "amount": 115.39919790974626,
+      "merchant_name": "OfficeSupply Co #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2b5b70f5-18ed-4a0b-8709-52795fd5dd24",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-15",
+      "amount": 63.389757386772104,
+      "merchant_name": "PetWorld #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-50634616-cd10-4a2d-b490-f54e67605440",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-18",
+      "amount": 111.05095495518056,
+      "merchant_name": "DiscountOutlets #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Discount Stores"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b1548d01-6801-4a56-830e-57f8dfab6045",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-18",
+      "amount": 124.4067621428548,
+      "merchant_name": "FineDining LLC #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d3600c37-ee50-4acc-a849-7d733a0f1f42",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-19",
+      "amount": 73.7704450524277,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-89ce33b2-2702-466b-ae7d-b3501ebbd6ed",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-20",
+      "amount": 50.25994885567381,
+      "merchant_name": "BeerBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9c9e9507-12a1-4c4e-9e97-5d89dc7b86a0",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-21",
+      "amount": 100.2246587868119,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-180fde35-56d2-4cd0-ae53-2bb8339581db",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-21",
+      "amount": 59.33474824131114,
+      "merchant_name": "FineDining LLC #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-bec9dd51-b090-4eaf-9e07-efbba4901225",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-21",
+      "amount": 124.58639323641198,
+      "merchant_name": "BeerBarn #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0f8cdf82-57b0-48f0-8866-3588338555df",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-21",
+      "amount": 130.87816277660468,
+      "merchant_name": "FineDining LLC #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2b169550-d8f2-4f7d-82b7-12f312fcd086",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-23",
+      "amount": 38.16342716135054,
+      "merchant_name": "FineDining LLC #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2f776377-7d2a-41d2-91b9-9423c6b8811a",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-24",
+      "amount": 158.38119978988698,
+      "merchant_name": "FurnitureCo #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e07e3db5-e251-47ae-b0cc-ca22795cc177",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-24",
+      "amount": -4970.786357715126,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-de96e610-0768-4294-8e4f-6020f05a4652",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-25",
+      "amount": 37.67940516273087,
+      "merchant_name": "BeerBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-56c7ab1e-b083-46cb-84a2-8cc7dc621963",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-25",
+      "amount": 27.524544593464867,
+      "merchant_name": "FreshBites #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8f86f59b-3f86-4e69-b9c9-f72389e8b3ee",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-29",
+      "amount": 144.73795176498334,
+      "merchant_name": "ElectroHub #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-59cd0b7a-cd25-4ecc-8e67-4cd624a805f3",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-05-29",
+      "amount": 25.229919435430848,
+      "merchant_name": "SubscriptionBox #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-379d3175-6cd5-40f6-8f40-0fb96be62b1c",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-29",
+      "amount": 224.71344857284632,
+      "merchant_name": "CityMall Clothing #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-479150bc-3706-4ee8-81d6-0afb98ee1dda",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-30",
+      "amount": 64.56143659790214,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-059d43ba-c4a1-40e2-af26-ef8650e51a05",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-05-31",
+      "amount": 23.965550056846364,
+      "merchant_name": "LocalBakery #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2c7f82d4-d446-4c8a-adaf-94e74883e727",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-01",
+      "amount": 211.42492184831914,
+      "merchant_name": "BikeShop #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Bicycles & Accessories"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-71c9d750-70f7-44a1-8b4d-05866ac0f8f7",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-03",
+      "amount": 36.7828433995338,
+      "merchant_name": "CraftsOnline #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a290bd7b-e15b-4ae1-b478-c955466e0bb9",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-03",
+      "amount": 140.7947035701678,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fe3e6761-59f8-40cd-b9bb-a9e6bb24ebe6",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-05",
+      "amount": 42.06308422540946,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1117235d-282c-4d87-949d-7e51d27966e5",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-05",
+      "amount": -4999.140648403932,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b00a503f-addf-4a6f-8bb6-f354f6af36a2",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-06",
+      "amount": 71.7771621576451,
+      "merchant_name": "FineDining LLC #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1cd60785-994a-489b-85ef-41e09f382bd7",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-08",
+      "amount": -3099.3326788416334,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0d9c2cde-7a84-4be4-9cae-77a3fc58f3b0",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-11",
+      "amount": 74.50707142284645,
+      "merchant_name": "BeerBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d5e7adde-d85a-4e36-925e-ef31d499ba8f",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-11",
+      "amount": 77.47069274122525,
+      "merchant_name": "BeerBarn #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3aec9dfc-3e32-49f3-b90b-ae0a92069a72",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-12",
+      "amount": 139.99663149787585,
+      "merchant_name": "LocalBakery #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-105cf225-afe0-478b-a816-0cfe152b4925",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-13",
+      "amount": 37.4234968126183,
+      "merchant_name": "FreshBites #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-46bb1550-a1de-448b-9842-3461f4582fca",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-13",
+      "amount": 114.44422767870303,
+      "merchant_name": "StarBite Cafe #5",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e0782400-ecd2-4f59-b31f-5e0f8f54a900",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-13",
+      "amount": 26.505563562761676,
+      "merchant_name": "BeerBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-52d755bd-7d9e-41bd-821c-bf2d9005a685",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-14",
+      "amount": 121.27139610167475,
+      "merchant_name": "GardenCenter #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Nurseries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f37cf591-7383-4770-b536-f1d147542554",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-14",
+      "amount": 117.44913181607727,
+      "merchant_name": "StarBite Cafe #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ff63d2d1-be92-460d-a723-1c140e647d3c",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-15",
+      "amount": 228.0304671420435,
+      "merchant_name": "ToyHouse #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Toys & Games"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-95f78fe4-9cd0-478a-b724-15b5ef9bca2b",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-15",
+      "amount": 53.342735216448176,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-028015b9-384f-4d34-870f-94f4fc42a106",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-16",
+      "amount": 168.4345762869379,
+      "merchant_name": "HomeGoods Store #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Home & Garden"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b0194e22-6ccb-451d-86f1-beb136ff398f",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-16",
+      "amount": 264.26977684282065,
+      "merchant_name": "GardenCenter #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Nurseries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3e5e72c5-0bcb-43fd-906e-69223ba09699",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-17",
+      "amount": 20.90310125431358,
+      "merchant_name": "CraftsOnline #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e3a9c973-799a-4037-afa1-16b4c91efa7e",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-18",
+      "amount": 55.42854325491244,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4e86d5e4-8212-4efb-9591-37a3489363da",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-22",
+      "amount": 287.108686011052,
+      "merchant_name": "GardenCenter #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Nurseries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e4f6ed2b-b5a4-4656-b557-46c2e6a9431b",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-22",
+      "amount": 46.39024528135734,
+      "merchant_name": "BeerBarn #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8a1639e5-e9e8-409c-8cbf-184e40808905",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-23",
+      "amount": 138.5755020199219,
+      "merchant_name": "SubscriptionBox #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e9f5d25c-510c-4fc1-afd1-32222bf48ed8",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-23",
+      "amount": 43.212289961399286,
+      "merchant_name": "FreshBites #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b91d0e50-5149-4dda-bf84-90e135201f12",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-23",
+      "amount": 136.7749785392873,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-21fed847-aa3d-44a2-b5a7-f8a083f11d8d",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-23",
+      "amount": 60.77672599535908,
+      "merchant_name": "BeerBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e36fd17e-18c8-4b58-b235-7390256904b8",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-24",
+      "amount": 257.40158995108993,
+      "merchant_name": "eBookStore #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Digital Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-20061f3f-bf64-48f1-98f7-0fe8d9ec4e80",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-24",
+      "amount": 71.01660314320603,
+      "merchant_name": "FineDining LLC #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4d109229-e2a4-4054-bc5e-6c4282b365be",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-25",
+      "amount": 138.90798197498367,
+      "merchant_name": "PetWorld #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-95fc68d2-a770-4638-bad5-49e36b6bcd71",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-25",
+      "amount": 120.36695810120216,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8cc61d5b-43e1-4385-9c7c-49e57bcc4c46",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-26",
+      "amount": 141.94639466764326,
+      "merchant_name": "BeerBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-57ad703b-1caf-4741-9820-61a5fd6090b3",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-27",
+      "amount": 50.60260339740046,
+      "merchant_name": "LocalBakery #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ec14ff5f-f460-493e-b090-cdd75f730760",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-27",
+      "amount": 107.45486399220104,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-70700c89-12d2-45c9-b6f0-45ebc13c370f",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-28",
+      "amount": 237.20308476091805,
+      "merchant_name": "CraftsOnline #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-af37ac2a-8a4f-4e63-bb12-6fbb9105fac1",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-28",
+      "amount": 253.97714805294743,
+      "merchant_name": "ElectroHub #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b8a7ee01-7071-4311-9bc9-07eb361b5611",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-29",
+      "amount": 147.25545147678244,
+      "merchant_name": "FineDining LLC #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b0627f16-bf29-464e-a0e3-fb8f34ec85c5",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-06-30",
+      "amount": 70.83867448779866,
+      "merchant_name": "FreshBites #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-183d4473-2712-4278-8d1e-14d4b5d0a212",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-06-30",
+      "amount": 91.4587242742683,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-92799da4-729a-4b21-9009-e47a0e59475c",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-01",
+      "amount": -4473.66873554071,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-866deb96-1cee-42a1-8058-3a107504da80",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-03",
+      "amount": 12.086120279505817,
+      "merchant_name": "FineDining LLC #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-43b67957-dfbc-44a7-9c20-22e7702b4c71",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-05",
+      "amount": 57.378192325642345,
+      "merchant_name": "ElectroHub #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-604d00e2-b3b3-48f1-ab93-e8e330511aba",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-05",
+      "amount": 110.44519101965987,
+      "merchant_name": "FineDining LLC #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-33f26a95-2eac-4745-8a9d-74947a401eb0",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-05",
+      "amount": 90.14520131787118,
+      "merchant_name": "FineDining LLC #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-dff6b045-1955-43c0-87de-8105793ec03a",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-06",
+      "amount": -3805.3864238231486,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1e4b2f98-4b95-491e-a315-1fbed090b477",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-07",
+      "amount": 102.83145950486652,
+      "merchant_name": "OnlineMart #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e34fe79c-2778-4413-8f54-91a63d904f38",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-08",
+      "amount": 67.28147024179907,
+      "merchant_name": "BeerBarn #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4b52cf3e-01fe-413f-baa2-b318e7ee2b42",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-08",
+      "amount": 91.02611385905654,
+      "merchant_name": "FineDining LLC #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-01cc7686-4086-4d39-9aa2-de552c5834b0",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-12",
+      "amount": 284.8668614397144,
+      "merchant_name": "SubscriptionBox #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ad5ef015-0e13-4eb7-b806-f937e8754cd7",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-12",
+      "amount": 130.31332848421687,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b9a96d5c-c4dd-4874-a69d-74a51951fd66",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-13",
+      "amount": 289.77118470104546,
+      "merchant_name": "BookBarn #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7f01791c-f018-448c-ba21-13e6a09e134a",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-13",
+      "amount": 60.307721748008724,
+      "merchant_name": "BeerBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5ff530e5-e618-4a26-b2e2-d54fdb49660a",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-14",
+      "amount": 103.84198528375187,
+      "merchant_name": "FreshBites #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a38ca3a9-fdb1-4b21-985b-f2adafce1e64",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-15",
+      "amount": 14.293406896612336,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-47f9b430-4cb3-4694-89f0-819994217145",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-16",
+      "amount": 87.07332935357569,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9b764150-4d18-42e7-8064-33022550c599",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-16",
+      "amount": 23.15837008013768,
+      "merchant_name": "LocalBakery #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3c7037f6-fcff-4b66-a15f-7cadb3ddc7c9",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-16",
+      "amount": -3960.41680746173,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1a93a609-d114-4eaf-9611-ddcafa717623",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-17",
+      "amount": 63.60003936359422,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-33abbc06-6ccf-488d-9477-7c0e5c5827a9",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-17",
+      "amount": 148.03704655929675,
+      "merchant_name": "StarBite Cafe #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2d8cbcc6-2011-4a37-95cd-5419447db0b8",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-19",
+      "amount": 223.66127475858477,
+      "merchant_name": "HardwarePro #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8ed9b133-74e9-43dc-96c0-1487c6a7448a",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-20",
+      "amount": 64.95864969226824,
+      "merchant_name": "FineDining LLC #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7950af90-2d14-4ab5-9e6d-aa17db7d922f",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-20",
+      "amount": 31.3413740417148,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-cf202b92-a2be-447d-865e-258afa6765d5",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-21",
+      "amount": 82.85520559142643,
+      "merchant_name": "eBookStore #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Digital Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-20fec0df-f20c-4564-8f29-15529e237352",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-21",
+      "amount": 134.1589201623092,
+      "merchant_name": "StarBite Cafe #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fe2f71e0-d071-4822-9d56-07215625a641",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-22",
+      "amount": 29.617875694914726,
+      "merchant_name": "FineDining LLC #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-94e0ac2a-4a54-4fd8-b33e-37d2d2dd0663",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-24",
+      "amount": 149.98620727406993,
+      "merchant_name": "LuxuryBoutique #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-05205895-6e7f-4f3e-af9f-2f5f6481f321",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-25",
+      "amount": 21.094248761555985,
+      "merchant_name": "PetWorld #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-47c74270-60b3-4d5c-8111-f2d81b04fb26",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-25",
+      "amount": 102.8373616108214,
+      "merchant_name": "FreshBites #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1f9f0d78-9f9d-4c2e-9dd2-742ac32363b9",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-26",
+      "amount": 135.36598391190986,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0ebb7b12-f7b2-455c-ac80-71b432215e31",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-27",
+      "amount": 82.24699454705703,
+      "merchant_name": "FineDining LLC #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-80f1a237-3f1f-4919-8435-46bf1df6726c",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-28",
+      "amount": 37.25181369361205,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-da3a4f2d-475a-4a8d-bbb0-02e6cf7cc2c1",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-28",
+      "amount": 31.120629969493518,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b7438364-2d8b-42d4-b1c1-19ba7931f7bc",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-29",
+      "amount": 239.20121176669923,
+      "merchant_name": "CraftsOnline #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7a4f8428-e6d3-4db1-a215-e8ba55d11684",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-29",
+      "amount": 95.17347144580224,
+      "merchant_name": "FreshBites #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7d65b936-6ab9-48a2-86c4-a07ce3441fdb",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-29",
+      "amount": 178.49379229229984,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b99cab41-48c9-4923-bc79-5682e86fa2f5",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-30",
+      "amount": 264.6158932182443,
+      "merchant_name": "GardenCenter #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Nurseries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8168581c-9dd6-4636-b0dc-5719e35f1475",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-07-30",
+      "amount": 134.39640420023838,
+      "merchant_name": "StarBite Cafe #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-433923d3-5480-4aed-ba4f-2dac05f619ac",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-30",
+      "amount": 40.4042764971318,
+      "merchant_name": "FreshBites #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-602c12ab-6165-4352-97c0-5cd128e74323",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-07-31",
+      "amount": 190.49926813097233,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f728ed82-6a84-4408-8bd9-8cedfbe29409",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-01",
+      "amount": 151.28104734465617,
+      "merchant_name": "OfficeSupply Co #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d6d0d64e-08b6-4178-9293-7402dbd318dd",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-01",
+      "amount": 222.52401750196407,
+      "merchant_name": "ToyHouse #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Toys & Games"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-24499574-b696-44a6-8856-ac506349c929",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-01",
+      "amount": 119.5499412831839,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-27064cb5-c3ba-452e-824f-12cdc69220c5",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-01",
+      "amount": -4880.590180064945,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f18edbcb-beb3-47aa-86e8-1b390fa58db2",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-02",
+      "amount": 55.82815507482774,
+      "merchant_name": "HardwarePro #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a3824e03-ed5b-494e-a87e-acddf9cafcc6",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-03",
+      "amount": 264.33544934068834,
+      "merchant_name": "GardenCenter #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Nurseries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ae9f766d-c071-41d0-a6f7-f33c381201f6",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-03",
+      "amount": 127.799062536822,
+      "merchant_name": "StarBite Cafe #5",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-be612863-bae4-4cb6-9a41-210aaa7f5ac8",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-04",
+      "amount": 32.98988551030172,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0ec2486e-9ede-4d52-9499-42705a4c89c4",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-05",
+      "amount": -3383.6277874348825,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-aae8e4d5-4141-42d7-bbe5-4e6b9994e211",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-06",
+      "amount": 237.12077923708307,
+      "merchant_name": "CityMall Clothing #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-179bfe34-23fa-4803-965a-af92fe1d4a26",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-06",
+      "amount": 120.46964975380519,
+      "merchant_name": "BeerBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-87e54483-b9e4-4f04-bb6e-7168d544160c",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-07",
+      "amount": 281.87856564201985,
+      "merchant_name": "ToyHouse #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Toys & Games"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-bb9b7888-57a7-4c8b-9a84-993d77d95826",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-07",
+      "amount": 70.01138387088679,
+      "merchant_name": "LocalBakery #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fefb2343-d924-4580-b443-c2bc5cb7dade",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-08",
+      "amount": 29.020196730224093,
+      "merchant_name": "HardwarePro #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f2ddbb4e-2828-4e56-a5f7-39aeab29d96b",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-08",
+      "amount": 70.67605837511375,
+      "merchant_name": "LocalBakery #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-18672380-0240-4873-a8ea-c002d1e280ee",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-08",
+      "amount": 49.16245546200669,
+      "merchant_name": "FreshBites #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-03d42253-6ad0-434b-bbdc-6a751d354b93",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-09",
+      "amount": 30.0081887698377,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0afb851d-892a-476f-9275-53872f2fcfc0",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-10",
+      "amount": 70.29769204103857,
+      "merchant_name": "LocalBakery #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-80e18ab0-f38f-44d8-9cdf-284959fa6c73",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-11",
+      "amount": 40.44587031452567,
+      "merchant_name": "HomeGoods Store #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Home & Garden"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-08f194f9-6183-41e7-aaa6-49d1a03b77cf",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-11",
+      "amount": 76.72130139643991,
+      "merchant_name": "BeerBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-cb67ff63-fe0b-4c6c-911d-e3ca902c3cfc",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-11",
+      "amount": 104.82779456466302,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0d5bd54e-ed1b-4b3c-8671-6dd5003bedb9",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-12",
+      "amount": 26.88418371606202,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-44f9d779-d129-48ae-9c9a-3ddb0a66c02a",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-14",
+      "amount": 53.23633005427351,
+      "merchant_name": "CraftsOnline #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d651a884-dc02-4971-837f-87b15c0f7a6f",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-14",
+      "amount": 146.0444470678681,
+      "merchant_name": "LocalBakery #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4b36782a-b055-4f43-a443-3f485e6ce98e",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-15",
+      "amount": 66.52774511735879,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fd697328-9642-4354-b9e4-c995bf19d49b",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-16",
+      "amount": 232.64234746907724,
+      "merchant_name": "PetWorld #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2aec8618-ddb3-4ff6-bfb2-e03acafb6c25",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-20",
+      "amount": 113.6861426296033,
+      "merchant_name": "OfficeSupply Co #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-60a00ac5-41f5-4085-82da-544e0a995248",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-20",
+      "amount": 142.46295360555723,
+      "merchant_name": "OfficeSupply Co #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a820dc5e-e4bf-4fbf-a2ea-a420b3fccf76",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-20",
+      "amount": 233.51608156239752,
+      "merchant_name": "CityMall Clothing #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8076af7b-f8a0-466e-b420-e932c07dcf08",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-21",
+      "amount": 91.45580997364885,
+      "merchant_name": "SubscriptionBox #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1cc8d277-7f60-4d23-9de6-5b6e94d73ba0",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-23",
+      "amount": 80.68910073560178,
+      "merchant_name": "FreshBites #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-210e83ac-ac96-4ff7-a4e2-f48ea223e2d3",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-25",
+      "amount": 258.49075889503564,
+      "merchant_name": "OnlineMart #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5e54ff36-4b22-4504-bea4-aad7722821dd",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-25",
+      "amount": 40.5521358394023,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7edee607-d434-4eef-bc0f-810a55d3f2a8",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-26",
+      "amount": 92.48569856640754,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c7b80663-1a65-4107-b585-9e267bbe6bf0",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-27",
+      "amount": 24.37095960177861,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c8c89b88-a3a7-49f5-896c-0198d68d5e82",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-27",
+      "amount": -3415.7992097949664,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ca4a70d4-847e-48b6-904d-a8c79ee7ce37",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-08-29",
+      "amount": 91.62864953767541,
+      "merchant_name": "OnlineMart #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1e336db1-904b-44e3-b3f8-d6c371851ab1",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-08-29",
+      "amount": 92.47214702862189,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f1495cf2-eb90-4e93-ba61-385bf90c7099",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-09-01",
+      "amount": 61.40154713083266,
+      "merchant_name": "FreshBites #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3cecdd85-9f89-4efc-8280-8e96ab0f02ae",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-03",
+      "amount": 133.36971263842582,
+      "merchant_name": "FineDining LLC #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-60822105-f7d1-4793-aa44-ec7fd0c173c9",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-09-03",
+      "amount": 124.8996330247074,
+      "merchant_name": "BeerBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f28e23aa-9ea2-4022-a6a2-6a063b226ce7",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-09-03",
+      "amount": 96.21143535411596,
+      "merchant_name": "BeerBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0fb39516-98d5-47c9-995f-9df2eef32701",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-04",
+      "amount": 125.56024434774284,
+      "merchant_name": "LocalBakery #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1028301f-2a1c-4532-aa14-252d8ae66213",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-09-05",
+      "amount": 19.665222813240995,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-87024d17-98e4-4296-92f7-68b245023f01",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-06",
+      "amount": 26.700349599008625,
+      "merchant_name": "OnlineMart #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e4a48b92-35df-47c5-bb2c-7200384c57fa",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-09",
+      "amount": 141.10376904213774,
+      "merchant_name": "BeerBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d4598298-4837-4889-8e67-e9603475e8d5",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-12",
+      "amount": 142.93490032826233,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b4377afc-8ab7-4f88-b3eb-c82758d5af7b",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-09-12",
+      "amount": 80.72807056252725,
+      "merchant_name": "StarBite Cafe #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fe61df13-d311-439c-aed6-48b873777d1d",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-09-13",
+      "amount": 139.40929910184857,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0bc80f07-cab5-49e9-9934-ba897867cefd",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-14",
+      "amount": 84.06202890112347,
+      "merchant_name": "PetWorld #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5a3cf8a1-5c5a-49f1-95a2-f78c418592d0",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-14",
+      "amount": 127.64570962562502,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b9bf2f1d-a7c1-4963-a3e0-7aed9e7e5a09",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-15",
+      "amount": 92.16587466884633,
+      "merchant_name": "FreshBites #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-84b2ac69-819c-418d-a257-f7b84da603be",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-15",
+      "amount": 149.75681928114633,
+      "merchant_name": "FreshBites #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-aa74b3f9-e971-4eef-972f-fc958defb731",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-18",
+      "amount": 41.78228013207949,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-df4d35b9-bafb-4621-bd23-54d6106bbc0d",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-18",
+      "amount": 82.05349410801449,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5669a641-5f14-4fcd-ade3-616935250778",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-19",
+      "amount": 64.31581232369659,
+      "merchant_name": "StarBite Cafe #5",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-143711ed-1069-4783-b637-51e4e525f1ef",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-19",
+      "amount": 127.7550147307343,
+      "merchant_name": "BeerBarn #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-96b5cdb7-da0d-44d9-9901-565645cc4d13",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-20",
+      "amount": 17.864083429593023,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7933581b-4828-4b3e-a093-455dade67aaa",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-23",
+      "amount": 103.21963708983246,
+      "merchant_name": "PetWorld #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-aec804f1-b1cc-4193-a2ef-12891ac8b6ea",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-24",
+      "amount": 81.95358706733785,
+      "merchant_name": "LocalBakery #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5cde23da-3d31-4fe0-a141-b72b6cd3f0e2",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-24",
+      "amount": 140.56877434276456,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7c2424f4-e180-4332-b66b-73da6cfe784f",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-29",
+      "amount": 98.26192955030416,
+      "merchant_name": "LocalBakery #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b15d6d17-eb8f-436d-b833-f5d03510fd86",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-29",
+      "amount": 108.62341076674414,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-45115337-c6f9-47e3-ba7a-8b0a2990cb77",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-09-30",
+      "amount": 43.500500210491765,
+      "merchant_name": "BookBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2000c0a2-5902-4852-a00b-9d942cee3017",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-09-30",
+      "amount": 147.77440558674283,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f6169bd0-5fad-4b04-a822-16e29b6a67cc",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-01",
+      "amount": 40.428361571250406,
+      "merchant_name": "FurnitureCo #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e845b9fc-739e-44e1-b6dc-d78d6ea23757",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-01",
+      "amount": 134.08126161419938,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2d9cf8b5-de3c-4a84-bb87-861034e1c60c",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-02",
+      "amount": 161.37805670800074,
+      "merchant_name": "PetWorld #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ee70cbba-437c-463d-a4d4-7f8eeca0a846",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-02",
+      "amount": 29.034876260147175,
+      "merchant_name": "StarBite Cafe #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-152f1d54-f7b7-4d1a-bc37-f6a178459e8f",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-02",
+      "amount": 146.28631763607623,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8087b477-2883-4aec-811d-90b10a1f3405",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-03",
+      "amount": 109.09993505949488,
+      "merchant_name": "StarBite Cafe #5",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-62c3bec0-4fa8-4627-a847-d98ce5a3cd4a",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-04",
+      "amount": 139.51120368025153,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-944e2166-4add-4296-bb82-4b0064c40e07",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-04",
+      "amount": 101.05270895685858,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1cd36b0b-f4ea-4a55-938c-2f30ef5ccffc",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-05",
+      "amount": 200.11778953257271,
+      "merchant_name": "BookBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0c1f8d23-5dc6-4375-8a8a-3118d9047402",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-06",
+      "amount": 30.89203780124191,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1f228ef3-4bea-408b-a5f1-0a6d97c7bd95",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-07",
+      "amount": 135.17659838165957,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1a01f441-f86a-49de-ac06-522fcfdc7353",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-07",
+      "amount": 56.9253273959572,
+      "merchant_name": "StarBite Cafe #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d18845fc-a92a-48d7-8d0e-d836bd3fcc4a",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-08",
+      "amount": 91.98041977276223,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1470b024-f219-4850-b918-260466296046",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-09",
+      "amount": 208.48863759419174,
+      "merchant_name": "FurnitureCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1fc18ed4-f89b-4728-a1ab-b9b02e555d8a",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-09",
+      "amount": 23.82225327851599,
+      "merchant_name": "LocalBakery #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-99185c5c-90c5-49d5-89cb-ec5a5961a5e8",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-09",
+      "amount": 17.592076114227716,
+      "merchant_name": "StarBite Cafe #5",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fe6c292f-e9ee-44bb-9702-189e33953e22",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-09",
+      "amount": 28.70197260232192,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6e084310-34dc-419a-b26f-52fc800c30f2",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-10",
+      "amount": 135.45959111279427,
+      "merchant_name": "HardwarePro #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b3b82c8b-3a83-4947-8105-126a61d7ce74",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-11",
+      "amount": 145.3761849526386,
+      "merchant_name": "FineDining LLC #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b67f6f10-c227-4fe5-a676-6431cdde7f77",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-11",
+      "amount": 11.76919710081636,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-55d3e30a-4823-41e7-b1d3-f2d4657f50aa",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-12",
+      "amount": 111.76960994482364,
+      "merchant_name": "BeerBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b4a9e0fa-4020-4463-81c6-cebe075ed90b",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-13",
+      "amount": 199.07890639652695,
+      "merchant_name": "eBookStore #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Digital Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-34e00b96-3daf-45d7-9fc9-c25f4de5085d",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-13",
+      "amount": 24.449370034945794,
+      "merchant_name": "BeerBarn #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c7e1822c-17be-4c39-9ac1-cfcd558a6350",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-14",
+      "amount": 99.62685668620688,
+      "merchant_name": "LuxuryBoutique #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a4c44525-f948-49c6-a83e-b9038044d6c1",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-15",
+      "amount": 140.5052738619104,
+      "merchant_name": "DiscountOutlets #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Discount Stores"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-04fddcc9-d88a-4919-a5f0-3647883ee4a0",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-16",
+      "amount": 101.27466235129279,
+      "merchant_name": "FreshBites #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5274649d-efc7-4de2-8964-6843fdce6dc1",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-17",
+      "amount": 204.10028462284984,
+      "merchant_name": "PetWorld #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-86478e3c-e219-4fa2-8a97-8a2d9bd160c4",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-17",
+      "amount": 178.66110840451435,
+      "merchant_name": "HardwarePro #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9def9754-408c-436c-ab79-8fdf986ecb6e",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-17",
+      "amount": 115.51713195193264,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4da15da1-bc00-4188-a7a8-44c2980a5a27",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-18",
+      "amount": 119.07527355864747,
+      "merchant_name": "SubscriptionBox #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3867aa1d-0f24-43bd-ab82-b5b48a01f691",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-18",
+      "amount": 43.87018143616241,
+      "merchant_name": "BookBarn #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8f9b0b88-5248-45a0-b690-50c9d6934292",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-19",
+      "amount": 98.8135774614834,
+      "merchant_name": "FurnitureCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-85b732b8-9c51-4b02-854d-b32e8927dcef",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-20",
+      "amount": 65.0247011437135,
+      "merchant_name": "BeerBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-93b811a8-574d-4f3e-bae7-c5ffe0243d62",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-20",
+      "amount": 46.15407390924404,
+      "merchant_name": "StarBite Cafe #5",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-edd8fd8a-8c49-419b-8ebd-4a0e7eca9771",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-22",
+      "amount": 46.36949412630348,
+      "merchant_name": "CityMall Clothing #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2bc311e9-dcd6-4d09-a495-e9b977b24b29",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-22",
+      "amount": 105.84002019069375,
+      "merchant_name": "BeerBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-53aed227-5864-4353-bc71-b78920b79fef",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-23",
+      "amount": 230.3420945452398,
+      "merchant_name": "DiscountOutlets #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Discount Stores"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ef5e10fb-9cee-4513-b3d7-471372da5b08",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-23",
+      "amount": 97.21461158117256,
+      "merchant_name": "BeerBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-43a251aa-094b-442c-8dbe-9e13e869ab7a",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-25",
+      "amount": 106.02455450054387,
+      "merchant_name": "LuxuryBoutique #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-75c57ef3-636a-46dd-948d-ef07acc62e2b",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-26",
+      "amount": 76.01510762881728,
+      "merchant_name": "StarBite Cafe #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-014f3143-fa4e-4d4a-a7be-688f55192cc2",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-27",
+      "amount": 101.64377504716266,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b405df0a-9552-4422-94b5-22b4300a9d2b",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-27",
+      "amount": 40.1359334942418,
+      "merchant_name": "LocalBakery #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bakeries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ce53417b-7ebc-45c9-8cb5-8209656b7dc6",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-27",
+      "amount": 26.510751262378204,
+      "merchant_name": "FreshBites #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1252d113-95a3-4bed-94c5-c9eef00f53ac",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-28",
+      "amount": 192.43352148929415,
+      "merchant_name": "FurnitureCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c40fdc99-0a9e-467c-9ee2-2c3b89071c9e",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-29",
+      "amount": 90.08235905849969,
+      "merchant_name": "FreshBites #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Fast Food"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-86c15b84-422d-44ed-afc0-182718ab57ee",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-29",
+      "amount": 149.55701172728624,
+      "merchant_name": "BeerBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Bars & Pubs"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-89e11046-9803-4602-b294-1f914e718c7e",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-29",
+      "amount": 61.56834677777564,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a01cd859-50bd-4f45-ac31-8e7ef732ccbe",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-10-31",
+      "amount": 182.03393661486425,
+      "merchant_name": "DiscountOutlets #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Discount Stores"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-bcaf00ad-7f01-4864-83b9-d89971d0abb9",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-10-31",
+      "amount": 118.55793682945429,
+      "merchant_name": "StarBite Cafe #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fec22630-7fa4-467a-9fe7-0ba372cb9103",
+      "account_id": "acct-5924dbb3-6308-496a-8163-6621255b1a67",
+      "date": "2025-11-01",
+      "amount": 22.109373717102855,
+      "merchant_name": "FineDining LLC #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Restaurants"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9619c6b6-1289-433a-8eae-3255da13af4b",
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "date": "2025-11-01",
+      "amount": 94.30201044417826,
+      "merchant_name": "StarBite Cafe #5",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Food & Drink",
+        "detailed": "Food & Drink/Coffee Shops"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    }
+  ],
+  "liabilities": [
+    {
+      "account_id": "acct-ff86295f-c2fd-4b7e-86f0-7fd14c3f6002",
+      "aprs": [
+        {
+          "apr_percentage": 20.321762837053353,
+          "apr_type": "purchase_apr"
+        }
+      ],
+      "is_overdue": false,
+      "last_payment_amount": 1445.4941092213176,
+      "last_payment_date": "2025-10-18",
+      "last_statement_balance": 4615.429088419455,
+      "minimum_payment_amount": 221.52123210198417,
+      "next_payment_due_date": "2025-11-14"
+    }
+  ]
+}

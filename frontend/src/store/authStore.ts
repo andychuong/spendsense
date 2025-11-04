@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { User, AuthTokens } from '@/types'
 import { storeTokens, clearStoredTokens } from '@/services/api'
+import { authService } from '@/services/authService'
 
 interface AuthState {
   user: User | null
@@ -9,7 +10,7 @@ interface AuthState {
   isAuthenticated: boolean
   setAuth: (user: User, tokens: AuthTokens) => void
   setUser: (user: User) => void
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -25,9 +26,18 @@ export const useAuthStore = create<AuthState>()(
       setUser: (user: User) => {
         set({ user })
       },
-      logout: () => {
-        clearStoredTokens()
-        set({ user: null, tokens: null, isAuthenticated: false })
+      logout: async () => {
+        try {
+          // Call backend to revoke refresh token
+          await authService.logout()
+        } catch (error) {
+          // Even if backend logout fails, clear local tokens
+          console.error('Logout error:', error)
+        } finally {
+          // Always clear local tokens and state
+          clearStoredTokens()
+          set({ user: null, tokens: null, isAuthenticated: false })
+        }
       },
     }),
     {

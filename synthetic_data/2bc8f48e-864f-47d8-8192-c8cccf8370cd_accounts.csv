@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-10792a58-584b-43cd-abfe-5c1d4d947d40,"Stone, Barber and Shaw Checking",depository,checking,individual,"{'available': 787.0345056074159, 'current': 808.9678445782271, 'limit': None}",USD,8562
+acct-6351774e-5315-4ad1-a166-7cff92ed726d,Morrow-Knapp Savings,depository,savings,individual,"{'available': 828.8156152822114, 'current': 865.4025868335134, 'limit': None}",USD,1909
+acct-c93ba6ac-8cea-40ab-a379-fb9467df607c,George Group Credit Card,credit,credit card,individual,"{'available': 4421.099837876308, 'current': 4461.824014463356, 'limit': 5000.0}",USD,7008

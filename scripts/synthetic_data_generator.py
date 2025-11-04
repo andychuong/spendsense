@@ -1,0 +1,384 @@
+import argparse
+import csv
+import json
+import logging
+import os
+import random
+import sys
+from datetime import datetime, timedelta
+from typing import Any, Dict, List
+import uuid
+
+import yaml
+from faker import Faker
+
+# No longer need to modify sys.path
+# from app.ingestion.validator import PlaidValidator # Old import
+from app.common.validator import PlaidValidator # New, stable import
+
+# --- Configuration ---
+LOGGING_LEVEL = logging.INFO
+# Set the locale for the Faker instance, which determines the localization for the generated data
+FAKER_LOCALE = "en_US"
+
+# --- Setup Logging ---
+logging.basicConfig(level=LOGGING_LEVEL, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
+
+# --- Main Generator Class ---
+
+class SyntheticDataGenerator:
+    """Generates synthetic Plaid-style financial data based on persona configurations."""
+
+    def __init__(self, config_path: str, transactions_csv_path: str):
+        """
+        Initializes the generator.
+        
+        Args:
+            config_path: Path to the persona YAML configuration file.
+            transactions_csv_path: Path to the CSV file with sample transactions.
+        """
+        self.config = self._load_config(config_path)
+        self.faker = Faker(FAKER_LOCALE)
+        self.validator = PlaidValidator()
+        self.merchant_pool = self._load_merchant_pool(transactions_csv_path)
+
+    def _load_config(self, path: str) -> Dict[str, Any]:
+        """Loads a YAML configuration file."""
+        logger.info(f"Loading persona configuration from: {path}")
+        with open(path, "r") as f:
+            return yaml.safe_load(f)
+
+    def _load_merchant_pool(self, path: str) -> List[Dict[str, str]]:
+        """Loads a pool of merchants and categories from a CSV file."""
+        logger.info(f"Loading merchant pool from: {path}")
+        pool = []
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    pool.append({
+                        "name": row["merchant_name"],
+                        "category": row["personal_finance_category"],
+                    })
+            logger.info(f"Loaded {len(pool)} merchants into the pool.")
+            return pool
+        except FileNotFoundError:
+            logger.warning(f"Transactions CSV not found at {path}. Transaction generation will be less realistic.")
+            return []
+        except Exception as e:
+            logger.error(f"Error loading merchant pool: {e}")
+            return[]
+
+    def generate_profiles(self) -> List[Dict[str, Any]]:
+        """Generates a list of user profiles based on the configuration."""
+        num_profiles = self.config.get("num_profiles", 1)
+        logger.info(f"Generating {num_profiles} profiles for persona: {self.config.get('persona_name', 'Unknown')}")
+        
+        profiles = []
+        for i in range(num_profiles):
+            user_id = str(uuid.uuid4())
+            logger.info(f"Generating profile {i+1}/{num_profiles} for user {user_id}...")
+            profile = self._generate_single_profile(user_id)
+            profiles.append(profile)
+        return profiles
+
+    def _generate_single_profile(self, user_id: str) -> Dict[str, Any]:
+        """Generates a single, complete user profile with accounts, transactions, and liabilities."""
+        accounts = self._generate_accounts()
+        transactions = self._generate_transactions(accounts)
+        liabilities = self._generate_liabilities(accounts)
+
+        profile_data = {
+            "user_id": user_id,
+            "accounts": accounts,
+            "transactions": transactions,
+            "liabilities": liabilities
+        }
+        return profile_data
+    
+    def _get_random_value(self, config_range: List[float]) -> float:
+        """Returns a random value from a [min, max] range."""
+        return random.uniform(config_range[0], config_range[1])
+
+    def _generate_accounts(self) -> List[Dict[str, Any]]:
+        """Generates a list of accounts based on the persona configuration."""
+        accounts = []
+        account_configs = self.config.get("accounts", [])
+        
+        for acc_config in account_configs:
+            account_id = f"acct-{uuid.uuid4()}"
+            balance = self._get_random_value(acc_config["balance_range"])
+            limit = self._get_random_value(acc_config["limit_range"]) if "limit_range" in acc_config else None
+
+            account = {
+                "account_id": account_id,
+                "name": f"{self.faker.company()} {acc_config['subtype'].replace('_', ' ').title()}",
+                "type": acc_config["type"],
+                "subtype": acc_config["subtype"],
+                "holder_category": "individual",
+                "balances": {
+                    "available": balance * random.uniform(0.8, 1.0), # Assume available is slightly less than current
+                    "current": balance,
+                    "limit": limit,
+                },
+                "iso_currency_code": "USD",
+                "mask": str(random.randint(1000, 9999)),
+            }
+            accounts.append(account)
+        return accounts
+
+    def _generate_transactions(self, accounts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Generates a list of transactions based on the persona configuration."""
+        transactions = []
+        tx_config = self.config.get("transactions", {})
+        history_days = tx_config.get("history_days", 180)
+        end_date = datetime.now()
+        start_date = end_date - timedelta(days=history_days)
+
+        for pattern in tx_config.get("patterns", []):
+            if "category" in pattern and self.merchant_pool:
+                # Generate general spending transactions
+                merchants_in_category = [m for m in self.merchant_pool if pattern["category"] in m["category"]]
+                if not merchants_in_category:
+                    continue
+                
+                num_months = history_days / 30
+                freq_min, freq_max = pattern.get("frequency_per_month", [1,1])
+                num_transactions = int(random.uniform(freq_min, freq_max) * num_months)
+
+                for _ in range(num_transactions):
+                    merchant = random.choice(merchants_in_category)
+                    transaction = {
+                        "transaction_id": f"txn-{uuid.uuid4()}",
+                        "account_id": self._get_random_account(accounts, ["checking", "credit card"]),
+                        "date": self.faker.date_between(start_date=start_date, end_date=end_date).strftime("%Y-%m-%d"),
+                        "amount": self._get_random_value(pattern["amount_range"]),
+                        "merchant_name": merchant["name"],
+                        "merchant_entity_id": None, # Can be enhanced later
+                        "payment_channel": random.choice(["online", "in_store", "other"]),
+                        "personal_finance_category": {
+                            "primary": merchant["category"].split('/')[0],
+                            "detailed": merchant["category"],
+                        },
+                        "pending": False,
+                        "iso_currency_code": "USD",
+                    }
+                    transactions.append(transaction)
+            
+            elif "payment_type" in pattern:
+                # Generate special transaction types
+                num_months = history_days / 30
+                freq_min, freq_max = pattern.get("frequency_per_month", [1,1])
+                num_transactions = int(random.uniform(freq_min, freq_max) * num_months)
+
+                for _ in range(num_transactions):
+                    amount = self._get_random_value(pattern.get("amount_range", [50, 200])) # Default amount
+                    
+                    # Custom logic for each payment type
+                    if pattern["payment_type"] == "income":
+                        merchant_name = "Direct Deposit"
+                        category = "Financial/Income"
+                        account_id = self._get_random_account(accounts, ["checking"])
+                        amount = -amount # Income is a credit
+                    elif pattern["payment_type"] == "transfer_to_savings":
+                        merchant_name = "Transfer to Savings"
+                        category = "Financial/Transfers"
+                        account_id = self._get_random_account(accounts, ["checking"])
+                        # We would also need a corresponding credit to the savings account
+                    elif pattern["payment_type"] == "credit_card_payment":
+                        merchant_name = "Credit Card Payment"
+                        category = "Financial/Payments"
+                        account_id = self._get_random_account(accounts, ["checking"])
+                    elif pattern["payment_type"] == "loan_payment":
+                        merchant_name = f"{pattern['loan_type'].title()} Loan Payment"
+                        category = "Financial/Payments"
+                        account_id = self._get_random_account(accounts, ["checking"])
+                    else:
+                        continue # Skip unknown payment types
+
+                    transaction = {
+                        "transaction_id": f"txn-{uuid.uuid4()}",
+                        "account_id": account_id,
+                        "date": self.faker.date_between(start_date=start_date, end_date=end_date).strftime("%Y-%m-%d"),
+                        "amount": amount,
+                        "merchant_name": merchant_name,
+                        "merchant_entity_id": None,
+                        "payment_channel": "online",
+                        "personal_finance_category": {
+                            "primary": category.split('/')[0],
+                            "detailed": category,
+                        },
+                        "pending": False,
+                        "iso_currency_code": "USD",
+                    }
+                    transactions.append(transaction)
+        
+        # Sort transactions by date
+        transactions.sort(key=lambda x: x["date"])
+        return transactions
+
+    def _generate_liabilities(self, accounts: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Generates a list of liabilities based on the persona configuration and accounts."""
+        liabilities = []
+        liability_configs = self.config.get("liabilities", {})
+
+        for account in accounts:
+            if account["type"] == "credit" and "credit_card" in liability_configs:
+                config = liability_configs["credit_card"]
+                last_payment_date = (datetime.now() - timedelta(days=random.randint(15, 25))).strftime("%Y-%m-%d")
+                
+                liability = {
+                    "account_id": account["account_id"],
+                    "aprs": [{
+                        "apr_percentage": self._get_random_value(account.get("apr_range", [18, 28])),
+                        "apr_type": "purchase_apr"
+                    }],
+                    "is_overdue": config.get("is_overdue", False),
+                    "last_payment_amount": account["balances"]["current"] * random.uniform(0.1, 0.5), # Assume last payment was a fraction of balance
+                    "last_payment_date": last_payment_date,
+                    "last_statement_balance": account["balances"]["current"] / random.uniform(0.8, 1.0),
+                    "minimum_payment_amount": account["balances"]["current"] * 0.05, # ~5% of balance
+                    "next_payment_due_date": (datetime.now() + timedelta(days=random.randint(5, 15))).strftime("%Y-%m-%d"),
+                }
+                liabilities.append(liability)
+
+            elif account["type"] == "loan" and account["subtype"] in liability_configs:
+                config = liability_configs[account["subtype"]]
+                liability = {
+                    "account_id": account["account_id"],
+                    "interest_rate_percentage": self._get_random_value(config["interest_rate_range"]),
+                    "next_payment_due_date": (datetime.now() + timedelta(days=random.randint(5, 25))).strftime("%Y-%m-%d"),
+                    # ... other loan-specific fields can be added ...
+                }
+                liabilities.append(liability)
+
+        return liabilities
+
+    def _get_random_account(self, accounts: List[Dict[str, Any]], subtypes: List[str]) -> str:
+        """Gets a random account ID of a given subtype."""
+        eligible_accounts = [acc for acc in accounts if acc["subtype"] in subtypes]
+        if not eligible_accounts:
+            # Fallback to any account if no specific subtype is found
+            return random.choice(accounts)["account_id"]
+        return random.choice(eligible_accounts)["account_id"]
+
+    def validate_and_export(self, profiles: List[Dict[str, Any]], output_dir: str, format: str):
+        """Validates the generated profiles and exports them to the specified format."""
+        logger.info(f"Starting validation and export for {len(profiles)} profiles.")
+        
+        for i, profile in enumerate(profiles):
+            user_id = profile["user_id"]
+            logger.info(f"Validating profile {i+1}/{len(profiles)} for user {user_id}...")
+            
+            is_valid, errors = self.validator.validate(profile)
+            
+            if not is_valid:
+                logger.error(f"Validation FAILED for user {user_id}.")
+                for error in errors:
+                    logger.error(f"  - {error.to_dict()}")
+                # Decide whether to skip export for invalid profiles
+                continue 
+            
+            logger.info(f"Validation PASSED for user {user_id}.")
+
+
+            # --- Exporting ---
+            if format == "json" or format == "both":
+                self._export_to_json(profile, output_dir)
+            if format == "csv" or format == "both":
+                self._export_to_csv(profile, output_dir)
+            
+        logger.info("Export process completed.")
+
+    def _export_to_json(self, profile: Dict[str, Any], output_dir: str):
+        """Exports a single profile to a JSON file."""
+        user_id = profile["user_id"]
+        filepath = os.path.join(output_dir, f"{user_id}.json")
+        logger.info(f"Exporting profile for user {user_id} to {filepath}...")
+        with open(filepath, "w") as f:
+            json.dump(profile, f, indent=2)
+
+    def _export_to_csv(self, profile: Dict[str, Any], output_dir: str):
+        """Exports a single profile to multiple CSV files (accounts, transactions, liabilities)."""
+        user_id = profile["user_id"]
+        logger.info(f"Exporting profile for user {user_id} to CSV files in {output_dir}...")
+
+        # Export Accounts
+        if profile["accounts"]:
+            accounts_path = os.path.join(output_dir, f"{user_id}_accounts.csv")
+            with open(accounts_path, "w", newline="") as f:
+                writer = csv.writer(f)
+                # Header
+                header = profile["accounts"][0].keys()
+                writer.writerow(header)
+                # Rows
+                for account in profile["accounts"]:
+                    writer.writerow(account.values())
+
+        # Export Transactions
+        if profile["transactions"]:
+            transactions_path = os.path.join(output_dir, f"{user_id}_transactions.csv")
+            with open(transactions_path, "w", newline="") as f:
+                writer = csv.writer(f)
+                header = profile["transactions"][0].keys()
+                writer.writerow(header)
+                for tx in profile["transactions"]:
+                    writer.writerow(tx.values())
+
+        # Export Liabilities
+        if profile["liabilities"]:
+            liabilities_path = os.path.join(output_dir, f"{user_id}_liabilities.csv")
+            with open(liabilities_path, "w", newline="") as f:
+                writer = csv.writer(f)
+                header = profile["liabilities"][0].keys()
+                writer.writerow(header)
+                for liability in profile["liabilities"]:
+                    writer.writerow(liability.values())
+
+
+# --- Command-Line Interface ---
+
+def main():
+    """Main function to run the data generator from the command line."""
+    parser = argparse.ArgumentParser(description="Synthetic Plaid Data Generator")
+    parser.add_argument(
+        "config_dir",
+        type=str,
+        help="Directory containing the persona YAML configuration files.",
+    )
+    parser.add_argument(
+        "transactions_csv",
+        type=str,
+        help="Path to the CSV file containing sample transactions for realistic merchant data.",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="synthetic_data",
+        help="Directory to save the generated data files.",
+    )
+    parser.add_argument(
+        "--format",
+        type=str,
+        choices=["json", "csv", "both"],
+        default="json",
+        help="Output format for the generated data.",
+    )
+    args = parser.parse_args()
+
+    # Create output directory if it doesn't exist
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
+
+    # Process each config file in the directory
+    for filename in os.listdir(args.config_dir):
+        if filename.endswith(".yaml") or filename.endswith(".yml"):
+            config_path = os.path.join(args.config_dir, filename)
+            
+            generator = SyntheticDataGenerator(config_path, args.transactions_csv)
+            profiles = generator.generate_profiles()
+            generator.validate_and_export(profiles, args.output_dir, args.format)
+
+if __name__ == "__main__":
+    main()

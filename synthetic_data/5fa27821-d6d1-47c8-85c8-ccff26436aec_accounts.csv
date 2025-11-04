@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-f763ef81-ce1d-4bee-8ccb-52049cb4d78c,Knox-Cummings Checking,depository,checking,individual,"{'available': 871.2584618516283, 'current': 925.6334125885751, 'limit': None}",USD,4658
+acct-75d73c1c-31b3-45a3-9e9d-71a976c9d4ea,"Ross, Winters and Harvey Savings",depository,savings,individual,"{'available': 3814.249630360533, 'current': 4357.996683740117, 'limit': None}",USD,1383
+acct-a9c585e6-f1d1-4243-b36e-f11b9edbe255,Hayes-Hunt Credit Card,credit,credit card,individual,"{'available': 1693.1194858227088, 'current': 1705.802298471672, 'limit': 4603.896154052402}",USD,9210

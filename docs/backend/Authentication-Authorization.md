@@ -2,7 +2,7 @@
 ## SpendSense Platform - Backend Layer
 
 **Version**: 1.0  
-**Date**: 2024-01-15  
+**Date**: 2025-11-04  
 **Status**: Planning  
 
 ---
@@ -142,7 +142,7 @@ This document defines the authentication and authorization requirements for the 
 
 ---
 
-## Account Linking
+## Account Linking ✅
 
 ### Link Additional Authentication Methods
 
@@ -160,18 +160,31 @@ This document defines the authentication and authorization requirements for the 
 - `DELETE /api/v1/auth/phone/unlink` - Unlink phone number
 
 **Requirements**:
-- Require authentication for linking
-- Prevent duplicate account creation
-- Merge accounts if needed (handle existing accounts)
-- Log account linking events
-- Support multiple OAuth providers per user
-- Support phone number linking
+- ✅ Require authentication for linking
+- ✅ Prevent duplicate account creation
+- ✅ Merge accounts if needed (handle existing accounts)
+- ✅ Log account linking events
+- ✅ Support multiple OAuth providers per user
+- ✅ Support phone number linking
 
 **Account Merging Strategy**:
 - If OAuth provider email matches existing account, link to existing account
 - If phone number matches existing account, link to existing account
 - Merge user data (recommendations, profiles, signals)
 - Preserve primary authentication method
+
+**Implementation Status**:
+- ✅ Account linking endpoints implemented
+- ✅ Account merging logic implemented
+- ✅ Merges user data from duplicate accounts:
+  - DataUpload records
+  - Recommendation records (user_id, approved_by, rejected_by)
+  - PersonaHistory records
+  - UserProfile records (handles unique constraint)
+  - Session records (deleted, recreated on login)
+- ✅ Preserves primary authentication method
+- ✅ Ensures at least one authentication method remains after unlinking
+- ✅ CSRF protection via OAuth state verification
 
 ---
 
@@ -200,16 +213,38 @@ This document defines the authentication and authorization requirements for the 
   - Can access audit logs
 
 **Authorization Checks**:
-- Endpoint-level authorization (check role in route handler)
-- Resource-level authorization (users can only access their own data)
-- Operator can access all user data
-- Admin can access all endpoints
+- ✅ Endpoint-level authorization (check role in route handler)
+- ✅ Resource-level authorization (users can only access their own data)
+- ✅ Operator can access all user data (but must respect user consent)
+- ✅ Admin can access all endpoints (but must respect user consent)
+- ✅ Consent enforcement: Operators and admins cannot access user data if consent is revoked or not granted
 
 **Implementation**:
-- JWT token includes `role` claim
-- Middleware checks role before route handler
-- Resource-level checks in service layer
-- Log authorization failures
+- ✅ JWT token includes `role` claim
+- ✅ Authorization dependencies check role before route handler
+- ✅ Resource-level checks in dependency layer
+- ✅ Log authorization failures
+
+**Implementation Details**:
+- **Authorization Dependencies** (`app/core/dependencies.py`):
+  - `require_role(role)` - Factory function for role-based authorization
+  - `require_operator` - Dependency for operator role or higher
+  - `require_admin` - Dependency for admin role
+  - `check_resource_access()` - Helper function for resource-level checks
+  - `check_user_access()` - Convenience function for user data access
+  - `require_owner_or_operator_factory()` - Factory for owner or operator/admin access
+  - `require_owner_or_admin_factory()` - Factory for owner or admin only
+  - `require_owner_only_factory()` - Factory for owner only access
+- **Role Hierarchy**: USER (1) < OPERATOR (2) < ADMIN (3)
+- **Authorization Logging**: All authorization failures are logged with user ID, role, and resource details
+- **Operator Endpoints**: All operator endpoints require operator role or higher
+- **Admin Endpoints**: Admin endpoints require admin role
+- **Resource-Level Authorization**: Users can access their own resources, operators can access all user resources (with consent), admins can access all resources (with consent)
+- **Consent Enforcement**: 
+  - Users can always access their own data (regardless of consent status)
+  - Operators and admins must respect user consent when accessing other users' data
+  - If a user has revoked consent or never granted consent, operators/admins are blocked from accessing that user's data
+  - Consent checks are performed via `check_resource_access()` and `check_user_access()` functions with `check_consent=True` (default)
 
 ---
 

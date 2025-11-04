@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-35b60d04-0719-4d62-ac39-d06b935c342f,Simmons PLC Checking,depository,checking,individual,"{'available': 4077.5574630805504, 'current': 4157.32853658038, 'limit': None}",USD,1383
+acct-6aa20516-33de-4c7f-bcb9-c3fad106edf8,Myers PLC Savings,depository,savings,individual,"{'available': 20815.48934724645, 'current': 22539.02892614428, 'limit': None}",USD,2282
+acct-7774f7f2-190e-4fa4-8310-4e9fb7895772,"Curry, Calderon and Johnston Credit Card",credit,credit card,individual,"{'available': 762.7506866234035, 'current': 770.4987699929401, 'limit': 9219.408885173088}",USD,1382

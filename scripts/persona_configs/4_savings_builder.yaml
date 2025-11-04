@@ -1,0 +1,43 @@
+# Persona 4: Savings Builder
+# This persona represents users who are consistently building their savings.
+
+persona_name: "Savings Builder"
+num_profiles: 20
+
+# --- Account Generation ---
+accounts:
+  - type: "depository"
+    subtype: "checking"
+    balance_range: [2000, 5000]
+  - type: "depository"
+    subtype: "savings"
+    balance_range: [10000, 50000] # High savings balance
+  - type: "credit"
+    subtype: "credit card"
+    balance_range: [200, 1000] # Low credit card balance
+    limit_range: [8000, 15000]
+    apr_range: [14.0, 20.0]
+
+# --- Transaction Generation ---
+transactions:
+  num_transactions_range: [40, 100]
+  history_days: 180
+  patterns:
+    - payment_type: "income"
+      amount_range: [5000, 8000]
+      frequency_per_month: [1, 2]
+    # Consistent, regular transfers to savings
+    - payment_type: "transfer_to_savings"
+      amount_range: [500, 2000]
+      frequency_per_month: [1, 3]
+    # General spending is moderate
+    - category: "Retail"
+      amount_range: [50, 200]
+      frequency_per_month: [4, 8]
+    - payment_type: "credit_card_payment"
+      payment_behavior: "pays_in_full"
+
+# --- Liability Generation ---
+liabilities:
+  credit_card:
+    is_overdue: false

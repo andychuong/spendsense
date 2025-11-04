@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-148fe9bf-dd42-4eb5-a6ed-8c9c6fa4a1d3,Andrews PLC Checking,depository,checking,individual,"{'available': 242.9794939350752, 'current': 273.5303267371319, 'limit': None}",USD,4720
+acct-ce55478a-b9a1-4596-aa8d-dd5c5a9edfba,Baker-Khan Savings,depository,savings,individual,"{'available': 4359.084034674949, 'current': 5233.15281282387, 'limit': None}",USD,8099
+acct-9e14c2cb-11a5-4b57-8a96-6bcaa0f9ee12,Smith Ltd Credit Card,credit,credit card,individual,"{'available': 1657.0888657161022, 'current': 1726.8933194199092, 'limit': 5396.676162654997}",USD,7538

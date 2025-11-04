@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-824aa8b7-8581-455a-b49b-abe53a54f5b3,Smith Inc Checking,depository,checking,individual,"{'available': 1782.5294882969708, 'current': 1787.7629745144059, 'limit': None}",USD,1467
+acct-88c219aa-514f-4625-9c6e-a5741b53cc38,"Evans, Porter and White Savings",depository,savings,individual,"{'available': 6205.662092405588, 'current': 6606.036192745442, 'limit': None}",USD,3975
+acct-e61528ed-7662-489e-84b9-a93c81275ff3,Jones Group Credit Card,credit,credit card,individual,"{'available': 1657.3136545342622, 'current': 1821.840792119518, 'limit': 5524.8892276274655}",USD,1692

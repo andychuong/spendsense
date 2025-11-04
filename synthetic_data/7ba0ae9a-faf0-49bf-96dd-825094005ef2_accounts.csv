@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-4cd830f4-cd10-43b3-bce8-85d4f2df62ae,"Robinson, Williams and Wells Checking",depository,checking,individual,"{'available': 1301.980837003736, 'current': 1399.4608631632364, 'limit': None}",USD,9859
+acct-412003e8-2b80-49f1-8f77-ad68162a5134,"Burns, Madden and Ortiz Savings",depository,savings,individual,"{'available': 6184.659623078816, 'current': 7704.014386701203, 'limit': None}",USD,2006
+acct-c058dc1c-9786-4a04-ab32-f0da294a57b0,James Ltd Credit Card,credit,credit card,individual,"{'available': 821.1074966804962, 'current': 844.2274817548745, 'limit': 4870.5068792544735}",USD,4302

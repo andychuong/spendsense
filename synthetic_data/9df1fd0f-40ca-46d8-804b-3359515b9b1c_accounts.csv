@@ -1,0 +1,3 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-d1d31945-4b46-44c1-bb57-2abd91782b1e,Powell-Bean Checking,depository,checking,individual,"{'available': 1650.5515171452118, 'current': 1707.0652875874694, 'limit': None}",USD,9891
+acct-10b4ffbe-d6b2-4fc0-96a8-1ffc7b2aeccb,Montgomery Inc Credit Card,credit,credit card,individual,"{'available': 1423.049448886828, 'current': 1713.06283481378, 'limit': 7816.987460997673}",USD,3429

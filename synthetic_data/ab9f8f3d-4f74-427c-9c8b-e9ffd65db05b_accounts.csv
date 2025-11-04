@@ -1,0 +1,5 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-ca4b09d9-e2a7-411b-8b8f-e6f6d1a1d9fd,Friedman Ltd Checking,depository,checking,individual,"{'available': 2420.838854510155, 'current': 2763.1084578693485, 'limit': None}",USD,1780
+acct-8054492e-eabf-4471-b768-ac061931c48b,Robertson-Lopez Savings,depository,savings,individual,"{'available': 5642.322542423658, 'current': 5643.991767784377, 'limit': None}",USD,5771
+acct-12ef3a7c-6296-4320-81f8-ee13228a8e7f,"Dougherty, Mills and Lopez Credit Card",credit,credit card,individual,"{'available': 1368.69388926267, 'current': 1588.0887901945332, 'limit': 7260.7590672929455}",USD,8068
+acct-6502d133-f06a-4fc5-862e-4428027206ec,"Cannon, Thomas and Williams Student",loan,student,individual,"{'available': 16038.01827877858, 'current': 17755.512328914803, 'limit': None}",USD,4359

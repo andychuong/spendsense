@@ -1,0 +1,652 @@
+{
+  "user_id": "353bc45b-0291-4226-83df-4a3a07abbe14",
+  "accounts": [
+    {
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "name": "Blackburn-Sanchez Checking",
+      "type": "depository",
+      "subtype": "checking",
+      "holder_category": "individual",
+      "balances": {
+        "available": 1055.3855433667118,
+        "current": 1247.0819807033902,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "7308"
+    },
+    {
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "name": "Walker, Donaldson and Morris Credit Card",
+      "type": "credit",
+      "subtype": "credit card",
+      "holder_category": "individual",
+      "balances": {
+        "available": 1085.5468811736253,
+        "current": 1136.276565070899,
+        "limit": 5073.768813617662
+      },
+      "iso_currency_code": "USD",
+      "mask": "8244"
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": "txn-452acef5-2a19-41c5-9f05-6d62dfa4d2dc",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-05-09",
+      "amount": 13.015890330338797,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7faae575-ebcd-495b-8f44-c0eb442e37c9",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-05-12",
+      "amount": 632.1180871205731,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-35ba4d6f-f115-47f3-9dd1-860cfd2b6c2c",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-05-25",
+      "amount": 13.796379183228058,
+      "merchant_name": "StreamingMusic #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8c54efbc-def6-4f4a-b360-7535e313ad91",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-05-28",
+      "amount": 12.793939371200748,
+      "merchant_name": "StreamFlix #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6dd36cc2-3b5e-4fa6-a108-46dff760e050",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-06-05",
+      "amount": 28.183890708881545,
+      "merchant_name": "StreamFlix #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f605cc0e-86a6-45c2-9fe0-a84b1399116b",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-06-05",
+      "amount": 27.213015441154404,
+      "merchant_name": "StreamingMusic #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-de41a30d-189a-4b65-8111-fd4c537708d1",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-06-09",
+      "amount": 29.646738593293087,
+      "merchant_name": "StreamFlix #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b6765853-342f-4fea-b4bf-80e6360e9a36",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-06-10",
+      "amount": 500.7257438064,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-43000611-3248-4a37-80da-3e66a81e11e4",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-06-17",
+      "amount": 11.776313527409636,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d6195b20-c70f-494b-a80b-cbfbed033d9c",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-07-01",
+      "amount": -4905.9689786617855,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1aea09a7-8209-4968-8284-cf10b0a72724",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-07-05",
+      "amount": 17.855344509931207,
+      "merchant_name": "StreamFlix #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6a646409-6741-4729-b0a7-4c7346af883a",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-07-14",
+      "amount": 13.742631099981114,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2fff997c-e395-4538-a60d-1d36c63e716c",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-07-17",
+      "amount": -4148.621637782891,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0abdcfa5-9070-4720-8cae-17017b0a83af",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-07-22",
+      "amount": 24.207633919800035,
+      "merchant_name": "StreamFlix #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4547ba39-412a-4eb7-9087-9e15039476d0",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-07-26",
+      "amount": 29.247979051086386,
+      "merchant_name": "StreamingMusic #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a90206fb-e996-42a5-8500-8c3c273fcae7",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-08-03",
+      "amount": 28.77625943115042,
+      "merchant_name": "StreamFlix #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4110f416-9041-4224-8fea-66e565024e29",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-08-07",
+      "amount": 23.41489094046176,
+      "merchant_name": "StreamFlix #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fbc38fae-b8c8-4e66-b325-21437e9b71e9",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-08-07",
+      "amount": 775.1956612166096,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6262a5a7-549c-40a2-aea8-55f1c4f47ff4",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-08-11",
+      "amount": -4991.033837268156,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c0b96e28-8a9d-4600-a5f2-6549094a1359",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-08-11",
+      "amount": 18.95165024265031,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-baeb29b5-61cf-4652-b782-c035ebf6430c",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-08-15",
+      "amount": 1398.5773872957345,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-92ecfa0f-91ae-4e07-b337-98281debf474",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-08-22",
+      "amount": -4330.678472689002,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b21e0576-c0fb-4ccd-95d8-f232b6e81a08",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-09-04",
+      "amount": 12.891768397367366,
+      "merchant_name": "StreamFlix #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-64e4d563-db02-4415-9bff-5c7bde0a427e",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-09-07",
+      "amount": 28.11704956309628,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a538d2fc-700b-46ba-8cdd-221a17226122",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-09-10",
+      "amount": 14.149342061143034,
+      "merchant_name": "StreamFlix #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-32dd4590-4a4b-4c67-ae48-acc9540e52df",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-09-14",
+      "amount": 27.246310426648325,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-eb54b3f6-117f-4bec-9fc6-25aa0fb69834",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-09-18",
+      "amount": -4052.0356279896414,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-40f7ad7d-6746-4ff4-b802-9035a1456d6d",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-09-20",
+      "amount": 1188.883413555456,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-756fa6b0-589d-4178-a92a-74d05cec3756",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-09-25",
+      "amount": 14.011246738549548,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-04817a02-1455-4db1-857a-ef2cf81e1235",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-09-25",
+      "amount": 17.931597016087707,
+      "merchant_name": "StreamingMusic #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ca779441-a771-4af3-a201-4d6e718b704b",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-09-30",
+      "amount": 17.74571902185477,
+      "merchant_name": "StreamingMusic #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-408c2ce9-c8f3-4624-9b79-953c411d1632",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-10-01",
+      "amount": -5970.164020942624,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e3166da5-c69a-4ccb-93d9-0fbe6247c6ed",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-10-05",
+      "amount": 19.85468750619034,
+      "merchant_name": "StreamingMusic #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b33c015c-de35-401d-85ab-9ea5dcf311bd",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-10-06",
+      "amount": -4779.180128389997,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-400b1753-e4b2-48d0-9a4c-90a739e9c699",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-10-06",
+      "amount": 1229.1272118372337,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-73079ab6-8ae2-40c7-a876-4538406c2c87",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-10-11",
+      "amount": -5633.521060894611,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-665be0ff-3dc9-4ff0-bc9b-7f9c35511512",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-10-14",
+      "amount": -4101.161033402012,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a42354ec-86e8-4d85-9b98-34afe3ea9723",
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "date": "2025-10-20",
+      "amount": 17.56896699673994,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-105e35f2-1d8a-4df9-a455-256b705da947",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-10-26",
+      "amount": 16.30622461809228,
+      "merchant_name": "StreamFlix #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-04995a27-6631-46d1-8f0b-5a75c5694188",
+      "account_id": "acct-33751a64-b237-4364-8f31-82b3c1644858",
+      "date": "2025-10-28",
+      "amount": 20.713835896041008,
+      "merchant_name": "StreamFlix #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    }
+  ],
+  "liabilities": [
+    {
+      "account_id": "acct-6cf76b60-4ee2-491c-a321-59b63eab33b3",
+      "aprs": [
+        {
+          "apr_percentage": 23.394101512492906,
+          "apr_type": "purchase_apr"
+        }
+      ],
+      "is_overdue": false,
+      "last_payment_amount": 437.7584387822867,
+      "last_payment_date": "2025-10-12",
+      "last_statement_balance": 1265.3351881721026,
+      "minimum_payment_amount": 56.813828253544955,
+      "next_payment_due_date": "2025-11-18"
+    }
+  ]
+}

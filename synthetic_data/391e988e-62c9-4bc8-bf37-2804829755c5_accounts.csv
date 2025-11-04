@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-8a645b06-f428-4942-8c97-e6ea95dc8d2e,Morales and Sons Checking,depository,checking,individual,"{'available': 3264.4012105490906, 'current': 3729.1682009678193, 'limit': None}",USD,9803
+acct-0433f51e-b5ab-47fc-9385-d7308be7e8b7,Bowen PLC Savings,depository,savings,individual,"{'available': 20858.671078210253, 'current': 24100.923776009775, 'limit': None}",USD,7887
+acct-d497ab6a-61ca-47f2-ba3d-8d9ea33a29a8,Conner-Pena Credit Card,credit,credit card,individual,"{'available': 584.1486710758656, 'current': 687.7787669047823, 'limit': 11437.850082474626}",USD,5313

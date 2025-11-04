@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-6cf68d89-4a76-48fc-9622-24e6e7a67549,Johnson-Bray Checking,depository,checking,individual,"{'available': 4130.429330362244, 'current': 4697.584380919148, 'limit': None}",USD,7566
+acct-031f4938-4d60-4060-a5f1-efa3d542d70a,Figueroa-Warren Savings,depository,savings,individual,"{'available': 32761.214016071015, 'current': 36684.521955536155, 'limit': None}",USD,6383
+acct-86770204-5ba4-4595-a25c-a73c5480b26a,Higgins LLC Credit Card,credit,credit card,individual,"{'available': 506.27205904698775, 'current': 521.3402471621494, 'limit': 10299.700318562602}",USD,3174

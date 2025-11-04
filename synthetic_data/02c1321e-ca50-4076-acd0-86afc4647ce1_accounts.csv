@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-30cf8074-8e99-4899-b4ac-ddb967d414b1,Lane and Sons Checking,depository,checking,individual,"{'available': 92.67859819281189, 'current': 114.94842229106892, 'limit': None}",USD,8299
+acct-b554f431-c354-4495-b256-bb88aaac4e76,Peck-Gibson Savings,depository,savings,individual,"{'available': 1405.653706978259, 'current': 1418.0505358384742, 'limit': None}",USD,1882
+acct-8942fc8e-6358-4acf-b02b-f9d427e293a1,Alexander-Taylor Credit Card,credit,credit card,individual,"{'available': 1178.1635661182765, 'current': 1370.74495907893, 'limit': 4674.214110528431}",USD,4114

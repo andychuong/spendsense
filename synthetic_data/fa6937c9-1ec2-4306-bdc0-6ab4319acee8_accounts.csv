@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-1c623f62-d5f7-47d2-8416-b9ba9d626cb3,Braun-Cruz Checking,depository,checking,individual,"{'available': 3503.354500890225, 'current': 4012.0898241911073, 'limit': None}",USD,3391
+acct-33d7cce0-858e-46ac-b013-d5b84f6f8a0a,"Jacobs, Bailey and Mathews Savings",depository,savings,individual,"{'available': 19260.6003268725, 'current': 19419.63737244356, 'limit': None}",USD,9249
+acct-5c420a1a-94b9-497e-9bb1-a7fa366bf25c,Howard-Jackson Credit Card,credit,credit card,individual,"{'available': 526.0340639223177, 'current': 585.4385619270371, 'limit': 12085.538133874554}",USD,3421

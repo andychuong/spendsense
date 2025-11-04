@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-ab481482-642e-4286-ac96-62ef506557ac,Bradley-Williams Checking,depository,checking,individual,"{'available': 2483.82697770791, 'current': 2897.4342109191216, 'limit': None}",USD,8520
+acct-dca2161c-c591-4184-b066-2d1e18c4ad91,Stokes and Sons Savings,depository,savings,individual,"{'available': 42328.27238915594, 'current': 48745.11083318699, 'limit': None}",USD,5514
+acct-bc2c1d2f-c956-46c0-8c98-26a1b58001d5,"Kelly, Davis and Shepherd Credit Card",credit,credit card,individual,"{'available': 824.307602685954, 'current': 973.4383498186293, 'limit': 11049.604950881734}",USD,1251

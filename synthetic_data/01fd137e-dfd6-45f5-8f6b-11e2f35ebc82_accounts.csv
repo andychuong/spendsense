@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-9e5ec7f2-1156-4d6f-a95a-3006b0a5bfab,Harris and Sons Checking,depository,checking,individual,"{'available': 1007.1988987971275, 'current': 1074.9674317743334, 'limit': None}",USD,5908
+acct-532bdeb0-6a59-403b-b17a-7938cee08dcd,Miller PLC Savings,depository,savings,individual,"{'available': 3903.4298796222074, 'current': 4299.972955063075, 'limit': None}",USD,3961
+acct-481fbf5b-ce6e-4c52-9b42-1a02484e5fd4,Harris-Carr Credit Card,credit,credit card,individual,"{'available': 1431.2623135423462, 'current': 1465.4325314946798, 'limit': 6987.2451490160865}",USD,9872

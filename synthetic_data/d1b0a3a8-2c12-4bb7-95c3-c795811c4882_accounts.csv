@@ -1,0 +1,4 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-1e1a0564-9741-4ed9-966f-723035e63b87,"Barnes, Camacho and Walsh Checking",depository,checking,individual,"{'available': 2039.3526363960807, 'current': 2463.3685113235165, 'limit': None}",USD,2467
+acct-dbc84d3c-aa95-40ab-8848-8803e8013679,"Combs, Singleton and Larson Savings",depository,savings,individual,"{'available': 1591.955456229728, 'current': 1937.4326541702785, 'limit': None}",USD,9818
+acct-d88c84c9-bb12-469f-9bb6-e334ededb1c9,Yang-Mcknight Credit Card,credit,credit card,individual,"{'available': 885.7505581249206, 'current': 1085.0411599338463, 'limit': 6690.712261905739}",USD,3457

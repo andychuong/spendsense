@@ -1,0 +1,5 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-61f45759-0fa2-4872-8dae-424c34c8f153,Daniels-Berg Checking,depository,checking,individual,"{'available': 1597.4650656352276, 'current': 1687.2958003599194, 'limit': None}",USD,8272
+acct-4a7ca9cc-dc7e-45df-96ab-47ccb7fcd918,Lucas-Harding Savings,depository,savings,individual,"{'available': 9025.848414915165, 'current': 9366.881293610648, 'limit': None}",USD,6452
+acct-b5c50701-9403-413e-9705-7affc28bf177,Phillips-Myers Credit Card,credit,credit card,individual,"{'available': 2287.2839669932778, 'current': 2309.2560843852907, 'limit': 8319.903875610024}",USD,5946
+acct-3bff8105-97ae-42c8-91be-5be35fa89add,"Hernandez, Lee and Harrison Student",loan,student,individual,"{'available': 15077.228763890487, 'current': 17017.899641847063, 'limit': None}",USD,4469

@@ -1,0 +1,3 @@
+account_id,name,type,subtype,holder_category,balances,iso_currency_code,mask
+acct-6185c40d-1378-4ef5-82fe-7686f571a930,Burke LLC Checking,depository,checking,individual,"{'available': 1653.9620125539482, 'current': 1999.7234999088123, 'limit': None}",USD,6088
+acct-0fa0ff6f-9205-4164-b1d3-ed01691d4216,"Hinton, Gutierrez and Caldwell Credit Card",credit,credit card,individual,"{'available': 1986.468579649778, 'current': 1999.6591823354315, 'limit': 6243.115954719259}",USD,2371

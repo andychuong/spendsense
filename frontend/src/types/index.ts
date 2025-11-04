@@ -19,9 +19,16 @@ export interface User {
   id: string
   email?: string
   phone?: string
+  oauth_providers?: Record<string, string>
   role: string
   created_at: string
   updated_at: string
+}
+
+// Validation Types
+export interface ValidationError {
+  field: string
+  message: string
 }
 
 // Store Types

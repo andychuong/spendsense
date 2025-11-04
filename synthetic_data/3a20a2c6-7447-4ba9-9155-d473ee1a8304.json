@@ -1,0 +1,2615 @@
+{
+  "user_id": "3a20a2c6-7447-4ba9-9155-d473ee1a8304",
+  "accounts": [
+    {
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "name": "Baker Inc Checking",
+      "type": "depository",
+      "subtype": "checking",
+      "holder_category": "individual",
+      "balances": {
+        "available": 1479.5921597531478,
+        "current": 1727.940540661723,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "1552"
+    },
+    {
+      "account_id": "acct-84e6ec5b-0c4e-450a-809d-0b17db0baa26",
+      "name": "Ellison-Willis Savings",
+      "type": "depository",
+      "subtype": "savings",
+      "holder_category": "individual",
+      "balances": {
+        "available": 6796.030349056046,
+        "current": 7833.662412763455,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "7520"
+    },
+    {
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "name": "Vasquez-Wise Credit Card",
+      "type": "credit",
+      "subtype": "credit card",
+      "holder_category": "individual",
+      "balances": {
+        "available": 1204.6838101401777,
+        "current": 1294.1861491233917,
+        "limit": 7392.835237777418
+      },
+      "iso_currency_code": "USD",
+      "mask": "2409"
+    },
+    {
+      "account_id": "acct-d1f4b44a-4097-4226-b60f-029faa3fc3ba",
+      "name": "Alexander LLC Student",
+      "type": "loan",
+      "subtype": "student",
+      "holder_category": "individual",
+      "balances": {
+        "available": 30697.698538481767,
+        "current": 35401.15769233724,
+        "limit": null
+      },
+      "iso_currency_code": "USD",
+      "mask": "1203"
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": "txn-36f81fe0-8d5d-4457-8d39-050439d67097",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-08",
+      "amount": 236.0997854610603,
+      "merchant_name": "SubscriptionBox #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a25fcce7-6a1e-4d35-9abe-48db43789211",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-09",
+      "amount": 69.53550686190208,
+      "merchant_name": "ParkingLot Inc #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-87cffbed-7167-416c-b49e-377032640e61",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-05-09",
+      "amount": 49.183198394608574,
+      "merchant_name": "QuickFuel #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-37096096-85ff-4d4f-95cc-3b6284e56b9c",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-05-10",
+      "amount": 144.68121233825607,
+      "merchant_name": "SubscriptionBox #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3d869bf5-d0a0-4266-bc17-ac00a56d4ca3",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-13",
+      "amount": 199.4682134248893,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c1181d90-6a39-4c57-aa1c-6ea040af5863",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-16",
+      "amount": 446.9015197581401,
+      "merchant_name": "eBookStore #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Digital Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-02157647-f829-4ce7-87fa-de901dfaeb86",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-17",
+      "amount": 17.18959716007273,
+      "merchant_name": "CityTransit #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-917395a1-18f4-4e11-a12d-72fc59293b6b",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-05-18",
+      "amount": 29.091055368083286,
+      "merchant_name": "CityTransit #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-bdb78a65-ea83-4972-9d78-9f4f4c42a717",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-05-19",
+      "amount": 298.1087094604765,
+      "merchant_name": "CityMall Clothing #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-10b75d5c-a97c-4489-a46e-2eddad2a06f3",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-19",
+      "amount": 101.29209941208556,
+      "merchant_name": "CinemaWorld #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Movie Theaters"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8129756a-03ce-4001-a5fa-a5d566031621",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-05-19",
+      "amount": 65.423217853503,
+      "merchant_name": "ParkingLot Inc #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-99df2ed6-d17c-4560-8c49-ffadb3508466",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-05-21",
+      "amount": 28.198051010375448,
+      "merchant_name": "StreamingMusic #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-896d036a-b851-4fc6-840a-dd2b18e3608f",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-23",
+      "amount": 253.2597457731259,
+      "merchant_name": "SubscriptionBox #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-53e43411-b7cb-4232-9039-09d1ff69199f",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-05-26",
+      "amount": 264.6477518474002,
+      "merchant_name": "FurnitureCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3e3a88c9-d015-46b9-9e3d-d219aab316ea",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-27",
+      "amount": 637.3748587050598,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d03263a8-52e6-4bea-b5f7-2e9cfb4e6e4f",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-05-28",
+      "amount": 346.92611871385895,
+      "merchant_name": "ElectroHub #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c37ea060-9e73-4123-abf3-22c890577e27",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-05-30",
+      "amount": 91.06187103841555,
+      "merchant_name": "ConcertHall #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Live Events"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ee36b6f7-0511-4668-a130-dd605ad371bd",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-02",
+      "amount": 19.426775046407826,
+      "merchant_name": "ParkingLot Inc #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-dfb019c0-1cf1-423d-b254-4a100e2fedf1",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-04",
+      "amount": 182.5087946421533,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b4b183a5-d81d-47bf-adf5-ccbf4f7983c9",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-06",
+      "amount": 246.97339969571465,
+      "merchant_name": "HardwarePro #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-490791cc-9367-45f5-930f-a7f9634b0174",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-06",
+      "amount": 57.45842087588945,
+      "merchant_name": "CityTransit #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e4d94edd-3c05-492f-89d7-100d45da3527",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-08",
+      "amount": 139.95419020894957,
+      "merchant_name": "StreamingMusic #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9a0b4fbd-d503-40f4-8e70-ee3733c9c89a",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-08",
+      "amount": 90.52760608255774,
+      "merchant_name": "CityTransit #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-84992d95-3ffd-4d63-bc58-6472bcf051ef",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-08",
+      "amount": 275.25588386402103,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d2211974-d763-4a28-8b01-e03df2a96535",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-09",
+      "amount": 67.31765603111751,
+      "merchant_name": "OnlineMart #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-25b234db-6325-4198-b6c1-efd49bc61413",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-09",
+      "amount": 49.89486912697757,
+      "merchant_name": "RideShareCo #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2a2c93aa-897b-4421-a442-e0f79e3adf40",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-11",
+      "amount": 89.33513536343355,
+      "merchant_name": "CloudStorage #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-36e2fd97-779c-43a8-8df6-8b5806e7ddb0",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-11",
+      "amount": 168.1000069489431,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ea5245d9-2ed9-4c7c-9706-8dcceeeee8c2",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-12",
+      "amount": 78.46397834451788,
+      "merchant_name": "ParkingLot Inc #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c4894bd8-6eea-43f4-9a22-7e435bbae64f",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-14",
+      "amount": 100.28254139267223,
+      "merchant_name": "StreamingMusic #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0aac6a16-e5ea-43b2-85c8-7b5cc5f6ab89",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-14",
+      "amount": 84.87983445150765,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-54a7e9a0-beae-4297-8c32-dd9990a46eac",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-16",
+      "amount": 28.47172097744612,
+      "merchant_name": "MovieRentals #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/On-demand Rentals"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8e5c53b3-b51c-4de3-a688-898894e94812",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-16",
+      "amount": 45.21865444845568,
+      "merchant_name": "RideShareCo #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-453b6d0a-fbec-4f96-a6d2-f2c6338b53a6",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-17",
+      "amount": 35.64874948029344,
+      "merchant_name": "RideShareCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b81e816a-1afa-4f5e-ad52-755e142acd7d",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-19",
+      "amount": 35.52306546573554,
+      "merchant_name": "CityTransit #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e572769f-e633-47a1-9bc1-6aa6d8eccf1c",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-19",
+      "amount": 387.50876112663525,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-03cbb02e-7f4d-4ae1-b053-721b5ced5852",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-20",
+      "amount": 672.724617462427,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-693e3311-740c-4a74-8314-d1555917055b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-21",
+      "amount": 311.83933841183716,
+      "merchant_name": "PetWorld #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f2d3f032-90d8-4dad-bccc-788e369be2d8",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-24",
+      "amount": 491.4241726913509,
+      "merchant_name": "Student Loan Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-eca6c8ef-3898-4010-9436-6ca6e95f30ab",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-27",
+      "amount": 173.64390424869472,
+      "merchant_name": "FurnitureCo #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c179a97a-b701-43e1-ba1d-95524eb6ecf7",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-27",
+      "amount": 498.8029948988632,
+      "merchant_name": "CraftsOnline #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7b705e0b-33c1-4fbe-8a7b-045afbb12d2c",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-27",
+      "amount": 37.28878225155718,
+      "merchant_name": "CinemaWorld #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Movie Theaters"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-aff1af7d-e60e-4dcb-8d2d-911f61fee8e0",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-27",
+      "amount": 43.11012277111256,
+      "merchant_name": "RideShareCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7a6e2d00-ec81-4532-871a-6a723b410ac6",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-28",
+      "amount": 398.6401754774811,
+      "merchant_name": "BikeShop #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Bicycles & Accessories"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b6199d45-58f7-44db-b0ad-e24f4e4451e3",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-28",
+      "amount": 74.90287745108043,
+      "merchant_name": "ParkingLot Inc #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7f3ac044-0320-4e1e-812d-808d5a58e3f2",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-28",
+      "amount": 287.12496523027136,
+      "merchant_name": "Student Loan Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-659ead8f-346a-428a-a55c-6b6898219556",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-06-29",
+      "amount": 90.80506182070894,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3826633b-eb79-4c3b-9680-ef5e42ae8806",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-30",
+      "amount": 427.46625275593993,
+      "merchant_name": "CityMall Clothing #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e7ccf90d-9e11-462d-be1a-b8376c08f0a0",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-30",
+      "amount": 110.65852798451112,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1daf0643-a954-4f06-bfd1-26fa1774fbaf",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-06-30",
+      "amount": 894.7479611412762,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1f2c94a9-92eb-455c-8856-376527928c3b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-01",
+      "amount": -5354.4456017930315,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8c066256-0659-4c93-a097-5cc4ec5bedaa",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-01",
+      "amount": 95.65130019602657,
+      "merchant_name": "ParkingLot Inc #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a4186bf5-66cf-4645-abff-e297519ea679",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-01",
+      "amount": 650.9608478684441,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-08020750-73da-4f52-99e9-85b184c9f100",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-02",
+      "amount": 352.36282967768716,
+      "merchant_name": "Student Loan Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f88fd2ff-8ad8-44f5-8fdd-789ffa5872b5",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-04",
+      "amount": 188.6395362551908,
+      "merchant_name": "StreamingMusic #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-bf93febf-b6f2-4e1f-a08e-0187e70e4ffe",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-04",
+      "amount": 41.56386277574715,
+      "merchant_name": "QuickFuel #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f1df2d3a-8af0-4d55-918b-ac3b917be1a4",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-08",
+      "amount": 252.94879381768868,
+      "merchant_name": "ElectroHub #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2b0aa90d-abbe-4bf9-9761-96e99a9590e8",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-08",
+      "amount": 57.979448781099215,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a644fdc4-642c-4bd0-88ee-8fb7f603ecfc",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-09",
+      "amount": 211.89468687221662,
+      "merchant_name": "FurnitureCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e3ae477c-0167-49ae-889c-b3053ea0f4fb",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-10",
+      "amount": 261.2908787665004,
+      "merchant_name": "ToyHouse #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Toys & Games"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-38359b5d-310c-45ad-a7d3-e23c85b3d72e",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-11",
+      "amount": 448.64018185984185,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e2a9f993-a3a6-4469-a7a4-5867e4704052",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-12",
+      "amount": 314.4575551817657,
+      "merchant_name": "Student Loan Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ce12ae1e-9310-4b2f-85c0-0f8158a560ef",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-13",
+      "amount": 185.80328186720283,
+      "merchant_name": "StreamingMusic #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-08783fbe-3837-4738-b671-df1f7d4be93f",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-14",
+      "amount": 15.995274967736934,
+      "merchant_name": "CinemaWorld #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Movie Theaters"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8bd5389c-2074-44f2-bd9a-347e654ddafd",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-14",
+      "amount": 24.66078205464958,
+      "merchant_name": "QuickFuel #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fb7ce14c-4c08-44fa-a0cf-f0b8f0676279",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-14",
+      "amount": 89.81671936169124,
+      "merchant_name": "RideShareCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-95cbfd3f-6f10-4339-8663-68c055dd8c32",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-16",
+      "amount": 216.0018031303271,
+      "merchant_name": "eBookStore #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Digital Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-95461dc7-78f0-4247-9264-47e596af8d40",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-16",
+      "amount": 40.21748154179448,
+      "merchant_name": "RideShareCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5fc26c29-60c3-4cc7-877e-bc6b0024015b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-17",
+      "amount": 90.68612414294407,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4fbfe061-1415-4dfd-84a5-c2ff45550186",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-18",
+      "amount": 44.28186464994012,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f50ca1cc-c7b5-48cd-9a53-a8a41899b0b1",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-20",
+      "amount": 20.82905806443528,
+      "merchant_name": "StreamingMusic #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-6b8dc82b-39f7-4a48-81cf-0afdefc3f8a0",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-21",
+      "amount": 135.03425359812087,
+      "merchant_name": "LuxuryBoutique #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Luxury Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-334086e0-140c-4660-845d-de0774d40e8b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-22",
+      "amount": 165.13535938341903,
+      "merchant_name": "GardenCenter #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Nurseries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2eb0c206-899a-4da7-b4d8-ed0ca96bb1dd",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-22",
+      "amount": 38.07215054884177,
+      "merchant_name": "ParkingLot Inc #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-69b37f11-ef88-447e-8646-d000f6774a69",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-24",
+      "amount": 91.87838940373838,
+      "merchant_name": "SubscriptionBox #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4e59474b-acb8-457c-a9fc-0e7c031bf058",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-24",
+      "amount": 248.07391922649956,
+      "merchant_name": "GardenCenter #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Nurseries"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-da292557-cd0e-49d2-ab36-8ff22240af3b",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-24",
+      "amount": 113.28974803337003,
+      "merchant_name": "OnlineMart #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Online Marketplace"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-95611305-896d-48f7-97f4-c257628c7955",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-24",
+      "amount": 30.702173128561554,
+      "merchant_name": "RideShareCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4ebff8cd-83ca-456b-afba-6b4d2e91a1f6",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-24",
+      "amount": 403.87974970904304,
+      "merchant_name": "Student Loan Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3ee228e4-0b66-40fb-9cc4-f5bfd1171cd2",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-25",
+      "amount": 52.36245713626216,
+      "merchant_name": "CloudStorage #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-820d529f-4a75-4eac-a3fa-70d500f43170",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-26",
+      "amount": 63.92695498148691,
+      "merchant_name": "ParkingLot Inc #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b53eb2fb-7eb2-49af-b426-de3d7f91617c",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-07-28",
+      "amount": 89.27671879423703,
+      "merchant_name": "ParkingLot Inc #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a9eca35f-f12b-4971-8be5-fadb817d099f",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-07-30",
+      "amount": 182.1742121971559,
+      "merchant_name": "HomeGoods Store #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Home & Garden"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-adc09edc-ac8b-4b0d-abf4-508d4eb890e6",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-01",
+      "amount": 471.9602028931719,
+      "merchant_name": "eBookStore #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Digital Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-bb6ffda8-ed67-4550-99b0-7c0442c3a7c6",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-01",
+      "amount": 20.74746376131737,
+      "merchant_name": "RideShareCo #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a92c4acd-bdf6-483f-a9c7-7749c4d55f8b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-02",
+      "amount": 443.69259407228446,
+      "merchant_name": "ElectroHub #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-575f651f-14d6-4d7f-acab-b7bb42bce8de",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-03",
+      "amount": 393.35842190786656,
+      "merchant_name": "OfficeSupply Co #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-39c212f3-37f3-4086-8778-08e363ec9df5",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-03",
+      "amount": 134.39057235379744,
+      "merchant_name": "CloudStorage #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ec440b1a-0f61-41c5-b4c0-ba95802bc861",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-04",
+      "amount": 66.06426362999403,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-936e0738-c39f-4e62-9f46-82454e32902d",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-05",
+      "amount": 169.3275815313712,
+      "merchant_name": "ConcertHall #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Live Events"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-708c49c5-f668-4b56-8cb1-218e9542a879",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-06",
+      "amount": 123.19865191570325,
+      "merchant_name": "CloudStorage #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1dd52850-6fd3-4b9d-bb04-3fdd9ac498e5",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-07",
+      "amount": 74.14001369771947,
+      "merchant_name": "BikeShop #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Bicycles & Accessories"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-eccb26b2-1a94-4b61-aa1e-d5b78074f22d",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-07",
+      "amount": 167.151428314325,
+      "merchant_name": "CloudStorage #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-67d8de84-5ecf-4a64-be58-d5f75ecc15cb",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-08",
+      "amount": -5444.053282511787,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-c0600593-1e4d-48c7-bcfd-de04fbeaf562",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-08",
+      "amount": 182.577582049345,
+      "merchant_name": "CloudStorage #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-59685d59-d8dc-4868-89e2-396f1b06d033",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-09",
+      "amount": 57.03559179472261,
+      "merchant_name": "CityTransit #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-46c3418f-5567-45ae-b00b-27a04a6d0c5d",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-10",
+      "amount": 762.7089031374117,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-fd1938e9-97c6-4969-ad3a-94232d836a73",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-11",
+      "amount": 440.9872810524369,
+      "merchant_name": "ElectroHub #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-28068f46-273a-4707-a6e6-2c8a85e1676a",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-11",
+      "amount": 365.3923658883352,
+      "merchant_name": "FurnitureCo #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Furniture"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-f13cef9b-8fbf-4581-8681-7de65a6745eb",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-11",
+      "amount": 476.54837791427894,
+      "merchant_name": "OfficeSupply Co #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-cd164a19-2089-497c-8c76-229d2b29a1e3",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-14",
+      "amount": 53.81788870690936,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-eb74f041-63ca-45a8-abdf-41b896ed8f5c",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-15",
+      "amount": 14.973020731830484,
+      "merchant_name": "PetWorld #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-cc0b01bd-c3db-488b-8164-2ffb6520fb37",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-16",
+      "amount": 56.65628304797976,
+      "merchant_name": "MovieRentals #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/On-demand Rentals"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-da6f25e6-93e9-4241-9e6a-db32bff0fbcb",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-16",
+      "amount": 12.350839099930688,
+      "merchant_name": "ParkingLot Inc #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-db09b07c-ddee-4779-80ed-9d1e24e25cfd",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-16",
+      "amount": 80.63675612132818,
+      "merchant_name": "CityTransit #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-313d5129-5717-4d2c-ad30-7945c06d7f2b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-18",
+      "amount": 163.00113788797054,
+      "merchant_name": "Credit Card Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e115a077-95f5-4a75-a037-32fb25aa2638",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-22",
+      "amount": 291.03941441296445,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-43e0df92-98e3-4b6f-a9d5-91842d18807f",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-24",
+      "amount": 50.57648251704829,
+      "merchant_name": "RideShareCo #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1fa907a5-3c19-4032-9e89-ffb7d2ce4259",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-26",
+      "amount": 43.027112678296774,
+      "merchant_name": "ParkingLot Inc #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0d686545-b9fe-4da7-9ff8-56d5ee2e5d16",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-27",
+      "amount": 48.55466671921012,
+      "merchant_name": "CityTransit #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-588ad37c-9ad0-47a5-88e7-2272ae2bd11e",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-27",
+      "amount": 484.0453192897492,
+      "merchant_name": "Student Loan Payment",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Payments"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-24faadc1-b7f8-4d82-9063-6c9c9f0170b0",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-28",
+      "amount": 66.15191367876052,
+      "merchant_name": "QuickFuel #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-19eb2fad-ef9a-4f9b-9666-4ed4da84a11c",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-08-30",
+      "amount": 116.54817782524943,
+      "merchant_name": "CraftsOnline #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-21bc65ef-bc21-4275-af37-cdbaa0360af1",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-08-31",
+      "amount": 53.321520276712754,
+      "merchant_name": "SubscriptionBox #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-e6258566-76df-4df6-b5fb-ccacdb47827a",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-01",
+      "amount": 64.60034646573527,
+      "merchant_name": "RideShareCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-458d937e-b860-4d53-a576-744236563ee9",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-02",
+      "amount": 286.65019764222814,
+      "merchant_name": "CraftsOnline #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-af6d0a27-b22a-40c5-9a95-c85713cc75c2",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-02",
+      "amount": 27.53562602912981,
+      "merchant_name": "ConcertHall #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Live Events"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5a07ace2-c07d-4dfe-9ada-c4ca116a77c7",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-04",
+      "amount": 27.040147319209158,
+      "merchant_name": "MovieRentals #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/On-demand Rentals"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-32ea612e-e345-4489-8c30-5a540c556043",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-04",
+      "amount": 51.65952044129563,
+      "merchant_name": "RideShareCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-74224beb-6cc5-457b-ad72-6cd68529945b",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-06",
+      "amount": 174.61888932848868,
+      "merchant_name": "CinemaWorld #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Movie Theaters"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-557bb6bf-4d6c-4db6-8c03-3bcfafa5f1f1",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-06",
+      "amount": 75.96838302221799,
+      "merchant_name": "QuickFuel #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9d4bf985-82e2-4253-bfa9-66fe05da7f32",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-07",
+      "amount": 402.807914364969,
+      "merchant_name": "HomeGoods Store #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Home & Garden"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-12388be7-a49d-48b2-9e04-f8f702d7f85b",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-07",
+      "amount": 383.95940529365043,
+      "merchant_name": "HardwarePro #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Hardware"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2af7041d-44e8-46a5-ab6e-80059f71dba9",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-08",
+      "amount": 77.046385963606,
+      "merchant_name": "CityTransit #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ccadbe81-4583-4521-9868-325d4b33b534",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-09",
+      "amount": -6231.468732298042,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-877ccb78-405d-461d-bfbf-7dcc7327ab75",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-12",
+      "amount": 41.26876198835349,
+      "merchant_name": "CinemaWorld #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Movie Theaters"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-05649de6-d53f-4b02-a72d-c74137cd60c1",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-12",
+      "amount": 16.183670374018625,
+      "merchant_name": "CityTransit #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-15d7f03b-93f4-4021-a809-bff50835ced7",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-13",
+      "amount": 170.338378407804,
+      "merchant_name": "SubscriptionBox #1",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Subscription Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5009f124-24dd-4c71-b131-348c042bc564",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-13",
+      "amount": 160.1469640554781,
+      "merchant_name": "StreamingMusic #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7ae6d55f-8c1b-4e47-b61a-35480494027c",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-13",
+      "amount": 534.1107976854009,
+      "merchant_name": "Transfer to Savings",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Transfers"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3adc1ed0-f67a-4a32-ac6e-c5ce260c89a1",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-15",
+      "amount": 340.5776700918467,
+      "merchant_name": "ElectroHub #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Electronics"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-308c10dd-e6ff-4497-b408-54fe5095d04b",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-17",
+      "amount": 134.20445737599874,
+      "merchant_name": "CloudStorage #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-cab62709-0cd7-41d8-b400-40a5a8e277bd",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-17",
+      "amount": 81.90312836936697,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-9e5b5b6c-32c1-4355-a372-94e06b02f39a",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-18",
+      "amount": 104.6166228522734,
+      "merchant_name": "CloudStorage #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5d222519-f8c0-49cc-85a3-2af18177f59d",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-19",
+      "amount": 82.44219878869293,
+      "merchant_name": "ParkingLot Inc #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-55dc23a7-e8d9-41f8-88f4-90ba713f9ddf",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-21",
+      "amount": 57.77510077216929,
+      "merchant_name": "RideShareCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b27997a4-cd1a-4e81-a380-9cb1f388b0a9",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-25",
+      "amount": 29.163107054264955,
+      "merchant_name": "ParkingLot Inc #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7d7d1aa8-0ea7-45e1-ba2d-3ae58a18f30a",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-26",
+      "amount": 236.08532844061486,
+      "merchant_name": "OfficeSupply Co #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d516e1fe-59c2-4d29-909f-6ba159c60a42",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-26",
+      "amount": 84.89316783602811,
+      "merchant_name": "CityTransit #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7ada8312-ee55-4941-a23f-91267c4e4a80",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-28",
+      "amount": 29.993610389405596,
+      "merchant_name": "CloudStorage #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Cloud Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-881aaf25-8361-4b4c-867b-d4927b434366",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-29",
+      "amount": 161.79509725474364,
+      "merchant_name": "HomeGoods Store #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Home & Garden"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-4b68b487-b616-46ef-a76a-cbd8ff013733",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-29",
+      "amount": 102.96135598305273,
+      "merchant_name": "MovieRentals #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/On-demand Rentals"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-62d24187-281e-4f09-9436-7eb6a824863d",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-30",
+      "amount": 391.0892705178007,
+      "merchant_name": "PetWorld #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Pet Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7a438771-1571-4d8b-8a11-3fcf11bd719b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-09-30",
+      "amount": 99.00280601027308,
+      "merchant_name": "QuickFuel #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-80364631-3826-42b8-a123-03a89f32372b",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-09-30",
+      "amount": 99.12705973594372,
+      "merchant_name": "QuickFuel #4",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-24c71346-3648-46c4-b7e8-a6a10b09f4c2",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-02",
+      "amount": -6969.499520865231,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-26465d7a-3f31-4884-8858-c4bec2611aab",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-10-02",
+      "amount": 81.15417962698494,
+      "merchant_name": "BookBarn #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-2c4f89a3-404a-4f1e-8a6f-b0f9025c2cc4",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-03",
+      "amount": 81.06747521460335,
+      "merchant_name": "CraftsOnline #3",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-03b79cee-e56d-42a7-adb1-c0b17a30a34b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-04",
+      "amount": 58.66532677395622,
+      "merchant_name": "ParkingLot Inc #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Parking"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-3ae6742a-1cf3-4657-950a-0609e1e58bfe",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-05",
+      "amount": 91.29515420676812,
+      "merchant_name": "StreamingMusic #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-0cd6e439-5624-462d-9b4d-395d1bbe8bda",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-10-11",
+      "amount": 142.22841264110968,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-114adeae-0355-4bf2-a5b3-05d87b7abdf8",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-14",
+      "amount": 109.23443353456197,
+      "merchant_name": "MovieRentals #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/On-demand Rentals"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-688a943a-dd0c-4b3a-a530-b4d922711a7f",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-14",
+      "amount": 51.6488992602962,
+      "merchant_name": "RideShareCo #1",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7427cb4a-2b79-4dee-a09a-41ae85719a68",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-15",
+      "amount": 374.94034116788305,
+      "merchant_name": "CraftsOnline #3",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Handmade Goods"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-7ea79675-1633-48c4-b85f-35cd5755cdcd",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-17",
+      "amount": 90.54092782027244,
+      "merchant_name": "QuickFuel #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Fuel"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b0fb6d18-91d9-47bd-b8a5-e29b036eb3af",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-22",
+      "amount": -4839.713842218908,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-498ff819-69d6-45ce-9894-06ebce630a4a",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-23",
+      "amount": 101.78809927052133,
+      "merchant_name": "ConcertHall #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Live Events"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-18c7416a-03cd-48c8-be28-5e758c7b2d3c",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-24",
+      "amount": -3672.093834665832,
+      "merchant_name": "Direct Deposit",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Financial",
+        "detailed": "Financial/Income"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1ded454d-c9cb-456d-84e3-91a57825a88b",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-26",
+      "amount": 362.9167637466452,
+      "merchant_name": "BookBarn #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Books"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-20bcd452-b553-4c9b-8dc8-31c2649f4039",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-10-26",
+      "amount": 126.94767713294586,
+      "merchant_name": "StreamingMusic #3",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-dea206db-d235-440e-a0ca-803db0117f9b",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-10-26",
+      "amount": 100.64212246715833,
+      "merchant_name": "MovieRentals #1",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/On-demand Rentals"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-b45864cc-6314-4b50-97cf-b3df4f5b49f0",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-27",
+      "amount": 253.72233684321415,
+      "merchant_name": "DiscountOutlets #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Discount Stores"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-ed4ce2fd-9c2d-4547-a3a5-4fddccd3255d",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-10-28",
+      "amount": 65.01982847240217,
+      "merchant_name": "CityTransit #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Public Transit"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-396489d6-027a-4a1c-8391-22c7e61f8771",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-10-31",
+      "amount": 146.5995548779354,
+      "merchant_name": "OfficeSupply Co #2",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-d825f2e8-7fb2-4ed9-831d-f5c0ac258056",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-10-31",
+      "amount": 175.2717762688698,
+      "merchant_name": "CinemaWorld #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Movie Theaters"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-5069dc12-3a56-4704-9d97-9bd1ecd8f1d8",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-11-01",
+      "amount": 144.20224213152048,
+      "merchant_name": "StreamFlix #4",
+      "merchant_entity_id": null,
+      "payment_channel": "online",
+      "personal_finance_category": {
+        "primary": "Entertainment",
+        "detailed": "Entertainment/Streaming Services"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-8fb46925-4e96-435b-8764-6132480d5603",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-11-01",
+      "amount": 15.69162137089325,
+      "merchant_name": "RideShareCo #2",
+      "merchant_entity_id": null,
+      "payment_channel": "in_store",
+      "personal_finance_category": {
+        "primary": "Transport",
+        "detailed": "Transport/Rideshare"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-1240ff31-972b-4148-af1e-561d212e1a48",
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "date": "2025-11-02",
+      "amount": 180.0312720166371,
+      "merchant_name": "CityMall Clothing #4",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Clothing"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    },
+    {
+      "transaction_id": "txn-a7a9671f-026a-4815-9b8b-80899a705ace",
+      "account_id": "acct-98a7c735-72a3-43fc-9ae3-08b328361282",
+      "date": "2025-11-02",
+      "amount": 168.87458541399886,
+      "merchant_name": "OfficeSupply Co #2",
+      "merchant_entity_id": null,
+      "payment_channel": "other",
+      "personal_finance_category": {
+        "primary": "Retail",
+        "detailed": "Retail/Office Supplies"
+      },
+      "pending": false,
+      "iso_currency_code": "USD"
+    }
+  ],
+  "liabilities": [
+    {
+      "account_id": "acct-ec95d881-f89d-4af8-a028-9e89bd02d5fa",
+      "aprs": [
+        {
+          "apr_percentage": 25.761171266771235,
+          "apr_type": "purchase_apr"
+        }
+      ],
+      "is_overdue": false,
+      "last_payment_amount": 492.589679098039,
+      "last_payment_date": "2025-10-14",
+      "last_statement_balance": 1447.3620058886752,
+      "minimum_payment_amount": 64.70930745616958,
+      "next_payment_due_date": "2025-11-09"
+    }
+  ]
+}
