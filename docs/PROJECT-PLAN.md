@@ -3,7 +3,7 @@
 
 **Version**: 1.1  
 **Date**: 2025-11-03
-**Status**: Development (Phase 1 - Task 2.2 Complete)  
+**Status**: Development (Phase 1 - Task 2.4 Complete)  
 **Project Manager**: TBD  
 
 ---
@@ -99,22 +99,22 @@ This document provides a comprehensive order of operations and task list for the
   - [API Requirements](./backend/API-Requirements.md#authentication-endpoints)
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#emailusername--password)
 
-**Task 2.3: Phone/SMS Authentication**
-- [ ] Integrate AWS SNS for SMS
-- [ ] Implement phone verification code generation
-- [ ] Create phone verification endpoints
-- [ ] Add rate limiting for SMS
+**Task 2.3: Phone/SMS Authentication** ✅
+- [x] Integrate AWS SNS for SMS
+- [x] Implement phone verification code generation
+- [x] Create phone verification endpoints
+- [x] Add rate limiting for SMS
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#authentication-endpoints)
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#phone-number--sms)
   - [Security](./backend/Security.md#rate-limiting)
 
-**Task 2.4: OAuth Integration**
-- [ ] Set up Google OAuth
-- [ ] Set up GitHub OAuth
-- [ ] Set up Facebook OAuth
-- [ ] Set up Apple Sign In
-- [ ] Implement OAuth callback handlers
+**Task 2.4: OAuth Integration** ✅
+- [x] Set up Google OAuth
+- [x] Set up GitHub OAuth (structure ready, credentials needed)
+- [x] Set up Facebook OAuth (structure ready, credentials needed)
+- [x] Set up Apple Sign In (structure ready, credentials needed)
+- [x] Implement OAuth callback handlers
 - **PRD References**:
   - [API Requirements](./backend/API-Requirements.md#authentication-endpoints)
   - [Authentication & Authorization](./backend/Authentication-Authorization.md#oauth-20-google-github-facebook-apple)
@@ -875,6 +875,7 @@ This document provides a comprehensive order of operations and task list for the
 | 1.3 | 2025-11-03 | Task 1.3 completed - AWS Infrastructure Setup (Development): Terraform modules for VPC, RDS PostgreSQL 16.10, ElastiCache Redis 7.1, S3 buckets, IAM roles. Includes owner_id support for shared AWS accounts (us-west-1 region). | TBD |
 | 1.4 | 2025-11-03 | Task 2.1 completed - Authentication Foundation: JWT token generation/validation (RS256), password hashing (bcrypt cost factor 12), authentication middleware, token refresh mechanism. Includes RSA key generation utilities and authentication dependencies. | TBD |
 | 1.5 | 2025-11-03 | Task 2.2 completed - Email/Password Authentication: User registration and login endpoints, password validation (12+ chars, uppercase, lowercase, digit, special char), email validation, user management endpoints (GET/PUT /api/v1/users/me), token refresh and logout. Fixed enum role storage, refresh token length (1000 chars), and session management. | TBD |
+| 1.6 | 2025-11-03 | Task 2.3 completed - Phone/SMS Authentication: Integrated AWS SNS for SMS sending, implemented phone verification code generation (6-digit cryptographically secure), created Redis connection utility for code storage (10-minute TTL), added rate limiting (5 SMS/hour, 10 SMS/day per phone), implemented phone validation using phonenumbers library (E.164 format), created POST /api/v1/auth/phone/request and POST /api/v1/auth/phone/verify endpoints with automatic user registration/login. | TBD |
 
 ---
 

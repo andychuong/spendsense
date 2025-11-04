@@ -58,9 +58,10 @@ The **Backend Layer** of SpendSense provides the API layer, authentication, auth
 - **S3**: Parquet files for analytics, static assets
 
 **Authentication**:
-- **AWS Cognito**: User pool management
-- **JWT**: Token generation and validation
-- **OAuth 2.0**: Google, GitHub, Facebook, Apple
+- **JWT**: Token generation and validation (RS256 algorithm)
+- **OAuth 2.0**: Google, GitHub, Facebook, Apple (FastAPI-managed)
+- **Password Hashing**: bcrypt (cost factor 12)
+- **SMS Authentication**: AWS SNS for phone verification
 
 **Deployment**:
 - **Docker**: `24.0.7+` (containerization)

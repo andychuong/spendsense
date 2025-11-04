@@ -98,7 +98,7 @@
 │  ┌──────────────────────────────────────────────────────────────────┐   │
 │  │              AWS API Gateway v2                                  │   │
 │  │  • REST API Routing                                               │   │
-│  │  • Authentication (Cognito)                                       │   │
+│  │  • Authentication (FastAPI-managed)                                  │   │
 │  │  • Rate Limiting & Throttling                                    │   │
 │  │  • Request Validation                                             │   │
 │  └──────────────────────────────────────────────────────────────────┘   │
@@ -375,63 +375,80 @@ React Query 5.17.0
 - **Throttling**: 1000 req/s per API key
 - **Rate Limiting**: Per IP and per user
 
-### Authentication (Cognito)
+### Authentication
 
-**User Pool**: `spendsense-users`
-- **Sign-in Methods**: 
-  - Email/Username (primary)
-  - Phone number (SMS verification)
-  - OAuth providers (Google, GitHub, Facebook, Apple Sign In)
-- **Password Policy**: 
-  - Min length: 12
-  - Require uppercase, lowercase, numbers, symbols
-- **MFA**: Optional (recommended for operators)
-- **Token Expiration**: 1 hour (access), 30 days (refresh)
+**Implementation**: FastAPI-managed authentication with JWT tokens
+
+**Sign-in Methods**: 
+- ✅ Email/Username (primary) - Password hashing with bcrypt (cost factor 12)
+- ✅ Phone number (SMS verification) - AWS SNS for SMS delivery
+- ✅ OAuth providers (Google, GitHub, Facebook, Apple Sign In) - FastAPI-managed OAuth flows
+
+**Password Policy**: 
+- Min length: 12
+- Require uppercase, lowercase, numbers, symbols
+
+**Token Management**:
+- JWT tokens (RS256 algorithm)
+- Access token expiration: 1 hour
+- Refresh token expiration: 30 days
+- Token storage: PostgreSQL (Sessions table)
+- Token blacklisting: Redis (optional)
+
+**MFA**: Optional (recommended for operators) - Future enhancement
+
+**Note**: The implementation uses FastAPI-managed OAuth (not AWS Cognito) for direct control and flexibility. OAuth credentials are stored in environment variables (development) or AWS Secrets Manager (production).
 
 **OAuth Identity Providers Configuration:**
 
-*Note: Cognito can handle OAuth directly, or FastAPI can handle OAuth flows and sync with Cognito/database*
+*Note: The implementation uses FastAPI-Managed OAuth (Option 2) for direct control and flexibility.*
 
-**Option 1: Cognito-Managed OAuth (Recommended for simplicity)**
+**Current Implementation: FastAPI-Managed OAuth**
+- FastAPI handles OAuth flows directly using `authlib` library
+- Direct integration with OAuth providers (Google, GitHub, Facebook, Apple)
+- OAuth state management via Redis (CSRF protection)
+- User data stored in PostgreSQL database
+- JWT tokens generated after successful OAuth authentication
+
+**Alternative: Cognito-Managed OAuth (Not currently used)**
 - Configure identity providers in Cognito User Pool
 - Cognito handles OAuth redirects and token exchange
 - FastAPI validates Cognito tokens
 
-**Option 2: FastAPI-Managed OAuth (More control)**
-- FastAPI handles OAuth flows directly
-- Syncs user data with Cognito or database
-- More flexibility for custom logic
-
 **OAuth Provider Details:**
 
-- **Google OAuth 2.0**
-  - Client ID and Secret: Store in Secrets Manager or Cognito
+- **Google OAuth 2.0** ✅ (Configured and tested)
+  - Client ID and Secret: Store in Secrets Manager or `.env` for development
   - Scopes: `email`, `profile`, `openid`
-  - Callback URL: 
-    - Cognito: `https://{domain}.auth.{region}.amazoncognito.com/oauth2/idpresponse`
-    - FastAPI: `https://api.spendsense.example.com/auth/oauth/google/callback`
+  - Callback URL: `https://api.spendsense.example.com/api/v1/auth/oauth/google/callback`
+  - Endpoints: 
+    - `GET /api/v1/auth/oauth/google/authorize` - Initiate OAuth flow
+    - `GET /api/v1/auth/oauth/google/callback` - Handle OAuth callback
   
-- **GitHub OAuth 2.0**
-  - Client ID and Secret: Store in Secrets Manager or Cognito
+- **GitHub OAuth 2.0** (Structure ready, credentials needed)
+  - Client ID and Secret: Store in Secrets Manager or `.env` for development
   - Scopes: `user:email`
-  - Callback URL: 
-    - Cognito: `https://{domain}.auth.{region}.amazoncognito.com/oauth2/idpresponse`
-    - FastAPI: `https://api.spendsense.example.com/auth/oauth/github/callback`
+  - Callback URL: `https://api.spendsense.example.com/api/v1/auth/oauth/github/callback`
+  - Endpoints:
+    - `GET /api/v1/auth/oauth/github/authorize` - Initiate OAuth flow
+    - `GET /api/v1/auth/oauth/github/callback` - Handle OAuth callback
   
-- **Facebook Login**
-  - App ID and App Secret: Store in Secrets Manager or Cognito
+- **Facebook Login** (Structure ready, credentials needed)
+  - App ID and App Secret: Store in Secrets Manager or `.env` for development
   - Permissions: `email`, `public_profile`
-  - Callback URL: 
-    - Cognito: `https://{domain}.auth.{region}.amazoncognito.com/oauth2/idpresponse`
-    - FastAPI: `https://api.spendsense.example.com/auth/oauth/facebook/callback`
+  - Callback URL: `https://api.spendsense.example.com/api/v1/auth/oauth/facebook/callback`
+  - Endpoints:
+    - `GET /api/v1/auth/oauth/facebook/authorize` - Initiate OAuth flow
+    - `GET /api/v1/auth/oauth/facebook/callback` - Handle OAuth callback
   
-- **Apple Sign In**
+- **Apple Sign In** (Structure ready, credentials needed)
   - Service ID, Key ID, Team ID: Store in Secrets Manager
   - Private Key (P8 file): Store securely in Secrets Manager
   - Client ID: Service ID
-  - Callback URL: 
-    - Cognito: `https://{domain}.auth.{region}.amazoncognito.com/oauth2/idpresponse`
-    - FastAPI: `https://api.spendsense.example.com/auth/oauth/apple/callback`
+  - Callback URL: `https://api.spendsense.example.com/api/v1/auth/oauth/apple/callback`
+  - Endpoints:
+    - `GET /api/v1/auth/oauth/apple/authorize` - Initiate OAuth flow
+    - `GET /api/v1/auth/oauth/apple/callback` - Handle OAuth callback (supports POST for form_post)
 
 **Phone Number Authentication:**
 - **SMS Provider**: AWS SNS (Simple Notification Service)
@@ -856,7 +873,7 @@ Steps:
 
 ### Authentication & Authorization
 
-- **Authentication**: AWS Cognito with multiple methods
+- **Authentication**: FastAPI-managed authentication with JWT tokens (Email, Phone/SMS, OAuth 2.0)
   - Email/Username + Password
   - Phone number + SMS verification
   - OAuth 2.0 (Google, GitHub, Facebook)
