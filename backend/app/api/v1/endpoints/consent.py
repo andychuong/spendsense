@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
     response_model=ConsentStatusResponse,
     status_code=status.HTTP_200_OK,
     summary="Grant consent",
-    description="Grant consent for data processing. Requires explicit opt-in (TOS acceptance). Stores consent with timestamp and version.",
+    description="Grant consent for data processing. Requires explicit opt-in (TOS acceptance). By granting consent, users acknowledge they have read the financial advice disclaimer: 'This is educational content, not financial advice. Consult a licensed advisor for personalized guidance.' Stores consent with timestamp and version.",
     responses={
         200: {"description": "Consent granted successfully"},
         400: {"description": "Terms of Service must be accepted"},
@@ -49,6 +49,10 @@ async def grant_consent(
     1. Requires explicit opt-in (TOS acceptance)
     2. Stores consent with timestamp and version
     3. Logs consent grant event
+    
+    Note: By granting consent, users acknowledge they have read the financial advice disclaimer:
+    "This is educational content, not financial advice. Consult a licensed advisor for personalized guidance."
+    The disclaimer is prominently displayed in the consent UI before granting consent.
     
     Args:
         request: Consent grant request with version and TOS acceptance
