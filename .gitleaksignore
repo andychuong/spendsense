@@ -1,0 +1,34 @@
+# Gitleaks ignore file
+# Format: file_path:rule_id:line_number
+# This file tells gitleaks to ignore specific findings
+
+# Development keys (gitignored, but ignore in scans)
+backend/.dev_keys/jwt_private_key.pem:private-key:1
+
+# Environment files (gitignored, but ignore in scans)
+backend/.env:generic-api-key:28
+
+# Documentation files with example tokens/secrets
+# These are intentional examples for documentation
+backend/SMS_TESTING.md:curl-auth-header:475
+backend/SMS_TESTING.md:generic-api-key:194
+backend/SMS_TESTING.md:generic-api-key:195
+backend/SMS_TESTING.md:generic-api-key:206
+backend/SMS_TESTING.md:generic-api-key:207
+backend/OAUTH_SETUP.md:private-key:290
+backend/OAUTH_SETUP.md:private-key:300
+
+# API schema examples with example JWT tokens
+# These are intentional example values for API documentation
+backend/app/api/v1/schemas/auth.py:generic-api-key:69
+backend/app/api/v1/schemas/auth.py:generic-api-key:70
+backend/app/api/v1/schemas/auth.py:generic-api-key:107
+backend/app/api/v1/schemas/auth.py:generic-api-key:108
+backend/app/api/v1/schemas/auth.py:generic-api-key:123
+backend/app/api/v1/schemas/auth.py:generic-api-key:139
+backend/app/api/v1/schemas/auth.py:generic-api-key:140
+backend/app/api/v1/schemas/auth.py:generic-api-key:208
+backend/app/api/v1/schemas/auth.py:generic-api-key:209
+backend/app/api/v1/schemas/auth.py:generic-api-key:249
+backend/app/api/v1/schemas/auth.py:generic-api-key:250
+

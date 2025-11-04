@@ -141,6 +141,7 @@ openai_key.env
 # Database credentials and dumps
 *.sqlite
 *.sqlite3
+*.db
 postgres_data/
 *.sql.dump
 *.sql.gz
