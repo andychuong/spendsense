@@ -23,8 +23,13 @@ from app.core.sms_service import (
     validate_phone_number,
 )
 from app.core.dependencies import get_current_active_user
+from app.core.cache_service import store_session, update_session_last_used
 from app.models.user import User, UserRole
 from app.models.session import Session as SessionModel
+from app.models.data_upload import DataUpload
+from app.models.recommendation import Recommendation
+from app.models.user_profile import UserProfile
+from app.models.persona_history import PersonaHistory
 from app.api.v1.schemas.auth import (
     UserRegisterRequest,
     UserRegisterResponse,
@@ -38,6 +43,11 @@ from app.api.v1.schemas.auth import (
     PhoneVerificationVerifyResponse,
     OAuthAuthorizeResponse,
     OAuthCallbackResponse,
+    OAuthLinkRequest,
+    OAuthLinkResponse,
+    PhoneLinkRequest,
+    PhoneLinkResponse,
+    UnlinkResponse,
 )
 from app.core.oauth_service import (
     get_oauth_authorize_url,
@@ -50,7 +60,17 @@ from app.core.oauth_service import (
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
 
-@router.post("/register", response_model=UserRegisterResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/register",
+    response_model=UserRegisterResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Register new user",
+    description="Create a new user account with email and password. Returns access and refresh tokens for immediate authentication.",
+    responses={
+        201: {"description": "User registered successfully"},
+        400: {"description": "Email already registered or validation failed"},
+    },
+)
 async def register(
     request: UserRegisterRequest,
     db: Session = Depends(get_db),
@@ -118,6 +138,14 @@ async def register(
     session.refresh_token = refresh_token
     db.commit()
     
+    # Store session in Redis
+    store_session(
+        session_id=session.session_id,
+        user_id=user.user_id,
+        role=user.role,
+        last_used_at=datetime.utcnow(),
+    )
+    
     return UserRegisterResponse(
         user_id=str(user.user_id),
         email=user.email or "",
@@ -127,7 +155,16 @@ async def register(
     )
 
 
-@router.post("/login", response_model=UserLoginResponse)
+@router.post(
+    "/login",
+    response_model=UserLoginResponse,
+    summary="Login user",
+    description="Authenticate user with email and password. Returns access and refresh tokens.",
+    responses={
+        200: {"description": "Login successful"},
+        401: {"description": "Invalid email or password"},
+    },
+)
 async def login(
     request: UserLoginRequest,
     db: Session = Depends(get_db),
@@ -194,6 +231,14 @@ async def login(
     # Update session with actual refresh token
     session.refresh_token = refresh_token
     db.commit()
+    
+    # Store session in Redis
+    store_session(
+        session_id=session.session_id,
+        user_id=user.user_id,
+        role=user.role,
+        last_used_at=datetime.utcnow(),
+    )
     
     return UserLoginResponse(
         user_id=str(user.user_id),
@@ -278,6 +323,9 @@ async def refresh_token(
         session.refresh_token = refresh_token
         session.last_used_at = datetime.utcnow()
         db.commit()
+        
+        # Update session in Redis
+        update_session_last_used(session.session_id)
         
         return TokenRefreshResponse(
             access_token=access_token,
@@ -451,6 +499,14 @@ async def verify_phone_code(
         # Update session with actual refresh token
         session.refresh_token = refresh_token
         db.commit()
+        
+        # Store session in Redis
+        store_session(
+            session_id=session.session_id,
+            user_id=user.user_id,
+            role=user.role,
+            last_used_at=datetime.utcnow(),
+        )
         
         return PhoneVerificationVerifyResponse(
             user_id=str(user.user_id),
@@ -722,6 +778,14 @@ async def oauth_callback(
     session.refresh_token = refresh_token
     db.commit()
     
+    # Store session in Redis
+    store_session(
+        session_id=session.session_id,
+        user_id=user.user_id,
+        role=user.role,
+        last_used_at=datetime.utcnow(),
+    )
+    
     # Return response
     # If redirect_uri is a frontend URL, redirect with tokens
     # Otherwise, return JSON response
@@ -752,4 +816,451 @@ async def oauth_callback(
             is_new_user=is_new_user,
             provider=provider_lower,
         )
+
+
+def merge_accounts(primary_user: User, duplicate_user: User, db: Session) -> None:
+    """
+    Merge duplicate user account into primary user account.
+    
+    This function:
+    1. Updates all foreign keys from duplicate_user to primary_user
+    2. Merges OAuth providers and phone numbers
+    3. Merges email if primary user doesn't have one
+    4. Deletes the duplicate user account
+    
+    Args:
+        primary_user: The primary user account to keep
+        duplicate_user: The duplicate user account to merge into primary
+        db: Database session
+    """
+    # Merge OAuth providers
+    primary_oauth = primary_user.oauth_providers or {}
+    duplicate_oauth = duplicate_user.oauth_providers or {}
+    primary_oauth.update(duplicate_oauth)
+    primary_user.oauth_providers = primary_oauth
+    
+    # Merge phone number if primary doesn't have one
+    if not primary_user.phone_number and duplicate_user.phone_number:
+        primary_user.phone_number = duplicate_user.phone_number
+    
+    # Merge email if primary doesn't have one
+    if not primary_user.email and duplicate_user.email:
+        primary_user.email = duplicate_user.email
+    
+    # Merge password hash if primary doesn't have one
+    if not primary_user.password_hash and duplicate_user.password_hash:
+        primary_user.password_hash = duplicate_user.password_hash
+    
+    # Update all foreign keys pointing to duplicate_user
+    # DataUpload
+    db.query(DataUpload).filter(DataUpload.user_id == duplicate_user.user_id).update(
+        {"user_id": primary_user.user_id}
+    )
+    
+    # Recommendation (user_id and approved_by/rejected_by)
+    db.query(Recommendation).filter(Recommendation.user_id == duplicate_user.user_id).update(
+        {"user_id": primary_user.user_id}
+    )
+    db.query(Recommendation).filter(Recommendation.approved_by == duplicate_user.user_id).update(
+        {"approved_by": primary_user.user_id}
+    )
+    db.query(Recommendation).filter(Recommendation.rejected_by == duplicate_user.user_id).update(
+        {"rejected_by": primary_user.user_id}
+    )
+    
+    # PersonaHistory
+    db.query(PersonaHistory).filter(PersonaHistory.user_id == duplicate_user.user_id).update(
+        {"user_id": primary_user.user_id}
+    )
+    
+    # UserProfile - delete duplicate profile if primary has one, otherwise update user_id
+    duplicate_profile = db.query(UserProfile).filter(
+        UserProfile.user_id == duplicate_user.user_id
+    ).first()
+    primary_profile = db.query(UserProfile).filter(
+        UserProfile.user_id == primary_user.user_id
+    ).first()
+    
+    if duplicate_profile:
+        if primary_profile:
+            # Keep primary profile, delete duplicate
+            db.delete(duplicate_profile)
+        else:
+            # Move duplicate profile to primary user
+            duplicate_profile.user_id = primary_user.user_id
+    
+    # Session - delete duplicate sessions (they'll be recreated on login)
+    db.query(SessionModel).filter(SessionModel.user_id == duplicate_user.user_id).delete()
+    
+    # Delete duplicate user
+    db.delete(duplicate_user)
+    db.commit()
+
+
+@router.post("/oauth/link", response_model=OAuthLinkResponse, status_code=status.HTTP_200_OK)
+async def link_oauth_provider(
+    request: OAuthLinkRequest,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Link an additional OAuth provider to the current user's account.
+    
+    This endpoint:
+    1. Validates OAuth state (CSRF protection)
+    2. Exchanges authorization code for access token
+    3. Retrieves user information from provider
+    4. Checks if provider is already linked
+    5. Checks if another account exists with this provider
+    6. Merges accounts if duplicate found
+    7. Links provider to current user account
+    
+    Args:
+        request: OAuth link request with code, state, and redirect_uri
+        current_user: Current authenticated user
+        db: Database session
+        
+    Returns:
+        OAuth link response with provider and merge status
+        
+    Raises:
+        HTTPException: If OAuth flow fails, provider already linked, or validation fails
+    """
+    # Verify state (CSRF protection)
+    state_info = verify_oauth_state(request.state)
+    if not state_info:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or expired OAuth state"
+        )
+    
+    provider = state_info.get("provider")
+    if not provider:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Provider not found in OAuth state"
+        )
+    
+    provider_lower = provider.lower()
+    
+    # Validate provider
+    if provider_lower not in OAUTH_PROVIDERS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported OAuth provider: {provider}"
+        )
+    
+    # Get redirect_uri from request or state
+    redirect_uri = request.redirect_uri or state_info.get("redirect_uri")
+    if not redirect_uri:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="redirect_uri is required"
+        )
+    
+    # Check if provider is already linked to current user
+    current_oauth = current_user.oauth_providers or {}
+    if provider_lower in current_oauth:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"OAuth provider {provider} is already linked to your account"
+        )
+    
+    # Exchange code for access token
+    token = await exchange_oauth_code(provider_lower, request.code, redirect_uri)
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Failed to exchange authorization code for access token"
+        )
+    
+    # Get user info from provider
+    user_info = await get_oauth_user_info(provider_lower, token)
+    if not user_info:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Failed to retrieve user information from OAuth provider"
+        )
+    
+    provider_id = user_info.get("provider_id")
+    email = user_info.get("email")
+    
+    if not provider_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="OAuth provider did not return user identifier"
+        )
+    
+    # Check if another user exists with this OAuth provider
+    # We need to check all users for OAuth provider match since it's stored in JSON
+    # This is less efficient but necessary for JSON field lookup
+    duplicate_user = None
+    
+    # First, try to find by email if email provided (more efficient)
+    if email:
+        duplicate_user = db.query(User).filter(
+            User.email == email,
+            User.user_id != current_user.user_id
+        ).first()
+    
+    # If no duplicate by email, check by OAuth provider ID
+    if not duplicate_user:
+        users = db.query(User).filter(User.user_id != current_user.user_id).all()
+        for u in users:
+            oauth_providers = u.oauth_providers or {}
+            if oauth_providers.get(provider_lower) == str(provider_id):
+                duplicate_user = u
+                break
+    
+    merged_account = False
+    
+    if duplicate_user:
+        # Merge duplicate account into current user
+        merge_accounts(current_user, duplicate_user, db)
+        merged_account = True
+        db.refresh(current_user)
+    
+    # Link OAuth provider to current user
+    current_oauth[provider_lower] = str(provider_id)
+    
+    # Update email if not set and OAuth provides one
+    if not current_user.email and email:
+        current_user.email = email
+    
+    current_user.oauth_providers = current_oauth
+    db.commit()
+    db.refresh(current_user)
+    
+    return OAuthLinkResponse(
+        message="OAuth provider linked successfully",
+        provider=provider_lower,
+        merged_account=merged_account,
+    )
+
+
+@router.post("/phone/link", response_model=PhoneLinkResponse, status_code=status.HTTP_200_OK)
+async def link_phone_number(
+    request: PhoneLinkRequest,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Link a phone number to the current user's account.
+    
+    This endpoint:
+    1. Validates phone number format
+    2. Verifies the code against stored code in Redis
+    3. Checks if phone number is already linked
+    4. Checks if another account exists with this phone number
+    5. Merges accounts if duplicate found
+    6. Links phone number to current user account
+    
+    Args:
+        request: Phone link request with phone and code
+        current_user: Current authenticated user
+        db: Database session
+        
+    Returns:
+        Phone link response with phone and merge status
+        
+    Raises:
+        HTTPException: If code is invalid, phone already linked, or validation fails
+    """
+    try:
+        # Validate and normalize phone number
+        normalized_phone = validate_phone_number(request.phone)
+        
+        # Verify code
+        try:
+            is_valid = verify_verification_code(normalized_phone, request.code)
+        except ValueError as e:
+            # Max attempts exceeded
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=str(e)
+            )
+        
+        if not is_valid:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid or expired verification code"
+            )
+        
+        # Check if phone number is already linked to current user
+        if current_user.phone_number == normalized_phone:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Phone number is already linked to your account"
+            )
+        
+        # Check if another user exists with this phone number
+        duplicate_user = db.query(User).filter(
+            User.phone_number == normalized_phone,
+            User.user_id != current_user.user_id
+        ).first()
+        
+        merged_account = False
+        
+        if duplicate_user:
+            # Merge duplicate account into current user
+            merge_accounts(current_user, duplicate_user, db)
+            merged_account = True
+            db.refresh(current_user)
+        
+        # Link phone number to current user
+        current_user.phone_number = normalized_phone
+        db.commit()
+        db.refresh(current_user)
+        
+        return PhoneLinkResponse(
+            message="Phone number linked successfully",
+            phone=normalized_phone,
+            merged_account=merged_account,
+        )
+        
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Unexpected error: {str(e)}"
+        )
+
+
+@router.delete("/oauth/unlink/{provider}", response_model=UnlinkResponse, status_code=status.HTTP_200_OK)
+async def unlink_oauth_provider(
+    provider: str,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Unlink an OAuth provider from the current user's account.
+    
+    This endpoint:
+    1. Validates the provider
+    2. Checks if provider is linked
+    3. Ensures user has at least one authentication method remaining
+    4. Unlinks the provider
+    
+    Args:
+        provider: OAuth provider name (google, github, facebook, apple)
+        current_user: Current authenticated user
+        db: Database session
+        
+    Returns:
+        Unlink response with success message
+        
+    Raises:
+        HTTPException: If provider is not linked, or user would have no auth methods left
+    """
+    provider_lower = provider.lower()
+    
+    # Validate provider
+    if provider_lower not in OAUTH_PROVIDERS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported OAuth provider: {provider}"
+        )
+    
+    # Check if provider is linked
+    current_oauth = current_user.oauth_providers or {}
+    if provider_lower not in current_oauth:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"OAuth provider {provider} is not linked to your account"
+        )
+    
+    # Count remaining authentication methods
+    remaining_methods = 0
+    
+    # Count OAuth providers (excluding the one being unlinked)
+    other_oauth = {k: v for k, v in current_oauth.items() if k != provider_lower}
+    remaining_methods += len(other_oauth)
+    
+    # Count phone number
+    if current_user.phone_number:
+        remaining_methods += 1
+    
+    # Count email/password
+    if current_user.email and current_user.password_hash:
+        remaining_methods += 1
+    
+    # Ensure user has at least one authentication method remaining
+    if remaining_methods == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot unlink OAuth provider. You must have at least one authentication method linked to your account."
+        )
+    
+    # Unlink provider
+    del current_oauth[provider_lower]
+    current_user.oauth_providers = current_oauth
+    db.commit()
+    
+    return UnlinkResponse(
+        message=f"OAuth provider {provider} unlinked successfully"
+    )
+
+
+@router.delete("/phone/unlink", response_model=UnlinkResponse, status_code=status.HTTP_200_OK)
+async def unlink_phone_number(
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Unlink phone number from the current user's account.
+    
+    This endpoint:
+    1. Checks if phone number is linked
+    2. Ensures user has at least one authentication method remaining
+    3. Unlinks the phone number
+    
+    Args:
+        current_user: Current authenticated user
+        db: Database session
+        
+    Returns:
+        Unlink response with success message
+        
+    Raises:
+        HTTPException: If phone number is not linked, or user would have no auth methods left
+    """
+    # Check if phone number is linked
+    if not current_user.phone_number:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Phone number is not linked to your account"
+        )
+    
+    # Count remaining authentication methods
+    remaining_methods = 0
+    
+    # Count OAuth providers
+    current_oauth = current_user.oauth_providers or {}
+    remaining_methods += len(current_oauth)
+    
+    # Count email/password
+    if current_user.email and current_user.password_hash:
+        remaining_methods += 1
+    
+    # Ensure user has at least one authentication method remaining
+    if remaining_methods == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot unlink phone number. You must have at least one authentication method linked to your account."
+        )
+    
+    # Unlink phone number
+    current_user.phone_number = None
+    db.commit()
+    
+    return UnlinkResponse(
+        message="Phone number unlinked successfully"
+    )
 

@@ -8,8 +8,17 @@ import re
 class UserRegisterRequest(BaseModel):
     """User registration request schema."""
 
-    email: EmailStr = Field(..., description="User email address")
-    password: str = Field(..., min_length=12, description="User password")
+    email: EmailStr = Field(..., description="User email address", examples=["user@example.com"])
+    password: str = Field(..., min_length=12, description="User password", examples=["SecurePass123!"])
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "email": "user@example.com",
+                "password": "SecurePass123!"
+            }
+        }
 
     @field_validator("password")
     @classmethod
@@ -51,12 +60,33 @@ class UserRegisterResponse(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
 
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "user_id": "123e4567-e89b-12d3-a456-426614174000",
+                "email": "user@example.com",
+                "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "token_type": "bearer"
+            }
+        }
+
 
 class UserLoginRequest(BaseModel):
     """User login request schema."""
 
-    email: EmailStr = Field(..., description="User email address")
-    password: str = Field(..., description="User password")
+    email: EmailStr = Field(..., description="User email address", examples=["user@example.com"])
+    password: str = Field(..., description="User password", examples=["SecurePass123!"])
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "email": "user@example.com",
+                "password": "SecurePass123!"
+            }
+        }
 
 
 class UserLoginResponse(BaseModel):
@@ -68,11 +98,31 @@ class UserLoginResponse(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
 
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "user_id": "123e4567-e89b-12d3-a456-426614174000",
+                "email": "user@example.com",
+                "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "token_type": "bearer"
+            }
+        }
+
 
 class TokenRefreshRequest(BaseModel):
     """Token refresh request schema."""
 
-    refresh_token: str = Field(..., description="Refresh token")
+    refresh_token: str = Field(..., description="Refresh token", examples=["eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."])
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9..."
+            }
+        }
 
 
 class TokenRefreshResponse(BaseModel):
@@ -82,11 +132,29 @@ class TokenRefreshResponse(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
 
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "token_type": "bearer"
+            }
+        }
+
 
 class PhoneVerificationRequest(BaseModel):
     """Phone verification request schema."""
 
-    phone: str = Field(..., description="Phone number in E.164 format (e.g., +1234567890)")
+    phone: str = Field(..., description="Phone number in E.164 format (e.g., +1234567890)", examples=["+1234567890"])
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "phone": "+1234567890"
+            }
+        }
 
 
 class PhoneVerificationRequestResponse(BaseModel):
@@ -95,12 +163,30 @@ class PhoneVerificationRequestResponse(BaseModel):
     message: str = "Verification code sent successfully"
     phone: str = Field(..., description="Normalized phone number in E.164 format")
 
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "message": "Verification code sent successfully",
+                "phone": "+1234567890"
+            }
+        }
+
 
 class PhoneVerificationVerifyRequest(BaseModel):
     """Phone verification verify request schema."""
 
-    phone: str = Field(..., description="Phone number in E.164 format (e.g., +1234567890)")
-    code: str = Field(..., min_length=6, max_length=6, description="6-digit verification code")
+    phone: str = Field(..., description="Phone number in E.164 format (e.g., +1234567890)", examples=["+1234567890"])
+    code: str = Field(..., min_length=6, max_length=6, description="6-digit verification code", examples=["123456"])
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "phone": "+1234567890",
+                "code": "123456"
+            }
+        }
 
 
 class PhoneVerificationVerifyResponse(BaseModel):
@@ -113,12 +199,34 @@ class PhoneVerificationVerifyResponse(BaseModel):
     token_type: str = "bearer"
     is_new_user: bool = Field(..., description="True if user was just created, False if existing user logged in")
 
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "user_id": "123e4567-e89b-12d3-a456-426614174000",
+                "phone": "+1234567890",
+                "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "token_type": "bearer",
+                "is_new_user": True
+            }
+        }
+
 
 class OAuthAuthorizeResponse(BaseModel):
     """OAuth authorization response schema."""
 
     authorize_url: str = Field(..., description="OAuth authorization URL to redirect user to")
     state: str = Field(..., description="OAuth state parameter for CSRF protection")
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "authorize_url": "https://accounts.google.com/o/oauth2/v2/auth?client_id=...",
+                "state": "abc123def456"
+            }
+        }
 
 
 class OAuthCallbackResponse(BaseModel):
@@ -131,4 +239,108 @@ class OAuthCallbackResponse(BaseModel):
     token_type: str = "bearer"
     is_new_user: bool = Field(..., description="True if user was just created, False if existing user logged in")
     provider: str = Field(..., description="OAuth provider name (google, github, facebook, apple)")
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "user_id": "123e4567-e89b-12d3-a456-426614174000",
+                "email": "user@example.com",
+                "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "refresh_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                "token_type": "bearer",
+                "is_new_user": True,
+                "provider": "google"
+            }
+        }
+
+
+class OAuthLinkRequest(BaseModel):
+    """OAuth link request schema."""
+
+    code: str = Field(..., description="Authorization code from OAuth callback")
+    state: str = Field(..., description="OAuth state parameter for CSRF protection")
+    redirect_uri: str = Field(..., description="Callback URL used in authorization")
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "code": "4/0AeanS...",
+                "state": "abc123def456",
+                "redirect_uri": "http://localhost:3000/auth/oauth/callback"
+            }
+        }
+
+
+class OAuthLinkResponse(BaseModel):
+    """OAuth link response schema."""
+
+    message: str = "OAuth provider linked successfully"
+    provider: str = Field(..., description="OAuth provider name (google, github, facebook, apple)")
+    merged_account: bool = Field(
+        default=False,
+        description="True if accounts were merged, False if provider was just linked"
+    )
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "message": "OAuth provider linked successfully",
+                "provider": "google",
+                "merged_account": False
+            }
+        }
+
+
+class PhoneLinkRequest(BaseModel):
+    """Phone link request schema."""
+
+    phone: str = Field(..., description="Phone number in E.164 format (e.g., +1234567890)", examples=["+1234567890"])
+    code: str = Field(..., min_length=6, max_length=6, description="6-digit verification code", examples=["123456"])
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "phone": "+1234567890",
+                "code": "123456"
+            }
+        }
+
+
+class PhoneLinkResponse(BaseModel):
+    """Phone link response schema."""
+
+    message: str = "Phone number linked successfully"
+    phone: str = Field(..., description="Normalized phone number in E.164 format")
+    merged_account: bool = Field(
+        default=False,
+        description="True if accounts were merged, False if phone was just linked"
+    )
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "message": "Phone number linked successfully",
+                "phone": "+1234567890",
+                "merged_account": False
+            }
+        }
+
+
+class UnlinkResponse(BaseModel):
+    """Unlink response schema."""
+
+    message: str = Field(..., description="Success message")
+
+    class Config:
+        """Pydantic configuration."""
+        json_schema_extra = {
+            "example": {
+                "message": "OAuth provider unlinked successfully"
+            }
+        }
 

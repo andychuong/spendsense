@@ -6,6 +6,9 @@ from app.models.data_upload import DataUpload
 from app.models.recommendation import Recommendation
 from app.models.user_profile import UserProfile
 from app.models.persona_history import PersonaHistory
+from app.models.account import Account
+from app.models.transaction import Transaction
+from app.models.liability import Liability
 
 __all__ = [
     "User",
@@ -14,5 +17,8 @@ __all__ = [
     "Recommendation",
     "UserProfile",
     "PersonaHistory",
+    "Account",
+    "Transaction",
+    "Liability",
 ]
 
