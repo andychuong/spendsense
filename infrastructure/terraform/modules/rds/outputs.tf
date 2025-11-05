@@ -39,3 +39,4 @@ output "db_secret_name" {
   description = "Name of the database password secret"
   value       = aws_secretsmanager_secret.db_password.name
 }
+

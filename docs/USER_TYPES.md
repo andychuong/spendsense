@@ -338,3 +338,4 @@ user_profiles.persona_name = 'High Utilization' | 'Variable Income Budgeter' | '
 - Role assignment is manual (via registration or admin action)
 
 
+

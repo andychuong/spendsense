@@ -31,11 +31,11 @@ class Recommendation(Base):
 
     recommendation_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.user_id"), nullable=False, index=True)
-    type = Column(Enum(RecommendationType), nullable=False)
+    type = Column(Enum(RecommendationType, native_enum=False, values_callable=lambda x: [e.value for e in x]), nullable=False)
     title = Column(String(255), nullable=False)
     content = Column(Text, nullable=False)
     rationale = Column(Text, nullable=False)
-    status = Column(Enum(RecommendationStatus), default=RecommendationStatus.PENDING, nullable=False, index=True)
+    status = Column(Enum(RecommendationStatus, native_enum=False, values_callable=lambda x: [e.value for e in x]), default=RecommendationStatus.PENDING, nullable=False, index=True)
     decision_trace = Column(JSON, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
     approved_at = Column(DateTime(timezone=True), nullable=True, index=True)

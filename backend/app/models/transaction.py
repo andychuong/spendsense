@@ -41,3 +41,4 @@ class Transaction(Base):
         """String representation of Transaction."""
         return f"<Transaction(id={self.id}, transaction_id={self.transaction_id}, date={self.date}, amount={self.amount})>"
 
+

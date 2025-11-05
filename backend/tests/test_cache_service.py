@@ -355,3 +355,4 @@ class TestCacheInvalidation:
 
         assert result == 0
 
+

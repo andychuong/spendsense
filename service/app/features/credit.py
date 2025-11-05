@@ -44,12 +44,6 @@ class CreditUtilizationDetector:
     """Detects credit card utilization patterns and behaviors."""
 
     def __init__(self, db_session: Session):
-        """
-        Initialize credit utilization detector.
-
-        Args:
-            db_session: SQLAlchemy database session
-        """
         self.db = db_session
         self.consent_guardrails = ConsentGuardrails(db_session)
 
@@ -458,6 +452,12 @@ class CreditUtilizationDetector:
             else 0.0
         )
 
+        # Detect debt consolidation opportunity
+        debt_consolidation_opportunity = self.detect_debt_consolidation_opportunity({
+            "credit_cards": credit_card_details,
+            "cards_with_interest": cards_with_interest,
+        })
+
         return {
             "window_days": window_days,
             "window_start": start_date.isoformat(),
@@ -473,6 +473,54 @@ class CreditUtilizationDetector:
             "total_balance": float(total_balance),
             "total_limit": float(total_limit),
             "card_count": len(credit_cards),
+            "debt_consolidation_opportunity": debt_consolidation_opportunity,
+        }
+
+    def detect_debt_consolidation_opportunity(
+        self,
+        credit_signals: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        """
+        Detect if user is a good candidate for debt consolidation.
+        Criteria:
+        - ≥3 credit cards with balances > 0
+        - Total credit card debt > $5,000
+        - Average APR across cards > 15%
+        - Interest charges totaling > $100/month across all cards
+        """
+        cards_with_balance = [card for card in credit_signals.get("credit_cards", []) if card["current_balance"] > 0]
+        cards_with_interest = credit_signals.get("cards_with_interest", [])
+        
+        total_debt = sum(card["current_balance"] for card in cards_with_balance)
+        total_interest_charges = sum(card["interest_charges"]["total_interest_charges"] for card in cards_with_interest)
+        
+        num_cards_with_balance = len(cards_with_balance)
+        
+        aprs = [card["apr_percentage"] for card in cards_with_balance if card["apr_percentage"]]
+        avg_apr = sum(aprs) / len(aprs) if aprs else 0
+        
+        matches = (
+            num_cards_with_balance >= 3 and
+            total_debt > 5000 and
+            avg_apr > 15 and
+            total_interest_charges > 100
+        )
+        
+        rationale = ""
+        if matches:
+            rationale = (
+                f"Candidate for debt consolidation with {num_cards_with_balance} cards carrying balances, "
+                f"totaling ${total_debt:,.2f} in debt at an average APR of {avg_apr:.2f}%. "
+                f"Paying ${total_interest_charges:,.2f} in monthly interest."
+            )
+
+        return {
+            "is_candidate": matches,
+            "rationale": rationale,
+            "num_cards_with_balance": num_cards_with_balance,
+            "total_debt": total_debt,
+            "average_apr": avg_apr,
+            "total_interest_charges": total_interest_charges,
         }
 
     @cache_feature_signals(CACHE_PREFIX_CREDIT)

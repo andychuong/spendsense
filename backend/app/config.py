@@ -62,7 +62,7 @@ class Settings(BaseSettings):
     sms_mock_mode: bool = False  # Set to True to use mock SMS (logs codes to console instead of sending)
 
     # Security
-    cors_origins: list[str] = ["http://localhost:3000", "http://localhost:5173"]
+    cors_origins: list[str] = ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "http://127.0.0.1:3001"]
 
     class Config:
         """Pydantic configuration."""

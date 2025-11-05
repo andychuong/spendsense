@@ -1,8 +1,8 @@
 # SpendSense Memory Bank
 ## Project Knowledge Base & Progress Tracker
 
-**Last Updated**: 2025-11-04
-**Version**: 1.49
+**Last Updated**: 2025-11-05
+**Version**: 1.50
 **Status**: Phase 6 - Operator Dashboard & Analytics (Task 18.3 Complete)
 
 ---
@@ -138,7 +138,7 @@ SpendSense/
 ### Phase 3: Core API & Data Models
 
 - **Task 3.1**: User Management API ✅ - Profile endpoints (GET/PUT/DELETE), consent management API (grant/status/revoke), user data deletion
-- **Task 3.2**: Data Upload API ✅ - File upload endpoint (JSON/CSV, max 10MB), S3 storage, upload status tracking, unit tests (12/12 passing)
+- **Task 3.2**: Data Upload API ✅ - File upload endpoint (JSON/CSV, max 10MB), S3 storage, upload status tracking, user ID assigned from authenticated user (not from file), unit tests (12/12 passing)
 - **Task 3.3**: Caching Infrastructure ✅ - Redis session storage (30-day TTL), API response caching (profile: 5min, recommendations: 1hr, signals: 24hr), cache invalidation, unit tests (21/21 passing)
 - **Task 3.4**: API Documentation ✅ - OpenAPI/Swagger documentation, request/response examples, comprehensive endpoint documentation
 
@@ -146,7 +146,7 @@ SpendSense/
 
 - **Task 4.1**: Data Ingestion Service ✅ - Plaid data parser (JSON/CSV), database models (Account/Transaction/Liability), PostgreSQL + S3 Parquet storage, ingestion service with comprehensive reporting
 - **Task 4.2**: Data Validation Service ✅ - Enhanced PlaidValidator with account/transaction/liability validation, duplicate detection, range validation, error reporting with severity levels
-- **Task 4.3**: Synthetic Data Generator ✅ - YAML-based persona configurations (5 personas), generates 100 diverse user profiles with accounts/transactions/liabilities, supports JSON/CSV export, validates all generated data
+- **Task 4.3**: Synthetic Data Generator ✅ - YAML-based persona configurations (5 personas), generates diverse user profiles with accounts/transactions/liabilities, supports JSON/CSV export, validates all generated data. **Security**: Generated files do NOT include `user_id` - assigned by authenticated user during upload
 
 #### ✅ Task 5.1: Subscription Detection
 - Implemented subscription detection service (`service/app/features/subscriptions.py`)
@@ -956,6 +956,12 @@ SpendSense/
   - **Users with Both**: Counts users with both persona and ≥3 behaviors
   - Calculates percentages for all metrics
   - Filters to regular users only (excludes operators and admins)
+- **UI Separation**: Operators and admins are displayed separately from regular users:
+  - `UsersList.tsx` component filters out operators/admins (shows only role='user')
+  - `StaffList.tsx` component displays only operators and admins
+  - `StaffManagement.tsx` page provides tabbed interface for managing both groups
+  - Navigation hides Profile, Recommendations, and Upload tabs for operators/admins
+  - Admins see "Management" link in navigation for staff management
 - **Explainability Metrics**:
   - **Recommendations with Rationales**: Checks if rationale exists and is not empty
   - **Rationales with Data Points**: Detects citations of:
@@ -1353,6 +1359,7 @@ SpendSense/
   - Public: `/login`, `/register`
   - Protected: `/`, `/profile`, `/recommendations`, `/recommendations/:id`, `/settings`, `/upload`
   - Operator: `/operator`, `/operator/review/:id`, `/operator/analytics`
+  - Admin: `/admin/management` - Staff management page with Users and Staff tabs
 - Implemented Zustand 4.4.7 for client state management:
   - Auth store with persistence (`src/store/authStore.ts`)
 - Configured React Query 5.17.0 for server state
@@ -2216,6 +2223,9 @@ Admin > Operator > User
 
 ### Data Upload Endpoints
 - `POST /api/v1/data/upload` - Upload transaction data file (JSON/CSV, max 10MB)
+  - **Security**: User ID is automatically assigned from authenticated user (not from file)
+  - Uploaded files should NOT contain `user_id` field (if present, it's ignored)
+  - Files contain only: `accounts`, `transactions`, `liabilities` (and optional `upload_timestamp`)
 - `GET /api/v1/data/upload/{upload_id}` - Get upload status
 
 ### Recommendations Endpoints
@@ -2248,7 +2258,8 @@ Admin > Operator > User
 ### Pages
 - `Login.tsx` - Login page with email/phone/OAuth
 - `Register.tsx` - Registration page with email/phone/OAuth
-- `Dashboard.tsx` - User dashboard with persona, signals, recommendations, and consent status
+- `Dashboard.tsx` - User dashboard with persona, signals, recommendations, and consent status. For admins, includes UsersList component showing all regular users
+- `StaffManagement.tsx` - Staff management page with tabs for Users and Staff (admin-only). Separates regular users from operators/admins
 - `Profile.tsx` - User profile page with behavioral signals, trends, and persona history
 - `Recommendations.tsx` - Recommendations list page with filtering, sorting, and actions
 - `RecommendationDetail.tsx` - Recommendation detail (placeholder)
@@ -2281,7 +2292,9 @@ Admin > Operator > User
 - `SkipLink.tsx` - Skip link component for keyboard navigation accessibility (Task 12.4)
 - `ConfirmationDialog.tsx` - Reusable confirmation dialog component supporting approve, reject, confirm, warning, and info types with customizable title, message, confirm/cancel labels, loading states, optional text input, and full accessibility support (Task 17.4)
 - `ReviewQueue.tsx` - Review queue component displaying pending recommendations with status badges, type badges, persona badges, and auto-refresh (Task 17.1)
-- `UsersList.tsx` - Users list component for admin dashboard displaying all users with personas, roles, and consent status
+- `UsersList.tsx` - Users list component for admin dashboard displaying regular users only (filters out operators and admins) with personas and consent status
+- `StaffList.tsx` - Staff list component for displaying operators and admins separately from regular users
+- `StaffManagement.tsx` - Staff management page with tabs for Users and Staff (admin-only)
 
 ### Services
 - `api.ts` - Axios instance with interceptors (enhanced error handling for 403/404/500, network errors, prevents redirect loops)
@@ -2790,6 +2803,20 @@ Admin > Operator > User
 - `backend/app/api/v1/schemas/recommendations.py` - Added RecommendationRejectRequest and RecommendationModifyRequest schemas
 - `backend/app/api/v1/endpoints/operator.py` - Updated reject endpoint, added modify endpoint, added logging
 
+### ✅ Database Seeding Enhancements
+- **Enhanced Seeding Script**: Updated `backend/scripts/seed_db.py` to support multiple examples per persona:
+  - Default: 50 users (10 per persona for personas 1-5)
+  - Added `--users-per-persona` parameter to control distribution
+  - Ensures balanced distribution across all personas
+  - Shows target persona distribution during creation
+  - Displays final persona distribution after assignment based on detected behavior
+  - Each user gets a unique UUID automatically assigned
+- **Synthetic Data Generator Updates**: Updated `scripts/synthetic_data_generator.py`:
+  - Removed `user_id` from generated JSON files (security improvement)
+  - User ID is now assigned by authenticated user during upload
+  - Files contain only `accounts`, `transactions`, and `liabilities`
+  - Export methods use generated UUIDs for filenames instead of user_id
+
 ### ✅ Synthetic Data Generator Fixes & Database Seeding
 - **Fixed Income Deposit Generation**: Updated `scripts/synthetic_data_generator.py` to correctly generate income deposits:
   - Income transactions now use **positive amounts** (Plaid convention: deposits = positive)
@@ -2914,6 +2941,111 @@ Admin > Operator > User
 **Known Issues** (Non-Critical):
 - CORS errors: Expected if backend isn't running or CORS is misconfigured
 - 404 errors for `/api/v1/users/{user_id}/profile`: Endpoint may not exist yet for operator/admin use
+
+---
+
+## Recent Changes (November 2025)
+
+### Income Signal Caching Fix (November 4, 2025)
+
+**Problem**: Income data was showing "insufficient_data" in the frontend even though payroll transactions were present in the database. The issue was caused by **three layers of caching** preventing fresh data from being displayed:
+
+1. **Feature Cache** (Redis) - `features:income:{user_id}` - 24h TTL
+2. **Profile API Response Cache** (Redis) - `profile:{user_id}` - 5min TTL  
+3. **React Query Cache** (Frontend) - Browser cache
+
+**Root Cause**: When signals were regenerated using `regenerate_signals.py`, only the feature cache layer was cleared, but the profile API response cache was still serving stale data. Additionally, the `generate_income_signals()` method had a `@cache_feature_signals` decorator that returned cached results even when underlying data had changed.
+
+**Solution Implemented**:
+
+1. **Enhanced `backend/scripts/regenerate_signals.py`**:
+   - Added import for `invalidate_user_profile_cache()` from `app.core.cache_service`
+   - Clears all feature caches (income, subscriptions, savings, credit) before regeneration
+   - Clears profile API response cache before and after database update
+   - Calls `calculate_income_signals()` directly to bypass the `@cache_feature_signals` decorator
+   - Added `_serialize_for_json()` helper function to convert UUIDs to strings before saving to database (prevents JSON serialization errors)
+   - Clears profile cache again after database commit to ensure fresh data on next API call
+
+2. **Removed Temporary Fix**:
+   - Deleted `backend/scripts/fix_income_signals.py` as it's no longer needed
+
+**Key Files Modified**:
+- `backend/scripts/regenerate_signals.py` - Enhanced with comprehensive cache clearing
+- `backend/scripts/fix_income_signals.py` - **DELETED** (temporary fix no longer needed)
+
+**Cache Invalidation Strategy**:
+- **Before Regeneration**: Clear all feature caches and profile API cache
+- **During Regeneration**: Call calculation methods directly (bypass decorator caching)
+- **After Database Update**: Clear profile API cache again to ensure fresh data on next request
+- **Frontend**: Hard refresh (Ctrl+Shift+R) or backend restart clears React Query cache
+
+**Result**: All 23 users now have correctly regenerated income signals stored in the database, and the caching layers are properly invalidated. Income data displays correctly in the frontend showing:
+- Estimated Monthly Income: $4,500.00
+- Payment Frequency: biweekly (6 deposits detected)
+- Income Stability: low variability (0.0%)
+- Payroll Deposits table with all 6 deposits
+
+**Testing**: Verified that after running `regenerate_signals.py`, the frontend displays fresh income data without requiring manual cache clearing.
+
+### UI/UX Improvements & Security Enhancements (November 5, 2025)
+
+**User Management UI Separation**:
+- **Separated Users and Staff**: Created separate management interfaces for regular users vs operators/admins:
+  - `UsersList.tsx` component now filters out operators/admins (only shows `role='user'`)
+  - Created new `StaffList.tsx` component for displaying operators and admins
+  - Created `StaffManagement.tsx` page with tabs: "Users" and "Staff"
+  - Dashboard shows `UsersList` directly for admins (regular users only)
+  - Staff management accessible via `/admin/management` route (admin-only)
+- **Navigation Updates**: Updated navigation to hide user-specific tabs for operators/admins:
+  - Operators and admins don't see: Profile, Recommendations, Upload tabs
+  - All users see: Dashboard, Settings
+  - Admins additionally see: Management tab (links to staff management)
+- **Component Updates**:
+  - `UsersList.tsx` - Removed Role column (all entries are regular users), filters to `role='user'`
+  - `StaffList.tsx` - New component displaying only operators/admins with role badges
+  - `StaffManagement.tsx` - New page with tabbed interface for managing both groups
+  - `Navigation.tsx` - Conditional navigation items based on user role
+  - `Dashboard.tsx` - Shows UsersList for admins, removed direct link to management page
+
+**Data Upload Security Enhancement**:
+- **Removed user_id from Synthetic Data Files**: Enhanced security by removing `user_id` from generated files:
+  - Updated `scripts/synthetic_data_generator.py` to NOT include `user_id` in JSON output
+  - Files now contain only: `accounts`, `transactions`, `liabilities` (and optional `upload_timestamp`)
+  - User ID is automatically assigned from authenticated user during upload (prevents users from uploading data for other users)
+- **Parser Updates**: Updated `service/app/ingestion/parser.py`:
+  - Parser ignores `user_id` if present in uploaded files (security measure)
+  - Added documentation noting that user_id comes from authenticated user
+- **Upload Flow**: Upload endpoint already correctly uses `current_user.user_id` from authentication:
+  - No changes needed to upload endpoint - already secure
+  - Ingestion service receives `user_id` as parameter (not from file)
+  - Prevents users from specifying their own user_id in uploaded files
+
+**Database Seeding Enhancements**:
+- **Enhanced Seeding Script**: Updated `backend/scripts/seed_db.py`:
+  - Default: 50 users (10 per persona for personas 1-5)
+  - Added `--users-per-persona` parameter for flexible distribution
+  - Ensures balanced distribution across all personas
+  - Shows target persona distribution during user creation
+  - Displays final persona distribution after assignment based on detected behavior
+  - Each user gets unique UUID automatically assigned via `uuid.uuid4()`
+
+**Key Files Modified**:
+- `frontend/src/components/UsersList.tsx` - Filters out operators/admins, removed Role column
+- `frontend/src/components/StaffList.tsx` - **NEW** - Staff management component
+- `frontend/src/pages/StaffManagement.tsx` - **NEW** - Staff management page with tabs
+- `frontend/src/pages/Dashboard.tsx` - Shows UsersList for admins
+- `frontend/src/components/Navigation.tsx` - Conditional navigation based on role
+- `frontend/src/App.tsx` - Added `/admin/management` route
+- `scripts/synthetic_data_generator.py` - Removed user_id from output, updated export methods
+- `service/app/ingestion/parser.py` - Ignores user_id from files
+- `backend/scripts/seed_db.py` - Enhanced with persona distribution options
+
+**Result**: 
+- Regular users and staff are now properly separated in the UI
+- Operators/admins have cleaner navigation without user-specific tabs
+- Data upload is more secure - users cannot specify user_id in uploaded files
+- Seeding script provides better control over persona distribution
+- All changes maintain backward compatibility
 
 ---
 

@@ -71,3 +71,4 @@ def example_detect_custom(db_session: Session, user_id: uuid.UUID):
     return subscriptions
 
 
+

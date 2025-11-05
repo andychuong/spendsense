@@ -88,3 +88,4 @@ export function formatPhoneNumber(phone: string): string {
   if (!phone) return ''
   return phone.startsWith('+') ? phone : `+${phone}`
 }
+

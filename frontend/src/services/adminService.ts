@@ -250,6 +250,22 @@ export const adminService = {
     return response.data
   },
 
+  // Generate recommendations for a user
+  async generateRecommendations(userId: string): Promise<{
+    user_id: string
+    recommendations_generated: number
+    education_count: number
+    partner_offer_count: number
+    generated_at: string
+    persona_ids: number[]
+    persona_names: string[]
+  }> {
+    const response = await apiClient.post(
+      `/api/v1/operator/users/${userId}/generate-recommendations`
+    )
+    return response.data
+  },
+
   // Get user recommendations
   async getUserRecommendations(
     userId: string,

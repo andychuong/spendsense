@@ -22,6 +22,7 @@ import OperatorReview from '@/pages/OperatorReview'
 import ReviewQueueList from '@/pages/ReviewQueueList'
 import OperatorAnalytics from '@/pages/OperatorAnalytics'
 import UserDetail from '@/pages/UserDetail'
+import StaffManagement from '@/pages/StaffManagement'
 
 // Protected Route Component (checks authentication)
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -200,6 +201,14 @@ function App() {
             element={
               <OperatorRoute>
                 <UserDetail />
+              </OperatorRoute>
+            }
+          />
+          <Route
+            path="/admin/management"
+            element={
+              <OperatorRoute>
+                <StaffManagement />
               </OperatorRoute>
             }
           />

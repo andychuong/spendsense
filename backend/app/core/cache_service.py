@@ -496,3 +496,4 @@ def invalidate_cache_pattern(pattern: str) -> int:
         logger.error(f"Failed to invalidate cache pattern: {str(e)}")
         return 0
 
+

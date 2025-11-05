@@ -40,3 +40,4 @@ class Account(Base):
         """String representation of Account."""
         return f"<Account(id={self.id}, account_id={self.account_id}, type={self.type}, subtype={self.subtype})>"
 
+

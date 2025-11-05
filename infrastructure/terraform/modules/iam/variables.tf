@@ -29,3 +29,4 @@ variable "s3_reports_bucket_arn" {
   description = "ARN of the S3 reports bucket"
   type        = string
 }
+

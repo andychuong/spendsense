@@ -89,3 +89,4 @@ const RecommendationsList = ({ recommendations }: RecommendationsListProps) => {
 
 export default RecommendationsList
 
+

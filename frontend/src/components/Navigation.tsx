@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store'
-import { FaBars, FaTimes, FaHome, FaUser, FaLightbulb, FaCog, FaUpload, FaSignOutAlt } from 'react-icons/fa'
+import { FaBars, FaTimes, FaHome, FaUser, FaLightbulb, FaCog, FaUpload, FaSignOutAlt, FaShieldAlt } from 'react-icons/fa'
 
 const Navigation = () => {
   const location = useLocation()
@@ -15,12 +15,32 @@ const Navigation = () => {
     setMobileMenuOpen(false)
   }
 
-  const navigationItems = [
+  const isAdmin = user?.role === 'admin'
+  const isOperator = user?.role === 'operator' || user?.role === 'admin'
+  
+  // Base navigation items for all users
+  const baseNavigationItems = [
     { path: '/', label: 'Dashboard', icon: FaHome },
+    { path: '/settings', label: 'Settings', icon: FaCog },
+  ]
+  
+  // User-specific navigation items (only for regular users)
+  const userNavigationItems = [
     { path: '/profile', label: 'Profile', icon: FaUser },
     { path: '/recommendations', label: 'Recommendations', icon: FaLightbulb },
     { path: '/upload', label: 'Upload', icon: FaUpload },
-    { path: '/settings', label: 'Settings', icon: FaCog },
+  ]
+  
+  // Admin-specific navigation items
+  const adminNavigationItems = isAdmin
+    ? [{ path: '/admin/management', label: 'Management', icon: FaShieldAlt }]
+    : []
+  
+  // Build navigation items based on user role
+  const navigationItems = [
+    ...baseNavigationItems,
+    ...(isOperator ? [] : userNavigationItems), // Only show user items if not operator/admin
+    ...adminNavigationItems,
   ]
 
   if (!isAuthenticated) {

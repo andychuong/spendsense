@@ -56,3 +56,4 @@ const ConsentStatusBadge = ({ consentStatus }: ConsentStatusBadgeProps) => {
 
 export default ConsentStatusBadge
 
+

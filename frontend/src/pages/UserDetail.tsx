@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { adminService } from '@/services/adminService'
 import { PageSkeleton } from '@/components/LoadingSkeleton'
@@ -7,12 +7,13 @@ import ErrorState from '@/components/ErrorState'
 import PersonaBadge from '@/components/PersonaBadge'
 import PersonaHistoryTimeline from '@/components/PersonaHistoryTimeline'
 import TimePeriodSelector from '@/components/TimePeriodSelector'
-import { FaArrowLeft, FaUser, FaEnvelope, FaShieldAlt, FaCheckCircle, FaTimesCircle, FaCreditCard, FaFileInvoice, FaList, FaDollarSign, FaLightbulb } from 'react-icons/fa'
+import { FaArrowLeft, FaUser, FaEnvelope, FaShieldAlt, FaCheckCircle, FaTimesCircle, FaCreditCard, FaFileInvoice, FaList, FaDollarSign, FaLightbulb, FaSync } from 'react-icons/fa'
 import type { Account, Transaction, Liability } from '@/services/adminService'
 
 const UserDetail = () => {
   const { userId } = useParams<{ userId: string }>()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [transactionsPage, setTransactionsPage] = useState(0)
   const [selectedPeriod, setSelectedPeriod] = useState<'30d' | '180d' | '365d'>('180d')
   const transactionsLimit = 50
@@ -70,6 +71,15 @@ const UserDetail = () => {
     queryKey: ['admin', 'user', userId, 'liabilities'],
     queryFn: () => adminService.getUserLiabilities(userId!),
     enabled: !!userId,
+  })
+
+  // Generate recommendations mutation
+  const generateRecommendationsMutation = useMutation({
+    mutationFn: () => adminService.generateRecommendations(userId!),
+    onSuccess: () => {
+      // Invalidate recommendations query to refetch
+      queryClient.invalidateQueries({ queryKey: ['admin', 'user', userId, 'recommendations'] })
+    },
   })
 
   // Fetch recommendations
@@ -464,7 +474,6 @@ const UserDetail = () => {
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Merchant</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -481,17 +490,6 @@ const UserDetail = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                           {formatCurrency(Math.abs(transaction.amount))}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {transaction.pending ? (
-                            <span className="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded">
-                              Pending
-                            </span>
-                          ) : (
-                            <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded">
-                              Completed
-                            </span>
-                          )}
                         </td>
                       </tr>
                     ))}
@@ -584,10 +582,35 @@ const UserDetail = () => {
 
         {/* Recommendations Section */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <FaLightbulb className="h-5 w-5 text-primary-600" />
-            Recommendations ({recommendationsData?.total || 0})
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+              <FaLightbulb className="h-5 w-5 text-primary-600" />
+              Recommendations ({recommendationsData?.total || 0})
+            </h2>
+            <button
+              onClick={() => generateRecommendationsMutation.mutate()}
+              disabled={generateRecommendationsMutation.isPending}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <FaSync className={generateRecommendationsMutation.isPending ? 'animate-spin' : ''} />
+              {generateRecommendationsMutation.isPending ? 'Generating...' : 'Generate Recommendations'}
+            </button>
+          </div>
+          {generateRecommendationsMutation.isError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
+              <p className="text-sm text-red-800">
+                Failed to generate recommendations: {generateRecommendationsMutation.error instanceof Error ? generateRecommendationsMutation.error.message : 'Unknown error'}
+              </p>
+            </div>
+          )}
+          {generateRecommendationsMutation.isSuccess && (
+            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-md">
+              <p className="text-sm text-green-800">
+                Successfully generated {generateRecommendationsMutation.data.recommendations_generated} recommendations
+                ({generateRecommendationsMutation.data.education_count} education, {generateRecommendationsMutation.data.partner_offer_count} partner offers)
+              </p>
+            </div>
+          )}
           {recommendationsError ? (
             <ErrorState title="Failed to load recommendations" error={recommendationsError} />
           ) : recommendationsData && recommendationsData.items.length > 0 ? (

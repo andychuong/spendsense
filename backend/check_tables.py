@@ -50,3 +50,4 @@ if __name__ == "__main__":
         print("2. The .env file is configured correctly")
         print("3. The database exists and credentials are correct")
 
+

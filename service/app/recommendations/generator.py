@@ -24,7 +24,9 @@ from app.common.tone_validation_guardrails import ToneValidationGuardrails, Tone
 
 # Try to import models from backend
 try:
-    from backend.app.models.user_profile import UserProfile, PersonaId
+    from backend.app.models.user_profile import UserProfile
+    from backend.app.models.user_persona_assignment import UserPersonaAssignment
+    from backend.app.models.persona import Persona, PersonaId
     from backend.app.models.recommendation import Recommendation, RecommendationType, RecommendationStatus
     from backend.app.models.account import Account as AccountModel
 except ImportError:
@@ -33,7 +35,9 @@ except ImportError:
     backend_path = os.path.join(os.path.dirname(__file__), "../../../backend")
     if backend_path not in sys.path:
         sys.path.insert(0, backend_path)
-    from app.models.user_profile import UserProfile, PersonaId
+    from app.models.user_profile import UserProfile
+    from app.models.user_persona_assignment import UserPersonaAssignment
+    from app.models.persona import Persona, PersonaId
     from app.models.recommendation import Recommendation, RecommendationType, RecommendationStatus
     from app.models.account import Account as AccountModel
 
@@ -52,7 +56,7 @@ class RecommendationGenerator:
             use_openai: Whether to use OpenAI for content generation (default: True)
         """
         self.db = db_session
-        self.rationale_generator = RationaleGenerator(db_session)
+        self.rationale_generator = RationaleGenerator(db_session, use_openai=use_openai)
         self.content_generator = ContentGenerator()
         self.partner_offer_service = PartnerOfferService(db_session)
         self.consent_guardrails = ConsentGuardrails(db_session)
@@ -62,10 +66,35 @@ class RecommendationGenerator:
         self.use_openai = use_openai
 
     def get_user_profile(self, user_id: uuid.UUID) -> Optional[UserProfile]:
-        """Get user profile with persona assignment."""
+        """Get user profile."""
         return self.db.query(UserProfile).filter(
             UserProfile.user_id == user_id
         ).first()
+    
+    def get_user_personas(self, user_id: uuid.UUID) -> List[Dict[str, Any]]:
+        """
+        Get all personas assigned to a user.
+        
+        Args:
+            user_id: User ID
+            
+        Returns:
+            List of persona dictionaries with persona_id, persona_name, and rationale
+        """
+        assignments = self.db.query(UserPersonaAssignment).filter(
+            UserPersonaAssignment.user_id == user_id
+        ).join(Persona).all()
+        
+        personas = []
+        for assignment in assignments:
+            personas.append({
+                "persona_id": assignment.persona_id,
+                "persona_name": assignment.persona.name,
+                "rationale": assignment.rationale,
+                "assigned_at": assignment.assigned_at,
+            })
+        
+        return personas
 
     def get_user_accounts(self, user_id: uuid.UUID) -> List[Dict[str, Any]]:
         """Get user accounts to check for existing products."""
@@ -115,32 +144,40 @@ class RecommendationGenerator:
 
     def select_education_items(
         self,
-        persona_id: int,
+        persona_ids: List[int],
         count: int = 5,
     ) -> List[Dict[str, Any]]:
         """
-        Select education items matching persona.
+        Select education items matching multiple personas.
 
         Args:
-            persona_id: Persona ID (1-5)
+            persona_ids: List of Persona IDs (e.g., [1, 2, 5])
             count: Number of items to select (default 5, will be capped at 3-5)
 
         Returns:
             List of education item dictionaries
         """
-        # Filter education items for this persona
-        matching_items = [
-            item for item in EDUCATION_CATALOG
-            if persona_id in item["persona_ids"]
-        ]
+        # Collect all matching items for all personas
+        matching_items = []
+        seen_item_ids = set()
+        
+        for persona_id in persona_ids:
+            items_for_persona = [
+                item for item in EDUCATION_CATALOG
+                if persona_id in item.get("persona_ids", []) and item.get("id") not in seen_item_ids
+            ]
+            matching_items.extend(items_for_persona)
+            seen_item_ids.update(item.get("id") for item in items_for_persona)
 
-        # If not enough items for this persona, include general items (Persona 5)
+        # If not enough items, include general items (Persona 5 - Balanced Spender)
         if len(matching_items) < count:
             general_items = [
                 item for item in EDUCATION_CATALOG
-                if 5 in item["persona_ids"] and item not in matching_items
+                if PersonaId.BALANCED_SPENDER.value in item.get("persona_ids", []) 
+                and item.get("id") not in seen_item_ids
             ]
             matching_items.extend(general_items[:count - len(matching_items)])
+            seen_item_ids.update(item.get("id") for item in general_items[:count - len(matching_items)])
 
         # Select random items (or all if fewer than count)
         selected = random.sample(
@@ -153,7 +190,8 @@ class RecommendationGenerator:
             # Add more general items if needed
             general_items = [
                 item for item in EDUCATION_CATALOG
-                if 5 in item["persona_ids"] and item not in selected
+                if PersonaId.BALANCED_SPENDER.value in item.get("persona_ids", []) 
+                and item.get("id") not in seen_item_ids
             ]
             selected.extend(general_items[:3 - len(selected)])
 
@@ -164,17 +202,17 @@ class RecommendationGenerator:
 
     def select_partner_offers(
         self,
-        persona_id: int,
+        persona_ids: List[int],
         user_id: uuid.UUID,
         signals_30d: Optional[Dict[str, Any]] = None,
         signals_180d: Optional[Dict[str, Any]] = None,
         count: int = 3,
     ) -> List[Dict[str, Any]]:
         """
-        Select partner offers matching persona and eligibility.
+        Select partner offers matching multiple personas and eligibility.
 
         Args:
-            persona_id: Persona ID (1-5)
+            persona_ids: List of Persona IDs (e.g., [1, 2, 5])
             user_id: User ID
             signals_30d: Optional 30-day signals
             signals_180d: Optional 180-day signals
@@ -183,14 +221,28 @@ class RecommendationGenerator:
         Returns:
             List of partner offer dictionaries with eligibility information
         """
-        # Use PartnerOfferService to select eligible offers
-        return self.partner_offer_service.select_eligible_offers(
-            persona_id,
-            user_id,
-            signals_30d,
-            signals_180d,
-            count,
-        )
+        # Collect offers for all personas
+        all_offers = []
+        seen_offer_ids = set()
+        
+        for persona_id in persona_ids:
+            offers_for_persona = self.partner_offer_service.select_eligible_offers(
+                persona_id,
+                user_id,
+                signals_30d,
+                signals_180d,
+                count,  # Get count offers per persona
+            )
+            # Deduplicate offers
+            for offer in offers_for_persona:
+                if offer.get("id") not in seen_offer_ids:
+                    all_offers.append(offer)
+                    seen_offer_ids.add(offer.get("id"))
+        
+        # Return up to count offers, prioritizing by persona priority (lower number = higher priority)
+        # Sort by persona priority (assuming persona_ids are already sorted by priority)
+        # Limit to count
+        return all_offers[:count]
 
     def generate_recommendations(
         self,
@@ -241,8 +293,38 @@ class RecommendationGenerator:
                 "error": "No profile found. Please run persona assignment first.",
             }
 
-        persona_id = profile.persona_id
-        persona_name = profile.persona_name
+        # Get user personas (multiple personas supported)
+        user_personas = self.get_user_personas(user_id)
+        if not user_personas:
+            logger.warning(f"No personas assigned to user {user_id}")
+            return {
+                "user_id": str(user_id),
+                "recommendations": [],
+                "error": "No personas assigned. Please run persona assignment first.",
+            }
+
+        # Delete existing PENDING recommendations to prevent duplicates
+        # Keep APPROVED and REJECTED recommendations as they've been reviewed
+        existing_pending_count = self.db.query(Recommendation).filter(
+            Recommendation.user_id == user_id,
+            Recommendation.status == "pending"
+        ).count()
+        
+        if existing_pending_count > 0:
+            logger.info(f"Deleting {existing_pending_count} existing PENDING recommendations for user {user_id}")
+            self.db.query(Recommendation).filter(
+                Recommendation.user_id == user_id,
+                Recommendation.status == "pending"
+            ).delete()
+            self.db.commit()
+
+        # Extract persona IDs and names
+        persona_ids = [p["persona_id"] for p in user_personas]
+        persona_names = [p["persona_name"] for p in user_personas]
+        
+        # Primary persona is the first one (highest priority)
+        primary_persona_id = persona_ids[0]
+        primary_persona_name = persona_names[0]
 
         # Get signals from profile if not provided
         if signals_30d is None:
@@ -250,20 +332,20 @@ class RecommendationGenerator:
         if signals_180d is None:
             signals_180d = profile.signals_180d or {}
 
-        # Extract persona assignment info (criteria_met from signals)
+        # Extract persona assignment info for all personas (criteria_met from signals)
         persona_assignment_info = self._extract_persona_assignment_info(
-            persona_id,
-            persona_name,
+            persona_ids,
+            user_personas,
             signals_30d,
             signals_180d,
         )
 
-        # Select education items (3-5)
-        education_items = self.select_education_items(persona_id, count=5)
+        # Select education items (3-5) matching all personas
+        education_items = self.select_education_items(persona_ids, count=5)
 
-        # Select partner offers (1-3) with eligibility checking
+        # Select partner offers (1-3) with eligibility checking for all personas
         partner_offers = self.select_partner_offers(
-            persona_id,
+            persona_ids,
             user_id,
             signals_30d,
             signals_180d,
@@ -323,7 +405,7 @@ class RecommendationGenerator:
                 item,
                 signals_30d,
                 signals_180d,
-                persona_id,
+                primary_persona_id,
                 user_id,
             )
 
@@ -333,7 +415,7 @@ class RecommendationGenerator:
             # Generate content using OpenAI (with fallback to template)
             content = self.content_generator.generate_education_content(
                 item,
-                persona_id,
+                primary_persona_id,
                 signals_30d,
                 use_openai=self.use_openai,
             )
@@ -389,11 +471,11 @@ class RecommendationGenerator:
             # Create recommendation
             recommendation = Recommendation(
                 user_id=user_id,
-                type=RecommendationType.EDUCATION,
+                type="education",  # Use string value directly
                 title=item["title"],
                 content=content,
                 rationale=rationale,
-                status=RecommendationStatus.PENDING,
+                status="pending",  # Use string value directly
             )
             self.db.add(recommendation)
             self.db.flush()  # Flush to get recommendation_id
@@ -403,8 +485,8 @@ class RecommendationGenerator:
                 user_id=user_id,
                 recommendation_id=recommendation.recommendation_id,
                 recommendation_type="education",
-                persona_id=persona_id,
-                persona_name=persona_name,
+                persona_id=primary_persona_id,
+                persona_name=primary_persona_name,
                 persona_assignment_info=persona_assignment_info,
                 signals_30d=signals_30d,
                 signals_180d=signals_180d,
@@ -433,7 +515,7 @@ class RecommendationGenerator:
                 offer,
                 signals_30d,
                 signals_180d,
-                persona_id,
+                primary_persona_id,
                 user_id,
             )
 
@@ -443,7 +525,7 @@ class RecommendationGenerator:
             # Generate content using OpenAI (with fallback to template)
             content = self.content_generator.generate_partner_offer_content(
                 offer,
-                persona_id,
+                primary_persona_id,
                 signals_30d,
                 use_openai=self.use_openai,
             )
@@ -493,11 +575,11 @@ class RecommendationGenerator:
             # Create recommendation
             recommendation = Recommendation(
                 user_id=user_id,
-                type=RecommendationType.PARTNER_OFFER,
+                type="partner_offer",  # Use string value directly
                 title=offer["title"],
                 content=content,
                 rationale=rationale,
-                status=RecommendationStatus.PENDING,
+                status="pending",  # Use string value directly
             )
             self.db.add(recommendation)
             self.db.flush()  # Flush to get recommendation_id
@@ -507,8 +589,8 @@ class RecommendationGenerator:
                 user_id=user_id,
                 recommendation_id=recommendation.recommendation_id,
                 recommendation_type="partner_offer",
-                persona_id=persona_id,
-                persona_name=persona_name,
+                persona_id=primary_persona_id,
+                persona_name=primary_persona_name,
                 persona_assignment_info=persona_assignment_info,
                 signals_30d=signals_30d,
                 signals_180d=signals_180d,
@@ -545,8 +627,10 @@ class RecommendationGenerator:
 
         return {
             "user_id": str(user_id),
-            "persona_id": persona_id,
-            "persona_name": persona_name,
+            "persona_ids": persona_ids,
+            "persona_names": persona_names,
+            "primary_persona_id": primary_persona_id,
+            "primary_persona_name": primary_persona_name,
             "recommendations": recommendations,
             "education_count": len(eligible_education_items),
             "partner_offer_count": len(eligible_partner_offers),
@@ -558,98 +642,134 @@ class RecommendationGenerator:
 
     def _extract_persona_assignment_info(
         self,
-        persona_id: int,
-        persona_name: str,
+        persona_ids: List[int],
+        user_personas: List[Dict[str, Any]],
         signals_30d: Dict[str, Any],
         signals_180d: Dict[str, Any],
     ) -> Dict[str, Any]:
         """
-        Extract persona assignment information for decision trace.
+        Extract persona assignment information for decision trace (supports multiple personas).
 
         Args:
-            persona_id: Persona ID
-            persona_name: Persona name
+            persona_ids: List of Persona IDs
+            user_personas: List of persona dictionaries with persona_id, persona_name, rationale
             signals_30d: Signals for 30-day window
             signals_180d: Signals for 180-day window
 
         Returns:
-            Persona assignment info dictionary
+            Persona assignment info dictionary with information about all personas
         """
-        criteria_met = []
-
+        all_criteria_met = []
+        persona_details = []
+        
         # Persona priority mapping
         persona_priority = {
-            1: 1,  # High Utilization
-            2: 2,  # Variable Income Budgeter
-            3: 3,  # Subscription-Heavy
-            4: 4,  # Savings Builder
-            5: 5,  # Custom Persona
+            PersonaId.HIGH_UTILIZATION.value: 1,
+            PersonaId.VARIABLE_INCOME_BUDGETER.value: 2,
+            PersonaId.SUBSCRIPTION_HEAVY.value: 3,
+            PersonaId.SAVINGS_BUILDER.value: 4,
+            PersonaId.BALANCED_SPENDER.value: 5,
+            PersonaId.DEBT_CONSOLIDATOR.value: 2,  # Same priority as Variable Income
+            PersonaId.EMERGENCY_FUND_SEEKER.value: 4,  # Same priority as Savings Builder
         }
 
-        # Extract criteria met based on persona
-        if persona_id == 1:  # High Utilization
-            credit_signals = signals_30d.get("credit", {}) or signals_180d.get("credit", {})
-            if credit_signals.get("critical_utilization_cards") or credit_signals.get("severe_utilization_cards"):
-                criteria_met.append("Credit card utilization ≥50%")
-            if credit_signals.get("cards_with_interest"):
-                criteria_met.append("Interest charges detected")
-            if credit_signals.get("minimum_payment_only_cards"):
-                criteria_met.append("Minimum-payment-only behavior")
-            if credit_signals.get("overdue_cards"):
-                criteria_met.append("Overdue accounts")
+        # Extract criteria met for each persona
+        for persona_dict in user_personas:
+            persona_id = persona_dict["persona_id"]
+            persona_name = persona_dict["persona_name"]
+            rationale = persona_dict.get("rationale", "")
+            
+            criteria_met = []
+            
+            if persona_id == PersonaId.HIGH_UTILIZATION.value:  # High Utilization
+                credit_signals = signals_30d.get("credit", {}) or signals_180d.get("credit", {})
+                if credit_signals.get("critical_utilization_cards") or credit_signals.get("severe_utilization_cards"):
+                    criteria_met.append("Credit card utilization ≥50%")
+                if credit_signals.get("cards_with_interest"):
+                    criteria_met.append("Interest charges detected")
+                if credit_signals.get("minimum_payment_only_cards"):
+                    criteria_met.append("Minimum-payment-only behavior")
+                if credit_signals.get("overdue_cards"):
+                    criteria_met.append("Overdue accounts")
 
-        elif persona_id == 2:  # Variable Income Budgeter
-            income_signals = signals_180d.get("income", {}) or signals_30d.get("income", {})
-            income_patterns = income_signals.get("income_patterns", {})
-            median_pay_gap = income_patterns.get("median_pay_gap_days")
-            cash_flow_buffer = income_signals.get("cash_flow_buffer_months")
+            elif persona_id == PersonaId.DEBT_CONSOLIDATOR.value:  # Debt Consolidator
+                credit_signals = signals_30d.get("credit", {}) or signals_180d.get("credit", {})
+                debt_consolidation = credit_signals.get("debt_consolidation_opportunity", {})
+                if debt_consolidation.get("is_candidate"):
+                    criteria_met.append(debt_consolidation.get("rationale", "Multiple credit cards with balances"))
 
-            if median_pay_gap and median_pay_gap > 45:
-                criteria_met.append(f"Median pay gap > 45 days ({median_pay_gap:.0f} days)")
-            if cash_flow_buffer is not None and cash_flow_buffer < 1.0:
-                criteria_met.append(f"Cash-flow buffer < 1 month ({cash_flow_buffer:.2f} months)")
+            elif persona_id == PersonaId.VARIABLE_INCOME_BUDGETER.value:  # Variable Income Budgeter
+                income_signals = signals_180d.get("income", {}) or signals_30d.get("income", {})
+                income_patterns = income_signals.get("income_patterns", {})
+                median_pay_gap = income_patterns.get("median_pay_gap_days")
+                cash_flow_buffer = income_signals.get("cash_flow_buffer_months")
 
-        elif persona_id == 3:  # Subscription-Heavy
-            subscription_signals = signals_30d.get("subscriptions", {}) or signals_180d.get("subscriptions", {})
-            subscription_count = subscription_signals.get("subscription_count", 0)
-            total_recurring_spend = subscription_signals.get("total_recurring_spend", 0)
-            subscription_share = subscription_signals.get("subscription_share_percent", 0)
+                if median_pay_gap and median_pay_gap > 45:
+                    criteria_met.append(f"Median pay gap > 45 days ({median_pay_gap:.0f} days)")
+                if cash_flow_buffer is not None and cash_flow_buffer < 1.0:
+                    criteria_met.append(f"Cash-flow buffer < 1 month ({cash_flow_buffer:.2f} months)")
 
-            if subscription_count >= 3:
-                criteria_met.append(f"Recurring merchants ≥3 ({subscription_count})")
-            if total_recurring_spend >= 50:
-                criteria_met.append(f"Monthly recurring spend ≥$50 (${total_recurring_spend:.2f})")
-            if subscription_share >= 10:
-                criteria_met.append(f"Subscription share ≥10% ({subscription_share:.1f}%)")
+            elif persona_id == PersonaId.SUBSCRIPTION_HEAVY.value:  # Subscription-Heavy
+                subscription_signals = signals_30d.get("subscriptions", {}) or signals_180d.get("subscriptions", {})
+                subscription_count = subscription_signals.get("subscription_count", 0)
+                total_recurring_spend = subscription_signals.get("total_recurring_spend", 0)
+                subscription_share = subscription_signals.get("subscription_share_percent", 0)
 
-        elif persona_id == 4:  # Savings Builder
-            savings_signals = signals_180d.get("savings", {}) or signals_30d.get("savings", {})
-            credit_signals = signals_180d.get("credit", {}) or signals_30d.get("credit", {})
+                if subscription_count >= 3:
+                    criteria_met.append(f"Recurring merchants ≥3 ({subscription_count})")
+                if total_recurring_spend >= 50:
+                    criteria_met.append(f"Monthly recurring spend ≥$50 (${total_recurring_spend:.2f})")
+                if subscription_share >= 10:
+                    criteria_met.append(f"Subscription share ≥10% ({subscription_share:.1f}%)")
 
-            savings_growth_rate = savings_signals.get("savings_growth_rate_percent")
-            net_inflow = savings_signals.get("net_inflow_monthly")
+            elif persona_id == PersonaId.SAVINGS_BUILDER.value:  # Savings Builder
+                savings_signals = signals_180d.get("savings", {}) or signals_30d.get("savings", {})
+                credit_signals = signals_180d.get("credit", {}) or signals_30d.get("credit", {})
 
-            if savings_growth_rate and savings_growth_rate >= 2.0:
-                criteria_met.append(f"Savings growth rate ≥2% ({savings_growth_rate:.2f}%)")
-            if net_inflow and net_inflow >= 200:
-                criteria_met.append(f"Net savings inflow ≥$200/month (${net_inflow:.2f})")
+                savings_growth_rate = savings_signals.get("savings_growth_rate_percent")
+                net_inflow = savings_signals.get("net_inflow_monthly")
 
-            # Check all utilizations < 30%
-            high_util_cards = credit_signals.get("high_utilization_cards", [])
-            critical_cards = credit_signals.get("critical_utilization_cards", [])
-            severe_cards = credit_signals.get("severe_utilization_cards", [])
-            if not (high_util_cards or critical_cards or severe_cards):
-                criteria_met.append("All card utilizations < 30%")
+                if savings_growth_rate and savings_growth_rate >= 2.0:
+                    criteria_met.append(f"Savings growth rate ≥2% ({savings_growth_rate:.2f}%)")
+                if net_inflow and net_inflow >= 200:
+                    criteria_met.append(f"Net savings inflow ≥$200/month (${net_inflow:.2f})")
 
-        else:  # Persona 5: Custom Persona
-            criteria_met.append("User does not match specific persona criteria")
+                # Check all utilizations < 30%
+                high_util_cards = credit_signals.get("high_utilization_cards", [])
+                critical_cards = credit_signals.get("critical_utilization_cards", [])
+                severe_cards = credit_signals.get("severe_utilization_cards", [])
+                if not (high_util_cards or critical_cards or severe_cards):
+                    criteria_met.append("All card utilizations < 30%")
+
+            elif persona_id == PersonaId.EMERGENCY_FUND_SEEKER.value:  # Emergency Fund Seeker
+                savings_signals = signals_30d.get("savings", {}) or signals_180d.get("savings", {})
+                emergency_fund_coverage = savings_signals.get("emergency_fund_coverage_months", 0)
+                if emergency_fund_coverage is not None and emergency_fund_coverage < 1.0:
+                    criteria_met.append(f"Emergency fund coverage < 1 month ({emergency_fund_coverage:.2f} months)")
+
+            elif persona_id == PersonaId.BALANCED_SPENDER.value:  # Balanced Spender
+                criteria_met.append("User does not match specific persona criteria")
+
+            # Collect criteria for this persona
+            all_criteria_met.extend(criteria_met)
+            persona_details.append({
+                "persona_id": persona_id,
+                "persona_name": persona_name,
+                "criteria_met": criteria_met,
+                "rationale": rationale or f"Assigned to {persona_name} persona based on detected behavioral signals.",
+                "priority": persona_priority.get(persona_id, 5),
+            })
+
+        # Primary persona is the first one (highest priority)
+        primary_persona = persona_details[0] if persona_details else {}
 
         return {
-            "persona_id": persona_id,
-            "persona_name": persona_name,
-            "criteria_met": criteria_met,
-            "priority": persona_priority.get(persona_id, 5),
-            "rationale": f"Assigned to {persona_name} persona based on detected behavioral signals.",
+            "persona_ids": persona_ids,
+            "persona_names": [p["persona_name"] for p in persona_details],
+            "primary_persona_id": primary_persona.get("persona_id"),
+            "primary_persona_name": primary_persona.get("persona_name"),
+            "all_criteria_met": all_criteria_met,
+            "persona_details": persona_details,
             "persona_changed": False,  # Could be determined from profile history if needed
         }
 

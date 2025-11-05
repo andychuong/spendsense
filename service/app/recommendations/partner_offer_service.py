@@ -149,7 +149,7 @@ class PartnerOfferService:
             logger.warning(f"No checking accounts found for user {user_id}")
             return None
 
-        account_ids = [acc.account_id for acc in checking_accounts]
+        account_ids = [acc.id for acc in checking_accounts]
 
         # Get payroll deposits
         payroll_deposits = self.db.query(Transaction).filter(
@@ -159,7 +159,7 @@ class PartnerOfferService:
                 Transaction.date >= start_date,
                 Transaction.date <= end_date,
                 Transaction.amount > 0,  # Deposits are positive
-                Transaction.personal_finance_category == "PAYROLL",
+                Transaction.category_primary == "Financial",
             )
         ).all()
 

@@ -13,6 +13,7 @@ from sqlalchemy import func, and_, or_
 try:
     from backend.app.models.user import User
     from backend.app.models.user_profile import UserProfile
+    from backend.app.models.user_persona_assignment import UserPersonaAssignment
     from backend.app.models.recommendation import Recommendation, RecommendationType, RecommendationStatus
 except ImportError:
     import sys
@@ -22,6 +23,7 @@ except ImportError:
         sys.path.insert(0, backend_path)
     from app.models.user import User
     from app.models.user_profile import UserProfile
+    from app.models.user_persona_assignment import UserPersonaAssignment
     from app.models.recommendation import Recommendation, RecommendationType, RecommendationStatus
 
 logger = logging.getLogger(__name__)
@@ -71,12 +73,16 @@ class EvaluationService:
                 "users_with_both_count": 0,
             }
 
-        # Get users with assigned persona
-        users_with_persona = self.db.query(UserProfile).join(
-            User, UserProfile.user_id == User.user_id
+        # Get users with assigned persona from UserPersonaAssignment
+        # Count distinct users who have persona assignments
+        from sqlalchemy import distinct
+        users_with_persona = self.db.query(
+            func.count(distinct(UserPersonaAssignment.user_id))
+        ).join(
+            User, UserPersonaAssignment.user_id == User.user_id
         ).filter(
             User.role == "user"
-        ).count()
+        ).scalar() or 0
 
         # Get users with ≥3 detected behaviors
         users_with_behaviors = 0
@@ -94,8 +100,12 @@ class EvaluationService:
 
             if behavior_count >= 3:
                 users_with_behaviors += 1
-                # Also has persona (already filtered by join)
-                users_with_both += 1
+                # Check if user also has persona assigned
+                has_persona = self.db.query(UserPersonaAssignment).filter(
+                    UserPersonaAssignment.user_id == profile.user_id
+                ).first() is not None
+                if has_persona:
+                    users_with_both += 1
 
         # Calculate percentages
         users_with_persona_percent = (users_with_persona / total_users) * 100 if total_users > 0 else 0.0
@@ -394,16 +404,16 @@ class EvaluationService:
         if not persona_id:
             return False
 
-        # Get user profile to check persona
-        profile = self.db.query(UserProfile).filter(
-            UserProfile.user_id == recommendation.user_id
-        ).first()
+        # Get user's assigned persona from UserPersonaAssignment
+        assignment = self.db.query(UserPersonaAssignment).filter(
+            UserPersonaAssignment.user_id == recommendation.user_id
+        ).order_by(UserPersonaAssignment.assigned_at.asc()).first()
 
-        if not profile:
+        if not assignment:
             return False
 
-        # Check if recommendation's decision trace persona matches user's persona
-        return persona_id == profile.persona_id
+        # Check if recommendation's decision trace persona matches user's assigned persona
+        return persona_id == assignment.persona_id
 
     def _check_partner_offer_persona_fit(self, recommendation: Recommendation) -> bool:
         """
@@ -539,10 +549,10 @@ class EvaluationService:
                 if persona_id:
                     persona_counts[persona_id] += 1
 
-        # Get user distribution by persona
-        profiles = self.db.query(UserProfile).all()
-        for profile in profiles:
-            persona_user_counts[profile.persona_id] += 1
+        # Get user distribution by persona from UserPersonaAssignment
+        assignments = self.db.query(UserPersonaAssignment).all()
+        for assignment in assignments:
+            persona_user_counts[assignment.persona_id] += 1
 
         # Calculate persona distribution percentages
         total_recommendations = sum(persona_counts.values())
@@ -602,9 +612,16 @@ class EvaluationService:
         # Calculate signal detection by persona (simplified)
         signal_detection_by_persona = {}
         for persona_id in range(1, 6):
-            profiles_for_persona = self.db.query(UserProfile).filter(
-                UserProfile.persona_id == persona_id
+            # Get users with this persona assignment
+            assignments_for_persona = self.db.query(UserPersonaAssignment).filter(
+                UserPersonaAssignment.persona_id == persona_id
             ).all()
+            
+            # Get profiles for these users
+            user_ids = [a.user_id for a in assignments_for_persona]
+            profiles_for_persona = self.db.query(UserProfile).filter(
+                UserProfile.user_id.in_(user_ids)
+            ).all() if user_ids else []
 
             total_behaviors = 0
             total_profiles = len(profiles_for_persona)

@@ -39,3 +39,4 @@ output "redis_secret_name" {
   description = "Name of the Redis auth token secret (if enabled)"
   value       = var.redis_auth_token_enabled ? aws_secretsmanager_secret.redis_password[0].name : null
 }
+

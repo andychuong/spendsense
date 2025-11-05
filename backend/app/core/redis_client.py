@@ -28,9 +28,22 @@ def get_redis_client() -> Optional[Redis]:
         # Parse Redis URL
         redis_url = settings.redis_url
 
-        # Create SSL context if SSL is enabled
-        ssl_context = None
+        # For SSL connections, use rediss:// URL scheme
+        # If SSL is enabled but URL doesn't use rediss://, update it
+        if settings.redis_ssl and not redis_url.startswith("rediss://"):
+            # Replace redis:// with rediss://
+            redis_url = redis_url.replace("redis://", "rediss://", 1)
+
+        # Build connection kwargs
+        connection_kwargs = {
+            "decode_responses": True,  # Automatically decode responses to strings
+            "socket_connect_timeout": 5,
+            "socket_timeout": 5,
+        }
+
+        # Add SSL configuration if SSL is enabled
         if settings.redis_ssl:
+            # Create SSL context if SSL is enabled
             ssl_context = ssl.create_default_context()
             if settings.redis_ssl_cert_reqs:
                 # Map string to ssl.CERT_REQUIRED, ssl.CERT_OPTIONAL, etc.
@@ -43,14 +56,15 @@ def get_redis_client() -> Optional[Redis]:
                 ssl_context.verify_mode = cert_reqs_map.get(
                     settings.redis_ssl_cert_reqs.lower(), ssl.CERT_REQUIRED
                 )
+            
+            # Use ssl_cert_reqs instead of ssl parameter
+            connection_kwargs["ssl_cert_reqs"] = ssl_context.verify_mode
+            connection_kwargs["ssl_check_hostname"] = ssl_context.check_hostname
 
         # Create Redis client
         _redis_client = redis.from_url(
             redis_url,
-            ssl=ssl_context,
-            decode_responses=True,  # Automatically decode responses to strings
-            socket_connect_timeout=5,
-            socket_timeout=5,
+            **connection_kwargs
         )
 
         # Test connection

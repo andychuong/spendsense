@@ -111,3 +111,4 @@ output "redis_security_group_id" {
   description = "Redis security group ID"
   value       = module.redis.redis_security_group_id
 }
+

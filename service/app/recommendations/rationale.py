@@ -23,20 +23,32 @@ except ImportError:
     from app.models.transaction import Transaction as TransactionModel
     from app.models.liability import Liability as LiabilityModel
 
+# Try to import OpenAI client
+try:
+    from app.common.openai_client import get_openai_client
+    OPENAI_AVAILABLE = True
+except ImportError:
+    OPENAI_AVAILABLE = False
+    def get_openai_client():
+        return None
+
 logger = logging.getLogger(__name__)
 
 
 class RationaleGenerator:
     """Service for generating plain-language rationales with specific data point citations."""
 
-    def __init__(self, db_session: Session):
+    def __init__(self, db_session: Session, use_openai: bool = True):
         """
         Initialize rationale generator.
 
         Args:
             db_session: SQLAlchemy database session
+            use_openai: Whether to use OpenAI for enhanced rationale generation (default: True)
         """
         self.db = db_session
+        self.use_openai = use_openai
+        self.openai_client = get_openai_client() if use_openai and OPENAI_AVAILABLE else None
 
     def format_account_number(self, account: AccountModel) -> str:
         """
@@ -535,6 +547,237 @@ class RationaleGenerator:
         else:
             return "This recommendation is tailored to your financial profile."
 
+    def _build_data_context(
+        self,
+        user_id: uuid.UUID,
+        signals_30d: Dict[str, Any],
+        signals_180d: Dict[str, Any],
+        persona_id: int,
+    ) -> str:
+        """
+        Build comprehensive data context string with all concrete data points for OpenAI prompt.
+
+        Args:
+            user_id: User ID
+            signals_30d: 30-day signals
+            signals_180d: 180-day signals
+            persona_id: Persona ID
+
+        Returns:
+            Formatted context string with all concrete data points
+        """
+        context_parts = []
+        
+        # Get all accounts for reference
+        accounts = self.db.query(AccountModel).filter(
+            AccountModel.user_id == user_id
+        ).all()
+        
+        account_map = {}
+        for acc in accounts:
+            account_map[acc.account_id] = {
+                "name": acc.name,
+                "mask": acc.mask,
+                "type": acc.type,
+                "subtype": acc.subtype,
+                "balance_current": float(acc.balance_current) if acc.balance_current else 0,
+                "balance_limit": float(acc.balance_limit) if acc.balance_limit else 0,
+            }
+        
+        # Persona-specific data extraction
+        if persona_id == 1:  # High Utilization
+            credit_signals = signals_30d.get("credit", {}) or signals_180d.get("credit", {})
+            if credit_signals:
+                context_parts.append("CREDIT CARD UTILIZATION:")
+                critical_cards = credit_signals.get("critical_utilization_cards", [])
+                severe_cards = credit_signals.get("severe_utilization_cards", [])
+                high_cards = credit_signals.get("high_utilization_cards", [])
+                
+                for card_list in [critical_cards, severe_cards, high_cards]:
+                    for card in card_list[:3]:  # Limit to top 3
+                        account_id = card.get("account_id")
+                        account_name = card.get("account_name", "Unknown")
+                        utilization = card.get("utilization_percent", 0)
+                        balance = card.get("current_balance", 0)
+                        limit = card.get("credit_limit", 0)
+                        
+                        # Try to get account mask if available
+                        account_display = account_name
+                        if account_id:
+                            # Find account in database
+                            account = self.db.query(AccountModel).filter(
+                                AccountModel.user_id == user_id,
+                                AccountModel.account_id == account_id
+                            ).first()
+                            if account:
+                                account_display = self.format_account_number(account)
+                        
+                        context_parts.append(
+                            f"- {account_display}: {utilization:.0f}% utilization "
+                            f"(${balance:,.2f} of ${limit:,.2f} limit)"
+                        )
+                
+                # Interest charges
+                interest_cards = credit_signals.get("cards_with_interest", [])
+                if interest_cards:
+                    total_interest = sum([
+                        card.get("interest_charges", {}).get("total_interest_charges", 0)
+                        for card in interest_cards
+                    ])
+                    if total_interest > 0:
+                        context_parts.append(f"\nMONTHLY INTEREST CHARGES: ${total_interest:,.2f}")
+        
+        elif persona_id == 2:  # Variable Income Budgeter
+            income_signals = signals_180d.get("income", {}) or signals_30d.get("income", {})
+            if income_signals:
+                context_parts.append("INCOME PATTERNS:")
+                income_patterns = income_signals.get("income_patterns", {})
+                median_gap = income_patterns.get("median_pay_gap_days")
+                if median_gap:
+                    context_parts.append(f"- Median gap between payments: {median_gap:.0f} days")
+                
+                # Get recent payroll deposits
+                recent_transactions = self.get_recent_transactions(user_id, limit=10)
+                payroll_deposits = [
+                    t for t in recent_transactions
+                    if t.category_primary == "PAYROLL" and t.amount > 0
+                ]
+                if payroll_deposits:
+                    latest = payroll_deposits[0]
+                    context_parts.append(
+                        f"- Last payroll deposit: {self.format_date(latest.date)} "
+                        f"(${float(latest.amount):,.2f})"
+                    )
+                
+                cash_buffer = income_signals.get("cash_flow_buffer_months")
+                if cash_buffer is not None:
+                    context_parts.append(f"- Cash flow buffer: {cash_buffer:.2f} months")
+        
+        elif persona_id == 3:  # Subscription-Heavy
+            sub_signals = signals_30d.get("subscriptions", {}) or signals_180d.get("subscriptions", {})
+            if sub_signals:
+                context_parts.append("SUBSCRIPTIONS:")
+                sub_count = sub_signals.get("subscription_count", 0)
+                total_recurring = sub_signals.get("total_recurring_spend", 0)
+                sub_share = sub_signals.get("subscription_share_percent", 0)
+                
+                context_parts.append(f"- Total subscriptions: {sub_count}")
+                context_parts.append(f"- Monthly recurring spend: ${total_recurring:,.2f}")
+                if sub_share > 0:
+                    context_parts.append(f"- Subscription share of spending: {sub_share:.1f}%")
+                
+                recurring_merchants = sub_signals.get("recurring_merchants", [])
+                if recurring_merchants:
+                    context_parts.append("\nTop recurring merchants:")
+                    for merchant in recurring_merchants[:5]:
+                        name = merchant.get("merchant_name", "Unknown")
+                        amount = merchant.get("monthly_amount", 0)
+                        context_parts.append(f"- {name}: ${amount:,.2f}/month")
+        
+        elif persona_id == 4:  # Savings Builder
+            savings_signals = signals_180d.get("savings", {}) or signals_30d.get("savings", {})
+            if savings_signals:
+                context_parts.append("SAVINGS:")
+                savings_accounts = self.db.query(AccountModel).filter(
+                    AccountModel.user_id == user_id,
+                    AccountModel.type == "depository",
+                    AccountModel.subtype.in_(["savings", "money market", "hsa"])
+                ).all()
+                
+                if savings_accounts:
+                    for acc in savings_accounts[:3]:
+                        account_display = self.format_account_number(acc)
+                        balance = float(acc.balance_current) if acc.balance_current else 0
+                        context_parts.append(f"- {account_display}: ${balance:,.2f}")
+                
+                growth_rate = savings_signals.get("savings_growth_rate_percent")
+                net_inflow = savings_signals.get("net_inflow_monthly")
+                emergency_coverage = savings_signals.get("emergency_fund_coverage_months")
+                
+                if growth_rate:
+                    context_parts.append(f"- Savings growth rate: {growth_rate:.2f}%")
+                if net_inflow:
+                    context_parts.append(f"- Monthly savings inflow: ${net_inflow:,.2f}")
+                if emergency_coverage is not None:
+                    context_parts.append(f"- Emergency fund coverage: {emergency_coverage:.1f} months")
+        
+        return "\n".join(context_parts) if context_parts else "No specific data available."
+
+    def _generate_openai_rationale(
+        self,
+        recommendation: Dict[str, Any],
+        signals_30d: Dict[str, Any],
+        signals_180d: Dict[str, Any],
+        persona_id: int,
+        user_id: uuid.UUID,
+    ) -> Optional[str]:
+        """
+        Generate enhanced rationale using OpenAI with concrete data citations.
+
+        Args:
+            recommendation: Recommendation dictionary
+            signals_30d: 30-day signals
+            signals_180d: 180-day signals
+            persona_id: Persona ID
+            user_id: User ID
+
+        Returns:
+            Generated rationale string or None if generation fails
+        """
+        if not self.openai_client or not self.openai_client.client:
+            return None
+        
+        # Build comprehensive data context
+        data_context = self._build_data_context(user_id, signals_30d, signals_180d, persona_id)
+        
+        persona_names = {
+            1: "High Utilization",
+            2: "Variable Income Budgeter",
+            3: "Subscription-Heavy",
+            4: "Savings Builder",
+            5: "Custom Persona",
+        }
+        persona_name = persona_names.get(persona_id, "Custom Persona")
+        
+        recommendation_type = "education" if recommendation.get("id", "").startswith("edu_") else "partner offer"
+        
+        prompt = f"""Generate a personalized "because" rationale for a financial recommendation.
+
+USER CONTEXT:
+- Persona: {persona_name} (Persona {persona_id})
+- Recommendation Type: {recommendation_type}
+- Recommendation Title: {recommendation.get('title', 'N/A')}
+
+CONCRETE USER DATA:
+{data_context}
+
+REQUIREMENTS:
+- Write in plain, friendly language (NO financial jargon)
+- MUST cite specific data points from the user data above (account names with last 4 digits, exact amounts, percentages, dates)
+- Format: Start with "We noticed" or "Because" and cite specific data
+- Example format: "We noticed your Visa ending in 4523 is at 68% utilization ($3,400 of $5,000 limit). Bringing this below 30% could improve your credit score and reduce interest charges of $87/month."
+- Keep it empowering and educational (not judgmental)
+- Length: 2-4 sentences
+- Include actionable benefit (what they can gain)
+
+Generate the personalized rationale:"""
+
+        try:
+            generated_rationale = self.openai_client.generate_content(
+                prompt=prompt,
+                persona_id=persona_id,
+                signals={**signals_30d, **signals_180d},
+                use_cache=True,
+            )
+            
+            if generated_rationale:
+                logger.info(f"Generated OpenAI-enhanced rationale for recommendation {recommendation.get('id')}")
+                return generated_rationale.strip()
+        except Exception as e:
+            logger.warning(f"OpenAI rationale generation failed: {str(e)}, falling back to rule-based rationale")
+        
+        return None
+
     def generate_rationale(
         self,
         recommendation: Dict[str, Any],
@@ -545,6 +788,7 @@ class RationaleGenerator:
     ) -> str:
         """
         Generate rationale for a recommendation based on persona and signals.
+        Uses OpenAI if available, falls back to rule-based generation.
 
         Args:
             recommendation: Recommendation dictionary (education item or partner offer)
@@ -556,7 +800,15 @@ class RationaleGenerator:
         Returns:
             Plain-language rationale string with data point citations
         """
-        # Route to persona-specific rationale generator
+        # Try OpenAI-enhanced rationale first if enabled
+        if self.use_openai and self.openai_client:
+            openai_rationale = self._generate_openai_rationale(
+                recommendation, signals_30d, signals_180d, persona_id, user_id
+            )
+            if openai_rationale:
+                return openai_rationale
+        
+        # Fallback to rule-based rationale generation
         if persona_id == 1:
             rationale = self.generate_rationale_for_persona_1(
                 recommendation, signals_30d, signals_180d, user_id

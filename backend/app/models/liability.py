@@ -45,3 +45,4 @@ class Liability(Base):
         """String representation of Liability."""
         return f"<Liability(id={self.id}, account_id={self.account_id}, apr_percentage={self.apr_percentage})>"
 
+

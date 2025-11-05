@@ -14,11 +14,13 @@ from app.core.dependencies import (
     check_user_access,
 )
 from app.core.cache_service import invalidate_all_user_caches
-from app.models.user import User
+from app.models.user import User, UserRole
 from app.models.session import Session as SessionModel
 from app.models.data_upload import DataUpload
 from app.models.recommendation import Recommendation, RecommendationType, RecommendationStatus
 from app.models.user_profile import UserProfile
+from app.models.user_persona_assignment import UserPersonaAssignment
+from app.models.persona import Persona
 from app.models.persona_history import PersonaHistory
 from app.api.v1.schemas.user import (
     UserProfileResponse,
@@ -386,11 +388,27 @@ async def get_user_behavioral_profile(
     if profile.signals_180d:
         signals_180d = BehavioralSignals(**profile.signals_180d)
 
+    # Only include persona info for operators and admins
+    # Regular users should not see their persona assignments
+    persona_id = None
+    persona_name = None
+    
+    if current_user.role in [UserRole.OPERATOR, UserRole.ADMIN]:
+        # Get primary persona (first assigned persona)
+        assignments = db.query(UserPersonaAssignment).filter(
+            UserPersonaAssignment.user_id == user_id
+        ).join(Persona).order_by(UserPersonaAssignment.assigned_at.asc()).all()
+        
+        if assignments:
+            primary_assignment = assignments[0]
+            persona_id = primary_assignment.persona_id
+            persona_name = primary_assignment.persona.name
+
     return BehavioralProfileResponse(
         profile_id=str(profile.profile_id),
         user_id=str(profile.user_id),
-        persona_id=profile.persona_id,
-        persona_name=profile.persona_name,
+        persona_id=persona_id,
+        persona_name=persona_name,
         signals_30d=signals_30d,
         signals_180d=signals_180d,
         updated_at=profile.updated_at,
@@ -401,10 +419,10 @@ async def get_user_behavioral_profile(
     "/{user_id}/persona-history",
     response_model=PersonaHistoryResponse,
     summary="Get user persona history",
-    description="Get persona assignment history for a user. Users can access their own history. Operators and admins can access any user's history.",
+    description="Get persona assignment history for a user. OPERATOR AND ADMIN ONLY. Regular users cannot access persona history.",
     responses={
         200: {"description": "Persona history retrieved successfully"},
-        403: {"description": "Forbidden - insufficient permissions or consent revoked"},
+        403: {"description": "Forbidden - operator/admin access required"},
         404: {"description": "User not found"},
     },
 )
@@ -417,16 +435,18 @@ async def get_user_persona_history(
 ):
     """
     Get persona assignment history for a user.
+    
+    OPERATOR AND ADMIN ONLY. Regular users cannot access persona history as personas are not exposed to end users.
 
     Resource-level authorization:
-    - Users can access their own history
-    - Operators and admins can access any user's history
+    - Operators and admins can access any user's persona history
+    - Regular users cannot access persona history
 
     Args:
         user_id: User ID
         current_user: Current authenticated user
         db: Database session
-        skip: Number of records to skip (for pagination)
+        skip: Number of records to skip
         limit: Maximum number of records to return
 
     Returns:
@@ -436,26 +456,19 @@ async def get_user_persona_history(
         HTTPException: 403 Forbidden if user doesn't have permission
         HTTPException: 404 Not Found if user doesn't exist
     """
+    # Only operators and admins can access persona history
+    if current_user.role not in [UserRole.OPERATOR, UserRole.ADMIN]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Persona history is only available to operators and admins"
+        )
+
     # Check if user exists
     user = db.query(User).filter(User.user_id == user_id).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
-        )
-
-    # Check resource access (users can access own data, operators can access any)
-    # Operators and admins must respect user consent when accessing other users' data
-    if not check_user_access(user_id, current_user, db=db, check_consent=True):
-        # Check if it's a consent issue
-        if not user.consent_status and current_user.user_id != user_id:
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Cannot access this user's data. User has revoked consent or not granted consent."
-            )
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="You do not have permission to access this user's persona history"
         )
 
     # Get total count

@@ -717,6 +717,125 @@ async def export_summary_report(
             )
 
 
+@router.post(
+    "/users/{user_id}/generate-recommendations",
+    summary="Generate recommendations for a user",
+    description="Manually trigger recommendation generation for a user. Requires operator role or higher.",
+    responses={
+        200: {"description": "Recommendations generated successfully"},
+        401: {"description": "Unauthorized - authentication required"},
+        403: {"description": "Forbidden - operator role required"},
+        404: {"description": "User not found"},
+    },
+)
+async def generate_recommendations_for_user(
+    user_id: str,
+    current_user: User = Depends(require_operator),
+    db: Session = Depends(get_db),
+):
+    """
+    Generate recommendations for a user.
+
+    Requires operator role or higher.
+    This will:
+    1. Check if user has consent granted
+    2. Check if user has a profile with signals
+    3. Check if user has assigned personas
+    4. Generate 3-5 education items and 1-3 partner offers
+    5. Store recommendations with PENDING status
+
+    Args:
+        user_id: User ID
+        current_user: Current authenticated user (operator/admin)
+        db: Database session
+
+    Returns:
+        Recommendation generation result
+
+    Raises:
+        HTTPException: 404 Not Found if user doesn't exist
+        HTTPException: 400 Bad Request if user doesn't have profile/persona
+    """
+    logger.info(f"Operator {current_user.user_id} ({current_user.email}) generating recommendations for user {user_id}")
+
+    try:
+        user_uuid = uuid.UUID(user_id)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid user ID format"
+        )
+
+    # Check if user exists
+    target_user = db.query(User).filter(User.user_id == user_uuid).first()
+    if not target_user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+
+    # Import RecommendationGenerator from service layer
+    import sys
+    import os
+    _current_file = os.path.abspath(__file__)
+    _backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_current_file))))
+    _project_root = os.path.dirname(_backend_dir)
+    _service_dir = os.path.join(_project_root, "service")
+
+    # Add paths if not already there
+    for path in [_backend_dir, _service_dir]:
+        if path not in sys.path:
+            sys.path.insert(0, path)
+
+    try:
+        from app.recommendations.generator import RecommendationGenerator
+        logger.info("RecommendationGenerator imported successfully")
+    except ImportError as e:
+        logger.error(f"Failed to import RecommendationGenerator: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Recommendation service not available: {str(e)}"
+        )
+
+    # Initialize recommendation generator
+    generator = RecommendationGenerator(db_session=db, use_openai=True)
+
+    # Generate recommendations
+    try:
+        result = generator.generate_recommendations(user_uuid)
+
+        if result.get("error"):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=result.get("error")
+            )
+
+        logger.info(
+            f"Generated {len(result.get('recommendations', []))} recommendations for user {user_id}: "
+            f"{result.get('education_count', 0)} education, {result.get('partner_offer_count', 0)} partner offers"
+        )
+
+        return {
+            "user_id": user_id,
+            "recommendations_generated": len(result.get("recommendations", [])),
+            "education_count": result.get("education_count", 0),
+            "partner_offer_count": result.get("partner_offer_count", 0),
+            "generated_at": result.get("generated_at"),
+            "persona_ids": result.get("persona_ids", []),
+            "persona_names": result.get("persona_names", []),
+        }
+
+    except HTTPException:
+        # Re-raise HTTPException (400, 404, etc.) without modification
+        raise
+    except Exception as e:
+        logger.error(f"Error generating recommendations for user {user_id}: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate recommendations: {str(e)}"
+        )
+
+
 @router.get(
     "/users/{user_id}",
     summary="Get user details (operator)",
@@ -1029,6 +1148,8 @@ async def list_all_users(
     """
     from app.models.user import User as UserModel
     from app.models.user_profile import UserProfile
+    from app.models.user_persona_assignment import UserPersonaAssignment
+    from app.models.persona import Persona
 
     # Get users with their profiles (left join to include users without profiles)
     users = db.query(UserModel).offset(skip).limit(limit).all()
@@ -1039,6 +1160,19 @@ async def list_all_users(
         # Get user profile if exists
         profile = db.query(UserProfile).filter(UserProfile.user_id == user.user_id).first()
 
+        # Get persona assignment if exists
+        persona_assignment = db.query(UserPersonaAssignment).filter(
+            UserPersonaAssignment.user_id == user.user_id
+        ).first()
+        
+        persona_id = None
+        persona_name = None
+        if persona_assignment:
+            persona = db.query(Persona).filter(Persona.persona_id == persona_assignment.persona_id).first()
+            if persona:
+                persona_id = persona.persona_id  # Already an integer
+                persona_name = persona.name
+
         user_data = {
             "user_id": str(user.user_id),
             "name": user.name,
@@ -1046,17 +1180,10 @@ async def list_all_users(
             "role": user.role,
             "consent_status": user.consent_status,
             "created_at": user.created_at.isoformat() if user.created_at else None,
+            "persona_id": persona_id,
+            "persona_name": persona_name,
+            "profile_updated_at": profile.updated_at.isoformat() if profile and profile.updated_at else None,
         }
-
-        # Add persona information if profile exists
-        if profile:
-            user_data["persona_id"] = profile.persona_id
-            user_data["persona_name"] = profile.persona_name
-            user_data["profile_updated_at"] = profile.updated_at.isoformat() if profile.updated_at else None
-        else:
-            user_data["persona_id"] = None
-            user_data["persona_name"] = None
-            user_data["profile_updated_at"] = None
 
         items.append(user_data)
 

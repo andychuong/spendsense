@@ -108,26 +108,61 @@ class IncomeStabilityDetector:
             return []
 
         account_ids = [acc.id for acc in checking_accounts]
+        logger.info(f"Checking account IDs for user {user_id}: {account_ids}")
 
         # Query for payroll ACH deposits
         # Payroll deposits are positive amounts (credits)
+        # Accept both "PAYROLL" category and "Financial/Income" category
+        # Accept both "ACH" and "online" payment channels for flexibility
         payroll_transactions = self.db.query(Transaction).filter(
             and_(
                 Transaction.user_id == user_id,
                 Transaction.account_id.in_(account_ids),
                 Transaction.date >= start_date,
                 Transaction.date <= end_date,
-                Transaction.pending == False,
                 Transaction.amount > 0,  # Deposits are positive
+                Transaction.pending == False,
                 or_(
                     Transaction.category_primary == "PAYROLL",
                     Transaction.category_primary.like("%PAYROLL%"),
                     Transaction.category_detailed == "PAYROLL",
                     Transaction.category_detailed.like("%PAYROLL%"),
+                    Transaction.category_detailed == "Financial/Income",
+                    Transaction.category_detailed.like("%Income%"),
+                    # Also check merchant name for common payroll indicators (only if merchant_name is not NULL)
+                    and_(
+                        Transaction.merchant_name.isnot(None),
+                        or_(
+                            Transaction.merchant_name.like("%Direct Deposit%"),
+                            Transaction.merchant_name.like("%Payroll%"),
+                            Transaction.merchant_name.like("%Salary%"),
+                        ),
+                    ),
                 ),
-                Transaction.payment_channel == "ACH",
+                or_(
+                    Transaction.payment_channel == "ACH",
+                    Transaction.payment_channel == "online",
+                ),
             )
         ).order_by(Transaction.date).all()
+        
+        logger.info(f"Found {len(payroll_transactions)} payroll transactions for user {user_id}")
+        
+        # Debug: Log first few transactions if found
+        if payroll_transactions:
+            logger.info(f"Sample payroll transactions: {[{'date': str(t.date), 'amount': float(t.amount), 'merchant': t.merchant_name, 'category': t.category_primary} for t in payroll_transactions[:3]]}")
+        else:
+            # Debug: Try to see why no transactions found
+            logger.warning(f"No payroll transactions found for user {user_id}. Checking conditions...")
+            # Check if transactions exist at all for this user/account
+            all_user_txns = self.db.query(Transaction).filter(
+                Transaction.user_id == user_id,
+                Transaction.account_id.in_(account_ids),
+                Transaction.date >= start_date,
+                Transaction.date <= end_date,
+                Transaction.amount > 0,
+            ).count()
+            logger.info(f"Total positive transactions for user {user_id} in date range: {all_user_txns}")
 
         payroll_deposits = []
         for txn in payroll_transactions:

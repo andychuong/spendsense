@@ -5,8 +5,10 @@ from sqlalchemy import Column, String, Boolean, JSON, DateTime, Enum, TypeDecora
 from sqlalchemy.dialects.postgresql import UUID, ENUM
 from sqlalchemy.sql import func
 import enum
+from sqlalchemy.orm import relationship
 
 from app.database import Base
+from app.models.user_persona_assignment import UserPersonaAssignment # Import here to resolve relationship
 
 
 class UserRole(str, enum.Enum):
@@ -88,6 +90,9 @@ class User(Base):
     monthly_income = Column(Numeric(15, 2), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), nullable=True)
+
+    # Relationship to UserPersonaAssignment
+    persona_assignments = relationship("UserPersonaAssignment", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self) -> str:
         """String representation of User."""

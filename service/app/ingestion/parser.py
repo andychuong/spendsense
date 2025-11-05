@@ -25,7 +25,8 @@ class PlaidParser:
             file_content: Raw file content as bytes
 
         Returns:
-            Dictionary with 'accounts', 'transactions', and optional 'user_id', 'upload_timestamp'
+            Dictionary with 'accounts', 'transactions', 'liabilities', and optional 'upload_timestamp'
+            Note: user_id from the file is ignored - it comes from the authenticated user
 
         Raises:
             ValueError: If JSON is invalid or missing required fields
@@ -39,20 +40,25 @@ class PlaidParser:
         if not isinstance(data, dict):
             raise ValueError("JSON data must be a dictionary")
 
-        # Extract accounts, transactions
+        # Extract accounts, transactions, liabilities
         accounts = data.get("accounts", [])
         transactions = data.get("transactions", [])
+        liabilities = data.get("liabilities", [])
 
         if not isinstance(accounts, list):
             raise ValueError("'accounts' must be a list")
         if not isinstance(transactions, list):
             raise ValueError("'transactions' must be a list")
+        if not isinstance(liabilities, list):
+            raise ValueError("'liabilities' must be a list")
 
+        # Note: user_id is ignored from the file - it comes from the authenticated user
+        # If user_id is present, we ignore it for security reasons
         return {
-            "user_id": data.get("user_id"),
             "upload_timestamp": data.get("upload_timestamp"),
             "accounts": accounts,
             "transactions": transactions,
+            "liabilities": liabilities,
         }
 
     def parse_csv(self, file_content: bytes) -> Dict[str, Any]:

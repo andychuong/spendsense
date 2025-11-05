@@ -101,13 +101,17 @@ class SyntheticDataGenerator:
         return profiles
 
     def _generate_single_profile(self, user_id: str) -> Dict[str, Any]:
-        """Generates a single, complete user profile with accounts, transactions, and liabilities."""
+        """Generates a single, complete user profile with accounts, transactions, and liabilities.
+        
+        Note: user_id is used only for internal tracking during generation.
+        The output JSON does NOT include user_id - it will be assigned by the authenticated user during upload.
+        """
         accounts = self._generate_accounts()
         transactions = self._generate_transactions(accounts)
         liabilities = self._generate_liabilities(accounts)
 
+        # Do NOT include user_id in the output - it will be assigned by the authenticated user
         profile_data = {
-            "user_id": user_id,
             "accounts": accounts,
             "transactions": transactions,
             "liabilities": liabilities
@@ -351,45 +355,55 @@ class SyntheticDataGenerator:
         logger.info(f"Starting validation and export for {len(profiles)} profiles.")
 
         for i, profile in enumerate(profiles):
-            user_id = profile["user_id"]
-            logger.info(f"Validating profile {i+1}/{len(profiles)} for user {user_id}...")
+            # Generate a unique ID for this profile's filename (not included in the JSON)
+            file_id = str(uuid.uuid4())
+            logger.info(f"Validating profile {i+1}/{len(profiles)} (file_id: {file_id})...")
 
             is_valid, errors = self.validator.validate(profile)
 
             if not is_valid:
-                logger.error(f"Validation FAILED for user {user_id}.")
+                logger.error(f"Validation FAILED for profile {i+1} (file_id: {file_id}).")
                 for error in errors:
                     logger.error(f"  - {error.to_dict()}")
                 # Decide whether to skip export for invalid profiles
                 continue
 
-            logger.info(f"Validation PASSED for user {user_id}.")
-
+            logger.info(f"Validation PASSED for profile {i+1} (file_id: {file_id}).")
 
             # --- Exporting ---
             if format == "json" or format == "both":
-                self._export_to_json(profile, output_dir)
+                self._export_to_json(profile, output_dir, file_id)
             if format == "csv" or format == "both":
-                self._export_to_csv(profile, output_dir)
+                self._export_to_csv(profile, output_dir, file_id)
 
         logger.info("Export process completed.")
 
-    def _export_to_json(self, profile: Dict[str, Any], output_dir: str):
-        """Exports a single profile to a JSON file."""
-        user_id = profile["user_id"]
-        filepath = os.path.join(output_dir, f"{user_id}.json")
-        logger.info(f"Exporting profile for user {user_id} to {filepath}...")
+    def _export_to_json(self, profile: Dict[str, Any], output_dir: str, file_id: str):
+        """Exports a single profile to a JSON file.
+        
+        Args:
+            profile: Profile dictionary (without user_id)
+            output_dir: Output directory
+            file_id: Unique identifier for the filename (UUID string)
+        """
+        filepath = os.path.join(output_dir, f"{file_id}.json")
+        logger.info(f"Exporting profile to {filepath}...")
         with open(filepath, "w") as f:
             json.dump(profile, f, indent=2)
 
-    def _export_to_csv(self, profile: Dict[str, Any], output_dir: str):
-        """Exports a single profile to multiple CSV files (accounts, transactions, liabilities)."""
-        user_id = profile["user_id"]
-        logger.info(f"Exporting profile for user {user_id} to CSV files in {output_dir}...")
+    def _export_to_csv(self, profile: Dict[str, Any], output_dir: str, file_id: str):
+        """Exports a single profile to multiple CSV files (accounts, transactions, liabilities).
+        
+        Args:
+            profile: Profile dictionary (without user_id)
+            output_dir: Output directory
+            file_id: Unique identifier for the filename (UUID string)
+        """
+        logger.info(f"Exporting profile to CSV files in {output_dir} (file_id: {file_id})...")
 
         # Export Accounts
         if profile["accounts"]:
-            accounts_path = os.path.join(output_dir, f"{user_id}_accounts.csv")
+            accounts_path = os.path.join(output_dir, f"{file_id}_accounts.csv")
             with open(accounts_path, "w", newline="") as f:
                 writer = csv.writer(f)
                 # Header
@@ -401,7 +415,7 @@ class SyntheticDataGenerator:
 
         # Export Transactions
         if profile["transactions"]:
-            transactions_path = os.path.join(output_dir, f"{user_id}_transactions.csv")
+            transactions_path = os.path.join(output_dir, f"{file_id}_transactions.csv")
             with open(transactions_path, "w", newline="") as f:
                 writer = csv.writer(f)
                 header = profile["transactions"][0].keys()
@@ -411,7 +425,7 @@ class SyntheticDataGenerator:
 
         # Export Liabilities
         if profile["liabilities"]:
-            liabilities_path = os.path.join(output_dir, f"{user_id}_liabilities.csv")
+            liabilities_path = os.path.join(output_dir, f"{file_id}_liabilities.csv")
             with open(liabilities_path, "w", newline="") as f:
                 writer = csv.writer(f)
                 header = profile["liabilities"][0].keys()

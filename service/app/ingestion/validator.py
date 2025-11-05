@@ -12,7 +12,7 @@ VALID_ACCOUNT_TYPES = ["depository", "credit", "loan"]
 VALID_ACCOUNT_SUBTYPES = {
     "depository": ["checking", "savings", "money market", "HSA"],
     "credit": ["credit card"],
-    "loan": ["mortgage", "student"],
+    "loan": ["mortgage", "student", "auto"],
 }
 VALID_HOLDER_CATEGORIES = ["individual", "business"]
 VALID_PAYMENT_CHANNELS = ["online", "in_store", "other", "ACH"]

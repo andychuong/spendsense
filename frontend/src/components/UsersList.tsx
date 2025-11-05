@@ -4,7 +4,7 @@ import { adminService, type UserWithPersona } from '@/services/adminService'
 import { PageSkeleton } from '@/components/LoadingSkeleton'
 import ErrorState from '@/components/ErrorState'
 import PersonaBadge from '@/components/PersonaBadge'
-import { FaUser, FaEnvelope, FaShieldAlt, FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
+import { FaUser, FaEnvelope, FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 
 interface UsersListProps {
   limit?: number
@@ -43,10 +43,14 @@ const UsersList = ({ limit = 100 }: UsersListProps) => {
     )
   }
 
-  if (!usersData || usersData.items.length === 0) {
+  // Filter out operators and admins - only show regular users
+  const regularUsers = usersData?.items.filter((user) => user.role === 'user') || []
+  const regularUsersTotal = regularUsers.length
+
+  if (!usersData || regularUsers.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow-sm p-6">
-        <p className="text-gray-500 text-center">No users found</p>
+        <p className="text-gray-500 text-center">No regular users found</p>
       </div>
     )
   }
@@ -54,7 +58,7 @@ const UsersList = ({ limit = 100 }: UsersListProps) => {
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden">
       <div className="px-6 py-4 border-b border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900">All Users ({usersData.total})</h3>
+        <h3 className="text-lg font-semibold text-gray-900">Users ({regularUsersTotal})</h3>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
@@ -67,9 +71,6 @@ const UsersList = ({ limit = 100 }: UsersListProps) => {
                 Persona
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Role
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Consent
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -78,7 +79,7 @@ const UsersList = ({ limit = 100 }: UsersListProps) => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {usersData.items.map((user) => (
+            {regularUsers.map((user) => (
               <tr
                 key={user.user_id}
                 className="hover:bg-gray-50 cursor-pointer transition-colors"
@@ -111,20 +112,6 @@ const UsersList = ({ limit = 100 }: UsersListProps) => {
                   )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      user.role === 'admin'
-                        ? 'bg-purple-100 text-purple-800'
-                        : user.role === 'operator'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-gray-100 text-gray-800'
-                    }`}
-                  >
-                    <FaShieldAlt className="h-3 w-3" />
-                    {user.role}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
                   {user.consent_status ? (
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                       <FaCheckCircle className="h-3 w-3" />
@@ -151,10 +138,10 @@ const UsersList = ({ limit = 100 }: UsersListProps) => {
           </tbody>
         </table>
       </div>
-      {usersData.total > limit && (
+      {regularUsersTotal > limit && (
         <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
           <p className="text-sm text-gray-500">
-            Showing {usersData.items.length} of {usersData.total} users
+            Showing {regularUsers.length} of {regularUsersTotal} users
           </p>
         </div>
       )}

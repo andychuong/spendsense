@@ -87,12 +87,12 @@ class BehavioralSignals(BaseModel):
 
 
 class BehavioralProfileResponse(BaseModel):
-    """Behavioral profile response schema."""
+    """Behavioral profile response schema. Persona info only included for operators/admins."""
 
     profile_id: str
     user_id: str
-    persona_id: int
-    persona_name: str
+    persona_id: Optional[int] = Field(None, description="Persona ID (operator/admin only)")
+    persona_name: Optional[str] = Field(None, description="Persona name (operator/admin only)")
     signals_30d: Optional[BehavioralSignals] = Field(None, description="30-day behavioral signals")
     signals_180d: Optional[BehavioralSignals] = Field(None, description="180-day behavioral signals")
     updated_at: datetime

@@ -176,13 +176,13 @@ const OperatorDashboard = () => {
             </Link>
             {isAdmin && (
               <Link
-                to="/"
+                to="/admin/management"
                 className="flex items-center gap-3 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-primary-300 transition-colors"
               >
                 <FaUsers className="h-5 w-5 text-primary-600" />
                 <div>
                   <p className="text-sm font-medium text-gray-900">User Management</p>
-                  <p className="text-xs text-gray-500">View all users</p>
+                  <p className="text-xs text-gray-500">Manage users & staff</p>
                 </div>
               </Link>
             )}

@@ -21,6 +21,21 @@ except ImportError:
     OPENAI_AVAILABLE = False
     logger.warning("OpenAI client not available - persona rationales will use rule-based generation only")
 
+# Try to import models from backend
+try:
+    from app.models.user_profile import UserProfile
+    from app.models.persona import Persona, PersonaId
+    from app.models.user_persona_assignment import UserPersonaAssignment
+except ImportError:
+    import sys
+    import os
+    backend_path = os.path.join(os.path.dirname(__file__), "../../../backend")
+    if backend_path not in sys.path:
+        sys.path.insert(0, backend_path)
+    from app.models.user_profile import UserProfile
+    from app.models.persona import Persona, PersonaId
+    from app.models.user_persona_assignment import UserPersonaAssignment
+
 logger = logging.getLogger(__name__)
 
 
@@ -45,42 +60,29 @@ def _serialize_signals_for_json(signals: Dict[str, Any]) -> Dict[str, Any]:
     else:
         return signals
 
-# Try to import models from backend
-try:
-    from backend.app.models.user_profile import UserProfile, PersonaId
-    from backend.app.models.persona_history import PersonaHistory
-except ImportError:
-    import sys
-    import os
-    backend_path = os.path.join(os.path.dirname(__file__), "../../../backend")
-    if backend_path not in sys.path:
-        sys.path.insert(0, backend_path)
-    from app.models.user_profile import UserProfile, PersonaId
-    from app.models.persona_history import PersonaHistory
+# Remove the old backend model imports
+# try:
+#     from backend.app.models.user_profile import UserProfile, PersonaId
+#     from backend.app.models.persona_history import PersonaHistory
+# except ImportError:
+#     import sys
+#     import os
+#     backend_path = os.path.join(os.path.dirname(__file__), "../../../backend")
+#     if backend_path not in sys.path:
+#         sys.path.insert(0, backend_path)
+#     from app.models.user_profile import UserProfile, PersonaId
+#     from app.models.persona_history import PersonaHistory
 
 
 # Persona definitions
 PERSONA_DEFINITIONS = {
-    1: {
-        "name": "High Utilization",
-        "priority": 1,
-    },
-    2: {
-        "name": "Variable Income Budgeter",
-        "priority": 2,
-    },
-    3: {
-        "name": "Subscription-Heavy",
-        "priority": 3,
-    },
-    4: {
-        "name": "Savings Builder",
-        "priority": 4,
-    },
-    5: {
-        "name": "Custom Persona",
-        "priority": 5,
-    },
+    PersonaId.HIGH_UTILIZATION: {"name": "High Utilization", "priority": 1},
+    PersonaId.VARIABLE_INCOME_BUDGETER: {"name": "Variable Income Budgeter", "priority": 2},
+    PersonaId.SUBSCRIPTION_HEAVY: {"name": "Subscription-Heavy", "priority": 3},
+    PersonaId.SAVINGS_BUILDER: {"name": "Savings Builder", "priority": 4},
+    PersonaId.BALANCED_SPENDER: {"name": "Balanced Spender", "priority": 5},
+    PersonaId.DEBT_CONSOLIDATOR: {"name": "Debt Consolidator", "priority": 2},
+    PersonaId.EMERGENCY_FUND_SEEKER: {"name": "Emergency Fund Seeker", "priority": 4},
 }
 
 
@@ -95,12 +97,12 @@ class PersonaAssignmentService:
             db_session: SQLAlchemy database session
         """
         self.db = db_session
+        self.consent_guardrails = ConsentGuardrails(db_session)
         self.subscription_detector = SubscriptionDetector(db_session)
         self.savings_detector = SavingsDetector(db_session)
         self.credit_detector = CreditUtilizationDetector(db_session)
         self.income_detector = IncomeStabilityDetector(db_session)
-        self.consent_guardrails = ConsentGuardrails(db_session)
-
+        
         # Initialize OpenAI client if available
         self.openai_client = None
         if OPENAI_AVAILABLE:
@@ -339,6 +341,45 @@ class PersonaAssignmentService:
 
         return True, rationale
 
+    def check_persona_6_debt_consolidator(
+        self,
+        credit_signals_30d: Dict[str, Any],
+        credit_signals_180d: Dict[str, Any],
+    ) -> Tuple[bool, str]:
+        """Check if user matches Persona 6: Debt Consolidator."""
+        signals = credit_signals_180d or credit_signals_30d
+        if not signals:
+            return False, ""
+
+        opportunity = signals.get("debt_consolidation_opportunity", {})
+        if opportunity.get("is_candidate"):
+            return True, opportunity.get("rationale", "")
+        
+        return False, ""
+
+    def check_persona_7_emergency_fund_seeker(
+        self,
+        savings_signals_30d: Dict[str, Any],
+        savings_signals_180d: Dict[str, Any],
+    ) -> Tuple[bool, str]:
+        """Check if user matches Persona 7: Emergency Fund Seeker."""
+        signals = savings_signals_180d or savings_signals_30d
+        if not signals:
+            return False, ""
+
+        coverage = signals.get("emergency_fund_coverage", {})
+        coverage_months = coverage.get("coverage_months", 0)
+        
+        # Criteria: less than 1 month of emergency fund coverage
+        if coverage_months < 1.0:
+            rationale = (
+                f"Emergency fund is less than 1 month of expenses. "
+                f"Current coverage is {coverage_months:.2f} months."
+            )
+            return True, rationale
+        
+        return False, ""
+
     def assign_persona(
         self,
         user_id: uuid.UUID,
@@ -408,10 +449,8 @@ class PersonaAssignmentService:
                 "income": signals_180d.get("income", {}),
             }
 
-        # Apply priority logic
-        persona_id = None
-        persona_name = None
-        rationale = ""
+        # Check all personas and collect matches
+        assigned_personas = []
 
         # Check Persona 1: High Utilization
         matches, rationale = self.check_persona_1_high_utilization(
@@ -419,119 +458,124 @@ class PersonaAssignmentService:
             signals_180d.get("credit", {}),
         )
         if matches:
-            persona_id = PersonaId.HIGH_UTILIZATION
-            persona_name = PERSONA_DEFINITIONS[1]["name"]
+            assigned_personas.append({
+                "persona_id": PersonaId.HIGH_UTILIZATION,
+                "rationale": rationale
+            })
+
+        # Check Persona 6: Debt Consolidator
+        matches, rationale = self.check_persona_6_debt_consolidator(
+            signals_30d.get("credit", {}),
+            signals_180d.get("credit", {}),
+        )
+        if matches:
+            assigned_personas.append({
+                "persona_id": PersonaId.DEBT_CONSOLIDATOR,
+                "rationale": rationale
+            })
 
         # Check Persona 2: Variable Income Budgeter
-        if not persona_id:
-            matches, rationale = self.check_persona_2_variable_income(
-                signals_30d.get("income", {}),
-                signals_180d.get("income", {}),
-            )
-            if matches:
-                persona_id = PersonaId.VARIABLE_INCOME_BUDGETER
-                persona_name = PERSONA_DEFINITIONS[2]["name"]
+        matches, rationale = self.check_persona_2_variable_income(
+            signals_30d.get("income", {}),
+            signals_180d.get("income", {}),
+        )
+        if matches:
+            assigned_personas.append({
+                "persona_id": PersonaId.VARIABLE_INCOME_BUDGETER,
+                "rationale": rationale
+            })
 
         # Check Persona 3: Subscription-Heavy
-        if not persona_id:
-            matches, rationale = self.check_persona_3_subscription_heavy(
-                signals_30d.get("subscriptions", {}),
-                signals_180d.get("subscriptions", {}),
-            )
-            if matches:
-                persona_id = PersonaId.SUBSCRIPTION_HEAVY
-                persona_name = PERSONA_DEFINITIONS[3]["name"]
+        matches, rationale = self.check_persona_3_subscription_heavy(
+            signals_30d.get("subscriptions", {}),
+            signals_180d.get("subscriptions", {}),
+        )
+        if matches:
+            assigned_personas.append({
+                "persona_id": PersonaId.SUBSCRIPTION_HEAVY,
+                "rationale": rationale
+            })
 
         # Check Persona 4: Savings Builder
-        if not persona_id:
-            matches, rationale = self.check_persona_4_savings_builder(
-                signals_30d.get("savings", {}),
-                signals_180d.get("savings", {}),
-                signals_30d.get("credit", {}),
-                signals_180d.get("credit", {}),
-            )
-            if matches:
-                persona_id = PersonaId.SAVINGS_BUILDER
-                persona_name = PERSONA_DEFINITIONS[4]["name"]
+        matches, rationale = self.check_persona_4_savings_builder(
+            signals_30d.get("savings", {}),
+            signals_180d.get("savings", {}),
+            signals_30d.get("credit", {}),
+            signals_180d.get("credit", {}),
+        )
+        if matches:
+            assigned_personas.append({
+                "persona_id": PersonaId.SAVINGS_BUILDER,
+                "rationale": rationale
+            })
 
-        # Default to Persona 5: Custom Persona
-        if not persona_id:
-            persona_id = PersonaId.CUSTOM
-            persona_name = PERSONA_DEFINITIONS[5]["name"]
-            rationale = "User does not match specific persona criteria. Assigned to custom persona."
+        # Check Persona 7: Emergency Fund Seeker
+        matches, rationale = self.check_persona_7_emergency_fund_seeker(
+            signals_30d.get("savings", {}),
+            signals_180d.get("savings", {}),
+        )
+        if matches:
+            assigned_personas.append({
+                "persona_id": PersonaId.EMERGENCY_FUND_SEEKER,
+                "rationale": rationale
+            })
 
-        # Enhance rationale with OpenAI if available
-        if self.openai_client and self.openai_client.client:
-            try:
-                enhanced_rationale = self._generate_openai_rationale(
-                    persona_id=persona_id,
-                    persona_name=persona_name,
-                    base_rationale=rationale,
-                    signals_30d=signals_30d,
-                    signals_180d=signals_180d,
-                )
-                if enhanced_rationale:
-                    rationale = enhanced_rationale
-                    logger.info(f"Enhanced persona rationale using OpenAI for user {user_id}")
-            except Exception as e:
-                logger.warning(f"Failed to generate OpenAI rationale for persona assignment: {str(e)}")
-                # Continue with rule-based rationale
+        # If no specific personas matched, assign Balanced Spender
+        if not assigned_personas:
+            assigned_personas.append({
+                "persona_id": PersonaId.BALANCED_SPENDER,
+                "rationale": "User does not match any specific persona criteria. Assigned to Balanced Spender."
+            })
 
-        # Store persona assignment
-        user_profile = self.db.query(UserProfile).filter(
-            UserProfile.user_id == user_id
-        ).first()
+        # Get current assignments from the database
+        # from app.models.user_persona_assignment import UserPersonaAssignment # This line is removed
+        from app.models.user_persona_assignment import UserPersonaAssignment # This line is added
+        current_assignments = self.db.query(UserPersonaAssignment).filter_by(user_id=user_id).all()
+        current_persona_ids = {assignment.persona_id for assignment in current_assignments}
 
-        # Check if persona changed
-        persona_changed = False
-        if user_profile:
-            if user_profile.persona_id != persona_id:
-                persona_changed = True
-            # Update existing profile
-            user_profile.persona_id = persona_id
-            user_profile.persona_name = persona_name
-            # Serialize signals to ensure UUIDs are converted to strings for JSON storage
-            user_profile.signals_30d = _serialize_signals_for_json(signals_30d)
-            user_profile.signals_180d = _serialize_signals_for_json(signals_180d)
-        else:
-            # Create new profile
-            # Serialize signals to ensure UUIDs are converted to strings for JSON storage
-            user_profile = UserProfile(
+        # Determine which assignments are new and which should be removed
+        new_persona_ids = {p["persona_id"] for p in assigned_personas}
+        
+        to_add = [p for p in assigned_personas if p["persona_id"] not in current_persona_ids]
+        to_remove = [assignment for assignment in current_assignments if assignment.persona_id not in new_persona_ids]
+
+        # Remove old assignments
+        for assignment in to_remove:
+            self.db.delete(assignment)
+            logger.info(f"Removed persona {assignment.persona_id} from user {user_id}")
+
+        # Add new assignments
+        for persona_data in to_add:
+            assignment = UserPersonaAssignment(
                 user_id=user_id,
-                persona_id=persona_id,
-                persona_name=persona_name,
+                persona_id=persona_data["persona_id"],
+                rationale=persona_data["rationale"]
+            )
+            self.db.add(assignment)
+            logger.info(f"Assigned persona {persona_data['persona_id']} to user {user_id}")
+
+        # Create or update UserProfile with signals
+        # This is needed for recommendation generation and dashboard display
+        profile = self.db.query(UserProfile).filter(UserProfile.user_id == user_id).first()
+        if not profile:
+            profile = UserProfile(
+                user_id=user_id,
                 signals_30d=_serialize_signals_for_json(signals_30d),
                 signals_180d=_serialize_signals_for_json(signals_180d),
             )
-            persona_changed = True
-            self.db.add(user_profile)
+            self.db.add(profile)
+            logger.info(f"Created UserProfile for user {user_id}")
+        else:
+            profile.signals_30d = _serialize_signals_for_json(signals_30d)
+            profile.signals_180d = _serialize_signals_for_json(signals_180d)
+            logger.info(f"Updated UserProfile for user {user_id}")
 
-        # Track persona history if changed
-        if persona_changed:
-            # Serialize signals to ensure UUIDs are converted to strings for JSON storage
-            serialized_signals = {
-                "signals_30d": _serialize_signals_for_json(signals_30d),
-                "signals_180d": _serialize_signals_for_json(signals_180d),
-            }
-            persona_history = PersonaHistory(
-                user_id=user_id,
-                persona_id=persona_id,
-                persona_name=persona_name,
-                signals=serialized_signals,
-            )
-            self.db.add(persona_history)
-            logger.info(f"Persona changed for user {user_id}: {persona_name} (ID: {persona_id})")
-
-        # Commit changes
         self.db.commit()
 
         return {
             "user_id": str(user_id),
-            "persona_id": persona_id,
-            "persona_name": persona_name,
-            "rationale": rationale,
-            "persona_changed": persona_changed,
-            "assigned_at": datetime.utcnow().isoformat(),
+            "assigned_personas": [p["persona_id"] for p in assigned_personas],
+            "rationales": [p["rationale"] for p in assigned_personas],
         }
 
     def _generate_openai_rationale(
