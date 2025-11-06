@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 # Shaming/judgmental keywords to flag
 SHAMING_KEYWORDS = [
     "you're overspending",
-    "overspending",
     "irresponsible",
     "wasteful",
     "bad with money",
@@ -34,6 +33,7 @@ SHAMING_KEYWORDS = [
     "stupid decision",
     "you're wrong",
     "you're doing it wrong",
+    "rent-to-own",
 ]
 
 # Empowering keywords to look for

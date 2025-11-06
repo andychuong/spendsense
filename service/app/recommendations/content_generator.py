@@ -8,7 +8,6 @@ from app.common.openai_client import get_openai_client
 from app.recommendations.catalog import (
     EDUCATION_CATALOG,
     PARTNER_OFFER_CATALOG,
-    REGULATORY_DISCLAIMER,
 )
 
 logger = logging.getLogger(__name__)
@@ -195,12 +194,11 @@ Generate personalized content that matches the user's persona and behavioral sig
 
             if generated_content:
                 logger.info(f"Generated education content using OpenAI for item: {template_item['id']}")
-                # Add regulatory disclaimer
-                return f"{generated_content}\n\n{REGULATORY_DISCLAIMER}"
+                return generated_content
 
         # Fallback to template
         logger.info(f"Using template content for education item: {template_item['id']}")
-        return f"{template_item['content']}\n\n{REGULATORY_DISCLAIMER}"
+        return template_item['content']
 
     def generate_partner_offer_content(
         self,
@@ -234,12 +232,11 @@ Generate personalized content that matches the user's persona and behavioral sig
 
             if generated_content:
                 logger.info(f"Generated partner offer content using OpenAI for offer: {template_offer['id']}")
-                # Add regulatory disclaimer
-                return f"{generated_content}\n\n{REGULATORY_DISCLAIMER}"
+                return generated_content
 
         # Fallback to template
         logger.info(f"Using template content for partner offer: {template_offer['id']}")
-        return f"{template_offer['content']}\n\n{REGULATORY_DISCLAIMER}"
+        return template_offer['content']
 
     def generate_rationale_content(
         self,

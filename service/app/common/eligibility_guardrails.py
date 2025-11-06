@@ -34,6 +34,8 @@ HARMFUL_PRODUCT_KEYWORDS = [
     "check cashing",
     "pawn shop",
     "rent-to-own",
+    "high-interest loan",
+    "auto title loan",
 ]
 
 

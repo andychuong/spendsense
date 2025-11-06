@@ -12,6 +12,13 @@ sqlalchemy==2.0.23
 # Redis (for caching - shared with backend)
 redis==5.0.1
 
+# RAG System Dependencies (Phase 1 - Week 1)
+chromadb==0.4.22  # Vector database for RAG
+sentence-transformers==2.2.2  # Embedding models
+langchain==0.1.0  # RAG orchestration (optional, can use later)
+langchain-openai==0.0.5  # OpenAI integration for LangChain
+tiktoken==0.5.2  # Token counting for OpenAI
+
 # Note: Other dependencies are inherited from backend/requirements.txt
 # when running in the same environment
 

@@ -113,6 +113,88 @@ class SubscriptionDetector:
         logger.info(f"Found {len(recurring_merchants)} recurring merchants for user {user_id}")
         return recurring_merchants
 
+    def _is_discretionary_subscription(self, merchant_name: str, category: str = None) -> bool:
+        """
+        Determine if a merchant is a discretionary subscription (not an essential bill).
+        
+        Essential bills to exclude:
+        - Utilities (electric, gas, water)
+        - Internet/ISP services (if essential)
+        - Mobile phone carriers (if essential)
+        - Rent/mortgage payments
+        - Insurance payments
+        - Income/payroll deposits
+        
+        Args:
+            merchant_name: Name of the merchant
+            category: Transaction category (optional)
+            
+        Returns:
+            True if this is a discretionary subscription, False if it's an essential bill
+        """
+        if not merchant_name:
+            return True  # Default to allowing if we can't determine
+        
+        merchant_lower = merchant_name.lower()
+        
+        # Exclude income/payroll deposits
+        income_keywords = [
+            "payroll", "salary", "direct deposit", "ach deposit",
+            "employer", "employer payroll", "payroll deposit",
+            "transfer from", "deposit", "income", "ach"
+        ]
+        if any(keyword in merchant_lower for keyword in income_keywords):
+            return False
+        
+        # Exclude grocery delivery services (essential spending, not subscriptions)
+        grocery_delivery_keywords = [
+            "instacart", "shipt", "amazon fresh", "whole foods delivery"
+        ]
+        if any(keyword in merchant_lower for keyword in grocery_delivery_keywords):
+            return False
+        
+        # Exclude parking services (essential transport spending, not subscriptions)
+        # Note: While parking apps charge monthly, they're essential for commuting
+        parking_keywords = [
+            "parkmobile", "paybyphone", "spothero", "parking"
+        ]
+        if any(keyword in merchant_lower for keyword in parking_keywords):
+            return False
+        
+        # Exclude essential utilities
+        essential_utility_keywords = [
+            "electric", "gas", "water", "sewer", "trash", "waste",
+            "pge", "pg&e", "southern california edison", "edison",
+            "con edison", "coned", "duke energy", "duke",
+            "at&t internet", "verizon fios", "comcast", "xfinity", "spectrum",
+            "verizon wireless", "at&t wireless", "t-mobile", "sprint",
+            "mobile phone", "cell phone", "phone bill"
+        ]
+        
+        # Check if merchant name contains essential utility keywords
+        if any(keyword in merchant_lower for keyword in essential_utility_keywords):
+            return False
+        
+        # Exclude if category indicates it's a utility bill or income
+        if category:
+            category_lower = category.lower()
+            utility_categories = [
+                "bills & utilities", "utilities", "utility",
+                "mobile phone", "internet", "telephone"
+            ]
+            if any(util_cat in category_lower for util_cat in utility_categories):
+                return False
+            
+            # Exclude income/payroll categories
+            income_categories = [
+                "payroll", "income", "transfer_in", "deposit"
+            ]
+            if any(inc_cat in category_lower for inc_cat in income_categories):
+                return False
+        
+        # Allow discretionary subscriptions (streaming, software, gyms, etc.)
+        return True
+
     def _analyze_merchant_pattern(
         self,
         merchant_key: str,
@@ -122,6 +204,7 @@ class SubscriptionDetector:
     ) -> Optional[Dict[str, Any]]:
         """
         Analyze merchant transaction pattern to determine subscription details.
+        Only considers discretionary subscriptions, not essential bills.
 
         Args:
             merchant_key: Merchant identifier (entity_id or name)
@@ -137,6 +220,15 @@ class SubscriptionDetector:
 
         # Sort transactions by date
         transactions.sort(key=lambda x: x["date"])
+
+        # Check if this is a discretionary subscription (exclude essential bills)
+        merchant_name = transactions[0]["merchant_name"] or merchant_key
+        # Get category from transaction
+        category = transactions[0].get('category_detailed') or transactions[0].get('category_primary')
+        
+        if not self._is_discretionary_subscription(merchant_name, category):
+            logger.debug(f"Excluding essential bill from subscriptions: {merchant_name}")
+            return None
 
         # Calculate time gaps between transactions
         gaps_days = []
@@ -170,9 +262,6 @@ class SubscriptionDetector:
             monthly_recurring_spend = avg_amount * 4.33  # ~4.33 weeks per month
         else:  # monthly
             monthly_recurring_spend = avg_amount
-
-        # Get merchant name (use first transaction's merchant_name)
-        merchant_name = transactions[0]["merchant_name"] or merchant_key
 
         return {
             "merchant_key": merchant_key,

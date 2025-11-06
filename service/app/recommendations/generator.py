@@ -12,7 +12,6 @@ from sqlalchemy.orm import Session
 from app.recommendations.catalog import (
     EDUCATION_CATALOG,
     PARTNER_OFFER_CATALOG,
-    REGULATORY_DISCLAIMER,
 )
 from app.recommendations.rationale import RationaleGenerator
 from app.recommendations.content_generator import ContentGenerator
@@ -410,7 +409,6 @@ class RecommendationGenerator:
             )
 
             # Add regulatory disclaimer
-            rationale += f"\n\n{REGULATORY_DISCLAIMER}"
 
             # Generate content using OpenAI (with fallback to template)
             content = self.content_generator.generate_education_content(
@@ -462,7 +460,7 @@ class RecommendationGenerator:
                 tone_score=tone_score,
                 tone_explanation=tone_explanation,
                 disclaimer_present=True,
-                disclaimer_text=REGULATORY_DISCLAIMER,
+                disclaimer_text="This is educational content, not financial advice. Consult a licensed advisor for personalized guidance.",
             )
 
             # Calculate generation time for this recommendation
@@ -520,7 +518,6 @@ class RecommendationGenerator:
             )
 
             # Add regulatory disclaimer
-            rationale += f"\n\n{REGULATORY_DISCLAIMER}"
 
             # Generate content using OpenAI (with fallback to template)
             content = self.content_generator.generate_partner_offer_content(
@@ -548,12 +545,16 @@ class RecommendationGenerator:
             # Get eligibility information from offer
             eligibility_status = offer.get("eligibility_status", "eligible") == "eligible"
             eligibility_explanation = offer.get("eligibility_explanation", "")
-            eligibility_details = {
-                "estimated_income": offer.get("estimated_income"),
-                "estimated_credit_score": offer.get("estimated_credit_score"),
-                "eligibility_requirements": offer.get("eligibility_requirements", {}),
-                "existing_products": existing_products,
-            }
+            eligibility_details = {}
+            if offer.get("estimated_income") is not None:
+                eligibility_details["income"] = offer.get("estimated_income")
+            if offer.get("estimated_credit_score") is not None:
+                eligibility_details["credit_score"] = offer.get("estimated_credit_score")
+            if offer.get("eligibility_requirements", {}).get("existing_products"):
+                eligibility_details["existing_products"] = offer.get("eligibility_requirements", {}).get("existing_products", [])
+            elif existing_products:
+                # Use existing products from user check
+                eligibility_details["existing_products"] = list(existing_products.keys())
 
             # Create guardrails info
             guardrails_info = self.decision_trace_generator.create_guardrails_info(
@@ -566,7 +567,7 @@ class RecommendationGenerator:
                 tone_score=tone_score,
                 tone_explanation=tone_explanation,
                 disclaimer_present=True,
-                disclaimer_text=REGULATORY_DISCLAIMER,
+                disclaimer_text="This is educational content, not financial advice. Consult a licensed advisor for personalized guidance.",
             )
 
             # Calculate generation time for this recommendation

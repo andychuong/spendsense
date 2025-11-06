@@ -158,7 +158,7 @@ class DecisionTraceGenerator:
         """
         guardrails = {
             "consent": {
-                "status": consent_status,
+                "status": "granted" if consent_status else "not_granted",
                 "checked_at": consent_check_timestamp or datetime.utcnow().isoformat() + "Z",
             },
             "disclaimer": {
@@ -169,14 +169,14 @@ class DecisionTraceGenerator:
 
         if eligibility_status is not None:
             guardrails["eligibility"] = {
-                "status": eligibility_status,
+                "status": "eligible" if eligibility_status else "not_eligible",
                 "explanation": eligibility_explanation or "",
                 "details": eligibility_details or {},
             }
 
         if tone_valid is not None:
             guardrails["tone"] = {
-                "valid": tone_valid,
+                "status": "approved" if tone_valid else "rejected",
                 "score": tone_score,
                 "explanation": tone_explanation or "",
             }

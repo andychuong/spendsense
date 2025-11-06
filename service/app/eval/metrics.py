@@ -1,682 +1,441 @@
-"""Evaluation service for calculating system performance and fairness metrics."""
+"""Metrics collection and evaluation for RAG recommendations."""
 
 import logging
-from typing import Dict, List, Any, Optional
-from datetime import datetime, timedelta
-from collections import Counter
-import statistics
-
-from sqlalchemy.orm import Session
-from sqlalchemy import func, and_, or_
-
-# Try to import models from backend
-try:
-    from backend.app.models.user import User
-    from backend.app.models.user_profile import UserProfile
-    from backend.app.models.user_persona_assignment import UserPersonaAssignment
-    from backend.app.models.recommendation import Recommendation, RecommendationType, RecommendationStatus
-except ImportError:
-    import sys
-    import os
-    backend_path = os.path.join(os.path.dirname(__file__), "../../../backend")
-    if backend_path not in sys.path:
-        sys.path.insert(0, backend_path)
-    from app.models.user import User
-    from app.models.user_profile import UserProfile
-    from app.models.user_persona_assignment import UserPersonaAssignment
-    from app.models.recommendation import Recommendation, RecommendationType, RecommendationStatus
+from typing import Dict, Any, List, Optional
+from datetime import datetime
+from collections import defaultdict
 
 logger = logging.getLogger(__name__)
 
 
-class EvaluationService:
-    """Service for calculating evaluation metrics for the recommendation system."""
-
-    def __init__(self, db_session: Session):
+class RecommendationMetrics:
+    """
+    Collect and analyze metrics for recommendation quality.
+    
+    Tracks:
+    - Generation performance (speed, success rate)
+    - Content quality (citation rate, personalization)
+    - User engagement (views, clicks, dismissals)
+    - User feedback (ratings, helpful votes)
+    - Operator decisions (approvals, rejections, edits)
+    """
+    
+    def __init__(self):
+        """Initialize metrics collector."""
+        self.generations = []
+        self.user_interactions = []
+        self.operator_decisions = []
+    
+    def track_generation(
+        self,
+        user_id: str,
+        method: str,  # "rag" or "catalog"
+        generation_result: Dict[str, Any],
+    ):
         """
-        Initialize evaluation service.
-
+        Track recommendation generation.
+        
         Args:
-            db_session: SQLAlchemy database session
+            user_id: User ID
+            method: Generation method ("rag" or "catalog")
+            generation_result: Result from generation
         """
-        self.db = db_session
-
-    def calculate_coverage_metrics(self) -> Dict[str, Any]:
-        """
-        Calculate coverage metrics.
-
-        Returns:
-            Dictionary with coverage metrics:
-            - users_with_persona_percent: % of users with assigned persona
-            - users_with_behaviors_percent: % of users with ≥3 detected behaviors
-            - users_with_both_percent: % of users with both persona and ≥3 behaviors
-            - total_users: Total number of users
-            - users_with_persona_count: Count of users with persona
-            - users_with_behaviors_count: Count of users with ≥3 behaviors
-            - users_with_both_count: Count of users with both
-        """
-        logger.info("Calculating coverage metrics")
-
-        # Get total users (excluding operators and admins)
-        total_users = self.db.query(User).filter(
-            User.role == "user"
-        ).count()
-
-        if total_users == 0:
-            return {
-                "users_with_persona_percent": 0.0,
-                "users_with_behaviors_percent": 0.0,
-                "users_with_both_percent": 0.0,
-                "total_users": 0,
-                "users_with_persona_count": 0,
-                "users_with_behaviors_count": 0,
-                "users_with_both_count": 0,
-            }
-
-        # Get users with assigned persona from UserPersonaAssignment
-        # Count distinct users who have persona assignments
-        from sqlalchemy import distinct
-        users_with_persona = self.db.query(
-            func.count(distinct(UserPersonaAssignment.user_id))
-        ).join(
-            User, UserPersonaAssignment.user_id == User.user_id
-        ).filter(
-            User.role == "user"
-        ).scalar() or 0
-
-        # Get users with ≥3 detected behaviors
-        users_with_behaviors = 0
-        users_with_both = 0
-
-        profiles = self.db.query(UserProfile).join(
-            User, UserProfile.user_id == User.user_id
-        ).filter(
-            User.role == "user"
-        ).all()
-
-        for profile in profiles:
-            # Count behaviors from signals
-            behavior_count = self._count_behaviors(profile.signals_30d or {}, profile.signals_180d or {})
-
-            if behavior_count >= 3:
-                users_with_behaviors += 1
-                # Check if user also has persona assigned
-                has_persona = self.db.query(UserPersonaAssignment).filter(
-                    UserPersonaAssignment.user_id == profile.user_id
-                ).first() is not None
-                if has_persona:
-                    users_with_both += 1
-
-        # Calculate percentages
-        users_with_persona_percent = (users_with_persona / total_users) * 100 if total_users > 0 else 0.0
-        users_with_behaviors_percent = (users_with_behaviors / total_users) * 100 if total_users > 0 else 0.0
-        users_with_both_percent = (users_with_both / total_users) * 100 if total_users > 0 else 0.0
-
-        return {
-            "users_with_persona_percent": round(users_with_persona_percent, 2),
-            "users_with_behaviors_percent": round(users_with_behaviors_percent, 2),
-            "users_with_both_percent": round(users_with_both_percent, 2),
-            "total_users": total_users,
-            "users_with_persona_count": users_with_persona,
-            "users_with_behaviors_count": users_with_behaviors,
-            "users_with_both_count": users_with_both,
+        metrics = {
+            "user_id": user_id,
+            "method": method,
+            "timestamp": datetime.utcnow().isoformat(),
+            "success": generation_result.get("success", False),
+            "generation_time_ms": generation_result.get("generation_time_ms", 0),
+            "recommendation_count": generation_result.get("total_recommendations", 0),
+            "education_count": len(generation_result.get("education_recommendations", [])),
+            "partner_offer_count": len(generation_result.get("partner_offers", [])),
         }
-
-    def _count_behaviors(self, signals_30d: Dict[str, Any], signals_180d: Dict[str, Any]) -> int:
-        """
-        Count number of detected behaviors from signals.
-
-        Args:
-            signals_30d: 30-day signals
-            signals_180d: 180-day signals
-
-        Returns:
-            Number of behaviors detected (0-4: subscriptions, savings, credit, income)
-        """
-        behaviors = 0
-
-        # Check subscriptions
-        if signals_30d.get("subscriptions", {}).get("subscription_count", 0) > 0 or \
-           signals_180d.get("subscriptions", {}).get("subscription_count", 0) > 0:
-            behaviors += 1
-
-        # Check savings
-        if signals_30d.get("savings", {}).get("net_inflow_monthly") is not None or \
-           signals_180d.get("savings", {}).get("net_inflow_monthly") is not None or \
-           signals_30d.get("savings", {}).get("savings_growth_rate_percent") is not None or \
-           signals_180d.get("savings", {}).get("savings_growth_rate_percent") is not None:
-            behaviors += 1
-
-        # Check credit
-        if signals_30d.get("credit", {}).get("high_utilization_cards") or \
-           signals_180d.get("credit", {}).get("high_utilization_cards") or \
-           signals_30d.get("credit", {}).get("critical_utilization_cards") or \
-           signals_180d.get("credit", {}).get("critical_utilization_cards") or \
-           signals_30d.get("credit", {}).get("cards_with_interest") or \
-           signals_180d.get("credit", {}).get("cards_with_interest"):
-            behaviors += 1
-
-        # Check income
-        if signals_30d.get("income", {}).get("income_patterns", {}).get("payment_frequency") or \
-           signals_180d.get("income", {}).get("income_patterns", {}).get("payment_frequency") or \
-           signals_30d.get("income", {}).get("cash_flow_buffer_months") is not None or \
-           signals_180d.get("income", {}).get("cash_flow_buffer_months") is not None:
-            behaviors += 1
-
-        return behaviors
-
-    def calculate_explainability_metrics(self) -> Dict[str, Any]:
-        """
-        Calculate explainability metrics.
-
-        Returns:
-            Dictionary with explainability metrics:
-            - recommendations_with_rationales_percent: % of recommendations with plain-language rationales
-            - rationales_with_data_points_percent: % of rationales citing specific data points
-            - total_recommendations: Total number of recommendations
-            - recommendations_with_rationales_count: Count of recommendations with rationales
-            - rationales_with_data_points_count: Count of rationales with data points
-            - rationale_quality_score: Average rationale quality score (0-10)
-        """
-        logger.info("Calculating explainability metrics")
-
-        # Get all recommendations
-        recommendations = self.db.query(Recommendation).all()
-        total_recommendations = len(recommendations)
-
-        if total_recommendations == 0:
-            return {
-                "recommendations_with_rationales_percent": 0.0,
-                "rationales_with_data_points_percent": 0.0,
-                "total_recommendations": 0,
-                "recommendations_with_rationales_count": 0,
-                "rationales_with_data_points_count": 0,
-                "rationale_quality_score": 0.0,
-            }
-
-        recommendations_with_rationales = 0
-        rationales_with_data_points = 0
-        quality_scores = []
-
-        for rec in recommendations:
-            # Check if rationale exists and is not empty
-            if rec.rationale and len(rec.rationale.strip()) > 0:
-                recommendations_with_rationales += 1
-
-                # Check if rationale cites specific data points
-                if self._rationale_has_data_points(rec.rationale):
-                    rationales_with_data_points += 1
-
-                # Calculate rationale quality score
-                quality_score = self._calculate_rationale_quality(rec.rationale)
-                quality_scores.append(quality_score)
-
-        # Calculate percentages
-        recommendations_with_rationales_percent = (
-            (recommendations_with_rationales / total_recommendations) * 100
-            if total_recommendations > 0 else 0.0
-        )
-        rationales_with_data_points_percent = (
-            (rationales_with_data_points / recommendations_with_rationales) * 100
-            if recommendations_with_rationales > 0 else 0.0
-        )
-        rationale_quality_score = (
-            statistics.mean(quality_scores) if quality_scores else 0.0
-        )
-
-        return {
-            "recommendations_with_rationales_percent": round(recommendations_with_rationales_percent, 2),
-            "rationales_with_data_points_percent": round(rationales_with_data_points_percent, 2),
-            "total_recommendations": total_recommendations,
-            "recommendations_with_rationales_count": recommendations_with_rationales,
-            "rationales_with_data_points_count": rationales_with_data_points,
-            "rationale_quality_score": round(rationale_quality_score, 2),
-        }
-
-    def _rationale_has_data_points(self, rationale: str) -> bool:
-        """
-        Check if rationale cites specific data points.
-
-        Args:
-            rationale: Rationale text
-
-        Returns:
-            True if rationale contains data point citations
-        """
-        if not rationale:
-            return False
-
-        rationale_lower = rationale.lower()
-
-        # Check for account citations (ending in, last 4 digits)
-        if "ending in" in rationale_lower or "last 4" in rationale_lower or "last four" in rationale_lower:
-            return True
-
-        # Check for currency citations ($, amounts)
-        if "$" in rationale and any(char.isdigit() for char in rationale):
-            return True
-
-        # Check for percentage citations (%)
-        if "%" in rationale and any(char.isdigit() for char in rationale):
-            return True
-
-        # Check for date citations (month names, dates)
-        months = ["january", "february", "march", "april", "may", "june",
-                  "july", "august", "september", "october", "november", "december"]
-        if any(month in rationale_lower for month in months):
-            return True
-
-        # Check for number citations (counts, amounts)
-        # Look for patterns like "3 subscriptions", "5 cards", etc.
-        import re
-        number_patterns = [
-            r'\d+\s+(subscriptions?|cards?|merchants?|accounts?)',
-            r'\d+\s+(days?|months?|weeks?)',
-        ]
-        for pattern in number_patterns:
-            if re.search(pattern, rationale_lower):
-                return True
-
-        return False
-
-    def _calculate_rationale_quality(self, rationale: str) -> float:
-        """
-        Calculate rationale quality score (0-10).
-
-        Simple automated scoring based on:
-        - Length (longer is better, up to a point)
-        - Data point citations (presence of $, %, dates, account numbers)
-        - Plain language indicators (avoiding jargon)
-
-        Args:
-            rationale: Rationale text
-
-        Returns:
-            Quality score (0-10)
-        """
-        if not rationale:
-            return 0.0
-
-        score = 0.0
-
-        # Length score (0-3 points)
-        length = len(rationale.strip())
-        if length >= 100:
-            score += 3.0
-        elif length >= 50:
-            score += 2.0
-        elif length >= 20:
-            score += 1.0
-
-        # Data point citations (0-4 points)
-        if self._rationale_has_data_points(rationale):
-            score += 4.0
-
-        # Plain language check (0-3 points)
-        # Check for avoiding jargon
-        jargon_words = ["leverage", "optimize", "synergize", "utilize", "facilitate", "implementation"]
-        rationale_lower = rationale.lower()
-        jargon_count = sum(1 for word in jargon_words if word in rationale_lower)
-
-        if jargon_count == 0:
-            score += 3.0
-        elif jargon_count <= 1:
-            score += 2.0
-        elif jargon_count <= 2:
-            score += 1.0
-
-        # Cap at 10
-        return min(score, 10.0)
-
-    def calculate_relevance_metrics(self) -> Dict[str, Any]:
-        """
-        Calculate relevance metrics.
-
-        Returns:
-            Dictionary with relevance metrics:
-            - education_persona_fit_percent: % of education items matching persona
-            - partner_offer_persona_fit_percent: % of partner offers matching persona
-            - total_education_items: Total education recommendations
-            - total_partner_offers: Total partner offer recommendations
-            - education_items_matching_persona: Count of education items matching persona
-            - partner_offers_matching_persona: Count of partner offers matching persona
-        """
-        logger.info("Calculating relevance metrics")
-
-        # Get all recommendations with their decision traces
-        recommendations = self.db.query(Recommendation).join(
-            UserProfile, Recommendation.user_id == UserProfile.user_id
-        ).all()
-
-        education_items = [r for r in recommendations if r.type == RecommendationType.EDUCATION]
-        partner_offers = [r for r in recommendations if r.type == RecommendationType.PARTNER_OFFER]
-
-        total_education_items = len(education_items)
-        total_partner_offers = len(partner_offers)
-
-        # Check education-persona fit
-        education_items_matching_persona = 0
-        for rec in education_items:
-            if self._check_education_persona_fit(rec):
-                education_items_matching_persona += 1
-
-        # Check partner offer-persona fit
-        partner_offers_matching_persona = 0
-        for rec in partner_offers:
-            if self._check_partner_offer_persona_fit(rec):
-                partner_offers_matching_persona += 1
-
-        # Calculate percentages
-        education_persona_fit_percent = (
-            (education_items_matching_persona / total_education_items) * 100
-            if total_education_items > 0 else 0.0
-        )
-        partner_offer_persona_fit_percent = (
-            (partner_offers_matching_persona / total_partner_offers) * 100
-            if total_partner_offers > 0 else 0.0
-        )
-
-        return {
-            "education_persona_fit_percent": round(education_persona_fit_percent, 2),
-            "partner_offer_persona_fit_percent": round(partner_offer_persona_fit_percent, 2),
-            "total_education_items": total_education_items,
-            "total_partner_offers": total_partner_offers,
-            "education_items_matching_persona": education_items_matching_persona,
-            "partner_offers_matching_persona": partner_offers_matching_persona,
-        }
-
-    def _check_education_persona_fit(self, recommendation: Recommendation) -> bool:
-        """
-        Check if education item matches user's persona.
-
-        Args:
-            recommendation: Recommendation object
-
-        Returns:
-            True if education item matches persona
-        """
-        if not recommendation.decision_trace:
-            return False
-
-        trace = recommendation.decision_trace
-        persona_id = trace.get("persona_assignment", {}).get("persona_id")
-
-        if not persona_id:
-            return False
-
-        # Get user's assigned persona from UserPersonaAssignment
-        assignment = self.db.query(UserPersonaAssignment).filter(
-            UserPersonaAssignment.user_id == recommendation.user_id
-        ).order_by(UserPersonaAssignment.assigned_at.asc()).first()
-
-        if not assignment:
-            return False
-
-        # Check if recommendation's decision trace persona matches user's assigned persona
-        return persona_id == assignment.persona_id
-
-    def _check_partner_offer_persona_fit(self, recommendation: Recommendation) -> bool:
-        """
-        Check if partner offer matches user's persona.
-
-        Args:
-            recommendation: Recommendation object
-
-        Returns:
-            True if partner offer matches persona
-        """
-        # Same logic as education items
-        return self._check_education_persona_fit(recommendation)
-
-    def calculate_latency_metrics(self) -> Dict[str, Any]:
-        """
-        Calculate latency metrics.
-
-        Returns:
-            Dictionary with latency metrics:
-            - recommendation_generation_latency_p50: p50 latency in ms
-            - recommendation_generation_latency_p95: p95 latency in ms
-            - recommendation_generation_latency_p99: p99 latency in ms
-            - recommendation_generation_latency_mean: Mean latency in ms
-            - recommendation_generation_latency_max: Max latency in ms
-            - recommendation_generation_latency_min: Min latency in ms
-            - recommendations_within_target: Count of recommendations generated within 5 seconds
-            - recommendations_within_target_percent: % of recommendations within 5 seconds
-            - total_recommendations: Total recommendations with latency data
-        """
-        logger.info("Calculating latency metrics")
-
-        # Get all recommendations with decision traces
-        recommendations = self.db.query(Recommendation).filter(
-            Recommendation.decision_trace.isnot(None)
-        ).all()
-
-        latencies = []
-        target_threshold_ms = 5000  # 5 seconds in milliseconds
-
-        for rec in recommendations:
-            if rec.decision_trace:
-                latency_ms = rec.decision_trace.get("generation_time_ms")
-                if latency_ms is not None:
-                    latencies.append(float(latency_ms))
-
-        total_recommendations = len(latencies)
-
-        if total_recommendations == 0:
-            return {
-                "recommendation_generation_latency_p50": 0.0,
-                "recommendation_generation_latency_p95": 0.0,
-                "recommendation_generation_latency_p99": 0.0,
-                "recommendation_generation_latency_mean": 0.0,
-                "recommendation_generation_latency_max": 0.0,
-                "recommendation_generation_latency_min": 0.0,
-                "recommendations_within_target": 0,
-                "recommendations_within_target_percent": 0.0,
-                "total_recommendations": 0,
-            }
-
-        # Calculate percentiles
-        sorted_latencies = sorted(latencies)
-
-        def percentile(data, p):
-            """Calculate percentile value."""
-            if not data:
-                return 0.0
-            n = len(data)
-            k = (n - 1) * p
-            f = int(k)
-            c = k - f
-            if f + 1 < n:
-                return data[f] + c * (data[f + 1] - data[f])
-            return data[f]
-
-        p50 = percentile(sorted_latencies, 0.50)
-        p95 = percentile(sorted_latencies, 0.95)
-        p99 = percentile(sorted_latencies, 0.99)
-
-        mean_latency = statistics.mean(latencies)
-        max_latency = max(latencies)
-        min_latency = min(latencies)
-
-        # Count recommendations within target (5 seconds)
-        recommendations_within_target = sum(1 for l in latencies if l <= target_threshold_ms)
-        recommendations_within_target_percent = (
-            (recommendations_within_target / total_recommendations) * 100
-            if total_recommendations > 0 else 0.0
-        )
-
-        return {
-            "recommendation_generation_latency_p50": round(p50, 2),
-            "recommendation_generation_latency_p95": round(p95, 2),
-            "recommendation_generation_latency_p99": round(p99, 2),
-            "recommendation_generation_latency_mean": round(mean_latency, 2),
-            "recommendation_generation_latency_max": round(max_latency, 2),
-            "recommendation_generation_latency_min": round(min_latency, 2),
-            "recommendations_within_target": recommendations_within_target,
-            "recommendations_within_target_percent": round(recommendations_within_target_percent, 2),
-            "total_recommendations": total_recommendations,
-        }
-
-    def calculate_fairness_metrics(self) -> Dict[str, Any]:
-        """
-        Calculate fairness metrics.
-
-        Note: This is a simplified implementation. Full demographic parity
-        requires demographic data in the user model (e.g., age, gender, race).
-        For MVP, we check recommendation distribution across personas.
-
-        Returns:
-            Dictionary with fairness metrics:
-            - persona_distribution: Distribution of recommendations across personas
-            - recommendations_per_persona: Count of recommendations per persona
-            - persona_balance_score: Balance score (0-1, 1 = perfectly balanced)
-            - signal_detection_by_persona: Signal detection accuracy by persona
-        """
-        logger.info("Calculating fairness metrics")
-
-        # Get all recommendations with decision traces
-        recommendations = self.db.query(Recommendation).filter(
-            Recommendation.decision_trace.isnot(None)
-        ).all()
-
-        # Count recommendations by persona
-        persona_counts = Counter()
-        persona_user_counts = Counter()
-
-        for rec in recommendations:
-            if rec.decision_trace:
-                persona_id = rec.decision_trace.get("persona_assignment", {}).get("persona_id")
-                if persona_id:
-                    persona_counts[persona_id] += 1
-
-        # Get user distribution by persona from UserPersonaAssignment
-        assignments = self.db.query(UserPersonaAssignment).all()
-        for assignment in assignments:
-            persona_user_counts[assignment.persona_id] += 1
-
-        # Calculate persona distribution percentages
-        total_recommendations = sum(persona_counts.values())
-        total_users = sum(persona_user_counts.values())
-
-        persona_distribution = {}
-        recommendations_per_persona = {}
-
-        for persona_id in range(1, 6):
-            count = persona_counts.get(persona_id, 0)
-            user_count = persona_user_counts.get(persona_id, 0)
-
-            recommendations_per_persona[persona_id] = count
-
-            rec_percent = (
-                (count / total_recommendations) * 100
-                if total_recommendations > 0 else 0.0
-            )
-            user_percent = (
-                (user_count / total_users) * 100
-                if total_users > 0 else 0.0
-            )
-
-            persona_distribution[persona_id] = {
-                "recommendations_percent": round(rec_percent, 2),
-                "users_percent": round(user_percent, 2),
-                "recommendations_count": count,
-                "users_count": user_count,
-            }
-
-        # Calculate balance score (how evenly distributed)
-        # Lower variance = more balanced
-        if total_recommendations > 0 and total_users > 0:
-            rec_percentages = [v["recommendations_percent"] for v in persona_distribution.values()]
-            user_percentages = [v["users_percent"] for v in persona_distribution.values()]
-
-            # Calculate variance from expected distribution
-            variances = []
-            for rec_pct, user_pct in zip(rec_percentages, user_percentages):
-                if user_pct > 0:
-                    expected_rec_pct = user_pct
-                    variance = abs(rec_pct - expected_rec_pct)
-                    variances.append(variance)
-
-            # Balance score: 1 - (normalized variance)
-            # Perfect balance = 1.0
-            if variances:
-                avg_variance = statistics.mean(variances)
-                # Normalize: assume max variance is 100 (if all recs go to one persona)
-                normalized_variance = avg_variance / 100.0
-                balance_score = max(0.0, 1.0 - normalized_variance)
-            else:
-                balance_score = 1.0
-        else:
-            balance_score = 0.0
-
-        # Calculate signal detection by persona (simplified)
-        signal_detection_by_persona = {}
-        for persona_id in range(1, 6):
-            # Get users with this persona assignment
-            assignments_for_persona = self.db.query(UserPersonaAssignment).filter(
-                UserPersonaAssignment.persona_id == persona_id
-            ).all()
+        
+        # RAG-specific metrics
+        if method == "rag":
+            context_used = generation_result.get("context_used", {})
+            metrics.update({
+                "documents_retrieved": context_used.get("documents_retrieved", 0),
+                "similar_scenarios": context_used.get("similar_scenarios_found", 0),
+            })
             
-            # Get profiles for these users
-            user_ids = [a.user_id for a in assignments_for_persona]
-            profiles_for_persona = self.db.query(UserProfile).filter(
-                UserProfile.user_id.in_(user_ids)
-            ).all() if user_ids else []
-
-            total_behaviors = 0
-            total_profiles = len(profiles_for_persona)
-
-            for profile in profiles_for_persona:
-                behavior_count = self._count_behaviors(
-                    profile.signals_30d or {},
-                    profile.signals_180d or {}
-                )
-                total_behaviors += behavior_count
-
-            avg_behaviors = (
-                total_behaviors / total_profiles
-                if total_profiles > 0 else 0.0
+            # Analyze citation rate
+            citations = 0
+            recommendations = (
+                generation_result.get("education_recommendations", []) +
+                generation_result.get("partner_offers", [])
             )
-
-            signal_detection_by_persona[persona_id] = {
-                "avg_behaviors_detected": round(avg_behaviors, 2),
-                "profiles_count": total_profiles,
-            }
-
-        return {
-            "persona_distribution": persona_distribution,
-            "recommendations_per_persona": recommendations_per_persona,
-            "persona_balance_score": round(balance_score, 3),
-            "signal_detection_by_persona": signal_detection_by_persona,
-        }
-
-    def calculate_all_metrics(self) -> Dict[str, Any]:
+            
+            for rec in recommendations:
+                rationale = rec.get("rationale", "")
+                if any(char.isdigit() for char in rationale):
+                    citations += 1
+            
+            metrics["citation_rate"] = citations / len(recommendations) if recommendations else 0
+        
+        self.generations.append(metrics)
+        logger.debug(f"Tracked generation: {method} for user {user_id}")
+    
+    def track_user_interaction(
+        self,
+        user_id: str,
+        recommendation_id: str,
+        action: str,  # "view", "click", "dismiss", "rate", "helpful"
+        metadata: Optional[Dict[str, Any]] = None,
+    ):
         """
-        Calculate all evaluation metrics.
-
+        Track user interaction with recommendation.
+        
+        Args:
+            user_id: User ID
+            recommendation_id: Recommendation ID
+            action: Action type
+            metadata: Additional metadata (rating, click target, etc.)
+        """
+        interaction = {
+            "user_id": user_id,
+            "recommendation_id": recommendation_id,
+            "action": action,
+            "timestamp": datetime.utcnow().isoformat(),
+            "metadata": metadata or {},
+        }
+        
+        self.user_interactions.append(interaction)
+        logger.debug(f"Tracked interaction: {action} on {recommendation_id}")
+    
+    def track_operator_decision(
+        self,
+        operator_id: str,
+        recommendation_id: str,
+        decision: str,  # "approve", "reject", "edit"
+        metadata: Optional[Dict[str, Any]] = None,
+    ):
+        """
+        Track operator decision on recommendation.
+        
+        Args:
+            operator_id: Operator ID
+            recommendation_id: Recommendation ID
+            decision: Decision type
+            metadata: Additional metadata (edit changes, rejection reason, etc.)
+        """
+        decision_record = {
+            "operator_id": operator_id,
+            "recommendation_id": recommendation_id,
+            "decision": decision,
+            "timestamp": datetime.utcnow().isoformat(),
+            "metadata": metadata or {},
+        }
+        
+        self.operator_decisions.append(decision_record)
+        logger.debug(f"Tracked operator decision: {decision} on {recommendation_id}")
+    
+    def get_generation_metrics(self, method: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Get aggregated generation metrics.
+        
+        Args:
+            method: Filter by method ("rag" or "catalog"), or None for all
+        
         Returns:
-            Dictionary with all metrics:
-            - coverage: Coverage metrics
-            - explainability: Explainability metrics
-            - relevance: Relevance metrics
-            - latency: Latency metrics
-            - fairness: Fairness metrics
-            - calculated_at: Timestamp of calculation
+            Aggregated metrics
         """
-        logger.info("Calculating all evaluation metrics")
-
-        coverage = self.calculate_coverage_metrics()
-        explainability = self.calculate_explainability_metrics()
-        relevance = self.calculate_relevance_metrics()
-        latency = self.calculate_latency_metrics()
-        fairness = self.calculate_fairness_metrics()
-
-        return {
-            "coverage": coverage,
-            "explainability": explainability,
-            "relevance": relevance,
-            "latency": latency,
-            "fairness": fairness,
-            "calculated_at": datetime.utcnow().isoformat() + "Z",
+        generations = self.generations
+        if method:
+            generations = [g for g in generations if g["method"] == method]
+        
+        if not generations:
+            return {
+                "sample_size": 0,
+                "success_rate": 0,
+                "avg_generation_time_ms": 0,
+                "avg_recommendation_count": 0,
+            }
+        
+        successful = [g for g in generations if g["success"]]
+        
+        metrics = {
+            "sample_size": len(generations),
+            "successful_generations": len(successful),
+            "success_rate": len(successful) / len(generations),
+            "avg_generation_time_ms": sum(g["generation_time_ms"] for g in successful) / len(successful) if successful else 0,
+            "avg_recommendation_count": sum(g["recommendation_count"] for g in successful) / len(successful) if successful else 0,
+            "avg_education_count": sum(g["education_count"] for g in successful) / len(successful) if successful else 0,
+            "avg_partner_offer_count": sum(g["partner_offer_count"] for g in successful) / len(successful) if successful else 0,
         }
+        
+        # RAG-specific metrics
+        if method == "rag":
+            rag_gens = [g for g in successful if g["method"] == "rag"]
+            if rag_gens:
+                metrics.update({
+                    "avg_documents_retrieved": sum(g.get("documents_retrieved", 0) for g in rag_gens) / len(rag_gens),
+                    "avg_similar_scenarios": sum(g.get("similar_scenarios", 0) for g in rag_gens) / len(rag_gens),
+                    "avg_citation_rate": sum(g.get("citation_rate", 0) for g in rag_gens) / len(rag_gens),
+                })
+        
+        return metrics
+    
+    def get_interaction_metrics(self, recommendation_id: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Get aggregated interaction metrics.
+        
+        Args:
+            recommendation_id: Filter by recommendation ID, or None for all
+        
+        Returns:
+            Aggregated metrics
+        """
+        interactions = self.user_interactions
+        if recommendation_id:
+            interactions = [i for i in interactions if i["recommendation_id"] == recommendation_id]
+        
+        if not interactions:
+            return {
+                "total_interactions": 0,
+                "views": 0,
+                "clicks": 0,
+                "dismissals": 0,
+                "ratings": 0,
+                "helpful_votes": 0,
+            }
+        
+        # Count by action type
+        action_counts = defaultdict(int)
+        for interaction in interactions:
+            action_counts[interaction["action"]] += 1
+        
+        # Calculate rates
+        views = action_counts.get("view", 0)
+        clicks = action_counts.get("click", 0)
+        dismissals = action_counts.get("dismiss", 0)
+        
+        metrics = {
+            "total_interactions": len(interactions),
+            "views": views,
+            "clicks": clicks,
+            "dismissals": dismissals,
+            "ratings": action_counts.get("rate", 0),
+            "helpful_votes": action_counts.get("helpful", 0),
+            "click_through_rate": clicks / views if views > 0 else 0,
+            "dismissal_rate": dismissals / views if views > 0 else 0,
+        }
+        
+        # Average rating
+        ratings = [i["metadata"].get("rating", 0) for i in interactions if i["action"] == "rate"]
+        if ratings:
+            metrics["avg_rating"] = sum(ratings) / len(ratings)
+            metrics["rating_distribution"] = {
+                "5_stars": sum(1 for r in ratings if r == 5),
+                "4_stars": sum(1 for r in ratings if r == 4),
+                "3_stars": sum(1 for r in ratings if r == 3),
+                "2_stars": sum(1 for r in ratings if r == 2),
+                "1_star": sum(1 for r in ratings if r == 1),
+            }
+        
+        return metrics
+    
+    def get_operator_metrics(self, operator_id: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Get aggregated operator decision metrics.
+        
+        Args:
+            operator_id: Filter by operator ID, or None for all
+        
+        Returns:
+            Aggregated metrics
+        """
+        decisions = self.operator_decisions
+        if operator_id:
+            decisions = [d for d in decisions if d["operator_id"] == operator_id]
+        
+        if not decisions:
+            return {
+                "total_decisions": 0,
+                "approvals": 0,
+                "rejections": 0,
+                "edits": 0,
+                "approval_rate": 0,
+            }
+        
+        # Count by decision type
+        approvals = sum(1 for d in decisions if d["decision"] == "approve")
+        rejections = sum(1 for d in decisions if d["decision"] == "reject")
+        edits = sum(1 for d in decisions if d["decision"] == "edit")
+        
+        metrics = {
+            "total_decisions": len(decisions),
+            "approvals": approvals,
+            "rejections": rejections,
+            "edits": edits,
+            "approval_rate": approvals / len(decisions),
+            "rejection_rate": rejections / len(decisions),
+            "edit_rate": edits / len(decisions),
+        }
+        
+        # Common rejection reasons
+        rejection_reasons = [
+            d["metadata"].get("reason", "unknown")
+            for d in decisions if d["decision"] == "reject"
+        ]
+        if rejection_reasons:
+            reason_counts = defaultdict(int)
+            for reason in rejection_reasons:
+                reason_counts[reason] += 1
+            metrics["rejection_reasons"] = dict(reason_counts)
+        
+        return metrics
+    
+    def compare_methods(self) -> Dict[str, Any]:
+        """
+        Compare RAG vs Catalog generation methods.
+        
+        Returns:
+            Comparison metrics
+        """
+        rag_metrics = self.get_generation_metrics(method="rag")
+        catalog_metrics = self.get_generation_metrics(method="catalog")
+        
+        if rag_metrics["sample_size"] == 0 or catalog_metrics["sample_size"] == 0:
+            return {
+                "error": "Need data from both RAG and catalog to compare",
+                "rag_sample_size": rag_metrics["sample_size"],
+                "catalog_sample_size": catalog_metrics["sample_size"],
+            }
+        
+        comparison = {
+            "rag": rag_metrics,
+            "catalog": catalog_metrics,
+            "improvements": {
+                "success_rate": rag_metrics["success_rate"] - catalog_metrics["success_rate"],
+                "generation_time_ms": rag_metrics["avg_generation_time_ms"] - catalog_metrics["avg_generation_time_ms"],
+                "recommendation_count": rag_metrics["avg_recommendation_count"] - catalog_metrics["avg_recommendation_count"],
+            },
+            "winner": self._determine_winner(rag_metrics, catalog_metrics),
+        }
+        
+        return comparison
+    
+    def _determine_winner(self, rag_metrics: Dict[str, Any], catalog_metrics: Dict[str, Any]) -> str:
+        """
+        Determine which method is better.
+        
+        Args:
+            rag_metrics: RAG metrics
+            catalog_metrics: Catalog metrics
+        
+        Returns:
+            "rag", "catalog", or "tie"
+        """
+        # Weight different factors
+        rag_score = 0
+        catalog_score = 0
+        
+        # Success rate (30% weight)
+        if rag_metrics["success_rate"] > catalog_metrics["success_rate"]:
+            rag_score += 30
+        elif catalog_metrics["success_rate"] > rag_metrics["success_rate"]:
+            catalog_score += 30
+        
+        # Generation time (20% weight) - faster is better
+        if rag_metrics["avg_generation_time_ms"] < catalog_metrics["avg_generation_time_ms"]:
+            rag_score += 20
+        elif catalog_metrics["avg_generation_time_ms"] < rag_metrics["avg_generation_time_ms"]:
+            catalog_score += 20
+        
+        # Citation rate (50% weight) - only RAG has this
+        if "avg_citation_rate" in rag_metrics:
+            if rag_metrics["avg_citation_rate"] > 0.5:  # Good citation rate
+                rag_score += 50
+        
+        if abs(rag_score - catalog_score) < 10:
+            return "tie"
+        elif rag_score > catalog_score:
+            return "rag"
+        else:
+            return "catalog"
+    
+    def get_summary(self) -> str:
+        """
+        Get human-readable summary of all metrics.
+        
+        Returns:
+            Summary string
+        """
+        lines = [
+            "=" * 80,
+            "Recommendation Metrics Summary",
+            "=" * 80,
+        ]
+        
+        # Generation metrics
+        lines.append("\nGENERATION METRICS:")
+        for method in ["rag", "catalog"]:
+            metrics = self.get_generation_metrics(method=method)
+            if metrics["sample_size"] > 0:
+                lines.extend([
+                    f"\n  {method.upper()}:",
+                    f"    Sample Size: {metrics['sample_size']}",
+                    f"    Success Rate: {metrics['success_rate']:.1%}",
+                    f"    Avg Generation Time: {metrics['avg_generation_time_ms']:.0f}ms",
+                    f"    Avg Recommendations: {metrics['avg_recommendation_count']:.1f}",
+                ])
+                
+                if method == "rag" and "avg_citation_rate" in metrics:
+                    lines.append(f"    Avg Citation Rate: {metrics['avg_citation_rate']:.1%}")
+        
+        # Interaction metrics
+        interaction_metrics = self.get_interaction_metrics()
+        if interaction_metrics["total_interactions"] > 0:
+            lines.extend([
+                "\nUSER INTERACTION METRICS:",
+                f"  Total Interactions: {interaction_metrics['total_interactions']}",
+                f"  Views: {interaction_metrics['views']}",
+                f"  Clicks: {interaction_metrics['clicks']}",
+                f"  Click-Through Rate: {interaction_metrics['click_through_rate']:.1%}",
+                f"  Dismissal Rate: {interaction_metrics['dismissal_rate']:.1%}",
+            ])
+            
+            if "avg_rating" in interaction_metrics:
+                lines.append(f"  Avg Rating: {interaction_metrics['avg_rating']:.2f}/5.0")
+        
+        # Operator metrics
+        operator_metrics = self.get_operator_metrics()
+        if operator_metrics["total_decisions"] > 0:
+            lines.extend([
+                "\nOPERATOR DECISION METRICS:",
+                f"  Total Decisions: {operator_metrics['total_decisions']}",
+                f"  Approval Rate: {operator_metrics['approval_rate']:.1%}",
+                f"  Rejection Rate: {operator_metrics['rejection_rate']:.1%}",
+                f"  Edit Rate: {operator_metrics['edit_rate']:.1%}",
+            ])
+        
+        # Comparison
+        comparison = self.compare_methods()
+        if "error" not in comparison:
+            lines.extend([
+                "\nCOMPARISON (RAG vs CATALOG):",
+                f"  Winner: {comparison['winner'].upper()}",
+                f"  Success Rate Improvement: {comparison['improvements']['success_rate']:+.1%}",
+                f"  Generation Time Difference: {comparison['improvements']['generation_time_ms']:+.0f}ms",
+            ])
+        
+        lines.append("=" * 80)
+        
+        return "\n".join(lines)
+    
+    def reset(self):
+        """Reset all collected metrics."""
+        self.generations = []
+        self.user_interactions = []
+        self.operator_decisions = []
+        logger.info("Metrics reset")
 
+
+# Singleton instance for global metrics collection
+_global_metrics = RecommendationMetrics()
+
+
+def get_metrics_collector() -> RecommendationMetrics:
+    """Get global metrics collector instance."""
+    return _global_metrics

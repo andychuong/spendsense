@@ -262,6 +262,359 @@ EDUCATION_CATALOG: List[Dict[str, Any]] = [
         "persona_ids": [5],
         "tags": ["budgeting", "general", "planning"],
     },
+    {
+        "id": "edu_015",
+        "title": "Setting Financial Goals: Short, Mid, and Long-Term",
+        "content": (
+            "Setting clear financial goals is the first step toward achieving them.\n\n"
+            "**Short-Term Goals (1-12 months)**:\n"
+            "- Build a starter emergency fund ($1,000)\n"
+            "- Pay off a small credit card balance\n"
+            "- Save for a weekend trip\n\n"
+            "**Mid-Term Goals (1-5 years)**:\n"
+            "- Save for a down payment on a car\n"
+            "- Build a 3-6 month emergency fund\n"
+            "- Pay off student loans\n\n"
+            "**Long-Term Goals (5+ years)**:\n"
+            "- Save for a down payment on a house\n"
+            "- Invest for retirement\n"
+            "- Save for a child's education\n\n"
+            "**Pro Tip**: Use the SMART goals framework: Specific, Measurable, Achievable, Relevant, Time-bound. "
+            "Write down your goals and track your progress!"
+        ),
+        "persona_ids": [5],
+        "tags": ["financial goals", "planning", "general"],
+    },
+    
+    # Category-Based Recommendations: Food & Dining
+    {
+        "id": "edu_016",
+        "title": "Smart Grocery Shopping: Save $200+/Month",
+        "content": (
+            "Groceries are one of the easiest places to cut costs without sacrificing quality.\n\n"
+            "**Plan Before You Shop**:\n"
+            "- Make a weekly meal plan and shopping list\n"
+            "- Never shop hungry (you'll buy 40% more!)\n"
+            "- Check your pantry first to avoid duplicates\n\n"
+            "**Smart Shopping Strategies**:\n"
+            "- Buy store brands (often 30-50% cheaper, same quality)\n"
+            "- Use cash-back apps like Ibotta or Fetch\n"
+            "- Shop sales and buy in bulk for non-perishables\n"
+            "- Choose frozen vegetables (just as nutritious, less waste)\n\n"
+            "**Meal Prep**: Cooking at home saves $10-15 per meal vs. dining out. "
+            "Prep 3-4 meals on Sunday to reduce weeknight takeout temptation.\n\n"
+            "**Expert Tip**: Food should be 10-15% of your income. If you're spending more, start with one change at a time."
+        ),
+        "persona_ids": [5],
+        "tags": ["food", "groceries", "budgeting", "savings"],
+    },
+    {
+        "id": "edu_017",
+        "title": "Dining Out Without Breaking the Bank",
+        "content": (
+            "You can enjoy restaurants and save money with smart strategies:\n\n"
+            "**Set a Monthly Dining Budget**: Experts recommend keeping dining out to 5-7% of take-home pay. "
+            "For a $4,000/month income, that's $200-280.\n\n"
+            "**Money-Saving Tactics**:\n"
+            "- Order water instead of drinks (saves $3-5 per person)\n"
+            "- Split entrees or take half home\n"
+            "- Look for restaurant week deals or lunch specials\n"
+            "- Use credit card dining rewards (4% back adds up!)\n\n"
+            "**The 50/50 Rule**: For every restaurant meal, eat one meal at home. "
+            "This naturally reduces dining costs by half.\n\n"
+            "**Coffee Shop Savings**: That daily $5 coffee is $1,825/year. "
+            "Make coffee at home 3-4 days/week and save $1,000+/year."
+        ),
+        "persona_ids": [5],
+        "tags": ["dining", "restaurants", "budgeting"],
+    },
+    {
+        "id": "edu_018",
+        "title": "Meal Prep 101: Your Secret Weapon Against Overspending",
+        "content": (
+            "Meal prep is the single best way to reduce food spending.\n\n"
+            "**The Math**: Home-cooked meal = $3-5. Restaurant meal = $12-20. "
+            "Prep 10 meals on Sunday and save $90-150/week!\n\n"
+            "**Easy Meal Prep Strategy**:\n"
+            "1. Choose 3-4 simple recipes (Pinterest or YouTube)\n"
+            "2. Shop once for all ingredients\n"
+            "3. Spend 2-3 hours Sunday cooking and portioning\n"
+            "4. Store in containers (invest in good ones!)\n\n"
+            "**Beginner-Friendly Meals**:\n"
+            "- Chicken and rice bowls (add different vegetables)\n"
+            "- Pasta with marinara (make large batch)\n"
+            "- Chili or soup (freezes well)\n"
+            "- Breakfast burritos (freeze individually)\n\n"
+            "**Pro Tip**: Start small! Prep lunch only for first 2 weeks. Build the habit before adding dinner."
+        ),
+        "persona_ids": [5],
+        "tags": ["meal prep", "cooking", "budgeting", "food"],
+    },
+    
+    # Category-Based Recommendations: Transportation
+    {
+        "id": "edu_019",
+        "title": "Transportation Costs: Are You Spending Too Much?",
+        "content": (
+            "Transportation should be 10-15% of your income maximum.\n\n"
+            "**Total Transportation Costs Include**:\n"
+            "- Car payment or lease\n"
+            "- Gas and maintenance\n"
+            "- Insurance\n"
+            "- Parking fees\n"
+            "- Registration and taxes\n\n"
+            "**The 20/4/10 Rule for Car Buying**:\n"
+            "- 20% down payment\n"
+            "- 4-year loan maximum\n"
+            "- Total monthly payment < 10% of gross income\n\n"
+            "**Cost-Cutting Strategies**:\n"
+            "- Bundle insurance policies for discounts (10-25% savings)\n"
+            "- Pay insurance annually instead of monthly (save $50-100/year)\n"
+            "- Regular maintenance prevents costly repairs\n"
+            "- Use GasBuddy app to find cheapest gas\n\n"
+            "**Consider**: If transportation is >15% of income, explore alternatives like public transit, carpooling, or downsizing your vehicle."
+        ),
+        "persona_ids": [5],
+        "tags": ["transportation", "car", "budgeting", "expenses"],
+    },
+    {
+        "id": "edu_020",
+        "title": "Public Transit: The $5,000/Year Savings Option",
+        "content": (
+            "AAA estimates the average cost of car ownership at $12,000+/year. Public transit can slash that dramatically.\n\n"
+            "**Annual Cost Comparison**:\n"
+            "- Car ownership: $12,000+ (payment, insurance, gas, maintenance)\n"
+            "- Monthly transit pass: $600-1,200/year\n"
+            "- Savings: $10,000+/year!\n\n"
+            "**Making Transit Work**:\n"
+            "- Use transit apps for real-time schedules\n"
+            "- Combine transit with bike sharing for first/last mile\n"
+            "- Ask employer about commuter benefits (pre-tax transit spending)\n"
+            "- Use rideshare only for late nights or heavy cargo\n\n"
+            "**Not Fully Feasible?**: Hybrid approach works too:\n"
+            "- Transit for commute, car share for weekends\n"
+            "- Carpool 2-3 days/week (split gas costs)\n"
+            "- Work from home when possible\n\n"
+            "**Calculate Your Savings**: Use AAA's Driving Costs calculator to see your real car ownership cost, then compare to transit."
+        ),
+        "persona_ids": [5],
+        "tags": ["transportation", "public transit", "savings"],
+    },
+    
+    # Category-Based Recommendations: Shopping
+    {
+        "id": "edu_021",
+        "title": "The 30-Day Rule: Stop Impulse Buying",
+        "content": (
+            "Impulse purchases are budget killers. The 30-day rule helps you buy intentionally.\n\n"
+            "**How It Works**:\n"
+            "1. See something you want? Don't buy it yet.\n"
+            "2. Add it to a 'wish list' with the date\n"
+            "3. Wait 30 days (24 hours for items under $50)\n"
+            "4. After waiting, if you still want it AND it fits your budget, buy it\n\n"
+            "**Why It Works**: Most impulse purchases lose appeal within days. "
+            "Studies show 80% of wish-listed items are never purchased.\n\n"
+            "**Bonus Strategies**:\n"
+            "- Unsubscribe from marketing emails (reduces temptation)\n"
+            "- Delete shopping apps from your phone\n"
+            "- Use cash for discretionary spending (physical pain of spending)\n"
+            "- Calculate cost in 'hours worked' (Is this worth 6 hours of work?)\n\n"
+            "**Expert Tip**: Shopping should be 5-10% of income. Track it monthly to stay within budget."
+        ),
+        "persona_ids": [5],
+        "tags": ["shopping", "impulse buying", "budgeting"],
+    },
+    {
+        "id": "edu_022",
+        "title": "Buy It Right: Quality vs. Cheap",
+        "content": (
+            "Sometimes spending more upfront saves money long-term.\n\n"
+            "**The Cost Per Use Formula**: Price ÷ Number of Uses = Real Cost\n"
+            "- $50 shoes worn 200 times = $0.25/use\n"
+            "- $20 shoes worn 30 times = $0.67/use\n\n"
+            "**When to Buy Quality**:\n"
+            "- Items you use daily (shoes, work clothes, mattress)\n"
+            "- Tools and appliances (better warranty, longer life)\n"
+            "- Safety equipment (car seats, helmets)\n\n"
+            "**When Cheap is Fine**:\n"
+            "- Trendy items you'll wear once\n"
+            "- Kids' clothes (they outgrow them fast)\n"
+            "- Occasional-use items\n\n"
+            "**Smart Shopping**:\n"
+            "- Buy quality items secondhand (thrift stores, Poshmark, eBay)\n"
+            "- Wait for sales on quality brands (sign up for alerts)\n"
+            "- Check Buy It For Life subreddit for product recommendations\n\n"
+            "**The Sweet Spot**: Invest in quality for things you use every day, save on everything else."
+        ),
+        "persona_ids": [5],
+        "tags": ["shopping", "quality", "budgeting", "value"],
+    },
+    
+    # Category-Based Recommendations: Entertainment
+    {
+        "id": "edu_023",
+        "title": "Entertainment on a Budget: Still Have Fun, Save Money",
+        "content": (
+            "Entertainment should be 5-10% of your budget. You can have fun without overspending!\n\n"
+            "**Free Entertainment Options**:\n"
+            "- Public libraries (books, movies, events, museum passes)\n"
+            "- Community events (concerts, festivals, farmers markets)\n"
+            "- Parks and hiking trails (exercise + entertainment)\n"
+            "- Free museum days (most cities have them monthly)\n"
+            "- Game nights with friends at home\n\n"
+            "**Subscription Audit**: The average person spends $270/month on subscriptions!\n"
+            "- Netflix, Hulu, Disney+, HBO, Peacock, Apple TV ($80/month)\n"
+            "- Spotify, Apple Music, Audible ($35/month)\n"
+            "- Gaming subscriptions ($30/month)\n"
+            "**Action**: Cancel what you haven't used in 30 days. Rotate subscriptions monthly.\n\n"
+            "**Low-Cost Entertainment**:\n"
+            "- Matinee movies instead of evening ($8 vs $15)\n"
+            "- Happy hour instead of dinner ($10 vs $40)\n"
+            "- Streaming sports at home with friends instead of bars\n\n"
+            "**The Challenge**: Go one month trying only free entertainment. You'll find activities you love!"
+        ),
+        "persona_ids": [5],
+        "tags": ["entertainment", "budgeting", "subscriptions", "savings"],
+    },
+    {
+        "id": "edu_024",
+        "title": "Subscription Creep: The Silent Budget Killer",
+        "content": (
+            "The average American spends $270/month on subscriptions but thinks they spend $86. Sound familiar?\n\n"
+            "**Common Subscriptions to Audit**:\n"
+            "- Streaming services (Netflix, Hulu, Disney+, HBO, Apple TV, Prime Video)\n"
+            "- Music/Audio (Spotify, Apple Music, Audible, Podcasts)\n"
+            "- Software (Adobe, Microsoft, Dropbox, VPNs)\n"
+            "- Fitness (gym, fitness apps, online classes)\n"
+            "- Food delivery (DashPass, Uber Eats+)\n"
+            "- Gaming (Xbox Live, PlayStation Plus, Nintendo Online)\n\n"
+            "**The 90-Day Audit**:\n"
+            "1. List ALL subscriptions (check bank/credit card statements)\n"
+            "2. Cancel anything you haven't used in 60 days\n"
+            "3. Keep only 3-5 you actively use\n"
+            "4. Share subscriptions with family (most allow multiple profiles)\n"
+            "5. Rotate streaming services monthly (binge, cancel, switch)\n\n"
+            "**Annual Subscriptions**: Often 20-30% cheaper than monthly, but ONLY if you'll use it all year.\n\n"
+            "**Goal**: Get subscriptions under $100/month. Reallocate savings to debt payoff or emergency fund."
+        ),
+        "persona_ids": [3, 5],
+        "tags": ["subscriptions", "budgeting", "entertainment", "savings"],
+    },
+    
+    # Category-Based Recommendations: Bills & Utilities
+    {
+        "id": "edu_025",
+        "title": "Lower Your Utility Bills: Easy Wins",
+        "content": (
+            "Small changes to utility usage can save $50-150/month.\n\n"
+            "**Electricity Savings**:\n"
+            "- LED bulbs (save $75/year per bulb vs incandescent)\n"
+            "- Smart thermostat (saves 10-12% on heating/cooling, $130/year)\n"
+            "- Unplug vampire devices (chargers, appliances on standby = 10% of bill)\n"
+            "- Adjust thermostat 7-10°F for 8 hours/day (saves 10%/year)\n\n"
+            "**Water Savings**:\n"
+            "- Fix leaky faucets (saves 3,000 gallons/year)\n"
+            "- Low-flow showerheads ($20, saves $70/year)\n"
+            "- Run dishwasher/laundry only when full\n\n"
+            "**Internet/Phone**:\n"
+            "- Call and negotiate (mention competitor prices, ask for retention deals)\n"
+            "- Remove cable, keep internet (save $50-100/month)\n"
+            "- Use WiFi calling instead of unlimited plans\n\n"
+            "**Annual Savings**: Implementing all strategies = $1,000+/year!\n\n"
+            "**Pro Tip**: Set a calendar reminder annually to call providers and negotiate. "
+            "Competition for customers means deals are always available."
+        ),
+        "persona_ids": [5],
+        "tags": ["utilities", "bills", "savings", "budgeting"],
+    },
+    {
+        "id": "edu_026",
+        "title": "The Art of Negotiating Bills",
+        "content": (
+            "You can negotiate almost any bill. Companies would rather give you a discount than lose you as a customer.\n\n"
+            "**What You Can Negotiate**:\n"
+            "- Internet/cable ($20-50/month savings)\n"
+            "- Cell phone plans ($10-30/month)\n"
+            "- Car insurance ($200-500/year)\n"
+            "- Credit card APR and fees\n"
+            "- Gym memberships\n\n"
+            "**The Script**:\n"
+            "1. 'I've been a loyal customer for [X years]'\n"
+            "2. 'I'm reviewing my expenses and your service is expensive'\n"
+            "3. 'I saw [competitor] offers [service] for $[lower price]'\n"
+            "4. 'Can you match or beat that price to keep my business?'\n"
+            "5. If no: 'Can I speak to your retention department?'\n\n"
+            "**Best Times to Negotiate**:\n"
+            "- When promotional pricing expires\n"
+            "- Before contract renewal\n"
+            "- After seeing competitor ads\n\n"
+            "**Services That Do It For You**: BillShark, Truebill, Rocket Money (take 30-50% of savings, but hands-off).\n\n"
+            "**Goal**: Negotiate 3 bills this quarter and save $500+/year."
+        ),
+        "persona_ids": [5],
+        "tags": ["negotiation", "bills", "savings", "utilities"],
+    },
+    
+    # Category-Based Recommendations: Healthcare
+    {
+        "id": "edu_027",
+        "title": "Healthcare Costs: Save on Medical Expenses",
+        "content": (
+            "Healthcare costs are rising, but smart strategies can reduce your burden.\n\n"
+            "**Preventive Care is Free**: ACA requires insurance to cover preventive care at 100%:\n"
+            "- Annual physical exam\n"
+            "- Vaccinations\n"
+            "- Cancer screenings\n"
+            "- Blood pressure and cholesterol tests\n"
+            "Use it! Prevention is cheaper than treatment.\n\n"
+            "**Prescription Savings**:\n"
+            "- Ask for generic (50-80% cheaper, same active ingredient)\n"
+            "- Use GoodRx or RxSaver (find lowest pharmacy prices)\n"
+            "- 90-day supply vs 30-day (often cheaper per dose)\n"
+            "- Manufacturer coupons (check drug website)\n\n"
+            "**HSA/FSA Accounts**: Use pre-tax dollars for medical expenses:\n"
+            "- HSA: You own it forever, grows tax-free\n"
+            "- FSA: Use it or lose it annually\n"
+            "Both save 20-30% on medical costs via tax savings.\n\n"
+            "**Negotiate Medical Bills**: Call billing department, ask for:\n"
+            "- Itemized bill (catches errors)\n"
+            "- Financial assistance (many hospitals offer it)\n"
+            "- Payment plan (often interest-free)"
+        ),
+        "persona_ids": [5],
+        "tags": ["healthcare", "medical", "savings", "insurance"],
+    },
+    
+    # Category-Based Recommendations: Housing
+    {
+        "id": "edu_028",
+        "title": "The 28% Rule: Are You House Poor?",
+        "content": (
+            "Financial experts recommend spending no more than 28% of gross income on housing.\n\n"
+            "**Total Housing Costs Include**:\n"
+            "- Rent or mortgage payment\n"
+            "- Property taxes\n"
+            "- Homeowners insurance\n"
+            "- HOA fees\n"
+            "- Maintenance and repairs (budget 1-2% of home value annually)\n"
+            "- Utilities (sometimes)\n\n"
+            "**Example**: $5,000/month gross income → $1,400/month maximum housing\n\n"
+            "**Spending More Than 28%?** You might be 'house poor'. Options:\n"
+            "- Refinance mortgage (if rates are lower)\n"
+            "- Challenge property tax assessment (could save hundreds)\n"
+            "- Shop insurance annually (save $200-500/year)\n"
+            "- Get a roommate (cut rent/mortgage in half)\n"
+            "- Rent out a room on Airbnb (side income)\n\n"
+            "**Renters**: Negotiate rent at renewal:\n"
+            "- Research comparable units\n"
+            "- Highlight your reliability as tenant\n"
+            "- Offer to sign longer lease for discount\n"
+            "- Be willing to walk away\n\n"
+            "**Long-Term**: If housing >30% of income, consider downsizing or relocating to more affordable area."
+        ),
+        "persona_ids": [5],
+        "tags": ["housing", "rent", "mortgage", "budgeting"],
+    },
 ]
 
 # Partner offers catalog
@@ -290,6 +643,29 @@ PARTNER_OFFER_CATALOG: List[Dict[str, Any]] = [
             "blocked_if": [],  # No blocking conditions
         },
         "tags": ["balance transfer", "credit card", "debt"],
+    },
+    {
+        "id": "offer_001b",
+        "title": "Debt Consolidation Loan - Fixed Rate",
+        "content": (
+            "Consolidate multiple high-interest debts into a single loan with a fixed monthly payment. "
+            "This can simplify your payments and potentially lower your overall interest rate.\n\n"
+            "**Benefits**:\n"
+            "- Fixed interest rate and monthly payment\n"
+            "- Can be used for credit cards, personal loans, and medical debt\n"
+            "- Potential to lower your total monthly payment\n\n"
+            "**Important**: Make sure the new loan's interest rate is lower than the average rate of your current debts. "
+            "Avoid using credit cards after consolidating.\n\n"
+            "**Eligibility**: Requires fair to good credit score (typically 640+)."
+        ),
+        "persona_ids": [1],
+        "eligibility_requirements": {
+            "min_credit_score": 640,
+            "min_income": 2500,  # Example: $30k/year
+            "existing_products": ["credit_card"],  # User should have existing credit cards
+            "blocked_if": [],
+        },
+        "tags": ["debt consolidation", "loan", "debt"],
     },
 
     # Persona 2: Variable Income Budgeter
@@ -401,14 +777,14 @@ PARTNER_OFFER_CATALOG: List[Dict[str, Any]] = [
         "id": "offer_006",
         "title": "Credit Monitoring Service - Free Credit Score",
         "content": (
-            "Monitor your credit score and credit report for free.\n\n"
-            "**Features**:\n"
+            "Monitor your credit score and credit report for free. Stay on top of your credit health with regular updates and alerts.\n\n"
+            "**What You Get**:\n"
             "- Free credit score updates\n"
             "- Credit report monitoring\n"
             "- Identity theft protection\n"
             "- Credit score improvement tips\n\n"
-            "**Perfect For**: Anyone who wants to understand and improve their credit.\n\n"
-            "**Sign Up**: Create account with email. No credit check required."
+            "**Who This Helps**: Anyone who wants to understand and improve their credit. No credit check required to sign up.\n\n"
+            "**Getting Started**: Create a free account with your email. You'll get instant access to your credit score and personalized tips for improvement."
         ),
         "persona_ids": [5],
         "eligibility_requirements": {
@@ -421,11 +797,7 @@ PARTNER_OFFER_CATALOG: List[Dict[str, Any]] = [
     },
 ]
 
-# Regulatory disclaimer text
-REGULATORY_DISCLAIMER = (
-    "**Disclaimer**: This is educational content, not financial advice. "
-    "Consult a licensed financial advisor for personalized guidance."
-)
+# Regulatory disclaimer text (removed - now handled by frontend only)
 
 
 

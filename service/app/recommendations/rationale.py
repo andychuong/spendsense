@@ -217,11 +217,16 @@ class RationaleGenerator:
             utilization = card_signal.get("utilization_percent", 0)
             balance = card_signal.get("current_balance", 0)
             limit = card_signal.get("credit_limit", 0)
+            interest_paid = credit_signals.get("total_interest_paid_30d", 0)
 
-            rationale_parts.append(
-                f"We noticed {account_display} is at {utilization:.0f}% utilization "
-                f"({self.format_currency(balance)} of {self.format_currency(limit)} limit)."
+            rationale = (
+                f"We noticed your {account_display} is at {utilization:.0f}% utilization "
+                f"(${balance:,.2f} of ${limit:,.2f} limit). "
+                f"Bringing this below 30% could significantly improve your credit score."
             )
+            if interest_paid > 0:
+                rationale += f" It could also help you save on interest charges (you paid ${interest_paid:,.2f} last month)."
+            rationale_parts.append(rationale)
 
         # Interest charges
         interest_cards = credit_signals.get("cards_with_interest", [])
@@ -378,8 +383,8 @@ class RationaleGenerator:
                     merchants_str += f", and {len(recurring_merchants) - 3} more"
 
                 rationale_parts.append(
-                    f"You have {sub_count} recurring subscriptions including {merchants_str}, "
-                    f"totaling {self.format_currency(total_recurring)} per month."
+                    f"We noticed you have {sub_count} subscriptions totaling ${total_recurring:,.2f}/month. "
+                    f"Reviewing these regularly is a great way to find opportunities to save."
                 )
             else:
                 rationale_parts.append(
@@ -431,6 +436,7 @@ class RationaleGenerator:
 
         growth_rate = savings_signals.get("savings_growth_rate_percent", None)
         net_inflow = savings_signals.get("net_inflow_monthly", None)
+        total_inflows = savings_signals.get("total_savings_inflows_30d", 0)
 
         if savings_accounts:
             account = savings_accounts[0]
@@ -541,11 +547,11 @@ class RationaleGenerator:
         rec_type = recommendation.get("id", "").split("_")[0]
 
         if rec_type == "edu":
-            return "This educational content matches your financial profile and can help you improve your financial health."
+            return "This educational content can help you build stronger financial habits and improve your long-term financial health."
         elif rec_type == "offer":
-            return "This offer may help you achieve your financial goals based on your current financial situation."
+            return "Based on your financial profile, this offer could help you reach your financial goals faster."
         else:
-            return "This recommendation is tailored to your financial profile."
+            return "This recommendation is selected specifically for your financial situation."
 
     def _build_data_context(
         self,
