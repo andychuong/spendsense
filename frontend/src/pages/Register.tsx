@@ -70,8 +70,8 @@ const Register = () => {
         }
       )
 
-      // Redirect to dashboard
-      navigate('/')
+      // Redirect to consent page for new users
+      navigate('/consent')
     } catch (err: any) {
       const errorMessage =
         err.response?.data?.detail || err.message || 'Registration failed. Please try again.'
@@ -128,8 +128,8 @@ const Register = () => {
         }
       )
 
-      // Redirect to dashboard
-      navigate('/')
+      // Redirect to consent page for new users
+      navigate('/consent')
     } catch (err: any) {
       const errorMessage =
         err.response?.data?.detail || err.message || 'Verification failed. Please try again.'

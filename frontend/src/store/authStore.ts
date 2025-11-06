@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import type { User, AuthTokens } from '@/types'
 import { storeTokens, clearStoredTokens } from '@/services/api'
 import { authService } from '@/services/authService'
+import { queryClient } from '@/utils/queryClient'
 
 interface AuthState {
   user: User | null
@@ -28,7 +29,7 @@ export const useAuthStore = create<AuthState>()(
       },
       logout: async () => {
         try {
-          // Call backend to revoke refresh token
+          // Call backend to revoke refresh token and clear server-side caches
           await authService.logout()
         } catch (error) {
           // Even if backend logout fails, clear local tokens
@@ -36,6 +37,11 @@ export const useAuthStore = create<AuthState>()(
         } finally {
           // Always clear local tokens and state
           clearStoredTokens()
+          
+          // Clear React Query cache to remove all cached API responses
+          queryClient.clear()
+          
+          // Clear auth state
           set({ user: null, tokens: null, isAuthenticated: false })
         }
       },

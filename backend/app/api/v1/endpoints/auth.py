@@ -23,7 +23,12 @@ from app.core.sms_service import (
     validate_phone_number,
 )
 from app.core.dependencies import get_current_active_user
-from app.core.cache_service import store_session, update_session_last_used
+from app.core.cache_service import (
+    store_session,
+    update_session_last_used,
+    delete_session,
+    invalidate_all_user_caches,
+)
 from app.models.user import User, UserRole
 from app.models.session import Session as SessionModel
 from app.models.data_upload import DataUpload
@@ -347,14 +352,27 @@ async def logout(
     db: Session = Depends(get_db),
 ):
     """
-    Logout user by revoking refresh tokens.
+    Logout user by revoking refresh tokens and clearing all caches.
 
     Args:
         current_user: Current authenticated user
         db: Database session
     """
-    # Delete all sessions for the user
-    db.query(SessionModel).filter(SessionModel.user_id == current_user.user_id).delete()
+    user_id = current_user.user_id
+    
+    # Get all session IDs for the user before deleting them
+    sessions = db.query(SessionModel).filter(SessionModel.user_id == user_id).all()
+    session_ids = [session.session_id for session in sessions]
+    
+    # Delete Redis session cache entries
+    for session_id in session_ids:
+        delete_session(session_id)
+    
+    # Invalidate all user caches (profile, recommendations, signals)
+    invalidate_all_user_caches(user_id)
+    
+    # Delete all sessions for the user from database
+    db.query(SessionModel).filter(SessionModel.user_id == user_id).delete()
     db.commit()
 
     return None

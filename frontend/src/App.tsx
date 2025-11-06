@@ -46,7 +46,7 @@ const ConsentRoute = ({ children }: { children: React.ReactNode }) => {
   // Check consent status
   const { data: consentStatus, isLoading } = useQuery({
     queryKey: ['consentStatus'],
-    fn: () => consentService.getConsentStatus(),
+    queryFn: () => consentService.getConsentStatus(),
     enabled: isAuthenticated,
   })
 
@@ -60,7 +60,8 @@ const ConsentRoute = ({ children }: { children: React.ReactNode }) => {
   }
 
   // Redirect to consent page if consent not granted
-  if (consentStatus && !consentStatus.consent_status) {
+  // Check for null/undefined consentStatus OR consent_status being false/null
+  if (!consentStatus || !consentStatus.consent_status) {
     return <Navigate to="/consent" replace />
   }
 
