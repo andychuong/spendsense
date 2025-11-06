@@ -1,4 +1,4 @@
-"""Unit tests for user management endpoints (Task 3.1)."""
+"""Unit tests for user management endpoints."""
 
 import pytest
 from datetime import datetime, timedelta

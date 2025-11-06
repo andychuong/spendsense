@@ -7,7 +7,6 @@ import Navigation from '@/components/Navigation'
 import SkipLink from '@/components/SkipLink'
 import { consentService } from '@/services/consentService'
 
-// Pages (to be created in Task 10.2)
 import Dashboard from '@/pages/Dashboard'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
@@ -47,7 +46,7 @@ const ConsentRoute = ({ children }: { children: React.ReactNode }) => {
   // Check consent status
   const { data: consentStatus, isLoading } = useQuery({
     queryKey: ['consentStatus'],
-    queryFn: () => consentService.getConsentStatus(),
+    fn: () => consentService.getConsentStatus(),
     enabled: isAuthenticated,
   })
 

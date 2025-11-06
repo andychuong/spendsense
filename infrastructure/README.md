@@ -81,15 +81,6 @@ When deploying to a shared AWS account, use the `owner_id` variable to avoid nam
 - RDS: `spendsense-{env}-db-{owner_id}`
 - Redis: `spendsense-{env}-redis` (no owner_id needed for Redis replication group ID)
 
-## Development Tasks
-
-See [PROJECT-PLAN.md](../docs/PROJECT-PLAN.md) for detailed task breakdown.
-
-- **Task 1.3**: AWS Infrastructure Setup (Development) ✅ **COMPLETE**
-  - VPC, RDS PostgreSQL 16.10, ElastiCache Redis 7.1, S3 buckets, IAM roles
-  - Includes owner_id support for shared AWS accounts
-- **Task 15.1**: Docker Containerization (future)
-- **Task 15.3**: Terraform Infrastructure (future)
-- And more...
+See the `terraform/` and `n8n/` directories for infrastructure code and workflows.
 
 

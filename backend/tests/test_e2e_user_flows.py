@@ -1,4 +1,4 @@
-"""End-to-end tests for complete user flows (Task 13.2).
+"""End-to-end tests for complete user flows.
 
 Tests complete user journeys:
 1. Registration → Consent → Upload → Recommendations

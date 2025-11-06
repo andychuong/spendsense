@@ -1,4 +1,4 @@
-"""Unit tests for consent management endpoints (Task 3.1)."""
+"""Unit tests for consent management endpoints."""
 
 import pytest
 from datetime import datetime

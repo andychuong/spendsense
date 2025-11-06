@@ -1,4 +1,4 @@
-"""Unit tests for phone/SMS authentication endpoints (Task 2.3)."""
+"""Unit tests for phone/SMS authentication endpoints."""
 
 import pytest
 from unittest.mock import patch, MagicMock

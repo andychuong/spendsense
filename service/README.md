@@ -66,14 +66,6 @@ service/
    # Edit .env with your configuration (OpenAI API key, database URL, etc.)
    ```
 
-## Development Tasks
-
-See [PROJECT-PLAN.md](../docs/PROJECT-PLAN.md) for detailed task breakdown.
-
-- **Task 4.1**: Data Ingestion Service
-- **Task 5.1**: Subscription Detection
-- **Task 6.1**: Persona Assignment Logic
-- **Task 7.1**: Recommendation Engine Foundation
-- And more...
+See the `scripts/` directory for examples and tools for interacting with the service layer components.
 
 

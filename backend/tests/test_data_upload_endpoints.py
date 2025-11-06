@@ -1,4 +1,4 @@
-"""Unit tests for data upload endpoints (Task 3.2)."""
+"""Unit tests for data upload endpoints."""
 
 import pytest
 import uuid

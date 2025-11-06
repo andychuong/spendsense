@@ -1,4 +1,4 @@
-"""Unit tests for email/password authentication endpoints (Task 2.2)."""
+"""Unit tests for email/password authentication endpoints."""
 
 import pytest
 from datetime import datetime, timedelta

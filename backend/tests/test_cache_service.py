@@ -1,4 +1,4 @@
-"""Unit tests for caching service (Task 3.3)."""
+"""Unit tests for caching service."""
 
 import pytest
 import uuid

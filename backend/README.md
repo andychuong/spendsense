@@ -131,27 +131,8 @@ OAuth integration is implemented for Google, GitHub, Facebook, and Apple Sign In
 - Unlink OAuth provider: `DELETE /api/v1/auth/oauth/unlink/{provider}`
 - Unlink phone number: `DELETE /api/v1/auth/phone/unlink`
 
-**Current Status:**
-- ✅ Google OAuth: Configured and tested
-- ✅ Account Linking: Fully implemented with account merging
-- ⚠️ GitHub, Facebook, Apple: Structure ready, credentials needed
+See individual service `README.md` files for detailed setup and usage instructions.
 
-## Development Tasks
-
-See [PROJECT-PLAN.md](../docs/PROJECT-PLAN.md) for detailed task breakdown.
-
-- **Task 1.2**: Database Design & Setup ✅ (Complete)
-- **Task 2.1**: Authentication Foundation ✅ (Complete)
-- **Task 2.2**: Email/Password Authentication ✅ (Complete)
-- **Task 2.3**: Phone/SMS Authentication ✅ (Complete)
-- **Task 2.4**: OAuth Integration ✅ (Complete)
-  - Google OAuth: Configured and tested
-  - GitHub, Facebook, Apple: Structure ready, credentials needed
-- **Task 2.5**: Account Linking ✅ (Complete)
-  - OAuth provider linking and unlinking
-  - Phone number linking and unlinking
-  - Account merging logic for duplicate accounts
-- **Task 3.1**: User Management API
-- And more...
+---
 
 
