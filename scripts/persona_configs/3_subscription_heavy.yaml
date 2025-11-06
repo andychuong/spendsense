@@ -1,5 +1,6 @@
 # Persona 3: Subscription-Heavy
 # This persona represents users with a high number of recurring monthly or weekly subscriptions.
+# Subscriptions should dominate their spending (40-60% of total).
 
 persona_name: "Subscription-Heavy"
 num_profiles: 20
@@ -23,19 +24,49 @@ transactions:
     - payment_type: "income"
       amount_range: [4000, 6000]
       frequency_per_month: [1, 2]
-    # High number of recurring subscriptions
-    - category: "Entertainment/Streaming Services"
-      amount_range: [10, 30]
-      frequency_per_month: [3, 5] # Multiple streaming services
-    - category: "Software/Cloud Services"
-      amount_range: [5, 50]
-      frequency_per_month: [2, 4]
+    
+    # ESSENTIAL SPENDING - Everyone needs these basics
+    - category: "Groceries/Food & Beverage Stores"
+      amount_range: [40, 120]
+      frequency_per_month: [4, 8] # Moderate grocery shopping (cook at home)
+    - category: "Bills & Utilities/Utilities"
+      amount_range: [80, 200]
+      frequency_per_month: [1, 1] # Monthly utilities
     - category: "Bills & Utilities/Internet"
       amount_range: [50, 100]
-      frequency_per_month: [1, 1]
-    - category: "Health/Fitness" # Gym membership
-      amount_range: [30, 80]
-      frequency_per_month: [1, 1]
+      frequency_per_month: [1, 1] # Monthly internet
+    - category: "Bills & Utilities/Mobile Phone"
+      amount_range: [60, 120]
+      frequency_per_month: [1, 1] # Monthly mobile
+    - category: "Transport/Fuel"
+      amount_range: [30, 60]
+      frequency_per_month: [2, 6] # Moderate gas usage
+    
+    # PERSONA-SPECIFIC: HIGH NUMBER OF SUBSCRIPTIONS (should dominate)
+    - category: "Entertainment/Streaming Services"
+      amount_range: [10, 30]
+      frequency_per_month: [6, 10] # Multiple streaming services (Netflix, Hulu, Disney+, Max, Paramount+, etc.)
+    - category: "Software/Cloud Services"
+      amount_range: [5, 50]
+      frequency_per_month: [3, 6] # Adobe Creative Cloud, Microsoft 365, Dropbox, Google Workspace, etc.
+    - category: "Health & Fitness/Gym Memberships"
+      amount_range: [10, 200]
+      frequency_per_month: [1, 3] # Planet Fitness, 24 Hour Fitness, Equinox, ClassPass, etc.
+    - category: "Entertainment/Streaming Services" # Additional subscriptions like music
+      amount_range: [10, 15]
+      frequency_per_month: [1, 2] # Spotify Premium, Apple Music, etc.
+    
+    # SECONDARY SPENDING - Less frequent than subscriptions
+    - category: "Food & Drink/Fast Food"
+      amount_range: [8, 25]
+      frequency_per_month: [2, 6] # Less frequent than high utilization
+    - category: "Food & Drink/Restaurants"
+      amount_range: [20, 60]
+      frequency_per_month: [1, 4] # Occasional dining out
+    - category: "Food & Drink/Fast Food" # DoorDash, Uber Eats, Grubhub (food delivery)
+      amount_range: [15, 45]
+      frequency_per_month: [1, 4] # Occasional delivery (DoorDash, Grubhub)
+    
     - payment_type: "credit_card_payment"
       payment_behavior: "pays_statement_balance"
       frequency_per_month: [1, 1] # Pay once a month

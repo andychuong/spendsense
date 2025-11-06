@@ -27,13 +27,22 @@ transactions:
     - payment_type: "income"
       amount_range: [500, 4000] # Wide range of income payments
       frequency_per_month: [1, 5] # Multiple, irregular payments
-    # Spending is generally conservative
-    - category: "Bills & Utilities"
-      amount_range: [50, 400]
-      frequency_per_month: [3, 6]
-    - category: "Transport"
-      amount_range: [20, 150]
-      frequency_per_month: [4, 10]
+    # Spending is generally conservative - budget-conscious
+    - category: "Groceries/Food & Beverage Stores"
+      amount_range: [40, 120]
+      frequency_per_month: [6, 12] # Cook at home more
+    - category: "Transport/Fuel"
+      amount_range: [30, 60]
+      frequency_per_month: [4, 10] # Gas stations (Shell, Exxon, etc.)
+    - category: "Bills & Utilities/Utilities"
+      amount_range: [80, 200]
+      frequency_per_month: [1, 1]
+    - category: "Bills & Utilities/Mobile Phone"
+      amount_range: [60, 120]
+      frequency_per_month: [1, 1]
+    - category: "Food & Drink/Fast Food"
+      amount_range: [8, 25]
+      frequency_per_month: [3, 8] # Less frequent than high utilization
     - payment_type: "credit_card_payment"
       payment_behavior: "pays_in_full"
 

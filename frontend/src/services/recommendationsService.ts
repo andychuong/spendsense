@@ -1,5 +1,15 @@
 import apiClient from './api'
 
+export interface RecommendationExplanation {
+  data_citations?: string[]
+  persona?: string
+  similar_scenarios?: string[]
+  context_retrieved?: number
+  similar_users?: number
+  generation_method?: string
+  confidence?: number
+}
+
 export interface Recommendation {
   recommendation_id: string
   user_id: string
@@ -11,6 +21,7 @@ export interface Recommendation {
   created_at: string
   approved_at?: string
   decision_trace?: Record<string, any>
+  explanation?: RecommendationExplanation
   // Partner offer specific fields
   eligibility_status?: 'eligible' | 'ineligible' | 'pending'
   eligibility_reason?: string

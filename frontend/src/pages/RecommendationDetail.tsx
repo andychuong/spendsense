@@ -18,6 +18,8 @@ import {
   FaShare,
   FaSpinner,
 } from 'react-icons/fa'
+import ExplanationSection from '@/components/ExplanationSection'
+import { formatContent } from '@/utils/formatMarkdown'
 
 /**
  * Financial advice disclaimer text
@@ -143,6 +145,7 @@ const RecommendationDetail = () => {
       alert('Link copied to clipboard!')
     }
   }
+
 
   // Extract cited data points from decision trace or rationale
   const extractDataPoints = (): string[] => {
@@ -360,12 +363,12 @@ const RecommendationDetail = () => {
   const dataPoints = extractDataPoints()
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 pt-2 pb-6">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Navigation */}
         <button
           onClick={() => navigate('/recommendations')}
-          className="mb-6 inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
+          className="mb-2 inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
         >
           <FaArrowLeft className="h-4 w-4" />
           <span className="text-sm font-medium">Back to Recommendations</span>
@@ -374,17 +377,17 @@ const RecommendationDetail = () => {
         {/* Main Content */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary-50 to-primary-100 px-8 py-6 border-b border-primary-200">
-            <div className="flex flex-wrap items-center gap-3 mb-4">
+          <div className="bg-gradient-to-r from-primary-50 to-primary-100 px-8 py-4 border-b border-primary-200">
+            <div className="flex flex-wrap items-center gap-3 mb-3">
               {getTypeBadge()}
               {getStatusBadge()}
               {getEligibilityBadge()}
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{recommendation.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-1">{recommendation.title}</h1>
             {recommendation.partner_name && (
               <p className="text-lg text-gray-700">From {recommendation.partner_name}</p>
             )}
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-sm text-gray-500 mt-1">
               Created {new Date(recommendation.created_at).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
@@ -393,40 +396,44 @@ const RecommendationDetail = () => {
             </p>
           </div>
 
-          {/* Regulatory Disclaimer - Prominently Displayed */}
-          <div className="px-8 py-4 bg-blue-50 border-l-4 border-blue-500">
-            <div className="flex items-start gap-3">
-              <FaInfoCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <div className="flex-1">
-                <p className="text-sm font-semibold text-blue-900 mb-1">Important Notice</p>
-                <p className="text-sm text-blue-800 leading-relaxed">
-                  {FINANCIAL_ADVICE_DISCLAIMER}
-                </p>
-              </div>
-            </div>
+          {/* Regulatory Disclaimer - Compact */}
+          <div className="px-8 py-2 bg-gray-50 border-t border-gray-200">
+            <p className="text-xs text-gray-700 leading-relaxed">
+              <span className="font-semibold">Disclaimer:</span> {FINANCIAL_ADVICE_DISCLAIMER}
+            </p>
           </div>
 
           {/* Content */}
-          <div className="px-8 py-6">
-            <div className="prose prose-lg max-w-none mb-8">
-              <div className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                {recommendation.content}
-              </div>
+          <div className="px-8 py-4">
+            <div className="max-w-none mb-6">
+              {formatContent(recommendation.content)}
             </div>
+
+            {/* Explanation Section - RAG Context */}
+            {recommendation.explanation && (
+              <div className="mb-6">
+                <ExplanationSection explanation={recommendation.explanation} />
+              </div>
+            )}
 
             {/* Detailed Rationale */}
             {recommendation.rationale && (
-              <div className="mb-8 p-6 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+              <div className="mb-6 p-5 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
                 <div className="flex items-start gap-3">
                   <FaInfoCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                   <div className="flex-1">
-                    <h2 className="text-lg font-semibold text-blue-900 mb-3">Why This Matters</h2>
-                    <p className="text-blue-800 leading-relaxed mb-4">{recommendation.rationale}</p>
+                    <h2 className="text-lg font-semibold text-blue-900 mb-2">Why This Matters</h2>
+                    <p className="text-blue-800 leading-relaxed mb-3">
+                      {recommendation.rationale
+                        .replace(/\*\*Disclaimer\*\*:?\s*This is educational content.*?guidance\./gi, '')
+                        .replace(/This is educational content, not financial advice.*?guidance\./gi, '')
+                        .trim()}
+                    </p>
 
                     {/* Cited Data Points */}
                     {dataPoints.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-blue-200">
-                        <p className="text-sm font-semibold text-blue-900 mb-2">
+                      <div className="mt-3 pt-3 border-t border-blue-200">
+                        <p className="text-sm font-semibold text-blue-900 mb-1">
                           Based on Your Data:
                         </p>
                         <ul className="space-y-1">
@@ -446,16 +453,16 @@ const RecommendationDetail = () => {
 
             {/* Eligibility Explanation (Partner Offers) */}
             {recommendation.type === 'partner_offer' && recommendation.eligibility_reason && (
-              <div className="mb-8 p-6 bg-gray-50 border-l-4 border-gray-400 rounded-r-lg">
-                <h2 className="text-lg font-semibold text-gray-900 mb-3">Eligibility Status</h2>
+              <div className="mb-6 p-5 bg-gray-50 border-l-4 border-gray-400 rounded-r-lg">
+                <h2 className="text-lg font-semibold text-gray-900 mb-2">Eligibility Status</h2>
                 <p className="text-gray-700 leading-relaxed">{recommendation.eligibility_reason}</p>
               </div>
             )}
 
             {/* Partner Offer Details */}
             {recommendation.type === 'partner_offer' && recommendation.offer_details && (
-              <div className="mb-8 p-6 bg-purple-50 border border-purple-200 rounded-lg">
-                <h2 className="text-lg font-semibold text-purple-900 mb-3">Offer Details</h2>
+              <div className="mb-6 p-5 bg-purple-50 border border-purple-200 rounded-lg">
+                <h2 className="text-lg font-semibold text-purple-900 mb-2">Offer Details</h2>
                 <div className="space-y-2 text-sm text-purple-800">
                   {Object.entries(recommendation.offer_details).map(([key, value]) => (
                     <div key={key} className="flex">
@@ -468,7 +475,7 @@ const RecommendationDetail = () => {
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-gray-200">
+            <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-gray-200">
               <button
                 onClick={handleSave}
                 disabled={saveMutation.isPending}
@@ -516,8 +523,8 @@ const RecommendationDetail = () => {
 
             {/* Feedback Form */}
             {showFeedbackForm && !feedbackSubmitted && (
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Feedback</h3>
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Your Feedback</h3>
                 <div className="space-y-4">
                   {/* Rating */}
                   <div>

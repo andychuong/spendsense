@@ -17,6 +17,7 @@ export interface AuthTokens {
 
 export interface User {
   id: string
+  name?: string
   email?: string
   phone?: string
   oauth_providers?: Record<string, string>

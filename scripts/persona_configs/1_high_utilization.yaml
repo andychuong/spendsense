@@ -1,5 +1,6 @@
 # Persona 1: High Utilization
 # This persona represents users who have high credit card balances relative to their credit limits.
+# They spend frequently on dining out, food delivery, and retail.
 
 persona_name: "High Utilization"
 num_profiles: 20  # Generate 20 profiles for this persona
@@ -24,19 +25,55 @@ transactions:
   num_transactions_range: [50, 150] # Number of transactions over the history period
   history_days: 365 # Generate 365 days (1 year) of transaction history
   patterns:
-    # High credit card usage for various purchases
-    - category: "Retail"
-      amount_range: [20, 300]
-      frequency_per_month: [5, 15]
-    - category: "Food & Drink"
-      amount_range: [10, 150]
-      frequency_per_month: [10, 25]
-    # Simulate making only minimum payments
-    - payment_type: "credit_card_payment"
-      payment_behavior: "minimum_only"
     - payment_type: "income"
       amount_range: [3000, 5000] # Monthly income
       frequency_per_month: [1, 2] # Paid once or bi-weekly
+    
+    # ESSENTIAL SPENDING - Everyone needs these basics
+    - category: "Groceries/Food & Beverage Stores"
+      amount_range: [40, 120]
+      frequency_per_month: [3, 6] # Less grocery shopping (they eat out more)
+    - category: "Bills & Utilities/Utilities"
+      amount_range: [80, 200]
+      frequency_per_month: [1, 1] # Monthly utilities
+    - category: "Bills & Utilities/Internet"
+      amount_range: [50, 100]
+      frequency_per_month: [1, 1] # Monthly internet
+    - category: "Bills & Utilities/Mobile Phone"
+      amount_range: [60, 120]
+      frequency_per_month: [1, 1] # Monthly mobile
+    - category: "Transport/Fuel"
+      amount_range: [30, 60]
+      frequency_per_month: [4, 10] # Regular gas purchases
+    
+    # PERSONA-SPECIFIC: HIGH FREQUENCY DINING AND DELIVERY (should dominate)
+    - category: "Food & Drink/Fast Food"
+      amount_range: [8, 30]
+      frequency_per_month: [15, 35] # Very frequent fast food (McDonald's, Chipotle, etc.)
+    - category: "Food & Drink/Restaurants"
+      amount_range: [20, 80]
+      frequency_per_month: [8, 20] # Frequent dining out (Olive Garden, Applebee's, etc.)
+    - category: "Food & Drink/Bars & Pubs"
+      amount_range: [20, 60]
+      frequency_per_month: [4, 12] # Regular bar visits
+    - category: "Food & Drink/Coffee Shops"
+      amount_range: [4, 9]
+      frequency_per_month: [12, 30] # Daily coffee habit (Starbucks, Dunkin', etc.)
+    - category: "Food & Drink/Fast Food" # DoorDash, Uber Eats, Grubhub (food delivery)
+      amount_range: [15, 45]
+      frequency_per_month: [10, 25] # Very frequent food delivery (DoorDash, Uber Eats)
+    
+    # SECONDARY SPENDING
+    - category: "Retail/Department Stores"
+      amount_range: [20, 200]
+      frequency_per_month: [4, 12] # Frequent shopping (Target, Walmart, Amazon)
+    - category: "Retail/Online Marketplace"
+      amount_range: [15, 200]
+      frequency_per_month: [5, 15] # Frequent online shopping
+    
+    # Simulate making only minimum payments
+    - payment_type: "credit_card_payment"
+      payment_behavior: "minimum_only"
 
 # --- Liability Generation ---
 liabilities:

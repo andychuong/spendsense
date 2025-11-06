@@ -25,9 +25,10 @@ interface Signals30d {
 interface BehavioralSignalsProps {
   signals30d?: Signals30d
   signals180d?: Signals30d
+  showTitle?: boolean
 }
 
-const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
+const BehavioralSignals = ({ signals30d, showTitle = true }: BehavioralSignalsProps) => {
   const signals = signals30d || {}
 
   const formatCurrency = (value?: number) => {
@@ -50,7 +51,9 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold text-gray-900">Behavioral Signals (30 days)</h3>
+      {showTitle && (
+        <h3 className="text-lg font-semibold text-gray-900">Behavioral Signals (30 days)</h3>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Subscriptions */}
@@ -74,15 +77,27 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
                   </span>
                 </div>
               )}
-              {signals.subscriptions.subscription_share_percent !== undefined && (
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">Subscription Share</span>
-                  <span className="text-sm font-medium text-gray-900">
-                    {formatPercentage(signals.subscriptions.subscription_share_percent)}
-                  </span>
-                </div>
-              )}
             </div>
+            {signals.subscriptions.recurring_merchants && signals.subscriptions.recurring_merchants.length > 0 && (
+              <div className="mt-3 pt-3 border-t border-gray-200">
+                <p className="text-xs text-gray-500 mb-2">Top Subscriptions:</p>
+                <div className="space-y-1">
+                  {signals.subscriptions.recurring_merchants.slice(0, 5).map((merchant: any, idx: number) => (
+                    <div key={idx} className="flex justify-between text-xs">
+                      <span className="text-gray-600 truncate max-w-[180px]">{merchant.merchant_name}</span>
+                      <span className="text-gray-900 font-medium ml-2">
+                        {formatCurrency(merchant.monthly_recurring_spend)}/mo
+                      </span>
+                    </div>
+                  ))}
+                  {signals.subscriptions.recurring_merchants.length > 5 && (
+                    <p className="text-xs text-gray-400 mt-1">
+                      +{signals.subscriptions.recurring_merchants.length - 5} more
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -125,18 +140,27 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
             <h4 className="text-sm font-medium text-gray-700 mb-3">Credit</h4>
             <div className="space-y-2">
               {signals.credit.total_utilization !== undefined && (
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-600">Utilization</span>
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className={`text-sm font-medium ${
+                    signals.credit.total_utilization >= 80 ? 'text-red-600' :
+                    signals.credit.total_utilization >= 50 ? 'text-orange-600' :
+                    signals.credit.total_utilization >= 30 ? 'text-yellow-600' :
+                    'text-green-600'
+                  }`}>
                     {formatPercentage(signals.credit.total_utilization)}
                   </span>
                 </div>
               )}
-              {(signals.credit.high_utilization_cards?.length !== undefined || signals.credit.card_count !== undefined) && (
-                <div className="flex justify-between">
-                  <span className="text-sm text-gray-600">High Utilization Cards</span>
+              {(signals.credit.high_utilization_cards?.length !== undefined ||
+                signals.credit.critical_utilization_cards?.length !== undefined ||
+                signals.credit.severe_utilization_cards?.length !== undefined) && (
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">Cards Above 30%</span>
                   <span className="text-sm font-medium text-gray-900">
-                    {signals.credit.high_utilization_cards?.length ?? 0}
+                    {(signals.credit.high_utilization_cards?.length ?? 0) +
+                     (signals.credit.critical_utilization_cards?.length ?? 0) +
+                     (signals.credit.severe_utilization_cards?.length ?? 0)}
                   </span>
                 </div>
               )}
@@ -165,11 +189,16 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
           <div className="bg-white border border-gray-200 rounded-lg p-4">
             <h4 className="text-sm font-medium text-gray-700 mb-3">Income</h4>
             <div className="space-y-2">
-              {signals.income.payment_frequency?.median_gap_days !== undefined && (
+              {signals.income.payment_frequency?.frequency_type !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Payment Frequency</span>
-                  <span className="text-sm font-medium text-gray-900">
-                    Every {signals.income.payment_frequency.median_gap_days} days
+                  <span className="text-sm font-medium text-gray-900 capitalize">
+                    {signals.income.payment_frequency.frequency_type === 'insufficient_data' 
+                      ? 'Insufficient Data'
+                      : signals.income.payment_frequency.median_gap_days 
+                        ? `${signals.income.payment_frequency.frequency_type.charAt(0).toUpperCase() + signals.income.payment_frequency.frequency_type.slice(1)} (${signals.income.payment_frequency.median_gap_days} days)`
+                        : signals.income.payment_frequency.frequency_type.charAt(0).toUpperCase() + signals.income.payment_frequency.frequency_type.slice(1)
+                    }
                   </span>
                 </div>
               )}
@@ -184,7 +213,7 @@ const BehavioralSignals = ({ signals30d }: BehavioralSignalsProps) => {
               {signals.income.variable_income_pattern?.is_variable_income !== undefined && (
                 <div className="flex justify-between">
                   <span className="text-sm text-gray-600">Variable Income</span>
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className={`text-sm font-medium ${signals.income.variable_income_pattern.is_variable_income ? 'text-orange-600' : 'text-green-600'}`}>
                     {signals.income.variable_income_pattern.is_variable_income ? 'Yes' : 'No'}
                   </span>
                 </div>

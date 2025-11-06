@@ -29,6 +29,8 @@ class RecommendationResponse(BaseModel):
     partner_name: Optional[str] = None
     partner_logo_url: Optional[str] = None
     offer_details: Optional[Dict[str, Any]] = None
+    # Explanation fields (RAG context data)
+    explanation: Optional[Dict[str, Any]] = Field(None, description="Explanation of why this recommendation was generated")
 
     @field_validator('recommendation_id', 'user_id', 'approved_by', 'rejected_by', mode='before')
     @classmethod

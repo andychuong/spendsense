@@ -31,11 +31,16 @@ except ImportError:
     print("⚠ PersonaAssignmentService not available")
 
 try:
-    from app.recommendations.generator import RecommendationGenerator
+    from app.recommendations.rag_integration import create_enhanced_generator
     RECOMMENDATION_SERVICE_AVAILABLE = True
 except ImportError:
-    RECOMMENDATION_SERVICE_AVAILABLE = False
-    print("⚠ RecommendationGenerator not available")
+    try:
+        from app.recommendations.generator import RecommendationGenerator as create_enhanced_generator
+        RECOMMENDATION_SERVICE_AVAILABLE = True
+        print("⚠ Using legacy RecommendationGenerator (RAG integration not available)")
+    except ImportError:
+        RECOMMENDATION_SERVICE_AVAILABLE = False
+        print("⚠ RecommendationGenerator not available")
 
 
 def generate_recommendations_for_all_users():
@@ -60,7 +65,15 @@ def generate_recommendations_for_all_users():
             print("RecommendationGenerator not available. Cannot generate recommendations.")
             return
         
-        generator = RecommendationGenerator(db_session=db, use_openai=True)
+        # Create enhanced generator with RAG support (or fallback to legacy)
+        try:
+            generator = create_enhanced_generator(db_session=db)
+            print("✓ Using EnhancedRecommendationGenerator with RAG support")
+        except Exception as e:
+            print(f"⚠ Failed to create enhanced generator: {e}")
+            print("  Falling back to legacy RecommendationGenerator")
+            from app.recommendations.generator import RecommendationGenerator
+            generator = RecommendationGenerator(db_session=db, use_openai=True)
         
         success_count = 0
         error_count = 0

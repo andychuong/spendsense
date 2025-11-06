@@ -79,11 +79,58 @@ interface Recommendation {
   decision_trace?: Record<string, any>
 }
 
+interface Transaction {
+  id: string
+  user_id: string
+  account_id: string
+  date: string
+  merchant_name?: string
+  amount: number
+  category_primary: string
+  category_detailed?: string
+  payment_channel?: string
+  pending?: boolean
+}
+
+interface TransactionsListResponse {
+  items: Transaction[]
+  total: number
+  skip: number
+  limit: number
+}
+
 export interface DashboardData {
   profile: UserProfile
   behavioralProfile?: BehavioralProfile
   recommendations: Recommendation[]
   consentStatus: boolean
+}
+
+export interface SpendingCategory {
+  category: string
+  amount: number
+  percentage: number
+  transaction_count: number
+  top_merchants?: Array<{ merchant: string; amount: number }>
+  average_transaction: number
+}
+
+export interface SpendingSignals {
+  window_days: number
+  window_start: string
+  window_end: string
+  categories: SpendingCategory[]
+  total_spending: number
+  transaction_count: number
+  top_category?: string
+  top_category_amount?: number
+}
+
+export interface SpendingData {
+  user_id: string
+  generated_at: string
+  signals_30d: SpendingSignals
+  signals_180d: SpendingSignals
 }
 
 export const dashboardService = {
@@ -131,6 +178,44 @@ export const dashboardService = {
       recommendations,
       consentStatus: profile.consent_status,
     }
+  },
+
+  // Get user transactions (for regular users)
+  async getUserTransactions(
+    userId: string,
+    skip: number = 0,
+    limit: number = 50
+  ): Promise<TransactionsListResponse> {
+    // Try user endpoint first, fallback to operator endpoint if needed
+    try {
+      const response = await apiClient.get<TransactionsListResponse>(
+        `/api/v1/users/${userId}/transactions`,
+        {
+          params: { skip, limit },
+        }
+      )
+      return response.data
+    } catch (error: any) {
+      // Fallback to operator endpoint if user endpoint doesn't exist
+      if (error.response?.status === 404) {
+        const response = await apiClient.get<TransactionsListResponse>(
+          `/api/v1/operator/users/${userId}/transactions`,
+          {
+            params: { skip, limit },
+          }
+        )
+        return response.data
+      }
+      throw error
+    }
+  },
+
+  // Get spending categories
+  async getSpendingCategories(userId: string): Promise<SpendingData> {
+    const response = await apiClient.get<SpendingData>(
+      `/api/v1/users/${userId}/spending-categories`
+    )
+    return response.data
   },
 }
 

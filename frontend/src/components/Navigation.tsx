@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store'
-import { FaBars, FaTimes, FaHome, FaUser, FaLightbulb, FaCog, FaUpload, FaSignOutAlt, FaShieldAlt } from 'react-icons/fa'
+import { FaBars, FaTimes, FaHome, FaLightbulb, FaCog, FaUpload, FaSignOutAlt, FaShieldAlt } from 'react-icons/fa'
 
 const Navigation = () => {
   const location = useLocation()
@@ -21,12 +21,10 @@ const Navigation = () => {
   // Base navigation items for all users
   const baseNavigationItems = [
     { path: '/', label: 'Dashboard', icon: FaHome },
-    { path: '/settings', label: 'Settings', icon: FaCog },
   ]
   
   // User-specific navigation items (only for regular users)
   const userNavigationItems = [
-    { path: '/profile', label: 'Profile', icon: FaUser },
     { path: '/recommendations', label: 'Recommendations', icon: FaLightbulb },
     { path: '/upload', label: 'Upload', icon: FaUpload },
   ]
@@ -36,11 +34,15 @@ const Navigation = () => {
     ? [{ path: '/admin/management', label: 'Management', icon: FaShieldAlt }]
     : []
   
+  // Settings item (always at the end)
+  const settingsItem = { path: '/settings', label: 'Settings', icon: FaCog }
+  
   // Build navigation items based on user role
   const navigationItems = [
     ...baseNavigationItems,
     ...(isOperator ? [] : userNavigationItems), // Only show user items if not operator/admin
     ...adminNavigationItems,
+    settingsItem, // Settings always at the end
   ]
 
   if (!isAuthenticated) {
@@ -142,9 +144,9 @@ const Navigation = () => {
                 <FaSignOutAlt className="h-5 w-5" aria-hidden="true" />
                 <span className="font-medium">Logout</span>
               </button>
-              {user?.email && (
+              {(user?.name || user?.email) && (
                 <div className="px-4 py-2 text-xs text-gray-500 border-t border-gray-200 mt-2 pt-2">
-                  {user.email}
+                  {user?.name || user?.email}
                 </div>
               )}
             </div>
@@ -185,9 +187,9 @@ const Navigation = () => {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              {user?.email && (
-                <span className="text-sm text-gray-600" aria-label={`Logged in as ${user.email}`}>
-                  {user.email}
+              {(user?.name || user?.email) && (
+                <span className="text-sm text-gray-600" aria-label={`Logged in as ${user?.name || user?.email}`}>
+                  {user?.name || user?.email}
                 </span>
               )}
               <button

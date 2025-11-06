@@ -24,6 +24,7 @@ import {
   FaInfoCircle,
   FaUpload,
 } from 'react-icons/fa'
+import { formatMarkdownToReact, stripMarkdown } from '@/utils/formatMarkdown'
 
 type SortOption = 'date' | 'relevance' | 'type'
 type SortOrder = 'asc' | 'desc'
@@ -425,7 +426,14 @@ const RecommendationCard = ({
 
       {/* Content */}
       <div className="mb-4">
-        <p className="text-gray-700 leading-relaxed">{recommendation.content}</p>
+        <div className="text-gray-700 leading-relaxed line-clamp-3">
+          {formatMarkdownToReact(
+            recommendation.content
+              .replace(/\*\*Disclaimer\*\*:?\s*This is educational content.*?guidance\./gi, '')
+              .replace(/This is educational content, not financial advice.*?guidance\./gi, '')
+              .split('\n\n')[0]
+          )}
+        </div>
       </div>
 
       {/* "Because" Section */}
@@ -434,8 +442,15 @@ const RecommendationCard = ({
           <div className="flex items-start gap-2">
             <FaInfoCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div className="flex-1">
-              <p className="text-sm font-semibold text-blue-900 mb-1">Because:</p>
-              <p className="text-sm text-blue-800 leading-relaxed">{recommendation.rationale}</p>
+              <p className="text-sm font-semibold text-blue-900 mb-1">Why this matters:</p>
+              <div className="text-sm text-blue-800 leading-relaxed">
+                {formatMarkdownToReact(
+                  recommendation.rationale
+                    .replace(/\*\*Disclaimer\*\*:?\s*This is educational content.*?guidance\./gi, '')
+                    .replace(/This is educational content, not financial advice.*?guidance\./gi, '')
+                    .trim()
+                )}
+              </div>
             </div>
           </div>
         </div>

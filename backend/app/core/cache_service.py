@@ -202,8 +202,10 @@ def cache_recommendations_response(func: Callable) -> Callable:
     """
     Decorator to cache recommendations responses.
 
-    Cache key: recommendations:{user_id}
+    Cache key: recommendations:{user_id}:{query_hash}
     TTL: 1 hour
+    
+    Note: Query hash includes status filter to avoid cache collisions
     """
     @wraps(func)
     async def wrapper(*args, **kwargs):
@@ -217,7 +219,25 @@ def cache_recommendations_response(func: Callable) -> Callable:
         if not user_id:
             return await func(*args, **kwargs)
 
-        cache_key = f"{CACHE_PREFIX_RECOMMENDATIONS}:{user_id}"
+        # Build query hash from filter parameters to avoid cache collisions
+        import hashlib
+        query_params = []
+        if kwargs.get("status_filter"):
+            query_params.append(f"status:{kwargs['status_filter']}")
+        if kwargs.get("type_filter"):
+            query_params.append(f"type:{kwargs['type_filter']}")
+        if kwargs.get("sort_by"):
+            query_params.append(f"sort:{kwargs['sort_by']}")
+        if kwargs.get("sort_order"):
+            query_params.append(f"order:{kwargs['sort_order']}")
+        if kwargs.get("skip"):
+            query_params.append(f"skip:{kwargs['skip']}")
+        if kwargs.get("limit"):
+            query_params.append(f"limit:{kwargs['limit']}")
+        
+        query_hash = hashlib.md5(":".join(query_params).encode()).hexdigest()[:8] if query_params else "default"
+        
+        cache_key = f"{CACHE_PREFIX_RECOMMENDATIONS}:{user_id}:{query_hash}"
         redis_client = get_redis_client()
         if redis_client:
             try:
@@ -405,7 +425,9 @@ def invalidate_user_profile_cache(user_id: uuid.UUID) -> bool:
 
 def invalidate_recommendations_cache(user_id: uuid.UUID) -> bool:
     """
-    Invalidate recommendations cache.
+    Invalidate recommendations cache for a user.
+    
+    This invalidates all cache entries for the user (all query parameter combinations).
 
     Args:
         user_id: User ID
@@ -418,9 +440,17 @@ def invalidate_recommendations_cache(user_id: uuid.UUID) -> bool:
         return False
 
     try:
-        cache_key = f"{CACHE_PREFIX_RECOMMENDATIONS}:{user_id}"
-        redis_client.delete(cache_key)
-        logger.info(f"Invalidated recommendations cache for user: {user_id}")
+        # Invalidate all cache entries for this user (pattern: recommendations:{user_id}:*)
+        pattern = f"{CACHE_PREFIX_RECOMMENDATIONS}:{user_id}:*"
+        keys = redis_client.keys(pattern)
+        if keys:
+            redis_client.delete(*keys)
+            logger.info(f"Invalidated {len(keys)} recommendations cache entries for user: {user_id}")
+        else:
+            # Fallback: try old cache key format (without query hash)
+            old_key = f"{CACHE_PREFIX_RECOMMENDATIONS}:{user_id}"
+            redis_client.delete(old_key)
+            logger.info(f"Invalidated recommendations cache for user: {user_id}")
         return True
     except Exception as e:
         logger.error(f"Failed to invalidate recommendations cache: {str(e)}")

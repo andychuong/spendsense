@@ -22,6 +22,7 @@ from app.models.user_profile import UserProfile
 from app.models.user_persona_assignment import UserPersonaAssignment
 from app.models.persona import Persona
 from app.models.persona_history import PersonaHistory
+from app.models.transaction import Transaction
 from app.api.v1.schemas.user import (
     UserProfileResponse,
     UserProfileUpdateRequest,
@@ -33,6 +34,10 @@ from app.api.v1.schemas.user import (
 from app.api.v1.schemas.recommendations import (
     RecommendationResponse,
     RecommendationsListResponse,
+)
+from app.api.v1.schemas.financial_data import (
+    TransactionResponse,
+    TransactionsListResponse,
 )
 from app.core.cache_service import cache_profile_response
 
@@ -627,4 +632,169 @@ async def get_user_recommendations(
         skip=skip,
         limit=limit,
     )
+
+
+@router.get(
+    "/{user_id}/transactions",
+    response_model=TransactionsListResponse,
+    summary="Get user transactions",
+    description="Get paginated transactions for a user. Users can access their own transactions. Operators and admins can access any user's transactions.",
+    responses={
+        200: {"description": "Transactions retrieved successfully"},
+        403: {"description": "Forbidden - insufficient permissions or consent revoked"},
+        404: {"description": "User not found"},
+    },
+)
+async def get_user_transactions(
+    user_id: uuid.UUID,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+    skip: int = Query(0, ge=0, description="Number of records to skip"),
+    limit: int = Query(50, ge=1, le=1000, description="Maximum number of records to return"),
+):
+    """
+    Get paginated transactions for a user.
+
+    Resource-level authorization:
+    - Users can access their own transactions
+    - Operators and admins can access any user's transactions
+
+    Args:
+        user_id: User ID
+        current_user: Current authenticated user
+        db: Database session
+        skip: Number of records to skip (pagination)
+        limit: Maximum number of records to return
+
+    Returns:
+        Paginated list of transactions for the user
+
+    Raises:
+        HTTPException: 403 Forbidden if user doesn't have permission
+        HTTPException: 404 Not Found if user doesn't exist
+    """
+    # Check if user exists
+    user = db.query(User).filter(User.user_id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+
+    # Check resource access (users can access own transactions, operators can access any)
+    if not check_user_access(user_id, current_user, db=db, check_consent=True):
+        # Check if it's a consent issue
+        if not user.consent_status and current_user.user_id != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Cannot access this user's transactions. User has revoked consent or not granted consent."
+            )
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have permission to access this user's transactions"
+        )
+
+    # Check consent for own transactions
+    if current_user.user_id == user_id and not current_user.consent_status:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Consent required to view transactions. Please grant consent in settings."
+        )
+
+    # Get transactions (ordered by date descending, most recent first)
+    transactions = (
+        db.query(Transaction)
+        .filter(Transaction.user_id == user_id)
+        .order_by(Transaction.date.desc(), Transaction.created_at.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+    # Get total count
+    total = db.query(Transaction).filter(Transaction.user_id == user_id).count()
+
+    return TransactionsListResponse(
+        items=[TransactionResponse.model_validate(txn) for txn in transactions],
+        total=total,
+        skip=skip,
+        limit=limit,
+    )
+
+
+@router.get(
+    "/{user_id}/spending-categories",
+    summary="Get user spending breakdown by category",
+    description="Get spending breakdown by category for the user. Users can access their own data. Operators and admins can access any user's data.",
+    responses={
+        200: {"description": "Spending categories retrieved successfully"},
+        403: {"description": "Forbidden - insufficient permissions or consent revoked"},
+        404: {"description": "User not found"},
+    },
+)
+async def get_user_spending_categories(
+    user_id: uuid.UUID,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Get user spending breakdown by category.
+    
+    Resource-level authorization:
+    - Users can access their own data
+    - Operators and admins can access any user's data
+    
+    Args:
+        user_id: User ID
+        current_user: Current authenticated user
+        db: Database session
+    
+    Returns:
+        Spending category breakdown
+    
+    Raises:
+        HTTPException: 403 Forbidden if user doesn't have permission
+        HTTPException: 404 Not Found if user doesn't exist
+    """
+    # Check resource access (users can access own data, operators can access any)
+    if not check_user_access(user_id, current_user, db=db, check_consent=True):
+        user = db.query(User).filter(User.user_id == user_id).first()
+        if user and not user.consent_status and current_user.user_id != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Cannot access this user's data. User has revoked consent or not granted consent."
+            )
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied"
+        )
+    
+    # Verify user exists
+    user = db.query(User).filter(User.user_id == user_id).first()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+    
+    # Import spending analyzer
+    import sys
+    import os
+    backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+    service_dir = os.path.join(os.path.dirname(backend_dir), "service")
+    if service_dir not in sys.path:
+        sys.path.insert(0, service_dir)
+    
+    from app.features.spending_categories import SpendingCategoryAnalyzer
+    
+    try:
+        analyzer = SpendingCategoryAnalyzer(db)
+        spending_data = analyzer.generate_spending_signals(user_id)
+        return spending_data
+    except Exception as e:
+        logger.error(f"Failed to generate spending categories for user {user_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate spending categories: {str(e)}"
+        )
 

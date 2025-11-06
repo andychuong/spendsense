@@ -1,6 +1,6 @@
-# Persona 5: Custom Persona (General Profile)
+# Persona 5: Custom Persona (Balanced Spender)
 # This persona is a catch-all for users who don't fit a specific archetype.
-# Their financial behavior is mixed and less predictable.
+# Their financial behavior is mixed and balanced.
 
 persona_name: "Custom Persona"
 num_profiles: 20
@@ -30,16 +30,38 @@ transactions:
     - payment_type: "income"
       amount_range: [3500, 7000]
       frequency_per_month: [1, 2]
-    # Mixed spending patterns
-    - category: "Retail"
-      amount_range: [10, 500]
-      frequency_per_month: [5, 20]
-    - category: "Entertainment"
-      amount_range: [15, 200]
-      frequency_per_month: [2, 8]
-    - category: "Transport"
-      amount_range: [5, 100]
-      frequency_per_month: [5, 15]
+    
+    # ESSENTIAL SPENDING - Everyone needs these basics
+    - category: "Groceries/Food & Beverage Stores"
+      amount_range: [40, 150]
+      frequency_per_month: [6, 12] # Regular grocery shopping
+    - category: "Bills & Utilities/Utilities"
+      amount_range: [80, 200]
+      frequency_per_month: [1, 1] # Monthly utilities
+    - category: "Bills & Utilities/Internet"
+      amount_range: [50, 100]
+      frequency_per_month: [1, 1] # Monthly internet
+    - category: "Bills & Utilities/Mobile Phone"
+      amount_range: [60, 120]
+      frequency_per_month: [1, 1] # Monthly mobile
+    - category: "Transport/Fuel"
+      amount_range: [30, 60]
+      frequency_per_month: [4, 10] # Regular gas purchases
+    
+    # MIXED SPENDING PATTERNS - Balanced approach
+    - category: "Food & Drink/Fast Food"
+      amount_range: [8, 30]
+      frequency_per_month: [5, 12] # Some fast food
+    - category: "Food & Drink/Restaurants"
+      amount_range: [20, 60]
+      frequency_per_month: [3, 8] # Some dining out
+    - category: "Entertainment/Streaming Services"
+      amount_range: [10, 25]
+      frequency_per_month: [1, 3] # A few subscriptions
+    - category: "Retail/Department Stores"
+      amount_range: [20, 200]
+      frequency_per_month: [4, 10] # Moderate shopping
+    
     # Inconsistent savings
     - payment_type: "transfer_to_savings"
       amount_range: [100, 1000]

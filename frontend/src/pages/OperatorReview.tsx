@@ -32,6 +32,7 @@ import {
   FaSave,
   FaTimes,
 } from 'react-icons/fa'
+import { formatContent } from '@/utils/formatMarkdown'
 
 const OperatorReview = () => {
   const { id } = useParams<{ id: string }>()
@@ -509,15 +510,17 @@ const OperatorReview = () => {
                 ) : (
                   <>
                     <h3 className="text-base font-semibold text-gray-900 mb-3">{recommendation.title}</h3>
-                    <div className="prose max-w-none">
-                      <div className="text-sm text-gray-700 whitespace-pre-wrap mb-6">{recommendation.content}</div>
+                    <div className="prose max-w-none mb-6">
+                      {formatContent(recommendation.content)}
                     </div>
                     <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
                       <div className="flex items-start gap-3">
                         <FaInfoCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                         <div>
                           <h4 className="text-sm font-semibold text-blue-900 mb-1">Rationale</h4>
-                          <p className="text-sm text-blue-800 whitespace-pre-wrap">{recommendation.rationale}</p>
+                          <div className="text-sm text-blue-800">
+                            {formatContent(recommendation.rationale)}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -606,8 +609,8 @@ const OperatorReview = () => {
               <div className="px-6 pb-6 border-t border-gray-200">
                 <div className="pt-6 space-y-6">
                   {/* Subscriptions */}
-                  {(decisionTrace.detected_signals.subscriptions['30d'] ||
-                    decisionTrace.detected_signals.subscriptions['180d']) && (
+                  {(decisionTrace.detected_signals.subscriptions?.['30d'] ||
+                    decisionTrace.detected_signals.subscriptions?.['180d']) && (
                     <div>
                       <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-2">
                         <FaCreditCard className="h-4 w-4 text-blue-500" />
@@ -617,13 +620,13 @@ const OperatorReview = () => {
                         <div className="bg-gray-50 rounded-lg p-4">
                           <span className="text-xs text-gray-500">30-Day Window</span>
                           <div className="mt-2 space-y-1">
-                            {decisionTrace.detected_signals.subscriptions['30d']?.subscription_count !== undefined && (
+                            {decisionTrace.detected_signals.subscriptions?.['30d']?.subscription_count !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Count:</span>{' '}
                                 {decisionTrace.detected_signals.subscriptions['30d'].subscription_count}
                               </p>
                             )}
-                            {decisionTrace.detected_signals.subscriptions['30d']?.total_recurring_spend !== undefined && (
+                            {decisionTrace.detected_signals.subscriptions?.['30d']?.total_recurring_spend !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Monthly Recurring:</span>{' '}
                                 {formatCurrency(decisionTrace.detected_signals.subscriptions['30d'].total_recurring_spend)}
@@ -634,13 +637,13 @@ const OperatorReview = () => {
                         <div className="bg-gray-50 rounded-lg p-4">
                           <span className="text-xs text-gray-500">180-Day Window</span>
                           <div className="mt-2 space-y-1">
-                            {decisionTrace.detected_signals.subscriptions['180d']?.subscription_count !== undefined && (
+                            {decisionTrace.detected_signals.subscriptions?.['180d']?.subscription_count !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Count:</span>{' '}
                                 {decisionTrace.detected_signals.subscriptions['180d'].subscription_count}
                               </p>
                             )}
-                            {decisionTrace.detected_signals.subscriptions['180d']?.total_recurring_spend !== undefined && (
+                            {decisionTrace.detected_signals.subscriptions?.['180d']?.total_recurring_spend !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Monthly Recurring:</span>{' '}
                                 {formatCurrency(
@@ -655,8 +658,8 @@ const OperatorReview = () => {
                   )}
 
                   {/* Savings */}
-                  {(decisionTrace.detected_signals.savings['30d'] ||
-                    decisionTrace.detected_signals.savings['180d']) && (
+                  {(decisionTrace.detected_signals.savings?.['30d'] ||
+                    decisionTrace.detected_signals.savings?.['180d']) && (
                     <div>
                       <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-2">
                         <FaPiggyBank className="h-4 w-4 text-green-500" />
@@ -666,13 +669,13 @@ const OperatorReview = () => {
                         <div className="bg-gray-50 rounded-lg p-4">
                           <span className="text-xs text-gray-500">30-Day Window</span>
                           <div className="mt-2 space-y-1">
-                            {decisionTrace.detected_signals.savings['30d']?.savings_growth_rate_percent !== undefined && (
+                            {decisionTrace.detected_signals.savings?.['30d']?.savings_growth_rate_percent !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Growth Rate:</span>{' '}
                                 {formatPercent(decisionTrace.detected_signals.savings['30d'].savings_growth_rate_percent)}
                               </p>
                             )}
-                            {decisionTrace.detected_signals.savings['30d']?.net_inflow !== undefined && (
+                            {decisionTrace.detected_signals.savings?.['30d']?.net_inflow !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Net Inflow:</span>{' '}
                                 {formatCurrency(decisionTrace.detected_signals.savings['30d'].net_inflow)}
@@ -683,7 +686,7 @@ const OperatorReview = () => {
                         <div className="bg-gray-50 rounded-lg p-4">
                           <span className="text-xs text-gray-500">180-Day Window</span>
                           <div className="mt-2 space-y-1">
-                            {decisionTrace.detected_signals.savings['180d']?.savings_growth_rate_percent !== undefined && (
+                            {decisionTrace.detected_signals.savings?.['180d']?.savings_growth_rate_percent !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Growth Rate:</span>{' '}
                                 {formatPercent(
@@ -691,7 +694,7 @@ const OperatorReview = () => {
                                 )}
                               </p>
                             )}
-                            {decisionTrace.detected_signals.savings['180d']?.net_inflow !== undefined && (
+                            {decisionTrace.detected_signals.savings?.['180d']?.net_inflow !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Net Inflow:</span>{' '}
                                 {formatCurrency(decisionTrace.detected_signals.savings['180d'].net_inflow)}
@@ -704,8 +707,8 @@ const OperatorReview = () => {
                   )}
 
                   {/* Credit */}
-                  {(decisionTrace.detected_signals.credit['30d'] ||
-                    decisionTrace.detected_signals.credit['180d']) && (
+                  {(decisionTrace.detected_signals.credit?.['30d'] ||
+                    decisionTrace.detected_signals.credit?.['180d']) && (
                     <div>
                       <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-2">
                         <FaCreditCard className="h-4 w-4 text-red-500" />
@@ -715,7 +718,7 @@ const OperatorReview = () => {
                         <div className="bg-gray-50 rounded-lg p-4">
                           <span className="text-xs text-gray-500">30-Day Window</span>
                           <div className="mt-2 space-y-1">
-                            {decisionTrace.detected_signals.credit['30d']?.critical_utilization_cards && (
+                            {decisionTrace.detected_signals.credit?.['30d']?.critical_utilization_cards && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">High Utilization Cards:</span>{' '}
                                 {Array.isArray(decisionTrace.detected_signals.credit['30d'].critical_utilization_cards)
@@ -723,7 +726,7 @@ const OperatorReview = () => {
                                   : 0}
                               </p>
                             )}
-                            {decisionTrace.detected_signals.credit['30d']?.cards_with_interest && (
+                            {decisionTrace.detected_signals.credit?.['30d']?.cards_with_interest && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Cards with Interest:</span>{' '}
                                 {Array.isArray(decisionTrace.detected_signals.credit['30d'].cards_with_interest)
@@ -736,7 +739,7 @@ const OperatorReview = () => {
                         <div className="bg-gray-50 rounded-lg p-4">
                           <span className="text-xs text-gray-500">180-Day Window</span>
                           <div className="mt-2 space-y-1">
-                            {decisionTrace.detected_signals.credit['180d']?.critical_utilization_cards && (
+                            {decisionTrace.detected_signals.credit?.['180d']?.critical_utilization_cards && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">High Utilization Cards:</span>{' '}
                                 {Array.isArray(decisionTrace.detected_signals.credit['180d'].critical_utilization_cards)
@@ -744,7 +747,7 @@ const OperatorReview = () => {
                                   : 0}
                               </p>
                             )}
-                            {decisionTrace.detected_signals.credit['180d']?.cards_with_interest && (
+                            {decisionTrace.detected_signals.credit?.['180d']?.cards_with_interest && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Cards with Interest:</span>{' '}
                                 {Array.isArray(decisionTrace.detected_signals.credit['180d'].cards_with_interest)
@@ -759,8 +762,8 @@ const OperatorReview = () => {
                   )}
 
                   {/* Income */}
-                  {(decisionTrace.detected_signals.income['30d'] ||
-                    decisionTrace.detected_signals.income['180d']) && (
+                  {(decisionTrace.detected_signals.income?.['30d'] ||
+                    decisionTrace.detected_signals.income?.['180d']) && (
                     <div>
                       <h3 className="text-base font-semibold text-gray-900 mb-3 flex items-center gap-2">
                         <FaDollarSign className="h-4 w-4 text-yellow-500" />
@@ -770,13 +773,13 @@ const OperatorReview = () => {
                         <div className="bg-gray-50 rounded-lg p-4">
                           <span className="text-xs text-gray-500">30-Day Window</span>
                           <div className="mt-2 space-y-1">
-                            {decisionTrace.detected_signals.income['30d']?.cash_flow_buffer_months !== undefined && (
+                            {decisionTrace.detected_signals.income?.['30d']?.cash_flow_buffer_months !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Cash Flow Buffer:</span>{' '}
                                 {decisionTrace.detected_signals.income['30d'].cash_flow_buffer_months.toFixed(1)} months
                               </p>
                             )}
-                            {decisionTrace.detected_signals.income['30d']?.payment_frequency && (
+                            {decisionTrace.detected_signals.income?.['30d']?.payment_frequency && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Payment Frequency:</span>{' '}
                                 {decisionTrace.detected_signals.income['30d'].payment_frequency}
@@ -787,13 +790,13 @@ const OperatorReview = () => {
                         <div className="bg-gray-50 rounded-lg p-4">
                           <span className="text-xs text-gray-500">180-Day Window</span>
                           <div className="mt-2 space-y-1">
-                            {decisionTrace.detected_signals.income['180d']?.cash_flow_buffer_months !== undefined && (
+                            {decisionTrace.detected_signals.income?.['180d']?.cash_flow_buffer_months !== undefined && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Cash Flow Buffer:</span>{' '}
                                 {decisionTrace.detected_signals.income['180d'].cash_flow_buffer_months.toFixed(1)} months
                               </p>
                             )}
-                            {decisionTrace.detected_signals.income['180d']?.payment_frequency && (
+                            {decisionTrace.detected_signals.income?.['180d']?.payment_frequency && (
                               <p className="text-sm text-gray-700">
                                 <span className="font-medium">Payment Frequency:</span>{' '}
                                 {decisionTrace.detected_signals.income['180d'].payment_frequency}
@@ -836,7 +839,8 @@ const OperatorReview = () => {
                       <h3 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
                         <FaCheckCircle
                           className={`h-4 w-4 ${
-                            decisionTrace.recommendation.guardrails.consent.status === 'granted'
+                            decisionTrace.recommendation.guardrails.consent.status === 'granted' ||
+                            decisionTrace.recommendation.guardrails.consent.status === true
                               ? 'text-green-500'
                               : 'text-red-500'
                           }`}
@@ -844,7 +848,16 @@ const OperatorReview = () => {
                         Consent Check
                       </h3>
                       <p className="text-sm text-gray-700">
-                        Status: <span className="font-medium">{decisionTrace.recommendation.guardrails.consent.status}</span>
+                        Status:{' '}
+                        <span className="font-medium">
+                          {decisionTrace.recommendation.guardrails.consent.status === 'granted' ||
+                          decisionTrace.recommendation.guardrails.consent.status === true
+                            ? 'Granted'
+                            : decisionTrace.recommendation.guardrails.consent.status === 'not_granted' ||
+                              decisionTrace.recommendation.guardrails.consent.status === false
+                            ? 'Not Granted'
+                            : decisionTrace.recommendation.guardrails.consent.status || 'Unknown'}
+                        </span>
                       </p>
                       {decisionTrace.recommendation.guardrails.consent.checked_at && (
                         <p className="text-xs text-gray-500 mt-1">
@@ -860,7 +873,8 @@ const OperatorReview = () => {
                       <h3 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
                         <FaCheckCircle
                           className={`h-4 w-4 ${
-                            decisionTrace.recommendation.guardrails.eligibility.status === 'eligible'
+                            decisionTrace.recommendation.guardrails.eligibility.status === 'eligible' ||
+                            decisionTrace.recommendation.guardrails.eligibility.status === true
                               ? 'text-green-500'
                               : 'text-red-500'
                           }`}
@@ -868,7 +882,16 @@ const OperatorReview = () => {
                         Eligibility Check
                       </h3>
                       <p className="text-sm text-gray-700 mb-2">
-                        Status: <span className="font-medium">{decisionTrace.recommendation.guardrails.eligibility.status}</span>
+                        Status:{' '}
+                        <span className="font-medium">
+                          {decisionTrace.recommendation.guardrails.eligibility.status === 'eligible' ||
+                          decisionTrace.recommendation.guardrails.eligibility.status === true
+                            ? 'Eligible'
+                            : decisionTrace.recommendation.guardrails.eligibility.status === 'not_eligible' ||
+                              decisionTrace.recommendation.guardrails.eligibility.status === false
+                            ? 'Not Eligible'
+                            : decisionTrace.recommendation.guardrails.eligibility.status || 'Unknown'}
+                        </span>
                       </p>
                       {decisionTrace.recommendation.guardrails.eligibility.explanation && (
                         <p className="text-sm text-gray-700 mb-2">
@@ -902,7 +925,9 @@ const OperatorReview = () => {
                       <h3 className="text-sm font-semibold text-gray-900 mb-2 flex items-center gap-2">
                         <FaCheckCircle
                           className={`h-4 w-4 ${
-                            decisionTrace.recommendation.guardrails.tone.status === 'approved'
+                            decisionTrace.recommendation.guardrails.tone.status === 'approved' ||
+                            decisionTrace.recommendation.guardrails.tone.valid === true ||
+                            decisionTrace.recommendation.guardrails.tone.status === true
                               ? 'text-green-500'
                               : 'text-red-500'
                           }`}
@@ -910,7 +935,23 @@ const OperatorReview = () => {
                         Tone Validation
                       </h3>
                       <p className="text-sm text-gray-700">
-                        Status: <span className="font-medium">{decisionTrace.recommendation.guardrails.tone.status}</span>
+                        Status:{' '}
+                        <span className="font-medium">
+                          {decisionTrace.recommendation.guardrails.tone.status === 'approved' ||
+                          decisionTrace.recommendation.guardrails.tone.valid === true ||
+                          decisionTrace.recommendation.guardrails.tone.status === true
+                            ? 'Approved'
+                            : decisionTrace.recommendation.guardrails.tone.status === 'rejected' ||
+                              decisionTrace.recommendation.guardrails.tone.valid === false ||
+                              decisionTrace.recommendation.guardrails.tone.status === false
+                            ? 'Rejected'
+                            : decisionTrace.recommendation.guardrails.tone.status ||
+                              (decisionTrace.recommendation.guardrails.tone.valid !== undefined
+                                ? decisionTrace.recommendation.guardrails.tone.valid
+                                  ? 'Approved'
+                                  : 'Rejected'
+                                : 'Unknown')}
+                        </span>
                       </p>
                       {decisionTrace.recommendation.guardrails.tone.score !== undefined && (
                         <p className="text-sm text-gray-700 mt-1">
@@ -937,9 +978,6 @@ const OperatorReview = () => {
                       <p className="text-sm text-gray-700">
                         Present: <span className="font-medium">{decisionTrace.recommendation.guardrails.disclaimer.present ? 'Yes' : 'No'}</span>
                       </p>
-                      {decisionTrace.recommendation.guardrails.disclaimer.text && (
-                        <p className="text-xs text-gray-600 mt-1">{decisionTrace.recommendation.guardrails.disclaimer.text}</p>
-                      )}
                     </div>
                   )}
                 </div>

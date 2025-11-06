@@ -7,8 +7,11 @@ import ErrorState from '@/components/ErrorState'
 import PersonaBadge from '@/components/PersonaBadge'
 import PersonaHistoryTimeline from '@/components/PersonaHistoryTimeline'
 import TimePeriodSelector from '@/components/TimePeriodSelector'
-import { FaArrowLeft, FaUser, FaEnvelope, FaShieldAlt, FaCheckCircle, FaTimesCircle, FaCreditCard, FaFileInvoice, FaList, FaDollarSign, FaLightbulb, FaSync } from 'react-icons/fa'
+import { FaArrowLeft, FaUser, FaEnvelope, FaShieldAlt, FaCheckCircle, FaTimesCircle, FaCreditCard, FaFileInvoice, FaList, FaDollarSign, FaLightbulb, FaSync, FaChevronDown, FaChevronUp, FaChartPie } from 'react-icons/fa'
 import type { Account, Transaction, Liability } from '@/services/adminService'
+import SpendingBreakdown from '@/components/SpendingBreakdown'
+import { dashboardService, type SpendingData } from '@/services/dashboardService'
+import { formatMarkdownToReact, stripMarkdown } from '@/utils/formatMarkdown'
 
 const UserDetail = () => {
   const { userId } = useParams<{ userId: string }>()
@@ -17,6 +20,7 @@ const UserDetail = () => {
   const [transactionsPage, setTransactionsPage] = useState(0)
   const [selectedPeriod, setSelectedPeriod] = useState<'30d' | '180d' | '365d'>('180d')
   const transactionsLimit = 50
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['spendingBreakdown']))
 
   // Fetch user profile
   const {
@@ -104,6 +108,27 @@ const UserDetail = () => {
     enabled: !!userId,
   })
 
+  // Fetch spending categories
+  const {
+    data: spendingData,
+    isLoading: spendingLoading,
+    isError: spendingError,
+  } = useQuery<SpendingData>({
+    queryKey: ['admin', 'user', userId, 'spending-categories'],
+    queryFn: () => dashboardService.getSpendingCategories(userId!),
+    enabled: !!userId,
+  })
+
+  const toggleSection = (section: string) => {
+    const newExpanded = new Set(expandedSections)
+    if (newExpanded.has(section)) {
+      newExpanded.delete(section)
+    } else {
+      newExpanded.add(section)
+    }
+    setExpandedSections(newExpanded)
+  }
+
   if (profileLoading || accountsLoading || transactionsLoading || liabilitiesLoading || behavioralLoading || recommendationsLoading || personaHistoryLoading) {
     return <PageSkeleton sections={6} />
   }
@@ -137,6 +162,80 @@ const UserDetail = () => {
       month: 'short',
       day: 'numeric',
     })
+  }
+
+  const getCategoryColor = (category: string): string => {
+    const categoryColors: Record<string, string> = {
+      // Food & Dining (Red)
+      'Food & Dining': '#ef4444',
+      'Food and Drink': '#ef4444',
+      'Food & Drink': '#ef4444',
+      'Restaurants': '#ef4444',
+      'Fast Food': '#ef4444',
+      'Coffee Shops': '#ef4444',
+      'Bars': '#ef4444',
+      'Food Delivery': '#ef4444',
+      'Dining': '#ef4444',
+      
+      // Groceries (Orange)
+      'Groceries': '#f97316',
+      'Supermarkets and Groceries': '#f97316',
+      
+      // Transportation (Amber)
+      'Transportation': '#f59e0b',
+      'Transport': '#f59e0b',
+      'Gas Stations': '#f59e0b',
+      'Parking': '#f59e0b',
+      'Public Transportation': '#f59e0b',
+      'Ride Sharing': '#f59e0b',
+      'Auto & Transport': '#f59e0b',
+      
+      // Shopping (Yellow)
+      'Shopping': '#eab308',
+      'General Merchandise': '#eab308',
+      'Clothing and Apparel': '#eab308',
+      'Electronics and Software': '#eab308',
+      'Home Improvement': '#eab308',
+      'Online Marketplaces': '#eab308',
+      'Retail': '#eab308',
+      
+      // Bills & Utilities (Lime)
+      'Bills & Utilities': '#84cc16',
+      'Internet': '#84cc16',
+      'Mobile Phone': '#84cc16',
+      'Utilities': '#84cc16',
+      'Cable': '#84cc16',
+      
+      // Entertainment (Green)
+      'Entertainment': '#22c55e',
+      'Movies & Music': '#22c55e',
+      'Sports and Recreation': '#22c55e',
+      'Arts and Entertainment': '#22c55e',
+      
+      // Healthcare (Emerald)
+      'Healthcare': '#10b981',
+      'Medical': '#10b981',
+      'Pharmacies': '#10b981',
+      
+      // Travel (Teal)
+      'Travel': '#14b8a6',
+      'Airlines and Aviation Services': '#14b8a6',
+      'Hotels and Accommodations': '#14b8a6',
+      
+      // Personal Care (Cyan)
+      'Personal Care': '#06b6d4',
+      'Gyms and Fitness Centers': '#06b6d4',
+      'Hair Salons and Barbers': '#06b6d4',
+      
+      // Financial (Sky)
+      'Financial': '#0ea5e9',
+      'Bank Fees': '#0ea5e9',
+      'ATM Fees': '#0ea5e9',
+      'Wire Transfer': '#0ea5e9',
+      'Credit Card': '#0ea5e9',
+      'Loan Payment': '#0ea5e9',
+    }
+    return categoryColors[category] || '#6b7280'
   }
 
   // Get signals based on selected period
@@ -456,6 +555,45 @@ const UserDetail = () => {
           )}
         </div>
 
+        {/* Spending Breakdown Section */}
+        <div className="bg-white rounded-lg shadow-sm mb-6">
+          <button
+            onClick={() => toggleSection('spendingBreakdown')}
+            className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+          >
+            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+              <FaChartPie className="h-5 w-5 text-primary-600" />
+              Spending Breakdown
+            </h2>
+            {expandedSections.has('spendingBreakdown') ? (
+              <FaChevronUp className="h-5 w-5 text-gray-400" />
+            ) : (
+              <FaChevronDown className="h-5 w-5 text-gray-400" />
+            )}
+          </button>
+          {expandedSections.has('spendingBreakdown') && (
+            <div className="px-6 pb-6">
+              {spendingLoading ? (
+                <div className="text-center py-8 text-gray-500">
+                  <p>Loading spending data...</p>
+                </div>
+              ) : spendingError ? (
+                <ErrorState title="Failed to load spending breakdown" error={spendingError} />
+              ) : spendingData ? (
+                <SpendingBreakdown
+                  categories={spendingData.signals_30d.categories}
+                  totalSpending={spendingData.signals_30d.total_spending}
+                  period="30 days"
+                />
+              ) : (
+                <div className="text-center py-8 text-gray-500">
+                  <p>No spending data available</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
         {/* Transactions Section */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
@@ -483,13 +621,23 @@ const UserDetail = () => {
                           {formatDate(transaction.date)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {transaction.merchant_name || 'N/A'}
+                          <div className="flex items-center gap-2">
+                            <div
+                              className="w-2 h-2 rounded-full flex-shrink-0"
+                              style={{ backgroundColor: getCategoryColor(transaction.category_primary) }}
+                            />
+                            <span>{transaction.merchant_name || 'N/A'}</span>
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {transaction.category_primary}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {formatCurrency(Math.abs(transaction.amount))}
+                        <td className={`px-6 py-4 whitespace-nowrap text-sm font-semibold ${
+                          transaction.amount > 0 
+                            ? 'text-green-600' 
+                            : 'text-red-600'
+                        }`}>
+                          {transaction.amount > 0 ? '+' : '-'}{formatCurrency(Math.abs(transaction.amount))}
                         </td>
                       </tr>
                     ))}
@@ -643,11 +791,16 @@ const UserDetail = () => {
                       {formatDate(rec.created_at)}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{rec.content}</p>
+                  <div className="text-sm text-gray-600 mb-2">
+                    {formatMarkdownToReact(stripMarkdown(rec.content.substring(0, 200)))}
+                    {rec.content.length > 200 && '...'}
+                  </div>
                   {rec.rationale && (
                     <div className="mt-2 p-3 bg-gray-50 rounded">
                       <p className="text-xs font-medium text-gray-700 mb-1">Rationale:</p>
-                      <p className="text-xs text-gray-600">{rec.rationale}</p>
+                      <div className="text-xs text-gray-600">
+                        {formatMarkdownToReact(rec.rationale)}
+                      </div>
                     </div>
                   )}
                 </div>

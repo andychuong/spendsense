@@ -62,6 +62,7 @@ const Login = () => {
       setAuth(
         {
           id: response.user_id,
+          name: userProfileResponse.name,
           email: response.email,
           role: userProfileResponse.role || 'user',
           created_at: userProfileResponse.created_at,
@@ -130,6 +131,7 @@ const Login = () => {
       setAuth(
         {
           id: response.user_id,
+          name: userProfileResponse.name,
           phone: response.phone,
           role: userProfileResponse.role || 'user',
           created_at: userProfileResponse.created_at,

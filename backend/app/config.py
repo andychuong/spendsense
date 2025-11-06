@@ -56,10 +56,24 @@ class Settings(BaseSettings):
     openai_api_key: Optional[str] = None
     openai_model: str = "gpt-4-turbo-preview"
     openai_fallback_model: str = "gpt-3.5-turbo"
+    
+    # RAG System Configuration
+    rag_enabled: bool = False  # Feature flag for RAG system
+    rag_rollout_percentage: float = 0.10  # Percentage of users in A/B test (0.0-1.0)
+    rag_openai_model: str = "gpt-4-turbo-preview"  # Model for RAG generation
+    rag_vector_db_path: str = "./data/chroma_prod"  # Path to ChromaDB
+    rag_embedding_model: str = "all-MiniLM-L6-v2"  # Sentence transformer model
+    rag_top_k: int = 10  # Number of documents to retrieve
+    rag_force_catalog_fallback: bool = False  # Force fallback to catalog if RAG fails
 
     # SMS (AWS SNS)
     sns_region: str = "us-west-1"
     sms_mock_mode: bool = False  # Set to True to use mock SMS (logs codes to console instead of sending)
+
+    # N8N Integration
+    n8n_api_key: Optional[str] = None
+    n8n_webhook_secret: Optional[str] = None
+    n8n_webhook_url: Optional[str] = None
 
     # Security
     cors_origins: list[str] = ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "http://127.0.0.1:3001"]

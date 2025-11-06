@@ -28,6 +28,7 @@ from app.api.v1.schemas.recommendations import (
     RecommendationRejectRequest,
     RecommendationModifyRequest,
 )
+from app.api.v1.schemas.rag_metrics import RAGDashboard, RAGHealthCheck, GenerationMetrics, ABTestStatus, ABTestMetrics, ABTestComparison, VectorStoreStats
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +52,8 @@ async def get_review_queue(
     limit: int = Query(100, ge=1, le=1000),
     status_filter: Optional[str] = Query(None, alias="status"),
     user_id: Optional[str] = Query(None),
+    type_filter: Optional[str] = Query(None, alias="type"),
+    persona_id: Optional[int] = Query(None),
 ):
     """
     Get review queue for operators.
@@ -64,15 +67,134 @@ async def get_review_queue(
         limit: Maximum number of records to return
         status_filter: Filter by recommendation status (pending, approved, rejected)
         user_id: Filter by user ID
+        type_filter: Filter by recommendation type (education, partner_offer)
+        persona_id: Filter by persona ID
 
     Returns:
         List of recommendations pending review
     """
-    # TODO: Implement when Recommendation model is created
-    # This is a placeholder endpoint
+    from app.models.recommendation import Recommendation, RecommendationStatus, RecommendationType
+    
+    logger.info(
+        f"Operator {current_user.user_id} ({current_user.email}) accessing review queue "
+        f"with filters: status={status_filter}, user_id={user_id}, type={type_filter}, persona_id={persona_id}"
+    )
+    
+    # Build query - operators can see all recommendations
+    query = db.query(Recommendation)
+    
+    # Apply status filter (default to pending if not specified)
+    if status_filter:
+        try:
+            status_enum = RecommendationStatus(status_filter.lower())
+            query = query.filter(Recommendation.status == status_enum)
+        except ValueError:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid status filter: {status_filter}. Valid values: pending, approved, rejected"
+            )
+    else:
+        # Default to pending recommendations for review queue
+        query = query.filter(Recommendation.status == RecommendationStatus.PENDING)
+    
+    # Apply user_id filter
+    if user_id:
+        try:
+            user_uuid = uuid.UUID(user_id)
+            query = query.filter(Recommendation.user_id == user_uuid)
+        except ValueError:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid user_id format: {user_id}"
+            )
+    
+    # Apply type filter
+    if type_filter:
+        try:
+            type_enum = RecommendationType(type_filter.lower())
+            query = query.filter(Recommendation.type == type_enum)
+        except ValueError:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid type filter: {type_filter}. Valid values: education, partner_offer"
+            )
+    
+    # Apply persona_id filter (from decision_trace JSON)
+    if persona_id is not None:
+        # Note: persona_id is stored in decision_trace JSON, so we need to query JSON field
+        # This assumes the decision_trace has a structure like: {"persona_assignment": {"persona_id": 1}}
+        # PostgreSQL JSON query syntax
+        from sqlalchemy import text
+        query = query.filter(
+            text("decision_trace->'persona_assignment'->>'persona_id' = :persona_id")
+        ).params(persona_id=str(persona_id))
+    
+    # Get total count before pagination
+    total = query.count()
+    
+    # Apply sorting (default to newest first)
+    query = query.order_by(Recommendation.created_at.desc())
+    
+    # Apply pagination
+    recommendations = query.offset(skip).limit(limit).all()
+    
+    # Batch fetch all users to avoid N+1 queries
+    user_ids = [rec.user_id for rec in recommendations]
+    users_dict = {}
+    if user_ids:
+        users = db.query(User).filter(User.user_id.in_(user_ids)).all()
+        users_dict = {user.user_id: user for user in users}
+    
+    # Convert to response format with user information
+    items = []
+    for rec in recommendations:
+        # Get user information from batch-loaded dict
+        user = users_dict.get(rec.user_id)
+        user_name = user.name if user else None
+        user_email = user.email if user else None
+        
+        # Extract persona information from decision_trace
+        persona_id = None
+        persona_name = None
+        if rec.decision_trace and isinstance(rec.decision_trace, dict):
+            persona_assignment = rec.decision_trace.get("persona_assignment", {})
+            persona_id = persona_assignment.get("persona_id")
+            persona_name = persona_assignment.get("persona_name")
+        
+        # Build response item
+        item = {
+            "recommendation_id": str(rec.recommendation_id),
+            "user_id": str(rec.user_id),
+            "user_name": user_name,
+            "user_email": user_email,
+            "type": rec.type.value if isinstance(rec.type, RecommendationType) else rec.type,
+            "status": rec.status.value if isinstance(rec.status, RecommendationStatus) else rec.status,
+            "title": rec.title,
+            "content": rec.content,
+            "rationale": rec.rationale,
+            "created_at": rec.created_at.isoformat() if rec.created_at else None,
+            "approved_at": rec.approved_at.isoformat() if rec.approved_at else None,
+            "approved_by": str(rec.approved_by) if rec.approved_by else None,
+            "rejected_at": rec.rejected_at.isoformat() if rec.rejected_at else None,
+            "rejected_by": str(rec.rejected_by) if rec.rejected_by else None,
+            "rejection_reason": rec.rejection_reason,
+            "persona_id": persona_id,
+            "persona_name": persona_name,
+            "decision_trace": rec.decision_trace,
+        }
+        items.append(item)
+    
+    logger.info(
+        f"Review queue query returned {len(items)} recommendations (total: {total}, "
+        f"skip: {skip}, limit: {limit})"
+    )
+    
+    # Note: We're returning a dict instead of RecommendationsListResponse because
+    # RecommendationResponse doesn't include user_name, user_email, persona_id, persona_name
+    # The frontend expects these fields, so we'll return them directly
     return {
-        "items": [],
-        "total": 0,
+        "items": items,
+        "total": total,
         "skip": skip,
         "limit": limit,
     }
@@ -87,7 +209,7 @@ async def get_review_queue(
         401: {"description": "Unauthorized - authentication required"},
         403: {"description": "Forbidden - operator role required"},
         404: {"description": "Recommendation not found"},
-        501: {"description": "Not implemented - endpoint not yet available"},
+        400: {"description": "Bad request - invalid recommendation ID format"},
     },
 )
 async def get_recommendation_for_review(
@@ -108,11 +230,75 @@ async def get_recommendation_for_review(
     Returns:
         Recommendation details with decision trace
     """
-    # TODO: Implement when Recommendation model is created
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Endpoint not yet implemented"
+    from app.models.recommendation import Recommendation, RecommendationStatus, RecommendationType
+    
+    logger.info(
+        f"Operator {current_user.user_id} ({current_user.email}) accessing recommendation {recommendation_id} for review"
     )
+    
+    try:
+        # Convert recommendation_id to UUID
+        rec_uuid = uuid.UUID(recommendation_id)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid recommendation ID format: {recommendation_id}"
+        )
+    
+    # Get recommendation from database
+    recommendation = db.query(Recommendation).filter(
+        Recommendation.recommendation_id == rec_uuid
+    ).first()
+    
+    if not recommendation:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Recommendation not found: {recommendation_id}"
+        )
+    
+    # Get user information
+    user = db.query(User).filter(User.user_id == recommendation.user_id).first()
+    user_name = user.name if user else None
+    user_email = user.email if user else None
+    
+    # Extract persona info from decision_trace
+    persona_id = None
+    persona_name = None
+    decision_trace = None
+    
+    if recommendation.decision_trace and isinstance(recommendation.decision_trace, dict):
+        decision_trace = recommendation.decision_trace
+        persona_assignment = decision_trace.get("persona_assignment", {})
+        persona_id = persona_assignment.get("persona_id")
+        persona_name = persona_assignment.get("persona_name")
+    
+    # Build response
+    response_data = {
+        "recommendation_id": str(recommendation.recommendation_id),
+        "user_id": str(recommendation.user_id),
+        "user_name": user_name,
+        "user_email": user_email,
+        "type": recommendation.type.value if isinstance(recommendation.type, RecommendationType) else recommendation.type,
+        "status": recommendation.status.value if isinstance(recommendation.status, RecommendationStatus) else recommendation.status,
+        "title": recommendation.title,
+        "content": recommendation.content,
+        "rationale": recommendation.rationale,
+        "created_at": recommendation.created_at.isoformat() if recommendation.created_at else None,
+        "approved_at": recommendation.approved_at.isoformat() if recommendation.approved_at else None,
+        "approved_by": str(recommendation.approved_by) if recommendation.approved_by else None,
+        "rejected_at": recommendation.rejected_at.isoformat() if recommendation.rejected_at else None,
+        "rejected_by": str(recommendation.rejected_by) if recommendation.rejected_by else None,
+        "rejection_reason": recommendation.rejection_reason,
+        "persona_id": persona_id,
+        "persona_name": persona_name,
+        "decision_trace": decision_trace,
+    }
+    
+    logger.info(
+        f"Successfully retrieved recommendation {recommendation_id} for operator {current_user.user_id}"
+    )
+    
+    return response_data
 
 
 @router.post(
@@ -145,25 +331,92 @@ async def approve_recommendation(
     Returns:
         Approval confirmation
     """
+    from app.models.recommendation import Recommendation, RecommendationStatus
+    from datetime import datetime
+    
     # Log operator action
     logger.info(
         f"Operator {current_user.user_id} ({current_user.email}) attempting to approve recommendation {recommendation_id}"
     )
-
-    # TODO: Implement when Recommendation model is created
-    # When implemented, should:
-    # 1. Get recommendation from database
-    # 2. Check if recommendation exists and is pending
-    # 3. Update status to APPROVED
-    # 4. Set approved_at to current timestamp
-    # 5. Set approved_by to current_user.user_id
-    # 6. Commit changes
-    # 7. Log success
-
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Endpoint not yet implemented"
-    )
+    
+    try:
+        # Convert recommendation_id to UUID
+        rec_uuid = uuid.UUID(recommendation_id)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid recommendation ID format: {recommendation_id}"
+        )
+    
+    # Get recommendation from database
+    recommendation = db.query(Recommendation).filter(
+        Recommendation.recommendation_id == rec_uuid
+    ).first()
+    
+    if not recommendation:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Recommendation not found: {recommendation_id}"
+        )
+    
+    # Check if recommendation is already approved
+    if recommendation.status == RecommendationStatus.APPROVED:
+        logger.warning(
+            f"Recommendation {recommendation_id} is already approved by {recommendation.approved_by} "
+            f"at {recommendation.approved_at}"
+        )
+        return {
+            "message": "Recommendation already approved",
+            "recommendation_id": str(recommendation.recommendation_id),
+            "status": recommendation.status.value,
+            "approved_at": recommendation.approved_at.isoformat() if recommendation.approved_at else None,
+        }
+    
+    # Check if recommendation is rejected (can't approve a rejected recommendation)
+    if recommendation.status == RecommendationStatus.REJECTED:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Cannot approve a rejected recommendation. Recommendation {recommendation_id} was rejected."
+        )
+    
+    # Update recommendation status to APPROVED
+    recommendation.status = RecommendationStatus.APPROVED
+    recommendation.approved_at = datetime.utcnow()
+    recommendation.approved_by = current_user.user_id
+    
+    # Clear rejection fields if they were set
+    recommendation.rejected_at = None
+    recommendation.rejected_by = None
+    recommendation.rejection_reason = None
+    
+    # Commit changes
+    try:
+        db.commit()
+        db.refresh(recommendation)
+        logger.info(
+            f"Successfully approved recommendation {recommendation_id} by operator {current_user.user_id} ({current_user.email})"
+        )
+        
+        # Invalidate recommendations cache for the user
+        from app.core.cache_service import invalidate_recommendations_cache
+        invalidate_recommendations_cache(recommendation.user_id)
+        logger.debug(f"Invalidated recommendations cache for user {recommendation.user_id}")
+        
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error approving recommendation {recommendation_id}: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to approve recommendation: {str(e)}"
+        )
+    
+    return {
+        "message": "Recommendation approved successfully",
+        "recommendation_id": str(recommendation.recommendation_id),
+        "status": recommendation.status.value,
+        "approved_at": recommendation.approved_at.isoformat() if recommendation.approved_at else None,
+        "approved_by": str(recommendation.approved_by) if recommendation.approved_by else None,
+    }
 
 
 @router.post(
@@ -198,27 +451,94 @@ async def reject_recommendation(
     Returns:
         Rejection confirmation
     """
+    from app.models.recommendation import Recommendation, RecommendationStatus
+    from datetime import datetime
+    
     # Log operator action
     logger.info(
         f"Operator {current_user.user_id} ({current_user.email}) attempting to reject recommendation {recommendation_id} "
         f"with reason: {request.reason[:100]}..." if len(request.reason) > 100 else f"with reason: {request.reason}"
     )
-
-    # TODO: Implement when Recommendation model is created
-    # When implemented, should:
-    # 1. Get recommendation from database
-    # 2. Check if recommendation exists and is pending
-    # 3. Update status to REJECTED
-    # 4. Set rejected_at to current timestamp
-    # 5. Set rejected_by to current_user.user_id
-    # 6. Set rejection_reason to request.reason
-    # 7. Commit changes
-    # 8. Log success
-
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Endpoint not yet implemented"
-    )
+    
+    try:
+        # Convert recommendation_id to UUID
+        rec_uuid = uuid.UUID(recommendation_id)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid recommendation ID format: {recommendation_id}"
+        )
+    
+    # Get recommendation from database
+    recommendation = db.query(Recommendation).filter(
+        Recommendation.recommendation_id == rec_uuid
+    ).first()
+    
+    if not recommendation:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Recommendation not found: {recommendation_id}"
+        )
+    
+    # Check if recommendation is already rejected
+    if recommendation.status == RecommendationStatus.REJECTED:
+        logger.warning(
+            f"Recommendation {recommendation_id} is already rejected by {recommendation.rejected_by} "
+            f"at {recommendation.rejected_at}"
+        )
+        return {
+            "message": "Recommendation already rejected",
+            "recommendation_id": str(recommendation.recommendation_id),
+            "status": recommendation.status.value,
+            "rejected_at": recommendation.rejected_at.isoformat() if recommendation.rejected_at else None,
+        }
+    
+    # Check if recommendation is approved (can't reject an approved recommendation)
+    if recommendation.status == RecommendationStatus.APPROVED:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Cannot reject an approved recommendation. Recommendation {recommendation_id} was already approved."
+        )
+    
+    # Update recommendation status to REJECTED
+    recommendation.status = RecommendationStatus.REJECTED
+    recommendation.rejected_at = datetime.utcnow()
+    recommendation.rejected_by = current_user.user_id
+    recommendation.rejection_reason = request.reason
+    
+    # Clear approval fields if they were set
+    recommendation.approved_at = None
+    recommendation.approved_by = None
+    
+    # Commit changes
+    try:
+        db.commit()
+        db.refresh(recommendation)
+        logger.info(
+            f"Successfully rejected recommendation {recommendation_id} by operator {current_user.user_id} ({current_user.email})"
+        )
+        
+        # Invalidate recommendations cache for the user
+        from app.core.cache_service import invalidate_recommendations_cache
+        invalidate_recommendations_cache(recommendation.user_id)
+        logger.debug(f"Invalidated recommendations cache for user {recommendation.user_id}")
+        
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error rejecting recommendation {recommendation_id}: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to reject recommendation: {str(e)}"
+        )
+    
+    return {
+        "message": "Recommendation rejected successfully",
+        "recommendation_id": str(recommendation.recommendation_id),
+        "status": recommendation.status.value,
+        "rejected_at": recommendation.rejected_at.isoformat() if recommendation.rejected_at else None,
+        "rejected_by": str(recommendation.rejected_by) if recommendation.rejected_by else None,
+        "rejection_reason": recommendation.rejection_reason,
+    }
 
 
 @router.put(
@@ -281,6 +601,180 @@ async def modify_recommendation(
         status_code=status.HTTP_501_NOT_IMPLEMENTED,
         detail="Endpoint not yet implemented"
     )
+
+
+@router.post(
+    "/review/bulk",
+    summary="Bulk approve or reject recommendations",
+    description="Approve or reject multiple recommendations at once. Requires operator role or higher.",
+    responses={
+        200: {"description": "Bulk operation completed successfully"},
+        401: {"description": "Unauthorized - authentication required"},
+        403: {"description": "Forbidden - operator role required"},
+        400: {"description": "Bad request - invalid action or recommendation IDs"},
+    },
+)
+async def bulk_review_recommendations(
+    action: str = Body(..., description="Action to perform: 'approve' or 'reject'"),
+    recommendation_ids: List[str] = Body(..., description="List of recommendation IDs"),
+    reason: Optional[str] = Body(None, description="Reason for rejection (required if action is 'reject')"),
+    current_user: User = Depends(require_operator),
+    db: Session = Depends(get_db),
+):
+    """
+    Bulk approve or reject recommendations.
+
+    Requires operator role or higher.
+
+    Args:
+        action: Action to perform ('approve' or 'reject')
+        recommendation_ids: List of recommendation IDs
+        reason: Reason for rejection (required if action is 'reject')
+        current_user: Current authenticated user (operator/admin)
+        db: Database session
+
+    Returns:
+        Bulk operation results
+    """
+    from app.models.recommendation import Recommendation, RecommendationStatus
+    from datetime import datetime
+    
+    # Validate action
+    if action not in ['approve', 'reject']:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid action: {action}. Must be 'approve' or 'reject'"
+        )
+    
+    # Require reason for reject action
+    if action == 'reject' and not reason:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Reason is required when rejecting recommendations"
+        )
+    
+    # Validate recommendation IDs
+    if not recommendation_ids:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="At least one recommendation ID is required"
+        )
+    
+    # Convert recommendation IDs to UUIDs
+    rec_uuids = []
+    for rec_id in recommendation_ids:
+        try:
+            rec_uuids.append(uuid.UUID(rec_id))
+        except ValueError:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid recommendation ID format: {rec_id}"
+            )
+    
+    # Log operator action
+    logger.info(
+        f"Operator {current_user.user_id} ({current_user.email}) attempting to {action} "
+        f"{len(rec_uuids)} recommendations"
+    )
+    
+    # Get all recommendations
+    recommendations = db.query(Recommendation).filter(
+        Recommendation.recommendation_id.in_(rec_uuids)
+    ).all()
+    
+    # Check if all recommendations exist
+    found_ids = {rec.recommendation_id for rec in recommendations}
+    missing_ids = set(rec_uuids) - found_ids
+    if missing_ids:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Recommendations not found: {[str(id) for id in missing_ids]}"
+        )
+    
+    # Process each recommendation
+    approved_count = 0
+    rejected_count = 0
+    already_processed = []
+    errors = []
+    
+    for recommendation in recommendations:
+        try:
+            if action == 'approve':
+                # Check if already approved
+                if recommendation.status == RecommendationStatus.APPROVED:
+                    already_processed.append(str(recommendation.recommendation_id))
+                    continue
+                
+                # Check if rejected (can't approve a rejected recommendation)
+                if recommendation.status == RecommendationStatus.REJECTED:
+                    errors.append(f"Cannot approve rejected recommendation {recommendation.recommendation_id}")
+                    continue
+                
+                # Approve
+                recommendation.status = RecommendationStatus.APPROVED
+                recommendation.approved_at = datetime.utcnow()
+                recommendation.approved_by = current_user.user_id
+                recommendation.rejected_at = None
+                recommendation.rejected_by = None
+                recommendation.rejection_reason = None
+                approved_count += 1
+                
+            else:  # reject
+                # Check if already rejected
+                if recommendation.status == RecommendationStatus.REJECTED:
+                    already_processed.append(str(recommendation.recommendation_id))
+                    continue
+                
+                # Check if approved (can't reject an approved recommendation)
+                if recommendation.status == RecommendationStatus.APPROVED:
+                    errors.append(f"Cannot reject approved recommendation {recommendation.recommendation_id}")
+                    continue
+                
+                # Reject
+                recommendation.status = RecommendationStatus.REJECTED
+                recommendation.rejected_at = datetime.utcnow()
+                recommendation.rejected_by = current_user.user_id
+                recommendation.rejection_reason = reason
+                recommendation.approved_at = None
+                recommendation.approved_by = None
+                rejected_count += 1
+                
+        except Exception as e:
+            errors.append(f"Error processing recommendation {recommendation.recommendation_id}: {str(e)}")
+            logger.error(f"Error processing recommendation {recommendation.recommendation_id}: {str(e)}", exc_info=True)
+    
+    # Commit changes
+    try:
+        db.commit()
+        logger.info(
+            f"Successfully {action}ed {approved_count + rejected_count} recommendations "
+            f"by operator {current_user.user_id} ({current_user.email})"
+        )
+        
+        # Invalidate recommendations cache for all affected users
+        from app.core.cache_service import invalidate_recommendations_cache
+        affected_user_ids = {rec.user_id for rec in recommendations}
+        for user_id in affected_user_ids:
+            invalidate_recommendations_cache(user_id)
+        logger.debug(f"Invalidated recommendations cache for {len(affected_user_ids)} users")
+        
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error committing bulk {action} operation: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to {action} recommendations: {str(e)}"
+        )
+    
+    return {
+        "message": f"Bulk {action} operation completed",
+        "action": action,
+        "total_requested": len(rec_uuids),
+        "approved": approved_count if action == 'approve' else 0,
+        "rejected": rejected_count if action == 'reject' else 0,
+        "already_processed": len(already_processed),
+        "errors": errors if errors else None,
+    }
 
 
 @router.get(
@@ -788,17 +1282,23 @@ async def generate_recommendations_for_user(
             sys.path.insert(0, path)
 
     try:
-        from app.recommendations.generator import RecommendationGenerator
-        logger.info("RecommendationGenerator imported successfully")
+        from app.recommendations.rag_integration import create_enhanced_generator
+        logger.info("EnhancedRecommendationGenerator with RAG support imported successfully")
+        # Initialize enhanced recommendation generator
+        generator = create_enhanced_generator(db_session=db)
     except ImportError as e:
-        logger.error(f"Failed to import RecommendationGenerator: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Recommendation service not available: {str(e)}"
-        )
-
-    # Initialize recommendation generator
-    generator = RecommendationGenerator(db_session=db, use_openai=True)
+        logger.warning(f"RAG integration not available, falling back to legacy generator: {e}")
+        try:
+            from app.recommendations.generator import RecommendationGenerator
+            logger.info("RecommendationGenerator (legacy) imported successfully")
+            # Initialize legacy recommendation generator
+            generator = RecommendationGenerator(db_session=db, use_openai=True)
+        except ImportError as e:
+            logger.error(f"Failed to import RecommendationGenerator: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Recommendation service not available: {str(e)}"
+            )
 
     # Generate recommendations
     try:
@@ -1256,4 +1756,180 @@ async def update_user_role(
         "email": user.email,
         "role": user.role,
     }
+
+
+@router.get(
+    "/rag/dashboard",
+    response_model=RAGDashboard,
+    summary="Get RAG system dashboard",
+    description="Get comprehensive RAG system status including health, metrics, and A/B test results. Requires operator role.",
+    responses={
+        200: {"description": "Dashboard data retrieved successfully"},
+        401: {"description": "Unauthorized - authentication required"},
+        403: {"description": "Forbidden - operator role required"},
+    },
+)
+async def get_rag_dashboard(
+    current_user: User = Depends(require_operator),
+    db: Session = Depends(get_db),
+):
+    """
+    Get RAG system dashboard with health, metrics, and A/B test results.
+    
+    Requires operator role or higher.
+    
+    Args:
+        current_user: Current authenticated user (operator/admin)
+        db: Database session
+    
+    Returns:
+        RAG dashboard data
+    """
+    import sys
+    import os
+    from datetime import datetime
+    
+    logger.info(f"Operator {current_user.user_id} ({current_user.email}) accessing RAG dashboard")
+    
+    # Add service path
+    _current_file = os.path.abspath(__file__)
+    _backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(_current_file))))
+    _project_root = os.path.dirname(_backend_dir)
+    _service_dir = os.path.join(_project_root, "service")
+    
+    if _service_dir not in sys.path:
+        sys.path.insert(0, _service_dir)
+    
+    # Health check
+    health_data = {
+        "vector_store_healthy": False,
+        "vector_store_stats": None,
+        "rag_enabled": False,
+        "rag_rollout_percentage": 0.0,
+        "openai_configured": False,
+        "last_check": datetime.utcnow(),
+    }
+    
+    # Check RAG configuration
+    from app.config import settings
+    health_data["rag_enabled"] = settings.rag_enabled
+    health_data["rag_rollout_percentage"] = settings.rag_rollout_percentage
+    health_data["openai_configured"] = bool(settings.openai_api_key)
+    
+    # Check vector store
+    try:
+        from app.rag import VectorStore
+        vs = VectorStore()
+        stats = vs.get_stats()
+        
+        health_data["vector_store_healthy"] = True
+        health_data["vector_store_stats"] = VectorStoreStats(
+            total_documents=stats["total_documents"],
+            embedding_model=stats["embedding_model"],
+            embedding_dimensions=stats["embedding_dimensions"],
+            document_types=stats.get("document_types", {}),
+        )
+    except Exception as e:
+        logger.warning(f"Vector store health check failed: {e}")
+    
+    # Get generation metrics
+    rag_metrics_data = None
+    catalog_metrics_data = None
+    
+    try:
+        from app.eval import get_metrics_collector
+        metrics = get_metrics_collector()
+        
+        rag_metrics = metrics.get_generation_metrics(method="rag")
+        if rag_metrics["sample_size"] > 0:
+            rag_metrics_data = GenerationMetrics(
+                sample_size=rag_metrics["sample_size"],
+                successful_generations=rag_metrics["successful_generations"],
+                success_rate=rag_metrics["success_rate"],
+                avg_generation_time_ms=rag_metrics["avg_generation_time_ms"],
+                avg_recommendation_count=rag_metrics["avg_recommendation_count"],
+                avg_citation_rate=rag_metrics.get("avg_citation_rate"),
+            )
+        
+        catalog_metrics = metrics.get_generation_metrics(method="catalog")
+        if catalog_metrics["sample_size"] > 0:
+            catalog_metrics_data = GenerationMetrics(
+                sample_size=catalog_metrics["sample_size"],
+                successful_generations=catalog_metrics["successful_generations"],
+                success_rate=catalog_metrics["success_rate"],
+                avg_generation_time_ms=catalog_metrics["avg_generation_time_ms"],
+                avg_recommendation_count=catalog_metrics["avg_recommendation_count"],
+            )
+    except Exception as e:
+        logger.warning(f"Failed to get generation metrics: {e}")
+    
+    # Get A/B test status
+    ab_test_data = None
+    
+    try:
+        from app.eval import create_ab_tester
+        ab_tester = create_ab_tester(
+            rollout_percentage=settings.rag_rollout_percentage,
+            enabled=settings.rag_enabled
+        )
+        
+        if ab_tester.is_enabled():
+            metrics = ab_tester.get_metrics()
+            
+            # Control variant
+            control = metrics.get("control", {})
+            control_metrics = ABTestMetrics(
+                variant="control",
+                method="catalog",
+                sample_size=control.get("sample_size", 0),
+                success_rate=control.get("success_rate", 0.0),
+                avg_generation_time_ms=control.get("avg_generation_time_ms", 0.0),
+                avg_rating=control.get("avg_rating"),
+                helpful_rate=control.get("helpful_rate"),
+            )
+            
+            # Variant A
+            variant_a = metrics.get("variant_a", {})
+            variant_a_metrics = ABTestMetrics(
+                variant="variant_a",
+                method="rag",
+                sample_size=variant_a.get("sample_size", 0),
+                success_rate=variant_a.get("success_rate", 0.0),
+                avg_generation_time_ms=variant_a.get("avg_generation_time_ms", 0.0),
+                avg_rating=variant_a.get("avg_rating"),
+                helpful_rate=variant_a.get("helpful_rate"),
+            )
+            
+            # Comparison
+            comparison = metrics.get("comparison", {})
+            comparison_data = ABTestComparison(
+                variant_faster=comparison.get("variant_faster", False),
+                speed_improvement=comparison.get("speed_improvement", 0.0),
+                rating_improvement=comparison.get("rating_improvement", 0.0),
+                helpful_rate_improvement=comparison.get("helpful_rate_improvement", 0.0),
+                statistically_significant=comparison.get("statistically_significant", False),
+            )
+            
+            recommendation = ab_tester.get_recommendation()
+            
+            ab_test_data = ABTestStatus(
+                enabled=True,
+                rollout_percentage=settings.rag_rollout_percentage,
+                control=control_metrics,
+                variant_a=variant_a_metrics,
+                comparison=comparison_data,
+                recommendation=recommendation,
+            )
+    except Exception as e:
+        logger.warning(f"Failed to get A/B test status: {e}")
+    
+    # Build dashboard
+    dashboard = RAGDashboard(
+        health=RAGHealthCheck(**health_data),
+        rag_metrics=rag_metrics_data,
+        catalog_metrics=catalog_metrics_data,
+        ab_test_status=ab_test_data,
+    )
+    
+    return dashboard
 

@@ -20,6 +20,7 @@ from app.api.v1.schemas.recommendations import (
     RecommendationsListResponse,
     RecommendationFeedbackRequest,
 )
+from app.api.v1.utils.recommendation_helpers import enrich_recommendation_with_explanation
 
 logger = logging.getLogger(__name__)
 
@@ -80,6 +81,7 @@ async def get_recommendations(
     query = db.query(Recommendation).filter(Recommendation.user_id == current_user.user_id)
 
     # Apply status filter
+    # For regular users, default to showing only approved recommendations if no filter is provided
     if status_filter:
         try:
             status_enum = RecommendationStatus(status_filter.lower())
@@ -89,6 +91,9 @@ async def get_recommendations(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Invalid status filter: {status_filter}. Valid values: pending, approved, rejected"
             )
+    else:
+        # Default to approved recommendations for regular users (they shouldn't see pending/rejected)
+        query = query.filter(Recommendation.status == RecommendationStatus.APPROVED)
 
     # Apply type filter
     if type_filter:
@@ -121,8 +126,28 @@ async def get_recommendations(
     # Apply pagination
     recommendations = query.offset(skip).limit(limit).all()
 
-    # Convert to response format
-    items = [RecommendationResponse.model_validate(rec) for rec in recommendations]
+    # Convert to response format with explanations
+    items = []
+    for rec in recommendations:
+        rec_dict = {
+            "recommendation_id": str(rec.recommendation_id),
+            "user_id": str(rec.user_id),
+            "type": rec.type.value if hasattr(rec.type, 'value') else rec.type,
+            "title": rec.title,
+            "content": rec.content,
+            "rationale": rec.rationale,
+            "status": rec.status.value if hasattr(rec.status, 'value') else rec.status,
+            "decision_trace": rec.decision_trace,
+            "created_at": rec.created_at,
+            "approved_at": rec.approved_at,
+            "approved_by": str(rec.approved_by) if rec.approved_by else None,
+            "rejected_at": rec.rejected_at,
+            "rejected_by": str(rec.rejected_by) if rec.rejected_by else None,
+            "rejection_reason": rec.rejection_reason,
+        }
+        # Enrich with explanation
+        rec_dict = enrich_recommendation_with_explanation(rec_dict, rec)
+        items.append(RecommendationResponse.model_validate(rec_dict))
 
     return RecommendationsListResponse(
         items=items,
@@ -200,7 +225,26 @@ async def get_recommendation_detail(
             detail="Consent required to view recommendations. Please grant consent in settings."
         )
 
-    return RecommendationResponse.model_validate(recommendation)
+    # Convert to dict and enrich with explanation
+    rec_dict = {
+        "recommendation_id": str(recommendation.recommendation_id),
+        "user_id": str(recommendation.user_id),
+        "type": recommendation.type.value if hasattr(recommendation.type, 'value') else recommendation.type,
+        "title": recommendation.title,
+        "content": recommendation.content,
+        "rationale": recommendation.rationale,
+        "status": recommendation.status.value if hasattr(recommendation.status, 'value') else recommendation.status,
+        "decision_trace": recommendation.decision_trace,
+        "created_at": recommendation.created_at,
+        "approved_at": recommendation.approved_at,
+        "approved_by": str(recommendation.approved_by) if recommendation.approved_by else None,
+        "rejected_at": recommendation.rejected_at,
+        "rejected_by": str(recommendation.rejected_by) if recommendation.rejected_by else None,
+        "rejection_reason": recommendation.rejection_reason,
+    }
+    rec_dict = enrich_recommendation_with_explanation(rec_dict, recommendation)
+    
+    return RecommendationResponse.model_validate(rec_dict)
 
 
 @router.post(

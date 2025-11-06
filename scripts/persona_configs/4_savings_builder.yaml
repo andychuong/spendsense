@@ -1,5 +1,6 @@
 # Persona 4: Savings Builder
 # This persona represents users who are consistently building their savings.
+# They prioritize savings and have low credit utilization.
 
 persona_name: "Savings Builder"
 num_profiles: 20
@@ -26,14 +27,43 @@ transactions:
     - payment_type: "income"
       amount_range: [5000, 8000]
       frequency_per_month: [1, 2]
-    # Consistent, regular transfers to savings
+    
+    # ESSENTIAL SPENDING - Everyone needs these basics
+    - category: "Groceries/Food & Beverage Stores"
+      amount_range: [40, 200]
+      frequency_per_month: [8, 15] # Regular grocery shopping (Whole Foods, Trader Joe's, etc.)
+    - category: "Bills & Utilities/Utilities"
+      amount_range: [80, 200]
+      frequency_per_month: [1, 1] # Monthly utilities
+    - category: "Bills & Utilities/Internet"
+      amount_range: [50, 100]
+      frequency_per_month: [1, 1] # Monthly internet
+    - category: "Bills & Utilities/Mobile Phone"
+      amount_range: [60, 120]
+      frequency_per_month: [1, 1] # Monthly mobile
+    - category: "Transport/Fuel"
+      amount_range: [30, 60]
+      frequency_per_month: [3, 8] # Moderate gas usage
+    
+    # PERSONA-SPECIFIC: CONSISTENT SAVINGS TRANSFERS
     - payment_type: "transfer_to_savings"
       amount_range: [500, 2000]
-      frequency_per_month: [1, 3]
-    # General spending is moderate
-    - category: "Retail"
-      amount_range: [50, 200]
-      frequency_per_month: [4, 8]
+      frequency_per_month: [1, 3] # Regular savings transfers
+    
+    # SECONDARY SPENDING - Moderate and budget-conscious
+    - category: "Retail/Department Stores"
+      amount_range: [30, 150]
+      frequency_per_month: [2, 6] # Less frequent shopping
+    - category: "Food & Drink/Coffee Shops"
+      amount_range: [4, 9]
+      frequency_per_month: [2, 8] # Less frequent coffee
+    - category: "Food & Drink/Restaurants"
+      amount_range: [20, 60]
+      frequency_per_month: [1, 4] # Occasional dining out
+    - category: "Entertainment/Streaming Services"
+      amount_range: [10, 25]
+      frequency_per_month: [1, 3] # Minimal subscriptions
+    
     - payment_type: "credit_card_payment"
       payment_behavior: "pays_in_full"
 

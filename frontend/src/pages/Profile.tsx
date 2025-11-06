@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { profileService, type ProfileData } from '@/services/profileService'
-import PersonaBadge from '@/components/PersonaBadge'
 import TimePeriodSelector from '@/components/TimePeriodSelector'
 import ProfileBehavioralSignals from '@/components/ProfileBehavioralSignals'
 import PersonaHistoryTimeline from '@/components/PersonaHistoryTimeline'
@@ -116,17 +115,6 @@ const Profile = () => {
         </header>
 
         <div className="space-y-6">
-          {/* Current Persona */}
-          {behavioralProfile && (
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Current Persona</h2>
-              <PersonaBadge
-                personaId={behavioralProfile.persona_id}
-                personaName={behavioralProfile.persona_name}
-              />
-            </div>
-          )}
-
           {/* Time Period Selector */}
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="mb-4">
