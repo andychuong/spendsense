@@ -1,0 +1,37 @@
+[MASTER]
+# Use multiple processes for faster linting
+jobs=4
+
+# Python code to execute, usually for sys.path manipulation
+init-hook='import sys; sys.path.append(".")'
+
+[MESSAGES CONTROL]
+# Disable specific warnings that are too strict or not relevant
+disable=
+    C0111,  # missing-docstring
+    C0103,  # invalid-name
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+    R0903,  # too-few-public-methods
+    R0913,  # too-many-arguments
+    W0212,  # protected-access
+    W0613,  # unused-argument
+    E1101,  # no-member (often false positives with SQLAlchemy)
+    W0622,  # redefined-builtin (conflicts with 'id')
+    R0801,  # duplicate-code
+
+[FORMAT]
+# Maximum number of characters on a single line
+max-line-length=120
+
+[DESIGN]
+# Maximum number of attributes for a class
+max-attributes=15
+
+# Minimum number of public methods for a class
+min-public-methods=1
+
+# Maximum number of public methods for a class
+max-public-methods=25
+
